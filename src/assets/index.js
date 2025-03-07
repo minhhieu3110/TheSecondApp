@@ -1,0 +1,28 @@
+export const icon = {
+  icon_percent: require('./icon/percent.png'),
+  icon_heart: require('./icon/heart.png'),
+  icon_balance: require('./icon/balance.png'),
+  icon_point: require('./icon/point.png'),
+  icon_grandmother: require('./icon/grandmother.png'),
+  icon_patient: require('./icon/patient.png'),
+  icon_patient_1: require('./icon/patient_1.png'),
+  icon_maid: require('./icon/maid.png'),
+  icon_shop_home: require('./icon/icon_shop_home.png'),
+  icon_calendar: require('./icon/icon_calendar.png'),
+  icon_home: require('./icon/icon_home.png'),
+  icon_home_focus: require('./icon/icon_home_focus.png'),
+  icon_activity: require('./icon/icon_activity.png'),
+  icon_activity_focus: require('./icon/icon_activity_focus.png'),
+  icon_message: require('./icon/icon_message.png'),
+  icon_notification: require('./icon/icon_notification.png'),
+  icon_notification_focus: require('./icon/icon_notification_focus.png'),
+  icon_profile: require('./icon/icon_profile.png'),
+  icon_profile_focus: require('./icon/icon_profile_focus.png'),
+};
+export const image = {
+  image_top_home_1: require('./image/image_top_home_1.png'),
+  image_top_home_2: require('./image/image_top_home_2.png'),
+  image_sr_1: require('./image/image_sr_1.png'),
+  image_sr_2: require('./image/image_sr_2.png'),
+  image_new: require('./image/image_new.png'),
+};
