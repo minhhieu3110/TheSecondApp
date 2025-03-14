@@ -14,6 +14,7 @@ export const root = {
     navigationRef.navigate(screeName, screenParams);
   },
 };
+
 export const bottomRoot = {
   navigate: (screeName, screenParams) => {
     rootNavigation(router.BOTTOM_CONTAINER, screeName, screenParams);
@@ -22,5 +23,10 @@ export const bottomRoot = {
 export const commonRoot = {
   navigate: (screeName, screenParams) => {
     rootNavigation(router.COMMON_CONTAINER, screeName, screenParams);
+  },
+};
+export const topRoot = {
+  navigate: (screeName, screenParams) => {
+    rootNavigation(router.TOP_CONTAINER, screeName, screenParams);
   },
 };

@@ -132,7 +132,6 @@ const Block = ({
     alignSelfCenter && {alignSelf: 'center'},
     alignSelfStretch && {alignSelf: 'stretch'},
     zIndex && {zIndex},
-
     //width, height
     //size
     padding && {padding: hs(padding)},

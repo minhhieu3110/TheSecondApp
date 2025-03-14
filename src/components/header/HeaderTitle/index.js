@@ -1,69 +1,110 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import Block from '@components/base/Block';
+import Icon from '@components/base/Icon';
+import Pressable from '@components/base/Pressable';
+import Text from '@components/base/Text';
 import {useNavigation} from '@react-navigation/native';
-
-import Icon from 'react-native-vector-icons/Ionicons';
-// interface HeaderProps {
-//   title: string;
-//   icon?: string; // Name of Ionicons icon
-//   showBack?: boolean;
-// }
-
-const HeaderTitle = ({title, icon, showBack = true}) => {
+import {width} from '@responsive';
+import {COLORS} from '@theme';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+const HeaderTile = ({
+  icon,
+  iconType,
+  title,
+  showBack = true,
+  root,
+  screenName,
+  screenParams,
+  canGoBack,
+  colorIcon,
+  colorText,
+  background = false,
+}) => {
   const navigation = useNavigation();
 
   const handleBack = () => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
+    if (screenName) {
+      root.navigate(screenName, screenParams);
+    } else {
+      if (canGoBack) {
+        navigation.goBack();
+      }
     }
   };
-
-  return (
-    <View style={styles.container}>
-      {showBack && (
-        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-          <Icon name="chevron-back" size={24} color="black" />
-        </TouchableOpacity>
-      )}
-
-      <View style={styles.titleContainer}>
-        {icon && (
+  return background ? (
+    <Block
+      absolute
+      zIndex={10}
+      width={width}
+      height={53}
+      backgroundColor={background}>
+      <Pressable
+        onPress={handleBack}
+        height={30}
+        marginLeft={3}
+        marginTop={12}
+        alignCenter
+        row>
+        {icon ? (
           <Icon
-            name="chevron-back"
-            size={30}
-            color="black"
-            style={styles.icon}
+            IconType={iconType}
+            iconName={icon}
+            iconSize={30}
+            iconColor={colorIcon}
+          />
+        ) : (
+          <Icon
+            IconType={Ionicons}
+            iconName={'chevron-back'}
+            iconSize={30}
+            iconColor={colorIcon}
           />
         )}
-        <Text style={styles.title}>{title}</Text>
-      </View>
-    </View>
+        {colorText ? (
+          <Text marginLeft={10} fontSize={15} semiBold color={colorText}>
+            {title}
+          </Text>
+        ) : (
+          <Text marginLeft={10} fontSize={15} semiBold color={COLORS.black2}>
+            {title}
+          </Text>
+        )}
+      </Pressable>
+    </Block>
+  ) : (
+    <Block width={width} height={53} backgroundColor={COLORS.white}>
+      <Pressable
+        onPress={handleBack}
+        height={30}
+        marginLeft={3}
+        marginTop={12}
+        alignCenter
+        row>
+        {icon ? (
+          <Icon
+            IconType={iconType}
+            iconName={icon}
+            iconSize={30}
+            iconColor={colorIcon}
+          />
+        ) : (
+          <Icon
+            IconType={Ionicons}
+            iconName={'chevron-back'}
+            iconSize={30}
+            iconColor={colorIcon}
+          />
+        )}
+        {colorText ? (
+          <Text marginLeft={10} fontSize={15} semiBold color={colorText}>
+            {title}
+          </Text>
+        ) : (
+          <Text marginLeft={10} fontSize={15} semiBold color={COLORS.black2}>
+            {title}
+          </Text>
+        )}
+      </Pressable>
+    </Block>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-  },
-  backButton: {
-    marginRight: 16,
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  icon: {
-    marginRight: 8,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '600',
-  },
-});
-
-export default HeaderTitle;
+export default HeaderTile;

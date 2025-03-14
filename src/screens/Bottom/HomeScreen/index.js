@@ -26,7 +26,7 @@ export default function HomeScreen() {
       }}>
       <Block width={width} height={337} backgroundColor={COLORS.white}>
         <Block width={width - 24} height={46} row left={12}>
-          <Block>
+          <Block marginTop={3} height={43}>
             <Text
               color={COLORS.red4}
               uppercase={true}
@@ -34,11 +34,7 @@ export default function HomeScreen() {
               fontSize={16}>
               Ứng dụng chăm sóc người già
             </Text>
-            <Text
-              color={COLORS.black1}
-              light={true}
-              fontSize={14}
-              marginTop={9}>
+            <Text color={COLORS.black1} light={true} fontSize={14}>
               Nhỏ cậy Cha, Già cậy SAN
             </Text>
           </Block>
@@ -46,7 +42,10 @@ export default function HomeScreen() {
             <Pressable onPress={() => commonRoot.navigate(router.VOUCHER)}>
               <Image source={icon.icon_percent} />
             </Pressable>
-            <Image source={icon.icon_heart} />
+            <Pressable
+              onPress={() => commonRoot.navigate(router.FAVORITE_STAFF)}>
+              <Image source={icon.icon_heart} />
+            </Pressable>
           </Block>
         </Block>
         <Block
@@ -66,14 +65,17 @@ export default function HomeScreen() {
             width={width - 288}
             alignCenter>
             <Image source={icon.icon_balance} />
-            <Block spaceBetween>
+            <Pressable
+              onPress={() => commonRoot.navigate(router.BALANCE)}
+              spaceBetween
+              width={width - 328}>
               <Text fontSize={14} regular color={COLORS.black1}>
                 Số dư khả dụng
               </Text>
               <Text fontSize={14} semiBold color={COLORS.red4}>
                 3.000.000 đ
               </Text>
-            </Block>
+            </Pressable>
           </Block>
           <Block
             height={44}
@@ -90,14 +92,16 @@ export default function HomeScreen() {
             width={width - 306.5}
             alignCenter>
             <Image source={icon.icon_point} />
-            <Block spaceBetween>
+            <Pressable
+              onPress={() => commonRoot.navigate(router.ACCUMULATED_POINT)}
+              spaceBetween>
               <Text fontSize={14} regular color={COLORS.black1}>
                 Điểm tích luỹ
               </Text>
               <Text fontSize={14} semiBold color={COLORS.red4}>
                 2500 điểm
               </Text>
-            </Block>
+            </Pressable>
           </Block>
         </Block>
         <Block width={width - 24} height={164} top={26} left={12}>
@@ -108,12 +112,18 @@ export default function HomeScreen() {
             itemHeight={164}
             itemWidth={width - 68}
             renderItem={(item, index) => (
-              <Block key={index} width={width - 68} height={164}>
+              <Block
+                key={index}
+                width={width - 68}
+                height={164}
+                marginRight={10}>
                 <Image
                   source={{
                     uri: 'https://static.wikia.nocookie.net/bach-khoa-the-gioi-toan-thu/images/e/e4/Son_goku.png/revision/latest?cb=20211030082932',
                   }}
-                  // resizeMode="cover"
+                  resizeMode="cover"
+                  width={'100%'}
+                  height={'100%'}
                 />
               </Block>
             )}
@@ -137,7 +147,11 @@ export default function HomeScreen() {
         </Text>
         <Block width={width - 54} height={360.11} marginLeft={15}>
           <Block row spaceBetween marginTop={13}>
-            <Block width={width - 256} height={175.56} alignCenter>
+            <Pressable
+              onPress={() => commonRoot.navigate(router.ADDRESS)}
+              width={width - 256}
+              height={175.56}
+              alignCenter>
               <Block
                 width={width - 328}
                 height={105.56}
@@ -165,8 +179,12 @@ export default function HomeScreen() {
                 center>
                 Chăm sóc người già tại nhà
               </Text>
-            </Block>
-            <Block width={width - 256} height={175.56} alignCenter>
+            </Pressable>
+            <Pressable
+              onPress={() => commonRoot.navigate(router.ADDRESS)}
+              width={width - 256}
+              height={175.56}
+              alignCenter>
               <Block
                 width={width - 328}
                 height={105.56}
@@ -194,10 +212,14 @@ export default function HomeScreen() {
                 center>
                 Chăm người bệnh tại nhà
               </Text>
-            </Block>
+            </Pressable>
           </Block>
           <Block row spaceBetween marginTop={28.6}>
-            <Block width={width - 256} height={156} alignCenter>
+            <Pressable
+              onPress={() => commonRoot.navigate(router.ADDRESS)}
+              width={width - 256}
+              height={156}
+              alignCenter>
               <Block
                 width={width - 328}
                 height={105.56}
@@ -225,8 +247,12 @@ export default function HomeScreen() {
                 center>
                 Vật lý trị liệu tại nhà
               </Text>
-            </Block>
-            <Block width={width - 256} height={156} alignCenter>
+            </Pressable>
+            <Pressable
+              onPress={() => commonRoot.navigate(router.ADDRESS)}
+              width={width - 256}
+              height={156}
+              alignCenter>
               <Block
                 width={width - 328}
                 height={105.56}
@@ -254,7 +280,7 @@ export default function HomeScreen() {
                 center>
                 San sẻ việc nhà
               </Text>
-            </Block>
+            </Pressable>
           </Block>
         </Block>
         <Block
