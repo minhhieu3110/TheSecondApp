@@ -18,6 +18,7 @@ const HeaderTile = ({
   colorIcon,
   colorText,
   background = false,
+  absolute = true,
 }) => {
   const navigation = useNavigation();
 
@@ -32,7 +33,7 @@ const HeaderTile = ({
   };
   return background ? (
     <Block
-      absolute
+      absolute={absolute}
       zIndex={10}
       width={width}
       height={53}

@@ -65,5 +65,16 @@ export default StyleSheet.create({
 
     elevation: 5,
   },
+  shadow6: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 20,
+  },
   absoluteFillObject: StyleSheet.absoluteFillObject,
 });

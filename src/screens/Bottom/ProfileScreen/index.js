@@ -3,7 +3,7 @@ import {Block, Icon, Image, Pressable, Text} from '@components';
 import {height, width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
-import {commonRoot, topRoot} from 'navigation/navigationRef';
+import {bottomRoot, commonRoot, topRoot} from 'navigation/navigationRef';
 import {ScrollView} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import RadialGradient from 'react-native-radial-gradient';
@@ -65,33 +65,48 @@ export default function ProfileScreen() {
                 backgroundColor={COLORS.gradient5}
                 row
                 alignCenter
-                marginLeft={8}>
-                <Block width={19} height={19}>
-                  <Image
-                    source={icon.icon_bronze_rank}
-                    height={19}
-                    width={19}
+                marginLeft={8}
+                overflow={'hidden'}>
+                <RadialGradient
+                  colors={COLORS.gradient5}
+                  center={[1000, 1000]}
+                  style={{
+                    borderRadius: 15,
+                    width: width - 284.28,
+                    height: 29,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  {/* <Block row radius={15} alignCenter justifyCenter> */}
+                  <Block width={19} height={19}>
+                    <Image
+                      source={icon.icon_bronze_rank}
+                      height={19}
+                      width={19}
+                    />
+                  </Block>
+                  <Block
+                    borderWidth={1}
+                    height={15}
+                    marginLeft={8.5}
+                    borderColor={COLORS.white}
                   />
-                </Block>
-                <Block
-                  borderWidth={1}
-                  height={15}
-                  marginLeft={8.5}
-                  borderColor={COLORS.white}
-                />
-                <Text
-                  medium
-                  fontSize={13}
-                  color={COLORS.yellow3}
-                  marginLeft={8.5}>
-                  Hạng vàng
-                </Text>
-                <Icon
-                  IconType={MaterialIcons}
-                  iconName={'keyboard-arrow-right'}
-                  iconColor={COLORS.yellow3}
-                  marginLeft={17}
-                />
+                  <Text
+                    medium
+                    fontSize={13}
+                    color={COLORS.yellow3}
+                    marginLeft={8.5}>
+                    Hạng vàng
+                  </Text>
+                  <Icon
+                    IconType={MaterialIcons}
+                    iconName={'keyboard-arrow-right'}
+                    iconColor={COLORS.yellow3}
+                    marginLeft={17}
+                  />
+                  {/* </Block> */}
+                </RadialGradient>
               </Pressable>
             </Block>
             <Block width={27.53} height={27.53} absolute top={20} right={11.9}>
@@ -184,7 +199,9 @@ export default function ProfileScreen() {
               row
               spaceBetween>
               <Pressable
-                onPress={() => topRoot.navigate(router.NEW_ACTIVITY)}
+                onPress={() =>
+                  bottomRoot.navigate(router.ACTIVITY_SCREEN, {activity: 'new'})
+                }
                 width={width - 352}
                 height={74}
                 alignCenter>
@@ -489,7 +506,12 @@ export default function ProfileScreen() {
                 marginVertical={7}
                 marginLeft={69}
               />
-              <Block height={50} width={width - 48} alignCenter row>
+              <Pressable
+                onPress={() => commonRoot.navigate(router.SETTING)}
+                height={50}
+                width={width - 48}
+                alignCenter
+                row>
                 <Image source={icon.icon_setting} width={50} height={50} />
                 <Text
                   regular
@@ -504,7 +526,7 @@ export default function ProfileScreen() {
                     IconType={MaterialIcons}
                   />
                 </Block>
-              </Block>
+              </Pressable>
               <Block
                 width={width - 117}
                 borderWidth={1}
@@ -512,7 +534,12 @@ export default function ProfileScreen() {
                 marginVertical={7}
                 marginLeft={69}
               />
-              <Block height={50} width={width - 48} alignCenter row>
+              <Pressable
+                onPress={() => commonRoot.navigate(router.FEEDBACK)}
+                height={50}
+                width={width - 48}
+                alignCenter
+                row>
                 <Image source={icon.icon_feedback} width={50} height={50} />
                 <Text
                   regular
@@ -527,7 +554,7 @@ export default function ProfileScreen() {
                     IconType={MaterialIcons}
                   />
                 </Block>
-              </Block>
+              </Pressable>
               <Block
                 width={width - 117}
                 borderWidth={1}
@@ -535,7 +562,12 @@ export default function ProfileScreen() {
                 marginVertical={7}
                 marginLeft={69}
               />
-              <Block height={50} width={width - 48} alignCenter row>
+              <Pressable
+                onPress={() => commonRoot.navigate(router.ABOUT)}
+                height={50}
+                width={width - 48}
+                alignCenter
+                row>
                 <Image source={icon.icon_about} width={50} height={50} />
                 <Text
                   regular
@@ -550,7 +582,7 @@ export default function ProfileScreen() {
                     IconType={MaterialIcons}
                   />
                 </Block>
-              </Block>
+              </Pressable>
             </Block>
           </Block>
         </Block>

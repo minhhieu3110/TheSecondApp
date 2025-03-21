@@ -3,9 +3,8 @@ import router from '@router';
 import {top} from 'screens/Bottom/ActivityScreen/common/top';
 import {height, width} from '@responsive';
 import {FONTS, COLORS} from '@theme';
-const screenOption = {};
 const tabs = [
-  {name: router.NEW_ACTIVITY, lable: 'Mới   '},
+  {name: router.NEW_ACTIVITY, lable: 'Mới'},
   {name: router.RECEPTION, lable: 'Tiếp nhận'},
   {name: router.DOING, lable: 'Đang làm'},
   {name: router.COMPLETE, lable: 'Hoàn thành'},
@@ -20,12 +19,11 @@ export default function TopTabContainer() {
           fontSize: 15,
           fontFamily: FONTS.regular,
           includeFontPadding: 0,
-          marginBottom: 13,
+          marginTop: -20,
         },
         tabBarItemStyle: {
-          width: (width - 24) / 4,
+          width: 120,
           height: 30,
-          paddingTop: 0,
         },
         tabBarIndicatorStyle: {
           backgroundColor: COLORS.red4,

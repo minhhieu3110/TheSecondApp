@@ -201,6 +201,7 @@ const Text = ({
     bold && {fontFamily: FONTS.bold},
     medium && {fontFamily: FONTS.medium},
     light && {fontFamily: FONTS.light},
+    italic && {fontFamily: FONTS.italic},
     //text style
     center && {textAlign: 'center'},
     right && {textAlign: 'right'},

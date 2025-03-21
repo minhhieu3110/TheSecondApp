@@ -73,6 +73,9 @@ const Block = ({
   safeMarginAreaTop,
   safePaddingAreaBottom,
   safeMarginAreaBottom,
+  gap,
+  columnGap,
+  rowGap,
   //width, height
   width,
   height,
@@ -134,6 +137,10 @@ const Block = ({
     zIndex && {zIndex},
     //width, height
     //size
+    gap && {gap: hs(gap)},
+    columnGap && {columnGap: hs(columnGap)},
+    row && {rowGap: hs(rowGap)},
+    //
     padding && {padding: hs(padding)},
     margin && {margin: hs(margin)},
     paddingVertical && {paddingVertical: hs(paddingVertical)},
@@ -173,6 +180,7 @@ const Block = ({
     borderBottomRightRadius && {
       borderBottomRightRadius: hs(borderBottomRightRadius),
     },
+
     borderWidth && {borderWidth: hs(borderWidth)},
     borderTopWidth && {borderTopWidth: hs(borderTopWidth)},
     borderRightWidth && {borderRightWidth: hs(borderRightWidth)},

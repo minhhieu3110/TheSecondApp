@@ -22,6 +22,7 @@ export const COLORS = {
   green5: '#00BF00',
   greenWhite: '#E6FFDE',
   yellowWhite2: '#FFF6DA',
+  grayWhite: '#F3F3F3',
   black4: '#363636',
   puper: '#5C2064',
   gray: '#424242',
@@ -30,6 +31,10 @@ export const COLORS = {
   white: '#ffffff',
   white1: 'rgba(255,255,255,0.7)',
   white2: 'rgba(255,255,255,0)',
+  placeholderOpacity: 'rgba(112,112,112,0.1)',
+  green6: '#00C707',
+  gray12: '#E1E1E1',
+  borderColor1: '#F8F8F8',
   yellowwhite: '#FFF3CC',
   black: '#000000',
   black1: '#1A2227',
@@ -50,6 +55,8 @@ export const COLORS = {
   gradient3: ['#ffffff', '#ffffff', '#ffffff'],
   gradient4: ['#FF88CC', '#D568E6', '#AE4BFE'],
   gradient5: ['#f30304', '#990100'],
+  black6: '#303030',
+  solidColorRed: 'rgba(153,1,0,0.5)',
   lightGreen: '#29bb89',
   dark: '#00000060',
   bg_opacity: '#00000020',
@@ -182,6 +189,7 @@ export const FONTS = {
   medium: 'SVN-Poppins-Medium',
   regular: 'SVN-Poppins-Regular',
   semiBold: 'SVN-Poppins-SemiBold',
+  italic: 'SVN-Poppins-Italic',
 };
 
 export const SIZES = {

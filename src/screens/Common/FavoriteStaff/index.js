@@ -36,7 +36,7 @@ export default function FavoriteStaff() {
                 source={image.image_staff}
                 width={'100%'}
                 height={'100%'}
-                resizeMode="containt"
+                resizeMode="contain"
               />
             </Block>
             <Block height={43} marginLeft={10.7} marginTop={15}>
@@ -84,7 +84,7 @@ export default function FavoriteStaff() {
                 source={image.image_staff_1}
                 width={'100%'}
                 height={'100%'}
-                resizeMode="containt"
+                resizeMode="contain"
               />
             </Block>
             <Block height={43} marginLeft={10.7} marginTop={15}>

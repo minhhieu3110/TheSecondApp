@@ -16,6 +16,7 @@ import {bottomRoot, commonRoot} from 'navigation/navigationRef';
 import {useState} from 'react';
 import {Modal, SafeAreaView, ScrollView} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 export default function AddBlockStaff() {
   return (
     <>
@@ -41,7 +42,7 @@ export default function AddBlockStaff() {
                   source={image.image_staff}
                   width={'100%'}
                   height={'100%'}
-                  resizeMode="containt"
+                  resizeMode="contain"
                 />
               </Block>
               <Block height={96} marginLeft={10.7} marginTop={15}>
@@ -79,13 +80,21 @@ export default function AddBlockStaff() {
                 absolute
                 right={10}
                 marginTop={10}
+                width={34}
+                height={34}
+                // backgroundColor={COLORS.placeholder}
+                // radius={23}
+                // opacity={0.1}
                 onPress={() =>
                   commonRoot.navigate(router.PROFILE_STAFF_BLOCKED)
                 }>
-                <Image
-                  source={icon.icon_heart_staff_gray}
-                  height={34}
-                  width={34}
+                <Icon
+                  IconType={MaterialIcons}
+                  iconName={'block'}
+                  iconSize={20}
+                  iconColor={COLORS.red4}
+                  absolute
+                  zIndex={10}
                 />
               </Pressable>
             </Block>

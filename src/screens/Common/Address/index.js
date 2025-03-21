@@ -4,8 +4,22 @@ import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
+import {useEffect, useState} from 'react';
 
-export default function Address() {
+export default function Address({route}) {
+  const [service, setService] = useState(null);
+  useEffect(() => {
+    if (route.params?.service) {
+      setService(route.params?.service);
+    }
+  }, [route.params?.service]);
+  const handleService = () => {
+    service === 'elederly' && commonRoot.navigate(router.CARE_ELEDERLY);
+    service === 'sicker' && commonRoot.navigate(router.CARE_SICKER);
+    service === 'physical_therapy' &&
+      commonRoot.navigate(router.PHYSICAL_THERAPY);
+    service === 'housework' && commonRoot.navigate(router.HOUSEWORK);
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Chọn địa điểm'} canGoBack />
@@ -24,6 +38,7 @@ export default function Address() {
         spaceBetween>
         {Array.from({length: 5}).map((_, index) => (
           <Pressable
+            onPress={handleService}
             key={index}
             height={101}
             radius={8}

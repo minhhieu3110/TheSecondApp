@@ -100,7 +100,7 @@ const TextInput = ({
   right,
   fontSize,
   fontFamily,
-
+  rows,
   maxLength,
   setRef,
   value,
@@ -108,6 +108,7 @@ const TextInput = ({
   placeholderTextColor,
   onChangeText,
   returnKeyType,
+  numberOfLines,
   onBlur,
   editable,
   secureTextEntry,
@@ -245,6 +246,7 @@ const TextInput = ({
       returnKeyType={returnKeyType}
       placeholder={placeholder}
       maxLength={maxLength}
+      numberOfLines={numberOfLines}
       placeholderTextColor={COLORS[placeholderTextColor] || COLORS.placeholder}
       onChangeText={onChangeText}
       onBlur={onBlur}
@@ -254,6 +256,8 @@ const TextInput = ({
       blurOnSubmit={blurOnSubmit}
       onSubmitEditing={onSubmitEditing}
       onEndEditing={onEndEditing}
+      multiline={true}
+      scrollEnabled={true}
     />
   );
 };

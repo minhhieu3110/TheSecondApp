@@ -1,14 +1,23 @@
 import {Block, Text, Pressable} from '@components';
 import {width} from '@responsive';
 import {COLORS, FONTS} from '@theme';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import NewActivity from './common/NewActivity';
 import {ScrollView} from 'react-native';
 import Reception from './common/Reception';
 import Doing from './common/Doing';
 import TopTabContainer from 'navigation/TopTabContainer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-export default function ActivityScreen() {
+import {topRoot} from 'navigation/navigationRef';
+import router from '@router';
+export default function ActivityScreen({route}) {
+  const [activity, setActivity] = useState(null);
+  useEffect(() => {
+    if (route.params?.activity) {
+      setActivity(route.params?.activity);
+    }
+    activity === 'new' && topRoot.navigate(router.NEW_ACTIVITY);
+  }, [route.params?.activity]);
   const TopStack = createNativeStackNavigator();
   return (
     <Block flex backgroundColor={COLORS.gray10}>

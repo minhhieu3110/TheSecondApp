@@ -41,7 +41,7 @@ export default function AddStaff() {
                   source={image.image_staff}
                   width={'100%'}
                   height={'100%'}
-                  resizeMode="containt"
+                  resizeMode="contain"
                 />
               </Block>
               <Block height={96} marginLeft={10.7} marginTop={15}>
