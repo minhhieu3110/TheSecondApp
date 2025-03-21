@@ -16,6 +16,7 @@ import ModalSANStaffNotPerform from './base/ModalSANStaffNotPerform';
 import ModalVoucher from './base/ModalVoucher';
 import ModalMethodPay from './base/ModalMethodPay';
 // import ModalCalendar from './base/ModalCalendar';
+import ModalSuccess from './base/ModalSuccess';
 import SelectInput from './form/SelectInput';
 import HeaderTitle from './header/HeaderTitle';
 import HeaderModal from './header/HeaderModal';
@@ -43,6 +44,7 @@ export {
   ModalVoucher,
   ModalMethodPay,
   // ModalCalendar,
+  ModalSuccess,
   Switch,
   Pressable,
   HeaderTitle,

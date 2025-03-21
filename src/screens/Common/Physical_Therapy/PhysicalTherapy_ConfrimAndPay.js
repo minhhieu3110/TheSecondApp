@@ -1,15 +1,5 @@
 import {icon, image} from '@assets';
-import {
-  Block,
-  HeaderTitle,
-  Icon,
-  Image,
-  MethodPay,
-  ModalMethodPay,
-  ModalVoucher,
-  Pressable,
-  Text,
-} from '@components';
+import {Block, HeaderTitle, Image, MethodPay, Text} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {useState} from 'react';

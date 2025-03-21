@@ -121,3 +121,6 @@ export const image = {
   image_housework_1: require('./image/image_housework_1.png'),
   image_housework_2: require('./image/image_housework_2.png'),
 };
+export const lotties = {
+  success: require('./lotties/Success.json'),
+};
