@@ -10,6 +10,7 @@ import router from '@router';
 export default function ModalSuccess({visible, close}) {
   const backHome = () => {
     bottomRoot.navigate(router.HOME_SCREEN);
+    close();
   };
   return (
     <Modal
@@ -60,7 +61,7 @@ export default function ModalSuccess({visible, close}) {
           </Pressable>
           <LottiesView
             source={lotties.success}
-            style={{width: 268, height: 172, marginTop: 41}}
+            style={{width: width - 160, height: 172, marginTop: 41}}
             autoPlay
             loop
           />

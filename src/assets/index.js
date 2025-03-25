@@ -95,6 +95,22 @@ export const icon = {
   icon_lamp_choose: require('./icon/icon_infrared_lamp_choose.png'),
   icon_vibrator: require('./icon/icon_vibrator.png'),
   icon_vibrator_choose: require('./icon/icon_vibrator_choose.png'),
+  icon_cooking: require('./icon/icon_cooking.png'),
+  icon_cooking_choose: require('./icon/icon_cooking_choose.png'),
+  icon_ironing: require('./icon/icon_ironing_clothes.png'),
+  icon_ironing_choose: require('./icon/icon_ironing_clothes_choose.png'),
+  icon_logout: require('./icon/icon_logout.png'),
+  icon_block: require('./icon/icon_block.png'),
+  icon_elederly: require('./icon/icon_elederly.png'),
+  icon_sicker: require('./icon/icon_sicker.png'),
+  icon_physical_therapy: require('./icon/icon_physical_therapy.png'),
+  icon_housework: require('./icon/icon_housework.png'),
+  icon_cart: require('./icon/icon_cart.png'),
+  icon_shopping_new: require('./icon/icon_shopping_new.png'),
+  icon_shopping_confirm: require('./icon/icon_shopping_confirm.png'),
+  icon_shipping: require('./icon/icon_shipping.png'),
+  icon_shopping_complete: require('./icon/icon_shopping_complete.png'),
+  icon_shopping_cancel: require('./icon/icon_shopping_cancel.png'),
 };
 export const image = {
   image_top_home_1: require('./image/image_top_home_1.png'),
@@ -120,6 +136,15 @@ export const image = {
   image_care_elederly_2: require('./image/image_care_elederly_2.png'),
   image_housework_1: require('./image/image_housework_1.png'),
   image_housework_2: require('./image/image_housework_2.png'),
+
+  image_cate_1: require('./image/image_category_1.png'),
+  image_cate_2: require('./image/image_category_2.png'),
+  image_cate_3: require('./image/image_category_3.png'),
+  image_cate_4: require('./image/image_category_4.png'),
+  image_cate_5: require('./image/image_category_5.png'),
+  image_cate_6: require('./image/image_category_6.png'),
+
+  image_product: require('./image/image_product.png'),
 };
 export const lotties = {
   success: require('./lotties/Success.json'),

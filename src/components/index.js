@@ -20,6 +20,7 @@ import ModalSuccess from './base/ModalSuccess';
 import SelectInput from './form/SelectInput';
 import HeaderTitle from './header/HeaderTitle';
 import HeaderModal from './header/HeaderModal';
+import ModalChooseDay from './base/ModalChooseDay';
 import HeaderChooseTime from './header/HeaderChooseTime';
 import TicketVoucherShape from './common/TicketVoucherShape';
 import ButtonSubmitService from './common/ButtonSubmitService';
@@ -44,6 +45,7 @@ export {
   ModalVoucher,
   ModalMethodPay,
   // ModalCalendar,
+  ModalChooseDay,
   ModalSuccess,
   Switch,
   Pressable,

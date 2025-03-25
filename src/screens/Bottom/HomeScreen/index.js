@@ -162,7 +162,7 @@ export default function HomeScreen() {
                   backgroundColor={COLORS.pinkWhite2}
                   justifyCenter
                   alignCenter>
-                  <Image source={icon.icon_grandmother} />
+                  <Image source={icon.icon_elederly} />
                 </Block>
                 <Text
                   fontSize={16}
@@ -197,7 +197,7 @@ export default function HomeScreen() {
                   backgroundColor={COLORS.pinkWhite2}
                   justifyCenter
                   alignCenter>
-                  <Image source={icon.icon_patient_1} />
+                  <Image source={icon.icon_sicker} />
                 </Block>
                 <Text
                   fontSize={16}
@@ -236,7 +236,7 @@ export default function HomeScreen() {
                   backgroundColor={COLORS.pinkWhite2}
                   justifyCenter
                   alignCenter>
-                  <Image source={icon.icon_patient} />
+                  <Image source={icon.icon_physical_therapy} />
                 </Block>
                 <Text
                   fontSize={16}
@@ -271,7 +271,7 @@ export default function HomeScreen() {
                   backgroundColor={COLORS.pinkWhite2}
                   justifyCenter
                   alignCenter>
-                  <Image source={icon.icon_maid} />
+                  <Image source={icon.icon_housework} />
                 </Block>
                 <Text
                   fontSize={16}
@@ -294,33 +294,37 @@ export default function HomeScreen() {
               </Pressable>
             </Block>
           </Block>
-          <Block
+          <Pressable
+            onPress={() => commonRoot.navigate(router.SHOPPING)}
             absolute
             bottom={0}
             width={width - 24}
-            height={112}
             backgroundColor={COLORS.pinkWhite2}
             borderBottomLeftRadius={15}
             borderBottomRightRadius={15}
-            justifyCenter
-            alignCenter>
-            <Block
-              width={width - 52}
-              height={85.44}
-              justifyCenter
-              alignCenter
-              row>
-              <Image source={icon.icon_shop_home} />
-              <Block width={width - 183} height={55} spaceBetween>
-                <Text semiBold fontSize={16} uppercase color={COLORS.red4}>
+            paddingBottom={14.1}>
+            <Block row marginTop={6.7} marginHorizontal={14} columnGap={12}>
+              <Block width={119} height={91.26} alignCenter>
+                <Image
+                  source={icon.icon_shop_home}
+                  width={119}
+                  height={91.26}
+                />
+              </Block>
+              <Block marginTop={24.8} width={width - 183}>
+                <Text fontSize={16} semiBold color={COLORS.red4} uppercase>
                   e-shop
                 </Text>
-                <Text regular fontSize={14} color={COLORS.black1}>
+                <Text
+                  fontSize={15}
+                  regular
+                  color={COLORS.black2}
+                  numberOfLines={2}>
                   Mua sắm online chất lượng, giá tốt được nhiều người tin dùng
                 </Text>
               </Block>
             </Block>
-          </Block>
+          </Pressable>
         </Block>
         <Block marginTop={20} width={width} height={723}>
           <Block width={width - 24} left={12} row spaceBetween>
@@ -459,118 +463,46 @@ export default function HomeScreen() {
               marginTop={12.3}
               marginHorizontal={12}
               marginBottom={15}
-              rowGap={12}>
-              <Block row spaceBetween height={113}>
-                <Block width={width - 278} height={113}>
-                  <Image
-                    source={image.image_new}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      resizeMode: 'cover',
-                      borderRadius: 10,
-                    }}
-                  />
-                </Block>
-                <Block
-                  marginLeft={10}
-                  marginTop={17.9}
-                  width={width - 184}
-                  height={61.08}>
-                  <Block row alignCenter>
-                    <Image source={icon.icon_calendar} />
+              gap={12}>
+              {Array.from({length: 3}).map((_, index) => (
+                <Block row spaceBetween height={113} key={index}>
+                  <Block width={width - 278} height={113}>
+                    <Image
+                      source={image.image_new}
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        resizeMode: 'cover',
+                        borderRadius: 10,
+                      }}
+                    />
+                  </Block>
+                  <Block
+                    marginLeft={10}
+                    marginTop={17.9}
+                    width={width - 184}
+                    height={61.08}>
+                    <Block row alignCenter>
+                      <Image source={icon.icon_calendar} />
+                      <Text
+                        marginLeft={4.4}
+                        marginTop={2.08}
+                        fontSize={12}
+                        regular
+                        color={COLORS.lightGray1}>
+                        22/01/2024
+                      </Text>
+                    </Block>
                     <Text
-                      marginLeft={4.4}
-                      marginTop={2.08}
-                      fontSize={12}
-                      regular
-                      color={COLORS.lightGray1}>
-                      22/01/2024
+                      marginTop={10}
+                      fontSize={15}
+                      medium
+                      color={COLORS.black1}>
+                      Người già muốn khỏe mạnh hãy áp dụng chế độ ăn này
                     </Text>
                   </Block>
-                  <Text
-                    marginTop={10}
-                    fontSize={15}
-                    medium
-                    color={COLORS.black1}>
-                    Người già muốn khỏe mạnh hãy áp dụng chế độ ăn này
-                  </Text>
                 </Block>
-              </Block>
-              <Block row spaceBetween height={113}>
-                <Block width={width - 278} height={113}>
-                  <Image
-                    source={image.image_new}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      resizeMode: 'cover',
-                      borderRadius: 10,
-                    }}
-                  />
-                </Block>
-                <Block
-                  marginLeft={10}
-                  marginTop={17.9}
-                  width={width - 184}
-                  height={61.08}>
-                  <Block row alignCenter>
-                    <Image source={icon.icon_calendar} />
-                    <Text
-                      marginLeft={4.4}
-                      marginTop={2.08}
-                      fontSize={12}
-                      regular
-                      color={COLORS.lightGray1}>
-                      22/01/2024
-                    </Text>
-                  </Block>
-                  <Text
-                    marginTop={10}
-                    fontSize={15}
-                    medium
-                    color={COLORS.black1}>
-                    Người già muốn khỏe mạnh hãy áp dụng chế độ ăn này
-                  </Text>
-                </Block>
-              </Block>
-              <Block row spaceBetween height={113}>
-                <Block width={width - 278} height={113}>
-                  <Image
-                    source={image.image_new}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      resizeMode: 'cover',
-                      borderRadius: 10,
-                    }}
-                  />
-                </Block>
-                <Block
-                  marginLeft={10}
-                  marginTop={17.9}
-                  width={width - 184}
-                  height={61.08}>
-                  <Block row alignCenter>
-                    <Image source={icon.icon_calendar} />
-                    <Text
-                      marginLeft={4.4}
-                      marginTop={2.08}
-                      fontSize={12}
-                      regular
-                      color={COLORS.lightGray1}>
-                      22/01/2024
-                    </Text>
-                  </Block>
-                  <Text
-                    marginTop={10}
-                    fontSize={15}
-                    medium
-                    color={COLORS.black1}>
-                    Người già muốn khỏe mạnh hãy áp dụng chế độ ăn này
-                  </Text>
-                </Block>
-              </Block>
+              ))}
             </Block>
           </Block>
         </Block>

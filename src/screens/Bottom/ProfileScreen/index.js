@@ -586,6 +586,14 @@ export default function ProfileScreen() {
             </Block>
           </Block>
         </Block>
+        <Block marginTop={12}>
+          <Block absolute right={12} row alignCenter>
+            <Image source={icon.icon_logout} width={30} height={30} />
+            <Text fontSize={15} regular color={COLORS.red4} marginLeft={10}>
+              Đăng xuất
+            </Text>
+          </Block>
+        </Block>
       </ScrollView>
     </Block>
   );

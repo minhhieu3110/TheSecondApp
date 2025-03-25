@@ -8,6 +8,7 @@ import {
   Switch,
   SANStaffDuties,
   ButtonSubmitService,
+  ModalChooseDay,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -89,7 +90,7 @@ export default function PhysicalTherapy() {
     });
   };
   const [isActive, setIsActive] = useState(false);
-
+  const [visible, setVisible] = useState(0);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView contentContainerStyle={{paddingBottom: 147}}>
@@ -221,7 +222,14 @@ export default function PhysicalTherapy() {
       <ButtonSubmitService
         titleTop={'950.000 đ/3 giờ'}
         titleBottom={'Dịch vụ vật lý trị liệu tại nhà'}
-        onPress={() => commonRoot.navigate(router.CHOOSE_TIME_PHYSICAL_THERAPY)}
+        onPress={() => setVisible(!0)}
+      />
+      <ModalChooseDay
+        visible={visible}
+        close={() => setVisible(false)}
+        onPress={() =>
+          commonRoot.navigate(router.PHYSICAL_THERAPY_CONFIRM_AND_PAY)
+        }
       />
     </Block>
   );

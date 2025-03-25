@@ -69,9 +69,7 @@ export default function BlockStaff() {
               justifyCenter>
               <RadialGradient
                 colors={COLORS.gradient5}
-                stops={[0.1, 0.4, 0.3, 0.75]}
-                center={[80, 50]}
-                radius={200}
+                radius={40}
                 style={{
                   width: 76.83,
                   height: 30.33,

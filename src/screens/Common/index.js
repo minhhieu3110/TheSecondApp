@@ -38,17 +38,23 @@ import CareSicker from './CareSicker';
 import Housework from './Housework';
 import PhysicalTherapy from './Physical_Therapy';
 import Elederly_Servicedurationday from './CareElederly/common/ServiceForDay/Elederly_Servicedurationday';
-import Elederly_Serviceday from './CareElederly/common/ServiceForDay/Elederly_Serviceday';
 import Elederly_ConfirmAndPay from './CareElederly/common/ServiceForDay/Elederly_ConfirmAndPay';
 import Elederly_Servicedurationmonth from './CareElederly/common/ServiceForMonth/ELederly_Servicedurationmonth';
 import Elederly_ConfirmAndPayMonth from './CareElederly/common/ServiceForMonth/Elederly_ConfirmAndPayMonth';
 import Sicker_Servicedurationday from './CareSicker/common/ServiceForDay/Sicker_Servicedurationday';
-import Sicker_Serviceday from './CareSicker/common/ServiceForDay/Sicker_Serviceday';
 import Sicker_ConfirmAndPay from './CareSicker/common/ServiceForDay/Sicker_ConfirmAndPay';
 import Sicker_ConfirmAndPayMonth from './CareSicker/common/ServiceForMonth/Sicker_ConfirmAndPayMonth';
 import Sicker_Servicedurationmonth from './CareSicker/common/ServiceForMonth/Sicker_Servicedurationmonth';
 import ChooseTime from './Physical_Therapy/ChooseTime';
 import PhysicalTherapy_ConfirmAndPay from './Physical_Therapy/PhysicalTherapy_ConfrimAndPay';
+import Housework_OddShiftService from './Housework/common/OddShiftService';
+import Housework_OddShiftService_ConfirmAndPay from './Housework/common/OddShiftService/ConfirmAndPay';
+import Housework_ServiceMonth from './Housework/common/ServiceMonth';
+import Housework_Month_ConfirmAndPay from './Housework/common/ServiceMonth/ConfirmAndPay';
+import DetailMessage from './DetailMessage';
+import ShoppingScreen from './ShoppingScreen';
+import AllCategory from './AllCategory';
+import ProductOfCategory from './ProductOfCategory';
 export const common = {
   [router.VOUCHER]: Voucher,
   [router.DETAIL_VOUCHER]: DetailVoucher,
@@ -89,17 +95,25 @@ export const common = {
   [router.PHYSICAL_THERAPY]: PhysicalTherapy,
   [router.HOUSEWORK]: Housework,
   [router.ELEDERLY_SERVICE_DURATION_DAY]: Elederly_Servicedurationday,
-  [router.ELEDERLY_SERVICE_DAY]: Elederly_Serviceday,
   [router.ELEDERLY_CONFIRM_PAY]: Elederly_ConfirmAndPay,
   [router.ELEDERLY_SERVICE_DURATION_MONTH]: Elederly_Servicedurationmonth,
   [router.ELEDERLY_CONFIRM_PAY_MONTH]: Elederly_ConfirmAndPayMonth,
 
   [router.SICKER_SERVICE_DURATION_DAY]: Sicker_Servicedurationday,
-  [router.SICKER_SERVICE_DAY]: Sicker_Serviceday,
   [router.SICKER_CONFIRM_PAY]: Sicker_ConfirmAndPay,
   [router.SICKER_SERVICE_DURATION_MONTH]: Sicker_Servicedurationmonth,
   [router.SICKER_CONFIRM_PAY_MONTH]: Sicker_ConfirmAndPayMonth,
 
   [router.CHOOSE_TIME_PHYSICAL_THERAPY]: ChooseTime,
   [router.PHYSICAL_THERAPY_CONFIRM_AND_PAY]: PhysicalTherapy_ConfirmAndPay,
+
+  [router.HOUSEWORK_ODD_SHIFT]: Housework_OddShiftService,
+  [router.HOUSEWORK_ODD_SHIFT_CONFIRM_AND_PAY]:
+    Housework_OddShiftService_ConfirmAndPay,
+  [router.HOUSEWORK_MONTH]: Housework_ServiceMonth,
+  [router.HOUSEWORK_MONTH_CONFIRM_AND_PAY]: Housework_Month_ConfirmAndPay,
+  [router.DETAIL_MESSAGE]: DetailMessage,
+  [router.SHOPPING]: ShoppingScreen,
+  [router.ALL_CATEGORY]: AllCategory,
+  [router.PRODUCT_OF_CATEGORY]: ProductOfCategory,
 };

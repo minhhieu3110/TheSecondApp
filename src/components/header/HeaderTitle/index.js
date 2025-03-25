@@ -15,6 +15,7 @@ const HeaderTile = ({
   screenName,
   screenParams,
   canGoBack,
+  onPress,
   colorIcon,
   colorText,
   background = false,
@@ -24,11 +25,14 @@ const HeaderTile = ({
 
   const handleBack = () => {
     if (screenName) {
-      root.navigate(screenName, screenParams);
-    } else {
-      if (canGoBack) {
-        navigation.goBack();
-      }
+      root?.navigate(screenName, screenParams);
+    }
+    if (canGoBack) {
+      navigation.goBack();
+    }
+    if (onPress) {
+      onPress();
+      return;
     }
   };
   return background ? (

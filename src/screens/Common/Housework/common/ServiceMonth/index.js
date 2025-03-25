@@ -1,27 +1,19 @@
 import {
   Block,
   HeaderChooseTime,
-  Pressable,
   Text,
+  Pressable,
   Image,
-  TextInput,
-  Icon,
   ButtonSubmitService,
-  ModalSANStaffDo,
-  ModalSANStaffNotPerform,
-  ModalCalendar,
-  SANStaffDuties,
 } from '@components';
 import {COLORS} from '@theme';
-import {useState} from 'react';
 import {icon} from '@assets';
+import {useState} from 'react';
 import {width} from '@responsive';
 import {ScrollView} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
-export default function Elederly_Servicedurationmonth() {
+export default function Housework_ServiceMonth() {
   const dayWeek = [
     {id: 1, title: 'T2'},
     {id: 2, title: 'T3'},
@@ -31,17 +23,30 @@ export default function Elederly_Servicedurationmonth() {
     {id: 6, title: 'T7'},
     {id: 7, title: 'CN'},
   ];
-  const optionChoose = [
-    {id: 1, title: 'Theo buổi', duration: 'Tối đa 4h/ngày'},
-    {id: 2, title: 'Theo ngày', duration: 'Tối đa 8h/ngày'},
+  const optionDuration = [
+    {
+      id: 1,
+      time: '2 giờ',
+      title: 'Tối đa 55m2 hoặc 2 phòng',
+    },
+    {
+      id: 2,
+      time: '3 giờ',
+      title: 'Tối đa 85m2 hoặc 3 phòng',
+    },
+    {
+      id: 3,
+      time: '4 giờ',
+      title: 'Tối đa 105m2 hoặc 4 phòng',
+    },
   ];
+  const [chooseDuration, setChooseDuration] = useState(null);
   const optionServiceDuration = [
     {id: 1, title: 'Gói 1 tháng'},
     {id: 2, title: 'Gói 2 tháng'},
     {id: 3, title: 'Gói 3 tháng'},
     {id: 4, title: 'Gói 6 tháng'},
   ];
-  const [choose, setChoose] = useState(1);
   const [chooseOptionDuration, setChooseOptionDuration] = useState(1);
   const [againWeek, setAgainWeek] = useState([null]);
   const handleWeekDayPress = id => {
@@ -52,13 +57,9 @@ export default function Elederly_Servicedurationmonth() {
       return [...prevState, id];
     });
   };
-  const [doWork, setDoWork] = useState(0);
-  const [notWork, setNotWork] = useState(0);
-  const [calendar, setCalendar] = useState(0);
-  const [selected, setSelected] = useState('');
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <ScrollView contentContainerStyle={{paddingBottom: 136}}>
+      <ScrollView contentContainerStyle={{paddingBottom: 124}}>
         <HeaderChooseTime />
         <Block marginTop={20} marginHorizontal={12}>
           <Block row alignCenter>
@@ -150,35 +151,39 @@ export default function Elederly_Servicedurationmonth() {
           <Text fontSize={15} semiBold color={COLORS.black2} marginTop={20.2}>
             Thời lượng
           </Text>
-          <Block marginTop={15} row columnGap={12}>
-            {optionChoose.map(item => (
+          <Block marginTop={19} gap={12}>
+            {optionDuration.map(item => (
               <Pressable
+                onPress={() => setChooseDuration(item.id)}
                 key={item.id}
-                onPress={() => setChoose(item.id)}
-                width={(width - 24) / 2 - 6}
+                paddingBottom={19}
                 radius={8}
-                paddingBottom={18}
-                borderWidth={1}
-                borderColor={choose === item.id ? COLORS.red4 : COLORS.white2}
+                borderWidth={chooseDuration === item.id ? 1 : ''}
+                borderColor={chooseDuration === item.id && COLORS.red4}
                 backgroundColor={
-                  choose === item.id ? COLORS.pinkWhite2 : COLORS.white
-                }
-                alignCenter>
+                  chooseDuration === item.id ? COLORS.pinkWhite2 : COLORS.white
+                }>
                 <Text
-                  marginTop={19}
-                  fontSize={15}
-                  medium
-                  color={choose === item.id ? COLORS.red4 : COLORS.black2}>
-                  {item.title}
+                  marginTop={17}
+                  marginLeft={12}
+                  fontSize={16}
+                  semiBold
+                  color={
+                    chooseDuration === item.id ? COLORS.red4 : COLORS.black2
+                  }>
+                  {item.time}
                 </Text>
                 <Text
-                  marginTop={20}
-                  fontSize={15}
+                  marginTop={8}
+                  marginLeft={12}
+                  fontSize={14}
                   regular
                   color={
-                    choose === item.id ? COLORS.black2 : COLORS.placeholder
+                    chooseDuration === item.id
+                      ? COLORS.black2
+                      : COLORS.placeholder
                   }>
-                  {item.duration}
+                  {item.title}
                 </Text>
               </Pressable>
             ))}
@@ -216,30 +221,14 @@ export default function Elederly_Servicedurationmonth() {
               </Pressable>
             ))}
           </Block>
-          <Block marginTop={20}>
-            <Text fontSize={15} semiBold color={COLORS.black2}>
-              Ghi chú
-            </Text>
-            <Text fontSize={14} regular color={COLORS.black2} marginTop={17}>
-              Ghi chú này giúp nhân viên làm việc thuận tiện hơn
-            </Text>
-            <TextInput
-              placeholder={'Nhập nội dung'}
-              height={154.67}
-              radius={8}
-              backgroundColor={COLORS.white}
-              paddingLeft={12}
-              placeholderTextColor={COLORS.placeholder}
-              marginTop={13}
-            />
-          </Block>
-          <SANStaffDuties top={20.3} />
         </Block>
       </ScrollView>
       <ButtonSubmitService
-        titleTop={'2.050.000 đ/8 buổi'}
-        titleBottom={'Dịch vụ chăm sóc người già'}
-        onPress={() => commonRoot.navigate(router.ELEDERLY_CONFIRM_PAY_MONTH)}
+        titleTop={'2.760.000 đ/8 buổi'}
+        titleBottom={'Dịch vụ dọn vệ sinh'}
+        onPress={() =>
+          commonRoot.navigate(router.HOUSEWORK_MONTH_CONFIRM_AND_PAY)
+        }
       />
     </Block>
   );

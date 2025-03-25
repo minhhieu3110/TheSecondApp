@@ -88,14 +88,7 @@ export default function AddBlockStaff() {
                 onPress={() =>
                   commonRoot.navigate(router.PROFILE_STAFF_BLOCKED)
                 }>
-                <Icon
-                  IconType={MaterialIcons}
-                  iconName={'block'}
-                  iconSize={20}
-                  iconColor={COLORS.red4}
-                  absolute
-                  zIndex={10}
-                />
+                <Image source={icon.icon_block} width={34} height={34} />
               </Pressable>
             </Block>
           </Block>

@@ -6,6 +6,7 @@ import {
   HeaderTitle,
   Icon,
   Image,
+  ModalChooseDay,
   ModalSANStaffDo,
   ModalSANStaffNotPerform,
   Pressable,
@@ -30,8 +31,7 @@ export default function Elederly_Servicedurationday() {
   const [choose, setChoose] = useState(1);
   const [isActive, setIsActive] = useState(false);
   const selectedOption = optionChoose.find(item => item.id === choose);
-  const [doWork, setDoWork] = useState(0);
-  const [notWork, setNotWork] = useState(0);
+  const [visible, setVisible] = useState(0);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderChooseTime />
@@ -83,16 +83,7 @@ export default function Elederly_Servicedurationday() {
             Ưu tiên nhân viên yêu thích
           </Text>
           <Block absolute right={0} width={46} height={23}>
-            <Switch
-              value={isActive}
-              onValueChange={setIsActive}
-              trackColor={{false: COLORS.grayWhite, true: COLORS.green6}}
-              thumbColor={{false: COLORS.white, true: COLORS.white}}
-              width={46}
-              height={23}
-              thumbSize={19}
-              padding={3}
-            />
+            <Switch value={isActive} onValueChange={setIsActive} />
           </Block>
         </Block>
         <SANStaffDuties top={30} />
@@ -101,9 +92,14 @@ export default function Elederly_Servicedurationday() {
         <ButtonSubmitService
           titleTop={selectedOption?.duration}
           titleBottom={'Dịch vụ chăm sóc người già'}
-          onPress={() => commonRoot.navigate(router.ELEDERLY_SERVICE_DAY)}
+          onPress={() => setVisible(!visible)}
         />
       )}
+      <ModalChooseDay
+        visible={visible}
+        close={() => setVisible(0)}
+        onPress={() => commonRoot.navigate(router.ELEDERLY_CONFIRM_PAY)}
+      />
     </Block>
   );
 }

@@ -45,19 +45,29 @@ const commonStack = [
   {name: router.PHYSICAL_THERAPY},
   {name: router.HOUSEWORK},
   {name: router.ELEDERLY_SERVICE_DURATION_DAY},
-  {name: router.ELEDERLY_SERVICE_DAY},
   {name: router.ELEDERLY_CONFIRM_PAY},
   {name: router.ELEDERLY_SERVICE_DURATION_MONTH},
   {name: router.ELEDERLY_CONFIRM_PAY_MONTH},
 
   {name: router.SICKER_SERVICE_DURATION_DAY},
-  {name: router.SICKER_SERVICE_DAY},
   {name: router.SICKER_CONFIRM_PAY},
   {name: router.SICKER_SERVICE_DURATION_MONTH},
   {name: router.SICKER_CONFIRM_PAY_MONTH},
 
   {name: router.CHOOSE_TIME_PHYSICAL_THERAPY},
   {name: router.PHYSICAL_THERAPY_CONFIRM_AND_PAY},
+
+  {name: router.HOUSEWORK_ODD_SHIFT},
+  {name: router.HOUSEWORK_ODD_SHIFT_CONFIRM_AND_PAY},
+
+  {name: router.HOUSEWORK_MONTH},
+  {name: router.HOUSEWORK_MONTH_CONFIRM_AND_PAY},
+
+  {name: router.DETAIL_MESSAGE},
+
+  {name: router.SHOPPING},
+  {name: router.ALL_CATEGORY},
+  {name: router.PRODUCT_OF_CATEGORY},
 ];
 
 export default function CommonContainer() {

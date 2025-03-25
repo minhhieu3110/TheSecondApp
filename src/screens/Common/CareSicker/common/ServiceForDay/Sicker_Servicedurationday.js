@@ -6,20 +6,19 @@ import {
   HeaderTitle,
   Icon,
   Image,
-  ModalSANStaffDo,
-  ModalSANStaffNotPerform,
   Pressable,
   SANStaffDuties,
   Switch,
   Text,
+  ModalChooseDay,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {useState} from 'react';
-import {Modal, SafeAreaView, TouchableOpacity} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+// import {Modal, SafeAreaView, TouchableOpacity} from 'react-native';
+// import FontAwesome from 'react-native-vector-icons/FontAwesome';
+// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
 export default function Sicker_Servicedurationday() {
@@ -30,8 +29,7 @@ export default function Sicker_Servicedurationday() {
   const [choose, setChoose] = useState(1);
   const [isActive, setIsActive] = useState(false);
   const selectedOption = optionChoose.find(item => item.id === choose);
-  const [doWork, setDoWork] = useState(0);
-  const [notWork, setNotWork] = useState(0);
+  const [visible, setVisible] = useState(0);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderChooseTime />
@@ -101,9 +99,14 @@ export default function Sicker_Servicedurationday() {
         <ButtonSubmitService
           titleTop={selectedOption?.duration}
           titleBottom={'Dịch vụ chăm sóc người bệnh tại nhà'}
-          onPress={() => commonRoot.navigate(router.SICKER_SERVICE_DAY)}
+          onPress={() => setVisible(!0)}
         />
       )}
+      <ModalChooseDay
+        visible={visible}
+        close={() => setVisible(0)}
+        onPress={() => commonRoot.navigate(router.ELEDERLY_CONFIRM_PAY)}
+      />
     </Block>
   );
 }

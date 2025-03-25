@@ -10,12 +10,12 @@ import {
 const Switch = ({
   value,
   onValueChange,
-  trackColor = {false: '#767577', true: '#81b0ff'},
-  thumbColor = {false: '#f4f3f4', true: '#f5dd4b'},
-  width = 50,
-  height = 30,
-  thumbSize = 25,
-  padding = 2,
+  trackColor = {false: COLORS.grayWhite, true: COLORS.green6},
+  thumbColor = {false: COLORS.white, true: COLORS.white},
+  width = 46,
+  height = 23,
+  thumbSize = 19,
+  padding = 3,
 }) => {
   const animatedValue = useRef(new Animated.Value(value ? 1 : 0)).current;
   const trackPadding = Math.min(padding, (width - thumbSize) / 2);

@@ -1,7 +1,9 @@
 import {image} from '@assets';
-import {Block, HeaderTitle, Image, Text} from '@components';
+import {Block, HeaderTitle, Image, Pressable, Text} from '@components';
 import {width} from '@responsive';
+import router from '@router';
 import {COLORS} from '@theme';
+import {commonRoot} from 'navigation/navigationRef';
 import LinearGradient from 'react-native-linear-gradient';
 
 export default function Housework() {
@@ -17,7 +19,11 @@ export default function Housework() {
             canGoBack
           />
         </Block>
-        <Block width={width - 24} marginHorizontal={12} marginTop={10}>
+        <Pressable
+          onPress={() => commonRoot.navigate(router.HOUSEWORK_ODD_SHIFT)}
+          width={width - 24}
+          marginHorizontal={12}
+          marginTop={10}>
           <Block
             paddingBottom={23}
             backgroundColor={COLORS.white}
@@ -43,8 +49,12 @@ export default function Housework() {
               tiếng
             </Text>
           </Block>
-        </Block>
-        <Block width={width - 24} marginHorizontal={12} marginTop={12}>
+        </Pressable>
+        <Pressable
+          onPress={() => commonRoot.navigate(router.HOUSEWORK_MONTH)}
+          width={width - 24}
+          marginHorizontal={12}
+          marginTop={12}>
           <Block
             paddingBottom={23}
             backgroundColor={COLORS.white}
@@ -69,7 +79,7 @@ export default function Housework() {
               kiệm thời gian đăng việc, tránh thanh toán nhiều lần
             </Text>
           </Block>
-        </Block>
+        </Pressable>
       </LinearGradient>
     </Block>
   );

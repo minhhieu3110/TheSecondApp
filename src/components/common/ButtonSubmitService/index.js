@@ -35,9 +35,6 @@ const ButtonSubmitService = ({titleTop, titleBottom, onPress}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}
-            stops={[0.1, 0.2]}
-            center={[10, 10]}
-            radius={200}
             colors={COLORS.gradient5}>
             <Icon
               IconType={MaterialIcons}

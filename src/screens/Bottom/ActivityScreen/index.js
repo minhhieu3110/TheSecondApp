@@ -16,8 +16,8 @@ export default function ActivityScreen({route}) {
     if (route.params?.activity) {
       setActivity(route.params?.activity);
     }
-    activity === 'new' && topRoot.navigate(router.NEW_ACTIVITY);
   }, [route.params?.activity]);
+
   const TopStack = createNativeStackNavigator();
   return (
     <Block flex backgroundColor={COLORS.gray10}>
