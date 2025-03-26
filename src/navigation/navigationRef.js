@@ -30,3 +30,8 @@ export const topRoot = {
     rootNavigation(router.TOP_CONTAINER, screeName, screenParams);
   },
 };
+export const topRootOrder = {
+  navigate: (screeName, screenParams) => {
+    rootNavigation(router.TOP_ODER_CONTAINER, screeName, screenParams);
+  },
+};

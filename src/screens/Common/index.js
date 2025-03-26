@@ -55,6 +55,10 @@ import DetailMessage from './DetailMessage';
 import ShoppingScreen from './ShoppingScreen';
 import AllCategory from './AllCategory';
 import ProductOfCategory from './ProductOfCategory';
+import Cart from './Cart';
+import Shopping_Pay from './ShoppingPay';
+import OrderOfYou from './OrderOfYou';
+
 export const common = {
   [router.VOUCHER]: Voucher,
   [router.DETAIL_VOUCHER]: DetailVoucher,
@@ -116,4 +120,7 @@ export const common = {
   [router.SHOPPING]: ShoppingScreen,
   [router.ALL_CATEGORY]: AllCategory,
   [router.PRODUCT_OF_CATEGORY]: ProductOfCategory,
+  [router.CART]: Cart,
+  [router.PAY_SHOPPING]: Shopping_Pay,
+  [router.ORDER_OF_YOU]: OrderOfYou,
 };

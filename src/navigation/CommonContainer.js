@@ -68,6 +68,9 @@ const commonStack = [
   {name: router.SHOPPING},
   {name: router.ALL_CATEGORY},
   {name: router.PRODUCT_OF_CATEGORY},
+  {name: router.CART},
+  {name: router.PAY_SHOPPING},
+  {name: router.ORDER_OF_YOU},
 ];
 
 export default function CommonContainer() {

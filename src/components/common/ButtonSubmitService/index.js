@@ -3,10 +3,16 @@ import {COLORS} from '@theme';
 import RadialGradient from 'react-native-radial-gradient';
 import {width} from '@responsive';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-const ButtonSubmitService = ({titleTop, titleBottom, onPress}) => {
+const ButtonSubmitService = ({
+  titleTop,
+  titleBottom,
+  onPress,
+  disable = false,
+}) => {
   return (
     <Pressable
       onPress={onPress}
+      disabled={disable}
       absolute
       bottom={0}
       backgroundColor={COLORS.white}

@@ -6,6 +6,7 @@ import router from '@router';
 import BottomTabContainer from './BottomTabContainer';
 import CommonContainer from './CommonContainer';
 import TopTabContainer from './TopTabContainer';
+import TopTabContainerOrder from 'screens/Common/OrderOfYou/TopTabContainerOrder';
 
 export default function MainStack() {
   const RootStack = createNativeStackNavigator();
@@ -28,6 +29,10 @@ export default function MainStack() {
         <RootStack.Screen
           name={router.TOP_CONTAINER}
           component={TopTabContainer}
+        />
+        <RootStack.Screen
+          name={router.TOP_ODER_CONTAINER}
+          component={TopTabContainerOrder}
         />
       </RootStack.Navigator>
     </NavigationContainer>

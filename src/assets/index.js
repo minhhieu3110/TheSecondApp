@@ -145,6 +145,7 @@ export const image = {
   image_cate_6: require('./image/image_category_6.png'),
 
   image_product: require('./image/image_product.png'),
+  image_product_1: require('./image/image_product_1.png'),
 };
 export const lotties = {
   success: require('./lotties/Success.json'),

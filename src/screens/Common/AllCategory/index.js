@@ -7,7 +7,11 @@ import {commonRoot} from 'navigation/navigationRef';
 export default function AllCategory() {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <HeaderTitle title={'Danh mục'} canGoBack />
+      <HeaderTitle
+        title={'Danh mục'}
+        root={commonRoot}
+        screenName={router.SHOPPING}
+      />
       <Block marginTop={15} marginHorizontal={12} gap={12}>
         {Array.from({length: 5}).map((_, index) => (
           <Pressable

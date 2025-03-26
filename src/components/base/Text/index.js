@@ -114,6 +114,7 @@ const Text = ({
   numberOfLines,
   style,
   children,
+  onPress,
   ...rest
 }) => {
   const insets = useSafeAreaInsets();
@@ -220,7 +221,11 @@ const Text = ({
   ];
 
   return (
-    <RNText {...rest} style={customStyles} numberOfLines={numberOfLines}>
+    <RNText
+      {...rest}
+      style={customStyles}
+      numberOfLines={numberOfLines}
+      onPress={onPress}>
       {children}
     </RNText>
   );

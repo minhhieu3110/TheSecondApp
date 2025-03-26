@@ -25,21 +25,15 @@ export default function ShoppingScreen() {
       height: '164',
     },
     {
-      id: 2,
-      title: 'Dụng cụ y tế',
-      image: `${image.image_cate_2}`,
-      height: '127',
-    },
-    {
-      id: 3,
-      title: 'Giường Massage',
-      image: `${image.image_cate_3}`,
-      height: '164',
-    },
-    {
       id: 4,
       title: 'Thiết bị vật lý trị liệu',
       image: `${image.image_cate_4}`,
+      height: '127',
+    },
+    {
+      id: 2,
+      title: 'Dụng cụ y tế',
+      image: `${image.image_cate_2}`,
       height: '127',
     },
     {
@@ -48,6 +42,13 @@ export default function ShoppingScreen() {
       image: `${image.image_cate_5}`,
       height: '165',
     },
+    {
+      id: 3,
+      title: 'Giường Massage',
+      image: `${image.image_cate_3}`,
+      height: '164',
+    },
+
     {
       id: 6,
       title: 'Thực phẩm chức năng',
@@ -111,7 +112,11 @@ export default function ShoppingScreen() {
                   iconColor={COLORS.white}
                 />
               </Block>
-              <Block width={44} marginLeft={10} row>
+              <Pressable
+                onPress={() => commonRoot.navigate(router.CART)}
+                width={44}
+                marginLeft={10}
+                row>
                 <Image source={icon.icon_cart} width={35} height={35} />
                 <Block
                   absolute
@@ -128,7 +133,7 @@ export default function ShoppingScreen() {
                     99+
                   </Text>
                 </Block>
-              </Block>
+              </Pressable>
             </Block>
           </Block>
         </Block>
@@ -140,7 +145,12 @@ export default function ShoppingScreen() {
               paddingBottom={18.4}
               radius={15}>
               <Block marginHorizontal={12} marginTop={12} row columnGap={10}>
-                <Block width={(width - 48) / 5 - 8.5} alignCenter>
+                <Pressable
+                  onPress={() =>
+                    commonRoot.navigate(router.ORDER_OF_YOU, {name: 'new'})
+                  }
+                  width={(width - 48) / 5 - 8.5}
+                  alignCenter>
                   <Block
                     width={62}
                     height={62}
@@ -162,8 +172,13 @@ export default function ShoppingScreen() {
                     center>
                     Mới
                   </Text>
-                </Block>
-                <Block width={(width - 48) / 5 - 8.5} alignCenter>
+                </Pressable>
+                <Pressable
+                  onPress={() =>
+                    commonRoot.navigate(router.ORDER_OF_YOU, {name: 'confirm'})
+                  }
+                  width={(width - 48) / 5 - 8.5}
+                  alignCenter>
                   <Block
                     width={62}
                     height={62}
@@ -185,8 +200,13 @@ export default function ShoppingScreen() {
                     center>
                     Xác nhận
                   </Text>
-                </Block>
-                <Block width={(width - 48) / 5 - 8.5} alignCenter>
+                </Pressable>
+                <Pressable
+                  onPress={() =>
+                    commonRoot.navigate(router.ORDER_OF_YOU, {name: 'shipping'})
+                  }
+                  width={(width - 48) / 5 - 8.5}
+                  alignCenter>
                   <Block
                     width={62}
                     height={62}
@@ -208,8 +228,13 @@ export default function ShoppingScreen() {
                     center>
                     Đang giao
                   </Text>
-                </Block>
-                <Block width={(width - 48) / 5 - 8.5} alignCenter>
+                </Pressable>
+                <Pressable
+                  onPress={() =>
+                    commonRoot.navigate(router.ORDER_OF_YOU, {name: 'complete'})
+                  }
+                  width={(width - 48) / 5 - 8.5}
+                  alignCenter>
                   <Block
                     width={62}
                     height={62}
@@ -231,8 +256,13 @@ export default function ShoppingScreen() {
                     center>
                     Đã giao
                   </Text>
-                </Block>
-                <Block width={(width - 48) / 5 - 8.5} alignCenter>
+                </Pressable>
+                <Pressable
+                  onPress={() =>
+                    commonRoot.navigate(router.ORDER_OF_YOU, {name: 'cancel'})
+                  }
+                  width={(width - 48) / 5 - 8.5}
+                  alignCenter>
                   <Block
                     width={62}
                     height={62}
@@ -254,7 +284,7 @@ export default function ShoppingScreen() {
                     center>
                     Đã huỷ
                   </Text>
-                </Block>
+                </Pressable>
               </Block>
             </Block>
           </Block>
@@ -271,7 +301,13 @@ export default function ShoppingScreen() {
               </Text>
             </Pressable>
           </Block>
-          <Block marginTop={15} marginHorizontal={12} row wrap gap={10}>
+          <Block
+            marginTop={15}
+            marginHorizontal={12}
+            column
+            height={304}
+            wrap
+            gap={10}>
             {dataCategory.map(item => (
               <Pressable
                 onPress={() => commonRoot.navigate(router.PRODUCT_OF_CATEGORY)}
@@ -279,7 +315,6 @@ export default function ShoppingScreen() {
                 width={(width - 24 - 20) / 3}
                 height={item.height}
                 radius={5}
-                // absoluteFillObject
                 overflow={'hidden'}>
                 <Image source={item.image} width={'100%'} height={'100%'} />
                 <LinearGradient
