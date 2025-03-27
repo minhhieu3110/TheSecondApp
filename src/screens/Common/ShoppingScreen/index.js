@@ -356,7 +356,8 @@ export default function ShoppingScreen() {
           </Block>
           <Block marginTop={15} row wrap columnGap={10} rowGap={12}>
             {Array.from({length: 4}).map((_, index) => (
-              <Block
+              <Pressable
+                onPress={() => commonRoot.navigate(router.DETAIL_PRODUCT)}
                 key={index}
                 width={(width - 34) / 2}
                 paddingBottom={11}
@@ -369,9 +370,10 @@ export default function ShoppingScreen() {
                   borderTopRightRadius={5}
                   overflow={'hidden'}>
                   <Image
-                    source={image.image_product}
+                    source={image.image_san}
                     width={'100%'}
                     height={'100%'}
+                    resizeMode="cover"
                   />
                   <Block
                     width={39}
@@ -422,7 +424,7 @@ export default function ShoppingScreen() {
                     16.000.000đ
                   </Text>
                 </Block>
-              </Block>
+              </Pressable>
             ))}
           </Block>
           <Block marginTop={10} height={164}>
@@ -468,9 +470,10 @@ export default function ShoppingScreen() {
                   borderTopRightRadius={5}
                   overflow={'hidden'}>
                   <Image
-                    source={image.image_product}
+                    source={image.image_san}
                     width={'100%'}
                     height={'100%'}
+                    resizeMode="cover"
                   />
                 </Block>
                 <Block marginTop={10} marginHorizontal={10}>

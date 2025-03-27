@@ -23,11 +23,17 @@ export default function AllCategory() {
             paddingLeft={12}
             backgroundColor={COLORS.white}
             radius={8}>
-            <Block width={50} height={50} justifyCenter alignCenter>
+            <Block
+              width={50}
+              height={50}
+              justifyCenter
+              alignCenter
+              radius={8}
+              overflow={'hidden'}>
               <Image
-                source={image.image_cate_1}
-                width={50}
-                height={50}
+                source={image.image_san}
+                width={'100%'}
+                height={'100%'}
                 resizeMode="cover"
                 // radius={8}
               />

@@ -22,7 +22,7 @@ export default function Cart() {
   const cart = [
     {
       id: 1,
-      image: `${image.image_product}`,
+      image: `${image.image_san}`,
       name: 'Máy chiếu sóng Terahertz trị liệu',
       price: '100000000',
       priceDiscount: '',
@@ -30,7 +30,7 @@ export default function Cart() {
     },
     {
       id: 2,
-      image: `${image.image_product_1}`,
+      image: `${image.image_san}`,
       name: 'Xe đạp tập thể dục OKACHI JP-5...',
       price: '40990000',
       priceDiscount: '40290000',
@@ -117,12 +117,18 @@ export default function Cart() {
                     />
                   </Pressable>
                   <Block marginHorizontal={12} row gap={12}>
-                    <Image
-                      source={item.image}
+                    <Block
                       width={73}
                       height={73}
                       radius={5}
-                    />
+                      overflow={'hidden'}>
+                      <Image
+                        source={image.image_san}
+                        height={'100%'}
+                        width={'100%'}
+                        resizeMode="cover"
+                      />
+                    </Block>
                     <Block marginTop={3} marginRight={12} width={width - 167}>
                       <Text
                         lineHeight={17}

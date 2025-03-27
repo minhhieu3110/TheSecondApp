@@ -4,9 +4,9 @@ import React from 'react';
 
 const dataRank = [{id: 5}, {id: 4}, {id: 3}, {id: 2}, {id: 1}];
 
-const RankStar = ({value, size}) => {
+const RankStar = ({value, size, width, top}) => {
   return (
-    <Block rowCenter spaceBetween>
+    <Block rowCenter spaceBetween width={width} marginTop={top}>
       {dataRank?.map((i, idx) => {
         return (
           <Block key={idx} rowCenter flexGrow>

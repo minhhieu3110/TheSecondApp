@@ -1,35 +1,43 @@
-import {icon, image} from '@assets';
-import {
-  Block,
-  Button,
-  HeaderTitle,
-  Image,
-  MethodPay,
-  ModalSuccess,
-  Pressable,
-  Switch,
-  Text,
-} from '@components';
-import {width} from '@responsive';
+import {icon} from '@assets';
+import {Block, HeaderTitle, Image, Text} from '@components';
 import {COLORS} from '@theme';
+import {image} from '@assets';
+import {width} from '@responsive';
 import {formatCurrency} from '@utils';
-import {useState} from 'react';
 import {ScrollView} from 'react-native';
-import RadialGradient from 'react-native-radial-gradient';
-
-export default function Shopping_Pay() {
-  const [usePoint, setUsePoint] = useState(0);
-  const [show, setShow] = useState(0);
+export default function Detail_Shipping() {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <HeaderTitle canGoBack title={'Xác nhận và thanh toán'} />
-      <ScrollView contentContainerStyle={{paddingBottom: 179}}>
-        <Block marginTop={20} marginHorizontal={12}>
-          <Text fontSize={16} semiBold color={COLORS.black2}>
+      <HeaderTitle canGoBack title={'Chi tiết đơn hàng'} />
+      <ScrollView contentContainerStyle={{paddingBottom: 279}}>
+        <Block marginTop={16} marginHorizontal={12}>
+          <Block
+            backgroundColor={COLORS.pinkWhite2}
+            radius={8}
+            paddingVertical={12}
+            paddingLeft={12}
+            paddingRight={18}>
+            <Block rowCenter>
+              <Image source={icon.icon_shipping} width={53} height={53} />
+              <Block marginLeft={15}>
+                <Text fontSize={14} medium color={COLORS.red4}>
+                  Đang giao
+                </Text>
+                <Text
+                  marginTop={11}
+                  fontSize={14}
+                  regular
+                  color={COLORS.black2}>
+                  Đơn hàng đang trên đường giao đến bạn
+                </Text>
+              </Block>
+            </Block>
+          </Block>
+          <Text marginTop={20} fontSize={15} semiBold color={COLORS.black2}>
             Thông tin nhận hàng
           </Text>
           <Block
-            marginTop={15}
+            marginTop={16}
             radius={8}
             backgroundColor={COLORS.white}
             paddingBottom={19}>
@@ -57,34 +65,13 @@ export default function Shopping_Pay() {
                 numberOfLines={2}>
                 107 đường Cộng Hòa, Phường 12, quận Tân Bình, Tp.HCM
               </Text>
-              <Block
-                width={76.83}
-                height={30.33}
-                radius={15}
-                overflow={'hidden'}
-                absolute
-                top={0}
-                right={0}>
-                <RadialGradient
-                  colors={COLORS.gradient5}
-                  style={{
-                    width: 76.83,
-                    height: 30.33,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text fontSize={13} medium color={COLORS.white}>
-                    Thay đổi
-                  </Text>
-                </RadialGradient>
-              </Block>
             </Block>
           </Block>
           <Text marginTop={19} fontSize={16} semiBold color={COLORS.black2}>
             Sản phẩm
           </Text>
           <Block marginTop={15} gap={12}>
-            {Array.from({length: 5}).map((_, index) => (
+            {Array.from({length: 3}).map((_, index) => (
               <Block
                 key={index}
                 paddingBottom={14}
@@ -137,23 +124,9 @@ export default function Shopping_Pay() {
               </Block>
             ))}
           </Block>
-          <MethodPay top={20} />
-          <Block marginTop={15} row alignCenter>
-            <Text fontSize={14} regular color={COLORS.black2}>
-              Dùng điểm tích luỹ
-            </Text>
-            <Block row rowGap={10} absolute right={0}>
-              <Text fontSize={14} medium color={COLORS.black2}>
-                3000 điểm
-              </Text>
-              <Block marginLeft={10}>
-                <Switch value={usePoint} onValueChange={setUsePoint} />
-              </Block>
-            </Block>
-          </Block>
-          <Block marginTop={25}>
+          <Block marginTop={20}>
             <Text fontSize={15} semiBold color={COLORS.black2}>
-              Đơn hàng của bạn
+              Chi tiết thanh toán
             </Text>
             <Block
               radius={8}
@@ -225,51 +198,20 @@ export default function Shopping_Pay() {
               </Block>
             </Block>
           </Block>
-          <Text
-            center
-            marginHorizontal={10}
-            marginTop={15}
-            fontSize={14}
-            regular
-            color={COLORS.black2}>
-            Nhấn vào nút "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân theo
-            <Text color={COLORS.red4}> Điều khoản</Text> SAN
-          </Text>
-        </Block>
-      </ScrollView>
-      <Block
-        absolute
-        bottom={0}
-        backgroundColor={COLORS.white}
-        width={width}
-        paddingBottom={12}>
-        <Block marginHorizontal={12} marginTop={13}>
-          <Block>
-            <Block rowCenter spaceBetween>
-              <Text fontSize={14} regular color={COLORS.black2}>
-                Tổng thanh toán
-              </Text>
-              <Text fontSize={15} semiBold color={COLORS.red4}>
-                {formatCurrency('127597000')}
+          <Block marginTop={28}>
+            <Block
+              height={48}
+              radius={8}
+              backgroundColor={COLORS.red4}
+              justifyCenter
+              alignCenter>
+              <Text fontSize={15} regular color={COLORS.white}>
+                Hỗ trợ
               </Text>
             </Block>
           </Block>
         </Block>
-        <Pressable
-          onPress={() => setShow(!show)}
-          marginTop={13}
-          marginHorizontal={12}
-          backgroundColor={COLORS.red4}
-          radius={8}
-          justifyCenter
-          alignCenter
-          height={48}>
-          <Text fontSize={15} regular color={COLORS.white}>
-            Đặt hàng
-          </Text>
-        </Pressable>
-      </Block>
-      <ModalSuccess visible={show} close={() => setShow(0)} />
+      </ScrollView>
     </Block>
   );
 }

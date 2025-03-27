@@ -58,6 +58,14 @@ import ProductOfCategory from './ProductOfCategory';
 import Cart from './Cart';
 import Shopping_Pay from './ShoppingPay';
 import OrderOfYou from './OrderOfYou';
+import DetailProduct from './DetailProduct';
+import Evaluate from './Evaluate';
+import Detail_New_Order from './DetailOrder/Detail_New_Order';
+import Detail_Confirm_Order from './DetailOrder/Detail_Confirm_Order';
+import Detail_Shipping from './DetailOrder/Detail_Shipping';
+import Detail_Complete_Order from './DetailOrder/Detail_Complete_Order';
+import Detail_Cancel_Order from './DetailOrder/Detail_Cancel_Order';
+import EvaluateOrder from './EvaluateOrder';
 
 export const common = {
   [router.VOUCHER]: Voucher,
@@ -123,4 +131,12 @@ export const common = {
   [router.CART]: Cart,
   [router.PAY_SHOPPING]: Shopping_Pay,
   [router.ORDER_OF_YOU]: OrderOfYou,
+  [router.DETAIL_PRODUCT]: DetailProduct,
+  [router.EVALUATE_PRODUCT]: Evaluate,
+  [router.DETAIL_NEW_ORDER]: Detail_New_Order,
+  [router.DETAIL_CONFIRM_ORDER]: Detail_Confirm_Order,
+  [router.DETAIL_SHIPPING]: Detail_Shipping,
+  [router.DETAIL_COMPLETE_ORDER]: Detail_Complete_Order,
+  [router.DETAIL_CANCEL_ORDER]: Detail_Cancel_Order,
+  [router.EVALUATE_ORDER]: EvaluateOrder,
 };

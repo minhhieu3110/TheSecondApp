@@ -22,6 +22,7 @@ import HeaderTitle from './header/HeaderTitle';
 import HeaderModal from './header/HeaderModal';
 import ModalChooseDay from './base/ModalChooseDay';
 import HeaderChooseTime from './header/HeaderChooseTime';
+import ProgressBar from './common/ProgressBar';
 import TicketVoucherShape from './common/TicketVoucherShape';
 import ButtonSubmitService from './common/ButtonSubmitService';
 import SANStaffDuties from './common/SANStaffDuties';
@@ -43,6 +44,7 @@ export {
   ModalSANStaffDo,
   ModalSANStaffNotPerform,
   ModalVoucher,
+  ProgressBar,
   ModalMethodPay,
   // ModalCalendar,
   ModalChooseDay,

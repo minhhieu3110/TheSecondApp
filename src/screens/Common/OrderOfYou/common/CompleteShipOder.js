@@ -1,15 +1,21 @@
 import {image} from '@assets';
-import {Block, Image, Text} from '@components';
+import {Block, Image, Pressable, Text} from '@components';
 import {COLORS} from '@theme';
 import {width} from '@responsive';
 import {formatCurrency} from '@utils';
 import {ScrollView} from 'react-native';
+import {commonRoot} from 'navigation/navigationRef';
+import router from '@router';
 export default function CompleteShipOrder() {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <Block marginTop={15} gap={12} marginHorizontal={12}>
         <ScrollView contentContainerStyle={{paddingBottom: 500}}>
-          <Block paddingBottom={15} backgroundColor={COLORS.white} radius={8}>
+          <Pressable
+            onPress={() => commonRoot.navigate(router.DETAIL_COMPLETE_ORDER)}
+            paddingBottom={15}
+            backgroundColor={COLORS.white}
+            radius={8}>
             <Block marginTop={18} marginLeft={12}>
               <Text fontSize={17} semiBold color={COLORS.black2}>
                 #1269087AC
@@ -102,7 +108,7 @@ export default function CompleteShipOrder() {
                 </Text>
               </Block>
             </Block>
-          </Block>
+          </Pressable>
         </ScrollView>
       </Block>
     </Block>

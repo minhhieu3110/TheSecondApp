@@ -3,7 +3,6 @@ import router from '@router';
 import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
 import TopTabContainerOrder from './TopTabContainerOrder';
 import {useEffect, useState} from 'react';
 
@@ -15,7 +14,6 @@ export default function OrderOfYou({route}) {
       setName(route.params?.name);
     }
   }, [route.params?.name]);
-  // console.log(name);
 
   const TopOrderStack = createNativeStackNavigator();
 
