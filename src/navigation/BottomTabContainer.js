@@ -67,7 +67,6 @@ const tabs = [
 ];
 export default function BottomTabContainer() {
   return (
-    // <NavigationContainer independent={true}>
     <Tab.Navigator
       initialRouteName={router.HOME_SCREEN}
       screenOptions={screenOptions}>
@@ -80,6 +79,5 @@ export default function BottomTabContainer() {
         />
       ))}
     </Tab.Navigator>
-    // </NavigationContainer>
   );
 }

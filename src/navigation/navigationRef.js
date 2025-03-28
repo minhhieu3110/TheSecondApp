@@ -14,7 +14,11 @@ export const root = {
     navigationRef.navigate(screeName, screenParams);
   },
 };
-
+export const authRoot = {
+  navigate: (screeName, screenParams) => {
+    rootNavigation(router.AUTH_CONTAINER, screeName, screenParams);
+  },
+};
 export const bottomRoot = {
   navigate: (screeName, screenParams) => {
     rootNavigation(router.BOTTOM_CONTAINER, screeName, screenParams);

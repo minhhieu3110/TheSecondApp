@@ -112,6 +112,8 @@ export const icon = {
   icon_shopping_complete: require('./icon/icon_shopping_complete.png'),
   icon_shopping_cancel: require('./icon/icon_shopping_cancel.png'),
   icon_message_1: require('./icon/icon_message_1.png'),
+  icon_fingerprint: require('./icon/icon_fingerprint.png'),
+  icon_email: require('./icon/icon_email.png'),
 };
 export const image = {
   image_top_home_1: require('./image/image_top_home_1.png'),
@@ -149,6 +151,8 @@ export const image = {
   image_product_1: require('./image/image_product_1.png'),
 
   image_san: require('./image/image_san.png'),
+  image_intro: require('./image/image_intro.png'),
+  image_intro_1: require('./image/image_san_intro_1.png'),
 };
 export const lotties = {
   success: require('./lotties/Success.json'),

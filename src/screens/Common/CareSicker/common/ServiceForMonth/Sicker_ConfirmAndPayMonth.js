@@ -6,12 +6,16 @@ import {
   Image,
   PolicyCancelPackageService,
   Text,
+  Pressable,
+  ModalSuccess,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
+import {useState} from 'react';
 import {ScrollView} from 'react-native';
 import RadialGradient from 'react-native-radial-gradient';
 export default function Sicker_ConfirmAndPayMonth() {
+  const [show, setShow] = useState(0);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Xác nhận và thanh toán'} canGoBack />
@@ -319,7 +323,8 @@ export default function Sicker_ConfirmAndPayMonth() {
             </Text>
           </Block>
         </Block>
-        <Block
+        <Pressable
+          onPress={() => setShow(!show)}
           marginTop={13}
           marginHorizontal={12}
           height={43}
@@ -328,10 +333,11 @@ export default function Sicker_ConfirmAndPayMonth() {
           justifyCenter
           alignCenter>
           <Text fontSize={15} regular color={COLORS.white}>
-            Đăng việc
+            Đăng ký gói
           </Text>
-        </Block>
+        </Pressable>
       </Block>
+      <ModalSuccess visible={show} close={() => setShow(false)} />
     </Block>
   );
 }

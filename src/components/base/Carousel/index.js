@@ -1,7 +1,8 @@
-import {AnimatedImage} from '@components';
+import {AnimatedImage, Block, Text} from '@components';
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, Dimensions, FlatList, View} from 'react-native';
 import styles from './styles';
+import {COLORS} from '@theme';
 
 const {width} = Dimensions.get('window');
 const ViewAnimated = Animated.createAnimatedComponent(View);
@@ -108,15 +109,19 @@ const Carousel = ({
     });
 
     return (
-      <AnimatedImage
-        source={item.img_link}
-        thumbnail={item.thumbnail}
-        containerStyles={{width: sliderWidth}}
-        style={[
-          styles.banner(opacity, scale, itemWidth, itemHeight),
-          bannerStyles,
-        ]}
-      />
+      <Block width={itemWidth} height={itemHeight}>
+        <AnimatedImage
+          source={item.img_link}
+          thumbnail={item.thumbnail}
+          containerStyles={{width: sliderWidth}}
+          style={[
+            styles.banner(opacity, scale, itemWidth, itemHeight),
+            bannerStyles,
+          ]}
+        />
+
+        <Text color={COLORS.white}>{item.title || ''}</Text>
+      </Block>
     );
   };
 

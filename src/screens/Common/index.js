@@ -66,6 +66,7 @@ import Detail_Shipping from './DetailOrder/Detail_Shipping';
 import Detail_Complete_Order from './DetailOrder/Detail_Complete_Order';
 import Detail_Cancel_Order from './DetailOrder/Detail_Cancel_Order';
 import EvaluateOrder from './EvaluateOrder';
+import IntroSAN from './IntroSAN';
 
 export const common = {
   [router.VOUCHER]: Voucher,

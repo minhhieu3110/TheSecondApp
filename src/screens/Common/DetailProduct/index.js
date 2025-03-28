@@ -3,7 +3,7 @@ import {Block, Image, Pressable, Icon, Text, RankStar} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {bottomRoot, commonRoot} from 'navigation/navigationRef';
+import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';

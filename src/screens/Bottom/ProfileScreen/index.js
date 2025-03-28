@@ -3,7 +3,12 @@ import {Block, Icon, Image, Pressable, Text} from '@components';
 import {height, width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
-import {bottomRoot, commonRoot, topRoot} from 'navigation/navigationRef';
+import {
+  authRoot,
+  bottomRoot,
+  commonRoot,
+  topRoot,
+} from 'navigation/navigationRef';
 import {ScrollView} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import RadialGradient from 'react-native-radial-gradient';
@@ -587,12 +592,17 @@ export default function ProfileScreen() {
           </Block>
         </Block>
         <Block marginTop={12}>
-          <Block absolute right={12} row alignCenter>
+          <Pressable
+            onPress={() => authRoot.navigate(router.ONBOARDING_SCREEN)}
+            absolute
+            right={12}
+            row
+            alignCenter>
             <Image source={icon.icon_logout} width={30} height={30} />
             <Text fontSize={15} regular color={COLORS.red4} marginLeft={10}>
               Đăng xuất
             </Text>
-          </Block>
+          </Pressable>
         </Block>
       </ScrollView>
     </Block>
