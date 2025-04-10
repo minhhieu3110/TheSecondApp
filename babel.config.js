@@ -13,6 +13,7 @@ module.exports = {
           '@navigation': './src/navigation',
           '@router': './src/navigation/router.js',
           '@redux': './src/redux',
+          '@actions': './src/redux/actions',
           '@screens': './src/screens',
           '@utils': './src/utils',
           '@responsive': './src/utils/responsive',

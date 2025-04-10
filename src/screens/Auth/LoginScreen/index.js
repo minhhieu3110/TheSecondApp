@@ -1,11 +1,38 @@
+import actions from '@actions';
 import {icon, image} from '@assets';
 import {Block, Icon, Image, Pressable, Text, TextInput} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
+import axios from 'axios';
 import {authRoot, commonRoot} from 'navigation/navigationRef';
+import {useState} from 'react';
+import Toast from 'react-native-toast-message';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useDispatch, useSelector} from 'react-redux';
+
 export default function LoginScreen() {
+  const dispatch = useDispatch();
+  const [phone, setPhone] = useState('');
+
+  const sendOTP = () => {
+    dispatch({
+      type: actions.SEND_OTP,
+      body: {phone: phone, type: 'signup'},
+      onSuccess: () => {
+        setPhone('');
+        authRoot.navigate(router.INPUT_OTP, {phone: phone});
+      },
+      onFail: e => {
+        console.log(e);
+        Toast.show({
+          type: 'error',
+          text1: 'e?.message',
+        });
+      },
+    });
+  };
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <Block width={width} height={328}>
@@ -40,11 +67,14 @@ export default function LoginScreen() {
             paddingLeft={14}
             fontSize={14}
             regular
+            keyboardType={'phone-pad'}
             color={COLORS.black2}
+            value={phone}
+            onChangeText={setPhone}
           />
           <Block row gap={10} height={48} marginTop={40}>
             <Pressable
-              onPress={() => authRoot.navigate(router.INPUT_OTP)}
+              onPress={sendOTP}
               width={width - 108}
               backgroundColor={COLORS.red4}
               radius={8}

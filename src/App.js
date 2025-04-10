@@ -1,20 +1,20 @@
 import React from 'react';
-import {SafeAreaView, StatusBar} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RootStack from 'navigation/RootStack';
-import BottomTabContainer from 'navigation/BottomTabContainer';
-import {COLORS} from '@theme';
-import {PortalProvider} from '@gorhom/portal';
+import {Provider} from 'react-redux';
+import Toast from 'react-native-toast-message';
+import store from 'redux/store';
 const App = () => {
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={{flex: 1}}>
-        {/* <BottomTabContainer /> */}
-        {/* <PortalProvider> */}
-        <RootStack />
-        {/* </PortalProvider> */}
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <SafeAreaView style={{flex: 1}}>
+          <RootStack />
+          <Toast visibilityTime={3000} />
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </Provider>
   );
 };
 

@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Image} from 'react-native';
 import {icon} from 'assets';
 import router from '@router';
 import {bottom} from 'screens/Bottom';
 import {COLORS, FONTS} from '@theme';
+import {Block} from '@components';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,21 +25,16 @@ const getTabBarIcon = (route, focused) => {
       return null;
   }
 };
-const screenOptions = ({route, navigation}) => {
-  const currentRoute = navigation
-    .getState()
-    .routes.find(r => r.name === route.name);
-
-  const isInitialRoute =
-    currentRoute && currentRoute.state ? currentRoute.state.index === 0 : true;
-
+const screenOptions = ({route}) => {
   return {
     headerShown: false,
     tabBarStyle: {
-      display: isInitialRoute ? 'flex' : 'none',
       height: 81.65,
-      paddingBottom: 8,
-      paddingTop: 9,
+      elevation: 10,
+      shadowOpacity: 0.1,
+      shadowRadius: 10,
+      shadowColor: '#000',
+      shadowOffset: {height: -5, width: 0},
     },
     tabBarIcon: ({focused}) => (
       <Image
@@ -53,31 +48,54 @@ const screenOptions = ({route, navigation}) => {
     },
     tabBarActiveTintColor: COLORS.red4,
     tabBarInactiveTintColor: COLORS.black1,
+    tabBarItemStyle: {width: 54, height: 50, marginTop: 23.8},
   };
 };
-const tabs = [
-  {name: router.HOME_SCREEN, label: 'Trang Chủ'},
-  {
-    name: router.ACTIVITY_SCREEN,
-    label: 'Hoạt động',
-  },
-  {name: router.MESSAGE_SCREEN, label: ''},
-  {name: router.NOTIFICATION_SCREEN, label: 'Thông báo'},
-  {name: router.PROFILE_SCREEN, label: 'Tài Khoản'},
-];
+
 export default function BottomTabContainer() {
   return (
     <Tab.Navigator
       initialRouteName={router.HOME_SCREEN}
       screenOptions={screenOptions}>
-      {tabs.map(tab => (
-        <Tab.Screen
-          key={tab.name}
-          name={tab.name}
-          component={bottom[tab.name]}
-          options={{tabBarLabel: tab.label}}
-        />
-      ))}
+      <Tab.Screen
+        name={router.HOME_SCREEN}
+        component={bottom[router.HOME_SCREEN]}
+        options={{tabBarLabel: 'Trang chủ'}}
+      />
+      <Tab.Screen
+        name={router.ACTIVITY_SCREEN}
+        component={bottom[router.ACTIVITY_SCREEN]}
+        options={{tabBarLabel: 'Hoạt động'}}
+      />
+      <Tab.Screen
+        name={router.MESSAGE_SCREEN}
+        component={bottom[router.MESSAGE_SCREEN]}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({color}) => (
+            <Block
+              width={53.93}
+              height={53.93}
+              radius={50}
+              absolute
+              bottom={0}
+              alignCenter
+              justifyCenter>
+              <Image source={icon.icon_message} width={53.93} height={53.93} />
+            </Block>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name={router.NOTIFICATION_SCREEN}
+        component={bottom[router.NOTIFICATION_SCREEN]}
+        options={{tabBarLabel: 'Thông báo'}}
+      />
+      <Tab.Screen
+        name={router.PROFILE_SCREEN}
+        component={bottom[router.PROFILE_SCREEN]}
+        options={{tabBarLabel: 'Tài khoản'}}
+      />
     </Tab.Navigator>
   );
 }

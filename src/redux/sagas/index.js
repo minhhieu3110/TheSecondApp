@@ -1,5 +1,6 @@
 import {all, fork} from 'redux-saga/effects';
+import watchUserSagas from './watchSagas/userSagas';
 
-export default function* rootSagas() {
-  yield all([]);
+export default function* rootSage() {
+  yield all([fork(watchUserSagas)]);
 }

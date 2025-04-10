@@ -9,6 +9,7 @@
       "@navigation": ["navigation"],
       "@router": ["navigation/router"],
       "@redux": ["redux"],
+      "@actions": ["redux/actions"],
       "@screens": ["screens"],
       "@utils": ["utils"],
       "@responsive": ["utils/responsive"],

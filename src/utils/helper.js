@@ -2,10 +2,10 @@
 import {CURRENCY} from '@constants';
 import actions, {_onUnmount} from '@redux/actions';
 import store from '@redux/store';
-import I18n from 'i18n';
+// import I18n from 'i18n';
 import moment from 'moment';
 import {Alert} from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+// import DeviceInfo from 'react-native-device-info';
 import {check, request, RESULTS} from 'react-native-permissions';
 
 export const randomNumberString = () => {
@@ -46,7 +46,7 @@ export const convertMillisecond = millisecond => {
   return date;
 };
 
-export const isNotchPhone = DeviceInfo.hasNotch();
+// export const isNotchPhone = DeviceInfo.hasNotch();
 
 export const beginMonth = moment().startOf('month');
 

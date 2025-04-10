@@ -202,7 +202,7 @@ const Image = ({
       {...rest}
       style={customStyles}
       source={source}
-      resizeMode={resizeMode}
+      // resizeMode={resizeMode}
       tintColor={tintColor}
     />
   );
