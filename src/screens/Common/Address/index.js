@@ -14,11 +14,11 @@ export default function Address({route}) {
     }
   }, [route.params?.service]);
   const handleService = () => {
-    service === 'elederly' && commonRoot.navigate(router.CARE_ELEDERLY);
-    service === 'sicker' && commonRoot.navigate(router.CARE_SICKER);
+    service === 'elderly_care' && commonRoot.navigate(router.CARE_ELEDERLY);
+    service === 'patient_care' && commonRoot.navigate(router.CARE_SICKER);
     service === 'physical_therapy' &&
       commonRoot.navigate(router.PHYSICAL_THERAPY);
-    service === 'housework' && commonRoot.navigate(router.HOUSEWORK);
+    service === 'house_cleaning' && commonRoot.navigate(router.HOUSEWORK);
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>

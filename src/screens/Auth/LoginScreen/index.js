@@ -32,6 +32,8 @@ export default function LoginScreen() {
       },
     });
   };
+  const otp = useSelector(state => state.sendOTP?.data || []);
+  console.log(otp);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>

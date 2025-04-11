@@ -1,12 +1,50 @@
+import actions from '@actions';
 import {icon, image} from '@assets';
 import {Block, Image, Pressable, Text, TextInput} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {bottomRoot, commonRoot} from 'navigation/navigationRef';
+import {useState} from 'react';
 import {ScrollView} from 'react-native';
+import {getDeviceId, getDeviceName} from 'react-native-device-info';
+import Toast from 'react-native-toast-message';
+import {useDispatch} from 'react-redux';
 
-export default function InputInformation() {
+export default function InputInformation({route}) {
+  const [fullname, setFullName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [referralCode, setReferralCode] = useState('');
+  const data = route?.params.data;
+
+  const dispatch = useDispatch();
+  const signUp = () => {
+    dispatch({
+      type: actions.SIGN_UP,
+      body: {
+        full_name: fullname,
+        username: route?.params.data?.phone,
+        email: email,
+        password: `${data?.otpCode}00`,
+        device_name: getDeviceName(),
+        device_token: getDeviceId(),
+        referral_code: referralCode,
+      },
+      onSuccess: () => {
+        bottomRoot.navigate(router.HOME_SCREEN);
+      },
+      onFail: e => {
+        console.log(e?.message);
+
+        Toast.show({
+          type: 'error',
+          text1: e?.message,
+        });
+      },
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView contentContainerStyle={{paddingBottom: 67}}>
@@ -42,9 +80,12 @@ export default function InputInformation() {
                   color={COLORS.placeholder}
                   fontSize={14}
                   regular
-                  marginTop={15}>
-                  Lâm Minh Hoàng
-                </TextInput>
+                  marginTop={15}
+                  placeholder={'Nhập họ tên'}
+                  placeholderTextColor={COLORS.placeholder}
+                  value={fullname}
+                  onChangeText={setFullName}
+                />
               </Block>
               <Block marginBottom={17}>
                 <Text fontSize={15} semiBold color={COLORS.black3}>
@@ -59,9 +100,12 @@ export default function InputInformation() {
                   color={COLORS.placeholder}
                   fontSize={14}
                   regular
-                  marginTop={15}>
-                  Hoang1234@gmail.com
-                </TextInput>
+                  marginTop={15}
+                  placeholderTextColor={COLORS.placeholder}
+                  placeholder={'Nhập email'}
+                  value={email}
+                  onChangeText={setEmail}
+                />
               </Block>
               <Block marginBottom={17}>
                 <Text fontSize={15} semiBold color={COLORS.black3}>
@@ -78,7 +122,7 @@ export default function InputInformation() {
                   fontSize={14}
                   regular
                   marginTop={15}>
-                  0909 123 456
+                  {data?.phone}
                 </TextInput>
               </Block>
               <Block marginBottom={17}>
@@ -95,9 +139,9 @@ export default function InputInformation() {
                     paddingLeft={12}
                     color={COLORS.placeholder}
                     fontSize={14}
-                    regular>
-                    20/11/2000
-                  </TextInput>
+                    regular
+                    placeholder={'Nhập ngày sinh'}
+                  />
                   <Block
                     width={18.3}
                     height={17.13}
@@ -127,11 +171,13 @@ export default function InputInformation() {
                   regular
                   marginTop={15}
                   placeholder={'Nhập mã giới thiệu'}
+                  value={referralCode}
+                  onChangeText={setReferralCode}
                 />
               </Block>
             </Block>
             <Pressable
-              onPress={() => bottomRoot.navigate(router.HOME_SCREEN)}
+              onPress={signUp}
               height={48}
               backgroundColor={COLORS.red4}
               radius={8}

@@ -1,13 +1,15 @@
-import {View, SafeAreaView, Image, ScrollView} from 'react-native';
 import {height, width} from '@responsive';
 import {COLORS, FONTS} from '@theme';
 import RadialGradient from 'react-native-radial-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {icon, image} from '@assets';
-import {Block, Text, Carousel} from '@components';
+import {Block, Text, Carousel, Image, ScrollView} from '@components';
 import Pressable from 'components/base/Pressable';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
+import {useEffect, useMemo} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import actions from '@actions';
 export default function HomeScreen() {
   const imageTopHome = [
     {
@@ -16,6 +18,21 @@ export default function HomeScreen() {
     },
     {id: 2, image: `${image.image_top_home_2}`},
   ];
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_LIST_SERVICE,
+    });
+    dispatch({
+      type: actions.GET_LIST_PROMO,
+    });
+  }, []);
+  const service = useSelector(state => state.getServices?.data || []);
+  const serviceReverse = service.reverse();
+  const promo = useSelector(state => state.getPromo?.data || []);
+  console.log('---');
+  console.log(promo);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView
@@ -41,11 +58,11 @@ export default function HomeScreen() {
             </Block>
             <Block absolute={true} right={0} row spaceBetween width={84}>
               <Pressable onPress={() => commonRoot.navigate(router.VOUCHER)}>
-                <Image source={icon.icon_percent} />
+                <Image source={icon.icon_percent} width={37} height={37} />
               </Pressable>
               <Pressable
                 onPress={() => commonRoot.navigate(router.FAVORITE_STAFF)}>
-                <Image source={icon.icon_heart} />
+                <Image source={icon.icon_heart} width={37} height={37} />
               </Pressable>
             </Block>
           </Block>
@@ -65,7 +82,7 @@ export default function HomeScreen() {
               spaceBetween
               width={width - 288}
               alignCenter>
-              <Image source={icon.icon_balance} />
+              <Image source={icon.icon_balance} width={28} height={34.48} />
               <Pressable
                 onPress={() => commonRoot.navigate(router.BALANCE)}
                 spaceBetween
@@ -92,7 +109,7 @@ export default function HomeScreen() {
               spaceBetween
               width={width - 306.5}
               alignCenter>
-              <Image source={icon.icon_point} />
+              <Image source={icon.icon_point} width={28} height={34.71} />
               <Pressable
                 onPress={() => commonRoot.navigate(router.ACCUMULATED_POINT)}
                 spaceBetween>
@@ -132,172 +149,72 @@ export default function HomeScreen() {
           </Block>
         </Block>
         <Block
-          width={width - 24}
-          height={547}
-          left={12}
+          marginTop={15}
+          marginHorizontal={12}
           radius={15}
           backgroundColor={COLORS.white}
-          marginTop={15}>
+          width={width - 24}
+          height={547}>
           <Text
-            color={COLORS.black1}
-            marginLeft={15}
-            marginTop={18}
+            fontSize={16}
             bold
-            fontSize={16}>
+            color={COLORS.black2}
+            marginTop={18}
+            marginLeft={15}>
             Dịch vụ
           </Text>
-          <Block width={width - 54} height={360.11} marginLeft={15}>
-            <Block row spaceBetween marginTop={13}>
-              <Pressable
-                onPress={() =>
-                  commonRoot.navigate(router.ADDRESS, {service: 'elederly'})
-                }
-                width={width - 256}
-                height={175.56}
-                alignCenter>
-                <Block
-                  width={width - 328}
-                  height={105.56}
-                  radius={12}
-                  backgroundColor={COLORS.pinkWhite2}
-                  justifyCenter
-                  alignCenter>
-                  <Image source={icon.icon_elederly} />
-                </Block>
-                <Text
-                  fontSize={16}
-                  semiBold
-                  color={COLORS.red4}
-                  uppercase
-                  lineHeight={19}
-                  marginTop={10}>
-                  San pro
-                </Text>
-                <Text
-                  fontSize={16}
-                  regular
-                  color={COLORS.black1}
-                  marginTop={9}
-                  lineHeight={19}
-                  center>
-                  Chăm sóc người già tại nhà
-                </Text>
-              </Pressable>
-              <Pressable
-                onPress={() =>
-                  commonRoot.navigate(router.ADDRESS, {service: 'sicker'})
-                }
-                width={width - 256}
-                height={175.56}
-                alignCenter>
-                <Block
-                  width={width - 328}
-                  height={105.56}
-                  radius={12}
-                  backgroundColor={COLORS.pinkWhite2}
-                  justifyCenter
-                  alignCenter>
-                  <Image source={icon.icon_sicker} />
-                </Block>
-                <Text
-                  fontSize={16}
-                  semiBold
-                  color={COLORS.red4}
-                  uppercase
-                  lineHeight={19}
-                  marginTop={10}>
-                  San
-                </Text>
-                <Text
-                  fontSize={16}
-                  regular
-                  color={COLORS.black1}
-                  marginTop={9}
-                  lineHeight={19}
-                  center>
-                  Chăm người bệnh tại nhà
-                </Text>
-              </Pressable>
-            </Block>
-            <Block row spaceBetween marginTop={28.6}>
+          <Block
+            marginHorizontal={15}
+            marginTop={13}
+            row
+            wrap
+            columnGap={30}
+            rowGap={28}>
+            {serviceReverse.map(item => (
               <Pressable
                 onPress={() =>
                   commonRoot.navigate(router.ADDRESS, {
-                    service: 'physical_therapy',
+                    service: item.name_service,
                   })
                 }
-                width={width - 256}
-                height={156}
+                width={(width - 84) / 2}
+                height={175.56}
+                key={item.item_id}
                 alignCenter>
                 <Block
-                  width={width - 328}
+                  width={100}
                   height={105.56}
                   radius={12}
                   backgroundColor={COLORS.pinkWhite2}
                   justifyCenter
                   alignCenter>
-                  <Image source={icon.icon_physical_therapy} />
+                  <Image
+                    source={{uri: item.picture}}
+                    width={72}
+                    height={83.46}
+                  />
                 </Block>
                 <Text
                   fontSize={16}
                   semiBold
                   color={COLORS.red4}
                   uppercase
-                  lineHeight={19}
                   marginTop={10}>
-                  San
+                  {item.title_small}
                 </Text>
                 <Text
+                  marginTop={9}
                   fontSize={16}
                   regular
-                  color={COLORS.black1}
-                  marginTop={9}
-                  lineHeight={19}
+                  color={COLORS.black2}
                   center>
-                  Vật lý trị liệu tại nhà
+                  {item.title}
                 </Text>
               </Pressable>
-              <Pressable
-                onPress={() =>
-                  commonRoot.navigate(router.ADDRESS, {service: 'housework'})
-                }
-                width={width - 256}
-                height={156}
-                alignCenter>
-                <Block
-                  width={width - 328}
-                  height={105.56}
-                  radius={12}
-                  backgroundColor={COLORS.pinkWhite2}
-                  justifyCenter
-                  alignCenter>
-                  <Image source={icon.icon_housework} />
-                </Block>
-                <Text
-                  fontSize={16}
-                  semiBold
-                  color={COLORS.red4}
-                  uppercase
-                  lineHeight={19}
-                  marginTop={10}>
-                  San
-                </Text>
-                <Text
-                  fontSize={16}
-                  regular
-                  color={COLORS.black1}
-                  marginTop={9}
-                  lineHeight={19}
-                  center>
-                  San sẻ việc nhà
-                </Text>
-              </Pressable>
-            </Block>
+            ))}
           </Block>
           <Pressable
             onPress={() => commonRoot.navigate(router.SHOPPING)}
-            absolute
-            bottom={0}
             width={width - 24}
             backgroundColor={COLORS.pinkWhite2}
             borderBottomLeftRadius={15}
@@ -345,99 +262,66 @@ export default function HomeScreen() {
               }}
               horizontal
               showsHorizontalScrollIndicator={false}>
-              <Block width={width - 232} rowGap={11}>
-                <Block
-                  width={width - 232}
-                  height={196}
-                  radius={12}
-                  backgroundColor={'#fff'}>
-                  <Image
-                    source={image.image_sr_1}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      resizeMode: 'cover',
-                      borderRadius: 12,
-                    }}
-                  />
-                </Block>
-                <Text fontSize={15} semiBold uppercase color={COLORS.black1}>
-                  ưu đãi:{' '}
-                  <Text capitalize regular>
-                    Tặng máy xay tỏi cho dịch vụ từ 1000K
+              {promo.map(item => (
+                <Block width={width - 232} rowGap={11} key={item.item_id}>
+                  <Block
+                    width={width - 232}
+                    height={196}
+                    radius={12}
+                    overflow={'hidden'}>
+                    <Image
+                      source={{uri: item.picture}}
+                      width={width - 232}
+                      height={196}
+                    />
+                  </Block>
+                  <Text fontSize={15} semiBold uppercase color={COLORS.black1}>
+                    ưu đãi:{' '}
+                    <Text capitalize regular>
+                      {item.title}
+                    </Text>
                   </Text>
-                </Text>
-              </Block>
-              <Block width={width - 232} rowGap={11}>
-                <Block
-                  width={width - 232}
-                  height={196}
-                  radius={12}
-                  backgroundColor={'#fff'}>
-                  <Image
-                    source={image.image_sr_2}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      resizeMode: 'cover',
-                      borderRadius: 12,
-                    }}
-                  />
                 </Block>
-                <Text fontSize={15} semiBold uppercase color={COLORS.black1}>
-                  ưu đãi:{' '}
-                  <Text capitalize regular>
-                    199 suất vật lý trị lieu tại nhà năm 2024
-                  </Text>
-                </Text>
-              </Block>
-              <Block width={width - 232} rowGap={11}>
-                <Block
-                  width={width - 232}
-                  height={196}
-                  radius={12}
-                  backgroundColor={'#fff'}>
-                  <Image
-                    source={image.image_sr_1}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      resizeMode: 'cover',
-                      borderRadius: 12,
-                    }}
-                  />
-                </Block>
-                <Text fontSize={15} semiBold uppercase color={COLORS.black1}>
-                  ưu đãi:{' '}
-                  <Text capitalize regular>
-                    Tặng máy xay tỏi cho dịch vụ từ 1000K
-                  </Text>
-                </Text>
-              </Block>
-              <Block width={width - 232} rowGap={11}>
-                <Block
-                  width={width - 232}
-                  height={196}
-                  radius={12}
-                  backgroundColor={'#fff'}>
-                  <Image
-                    source={image.image_sr_2}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      resizeMode: 'cover',
-                      borderRadius: 12,
-                    }}
-                  />
-                </Block>
-                <Text fontSize={15} semiBold uppercase color={COLORS.black1}>
-                  ưu đãi:{' '}
-                  <Text capitalize regular>
-                    199 suất vật lý trị lieu tại nhà năm 2024
-                  </Text>
-                </Text>
-              </Block>
+              ))}
             </ScrollView>
+            {/* <Block marginTop={15} marginHorizontal={12}>
+              <ScrollView
+                horizontal
+                contentContainerStyle={{
+                  width: width - 24,
+                  height: 244,
+                  gap: 12,
+                }}>
+                {promo.map(item => (
+                  <Block
+                    width={(width - 36) / 2}
+                    height={244}
+                    key={item.item_id}>
+                    <Block
+                      width={(width - 36) / 2}
+                      height={(width - 36) / 2}
+                      radius={12}
+                      overflow={'hidden'}>
+                      <Image
+                        source={{uri: item.picture}}
+                        width={(width - 36) / 2}
+                        height={(width - 36) / 2}
+                      />
+                    </Block>
+                    <Text
+                      fontSize={15}
+                      semiBold
+                      uppercase
+                      color={COLORS.black1}>
+                      ưu đãi:{' '}
+                      <Text capitalize regular>
+                        {item.title}
+                      </Text>
+                    </Text>
+                  </Block>
+                ))}
+              </ScrollView>
+            </Block> */}
           </Block>
           <Block
             marginTop={24}
@@ -483,7 +367,11 @@ export default function HomeScreen() {
                     width={width - 184}
                     height={61.08}>
                     <Block row alignCenter>
-                      <Image source={icon.icon_calendar} />
+                      <Image
+                        source={icon.icon_calendar}
+                        width={13.47}
+                        height={13.78}
+                      />
                       <Text
                         marginLeft={4.4}
                         marginTop={2.08}

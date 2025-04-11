@@ -100,7 +100,7 @@ export default class HttpService {
           headers: {
             get: this.generateHeader(),
           },
-          params: {...params, lang: language},
+          params: {...params},
         })
         .then(response => response.data);
     } catch (error) {

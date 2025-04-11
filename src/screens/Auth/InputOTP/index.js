@@ -3,11 +3,15 @@ import {image} from '@assets';
 import {Block, Image, Text} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {OtpInput} from 'react-native-otp-entry';
 import {useRef} from 'react';
+import Toast from 'react-native-toast-message';
+import {getDeviceId, getDeviceName} from 'react-native-device-info';
+import {authRoot, bottomRoot} from 'navigation/navigationRef';
+import router from '@router';
 export default function InputOTP({route}) {
-  let ele = useRef();
+  let clearOTP = useRef();
   const dispatch = useDispatch();
   const {phone, type} = route?.params;
   const resend = () => {
@@ -15,8 +19,46 @@ export default function InputOTP({route}) {
       type: actions.SEND_OTP,
       body: {phone: phone, type: type},
     });
-    ele.clear();
+    clearOTP.clear();
   };
+  const verifyOTP = otpCode => {
+    dispatch({
+      type: actions.VERIFY_OTP,
+      body: {phone: phone, otp_code: otpCode},
+      onSuccess: () => {
+        dispatch({
+          type: actions.CHECK_PHONE,
+          body: {phone: phone},
+          onSuccess: () => {
+            dispatch({
+              type: actions.SIGN_IN,
+              body: {
+                username: phone,
+                password: otpCode,
+                device_name: getDeviceName(),
+                device_token: getDeviceId(),
+              },
+              onSuccess: () => {
+                bottomRoot.navigate(router.HOME_SCREEN);
+              },
+            });
+          },
+          onFail: () => {
+            authRoot.navigate(router.INPUT_INFORMATION, {
+              data: {otpCode, phone},
+            });
+          },
+        });
+      },
+      onFail: e => {
+        Toast.show({
+          type: 'error',
+          text1: 'OTP is wrong',
+        });
+      },
+    });
+  };
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <Block width={width} height={328}>
@@ -49,29 +91,20 @@ export default function InputOTP({route}) {
             Nhập mã để tiếp tục
           </Text>
           <Block marginTop={18} row gap={16}>
-            {/* {Array.from({length: 6}).map((_, index) => ( */}
-            <Block
-              // key={index}
-              width={(width - 128) / 6}
-              height={50}
-              radius={5}
-              backgroundColor={COLORS.blueGray}>
-              <OtpInput
-                onFilled={text => console.log(`OTP is ${text}`)}
-                ref={n => (ele = n)}
-                theme={{
-                  containerStyle: {gap: 16},
-                  pinCodeContainerStyle: {
-                    width: (width - 128) / 6,
-                    height: 50,
-                    borderRadius: 5,
-                    backgroundColor: COLORS.blueGray,
-                    borderWidth: 0,
-                  },
-                }}
-              />
-            </Block>
-            {/* ))} */}
+            <OtpInput
+              onFilled={otp => verifyOTP(otp)}
+              ref={ref => (clearOTP = ref)}
+              theme={{
+                containerStyle: {gap: 16},
+                pinCodeContainerStyle: {
+                  width: (width - 128) / 6,
+                  height: 50,
+                  borderRadius: 5,
+                  backgroundColor: COLORS.blueGray,
+                  borderWidth: 0,
+                },
+              }}
+            />
           </Block>
           <Text
             marginTop={14.9}

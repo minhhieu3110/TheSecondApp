@@ -27,6 +27,7 @@ import TicketVoucherShape from './common/TicketVoucherShape';
 import ButtonSubmitService from './common/ButtonSubmitService';
 import SANStaffDuties from './common/SANStaffDuties';
 import MethodPay from './common/MethodPay';
+import ScrollView from './base/ScrollView';
 import PolicyCancelPackageService from './form/PolicyCancelPackageService';
 export {
   Carousel,
@@ -59,4 +60,5 @@ export {
   SANStaffDuties,
   MethodPay,
   PolicyCancelPackageService,
+  ScrollView,
 };
