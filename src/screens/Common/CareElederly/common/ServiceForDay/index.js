@@ -16,13 +16,20 @@ import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
-export default function Elederly_Servicedurationday() {
+export default function Elederly_Servicedurationday({route}) {
   const [isActive, setIsActive] = useState(false);
   const [choose, setChoose] = useState(1);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({type: actions.GET_DETAIL_SERVICE_SUB, params: {item_id: 3}});
+    dispatch({
+      type: actions.GET_ADDRESS_SAVE,
+    });
   }, [dispatch]);
+  const addressInfo = useSelector(state => state.getAddressSave?.data || []);
+  const address = addressInfo?.find(
+    item => item.item_id === route?.params?.addressId,
+  );
   const detailSub = useSelector(state => state.getDetailServiceSub?.data || []);
   const durationSelected = detailSub?.durations?.find(
     item => item.item_id === choose,
@@ -30,7 +37,7 @@ export default function Elederly_Servicedurationday() {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <HeaderChooseTime />
+      <HeaderChooseTime address={address.address_full} />
       <Block marginHorizontal={12} marginTop={20}>
         <Text fontSize={15} semiBold color={COLORS.black2}>
           Chọn thời lượng

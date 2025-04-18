@@ -3,7 +3,7 @@ import {Block, HeaderTitle, Icon, Image, Text} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-export default function HeaderChooseTime() {
+export default function HeaderChooseTime({address}) {
   return (
     <Block
       width={width}
@@ -44,7 +44,7 @@ export default function HeaderChooseTime() {
           regular
           color={COLORS.white}
           numberOfLines={2}>
-          107 đường Cộng Hòa, Phường 12, quận Tân Bình, Tp.HCM
+          {address}
         </Text>
         <Block absolute top={15} right={3}>
           <Icon

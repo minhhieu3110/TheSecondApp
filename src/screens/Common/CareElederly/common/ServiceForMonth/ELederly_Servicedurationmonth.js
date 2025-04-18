@@ -5,11 +5,7 @@ import {
   Text,
   Image,
   TextInput,
-  Icon,
   ButtonSubmitService,
-  ModalSANStaffDo,
-  ModalSANStaffNotPerform,
-  ModalCalendar,
   SANStaffDuties,
 } from '@components';
 import {COLORS} from '@theme';
@@ -17,8 +13,6 @@ import {useState} from 'react';
 import {icon} from '@assets';
 import {width} from '@responsive';
 import {ScrollView} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
 export default function Elederly_Servicedurationmonth() {
@@ -43,7 +37,7 @@ export default function Elederly_Servicedurationmonth() {
   ];
   const [choose, setChoose] = useState(1);
   const [chooseOptionDuration, setChooseOptionDuration] = useState(1);
-  const [againWeek, setAgainWeek] = useState([null]);
+  const [againWeek, setAgainWeek] = useState([]);
   const handleWeekDayPress = id => {
     setAgainWeek(prevState => {
       if (prevState.includes(id)) {

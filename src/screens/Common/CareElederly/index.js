@@ -6,7 +6,7 @@ import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default function CareElederly() {
+export default function CareElederly({route}) {
   return (
     <Block flex backgroundColor={COLORS.gradient5}>
       <LinearGradient style={{flex: 1}} colors={COLORS.gradient5}>
@@ -22,7 +22,9 @@ export default function CareElederly() {
         <Block width={width - 24} marginHorizontal={12} marginTop={10}>
           <Pressable
             onPress={() =>
-              commonRoot.navigate(router.ELEDERLY_SERVICE_DURATION_DAY)
+              commonRoot.navigate(router.ELEDERLY_SERVICE_DURATION_DAY, {
+                addressId: route?.params?.addressId,
+              })
             }
             paddingBottom={23}
             backgroundColor={COLORS.white}

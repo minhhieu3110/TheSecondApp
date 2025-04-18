@@ -23,8 +23,9 @@ export default function Address({route}) {
       setService(route.params?.service);
     }
   }, [route.params?.service]);
-  const handleService = () => {
-    service === 'elderly_care' && commonRoot.navigate(router.CARE_ELEDERLY);
+  const handleService = item_id => {
+    service === 'elderly_care' &&
+      commonRoot.navigate(router.CARE_ELEDERLY, {addressId: item_id});
     service === 'patient_care' && commonRoot.navigate(router.CARE_SICKER);
     service === 'physical_therapy' &&
       commonRoot.navigate(router.PHYSICAL_THERAPY);
@@ -63,7 +64,7 @@ export default function Address({route}) {
               //     id: route.params?.id,
               //   })
               // }
-              onPress={handleService}
+              onPress={() => handleService(item.item_id)}
               key={item.item_id}
               radius={8}
               backgroundColor={COLORS.white}
