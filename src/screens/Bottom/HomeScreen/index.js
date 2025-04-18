@@ -7,17 +7,11 @@ import {Block, Text, Carousel, Image, ScrollView} from '@components';
 import Pressable from 'components/base/Pressable';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
-import {useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
+import {ConvertTimeStamp} from '@utils';
 export default function HomeScreen() {
-  const imageTopHome = [
-    {
-      id: 1,
-      image: `${image.image_top_home_1}`,
-    },
-    {id: 2, image: `${image.image_top_home_2}`},
-  ];
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
@@ -26,13 +20,34 @@ export default function HomeScreen() {
     dispatch({
       type: actions.GET_LIST_PROMO,
     });
-  }, []);
+    dispatch({
+      type: actions.GET_NEWS,
+    });
+    dispatch({
+      type: actions.GET_BANNER,
+      params: {group: 'banner-home'},
+    });
+  }, [dispatch]);
   const service = useSelector(state => state.getServices?.data || []);
   const serviceReverse = service.reverse();
   const promo = useSelector(state => state.getPromo?.data || []);
-  console.log('---');
-  console.log(promo);
-
+  const news = useSelector(state => state.getNews?.data || []);
+  const limitNews = news.slice(0, 3);
+  const banner = useSelector(state => state.getBanner?.data || []);
+  const renderItemBanner = useCallback(({item}) => {
+    return (
+      <Block>
+        <Image
+          radius={10}
+          source={{uri: item.content}}
+          width={width - 68}
+          height={164}
+          resizeMode="cover"
+          marginRight={10}
+        />
+      </Block>
+    );
+  }, []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView
@@ -122,29 +137,16 @@ export default function HomeScreen() {
               </Pressable>
             </Block>
           </Block>
-          <Block width={width - 24} height={164} top={26} left={12}>
+          <Block
+            width={width - 24}
+            height={164}
+            marginTop={26}
+            marginHorizontal={12}>
             <Carousel
-              data={imageTopHome}
-              duration={2000}
+              data={banner || []}
               isDots={false}
-              itemHeight={164}
-              itemWidth={width - 68}
-              renderItem={(item, index) => (
-                <Block
-                  key={index}
-                  width={width - 68}
-                  height={164}
-                  marginRight={10}>
-                  <Image
-                    source={{
-                      uri: 'https://static.wikia.nocookie.net/bach-khoa-the-gioi-toan-thu/images/e/e4/Son_goku.png/revision/latest?cb=20211030082932',
-                    }}
-                    resizeMode="cover"
-                    width={'100%'}
-                    height={'100%'}
-                  />
-                </Block>
-              )}
+              autoPlay={true}
+              renderItem={renderItemBanner}
             />
           </Block>
         </Block>
@@ -185,7 +187,7 @@ export default function HomeScreen() {
                   width={100}
                   height={105.56}
                   radius={12}
-                  backgroundColor={COLORS.pinkWhite2}
+                  // backgroundColor={COLORS.pinkWhite2}
                   justifyCenter
                   alignCenter>
                   <Image
@@ -284,44 +286,6 @@ export default function HomeScreen() {
                 </Block>
               ))}
             </ScrollView>
-            {/* <Block marginTop={15} marginHorizontal={12}>
-              <ScrollView
-                horizontal
-                contentContainerStyle={{
-                  width: width - 24,
-                  height: 244,
-                  gap: 12,
-                }}>
-                {promo.map(item => (
-                  <Block
-                    width={(width - 36) / 2}
-                    height={244}
-                    key={item.item_id}>
-                    <Block
-                      width={(width - 36) / 2}
-                      height={(width - 36) / 2}
-                      radius={12}
-                      overflow={'hidden'}>
-                      <Image
-                        source={{uri: item.picture}}
-                        width={(width - 36) / 2}
-                        height={(width - 36) / 2}
-                      />
-                    </Block>
-                    <Text
-                      fontSize={15}
-                      semiBold
-                      uppercase
-                      color={COLORS.black1}>
-                      ưu đãi:{' '}
-                      <Text capitalize regular>
-                        {item.title}
-                      </Text>
-                    </Text>
-                  </Block>
-                ))}
-              </ScrollView>
-            </Block> */}
           </Block>
           <Block
             marginTop={24}
@@ -343,22 +307,22 @@ export default function HomeScreen() {
             </Block>
             <Block
               width={width - 24}
-              height={363}
+              // height={363}
               marginTop={12.3}
               marginHorizontal={12}
               marginBottom={15}
               gap={12}>
-              {Array.from({length: 3}).map((_, index) => (
-                <Block row spaceBetween height={113} key={index}>
-                  <Block width={width - 278} height={113}>
+              {limitNews.map(item => (
+                <Block row spaceBetween height={113} key={item.item_id}>
+                  <Block
+                    width={width - 278}
+                    height={113}
+                    radius={10}
+                    overflow={'hidden'}>
                     <Image
-                      source={image.image_new}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        resizeMode: 'cover',
-                        borderRadius: 10,
-                      }}
+                      source={{uri: item.picture}}
+                      width={width - 278}
+                      height={113}
                     />
                   </Block>
                   <Block
@@ -378,7 +342,7 @@ export default function HomeScreen() {
                         fontSize={12}
                         regular
                         color={COLORS.lightGray1}>
-                        22/01/2024
+                        {ConvertTimeStamp(item.created_at)}
                       </Text>
                     </Block>
                     <Text
@@ -386,7 +350,7 @@ export default function HomeScreen() {
                       fontSize={15}
                       medium
                       color={COLORS.black1}>
-                      Người già muốn khỏe mạnh hãy áp dụng chế độ ăn này
+                      {item.title}
                     </Text>
                   </Block>
                 </Block>

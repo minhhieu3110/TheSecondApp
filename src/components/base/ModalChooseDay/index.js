@@ -16,16 +16,20 @@ import {icon} from '@assets';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useState} from 'react';
+import {FormatDay} from '@utils';
 const ModalChooseDay = ({visible, close, onPress}) => {
-  const days = [
-    {id: 1, title: 'T4', day: '19/02'},
-    {id: 2, title: 'T5', day: '20/02'},
-    {id: 3, title: 'T6', day: '21/02'},
-    {id: 4, title: 'T7', day: '22/02'},
-    {id: 5, title: 'CN', day: '23/02'},
-    {id: 6, title: 'T2', day: '24/02'},
-    {id: 7, title: 'T3', day: '25/02'},
-  ];
+  const days = Array.from({length: 7}, (_, index) => {
+    const date = new Date();
+    date.setDate(date.getDate() + index);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const titles = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+    return {
+      id: index + 1,
+      title: titles[date.getDay()],
+      day: `${day}/${month}`,
+    };
+  });
   const dayWeek = [
     {id: 1, title: 'T2'},
     {id: 2, title: 'T3'},
@@ -37,19 +41,21 @@ const ModalChooseDay = ({visible, close, onPress}) => {
   ];
   const [isActive, setIsActive] = useState(false);
   const [chooseDay, setChooseDay] = useState(null);
-  const [againWeek, setAgainWeek] = useState([null]);
-  const handleWeekDayPress = id => {
+  const [againWeek, setAgainWeek] = useState([]);
+  const handleWeekDayPress = title => {
     setAgainWeek(prevState => {
-      if (prevState.includes(id)) {
-        return prevState.filter(item => item !== id);
+      if (prevState.includes(title)) {
+        return prevState.filter(item => item !== title);
       }
-      return [...prevState, id];
+      return [...prevState, title];
     });
   };
   const handle = () => {
     onPress();
     close();
   };
+  console.log(againWeek);
+
   return (
     <Modal
       transparent
@@ -111,7 +117,10 @@ const ModalChooseDay = ({visible, close, onPress}) => {
               </Text>
               <Block absolute right={0}>
                 <Text fontSize={15} regular color={COLORS.black6}>
-                  Tháng 01/2025
+                  Tháng{' '}
+                  {String(new Date().getMonth() + 1).padStart(2, '0') +
+                    '/' +
+                    new Date().getFullYear()}
                 </Text>
               </Block>
             </Block>
@@ -124,7 +133,7 @@ const ModalChooseDay = ({visible, close, onPress}) => {
                   <Pressable
                     onPress={() => setChooseDay(day.id)}
                     key={day.id}
-                    width={width - 373.17}
+                    width={(width - 99) / 6}
                     height={80.33}
                     borderWidth={chooseDay === day.id ? 1 : 0}
                     borderColor={chooseDay === day.id && COLORS.red4}
@@ -232,15 +241,15 @@ const ModalChooseDay = ({visible, close, onPress}) => {
               {dayWeek.map(item => (
                 <Pressable
                   disabled={isActive === false}
-                  onPress={() => handleWeekDayPress(item.id)}
-                  key={item.id}
+                  onPress={() => handleWeekDayPress(item.title)}
+                  key={item.title}
                   width={49.14}
                   height={49.14}
                   radius={5}
-                  borderWidth={againWeek.includes(item.id) ? 1 : ''}
-                  borderColor={againWeek.includes(item.id) && COLORS.red4}
+                  borderWidth={againWeek.includes(item.title) ? 1 : ''}
+                  borderColor={againWeek.includes(item.title) && COLORS.red4}
                   backgroundColor={
-                    againWeek.includes(item.id)
+                    againWeek.includes(item.title)
                       ? COLORS.pinkWhite2
                       : COLORS.white
                   }
@@ -250,7 +259,9 @@ const ModalChooseDay = ({visible, close, onPress}) => {
                     fontSize={15}
                     semiBold
                     color={
-                      againWeek.includes(item.id) ? COLORS.red4 : COLORS.black2
+                      againWeek.includes(item.title)
+                        ? COLORS.red4
+                        : COLORS.black2
                     }>
                     {item.title}
                   </Text>

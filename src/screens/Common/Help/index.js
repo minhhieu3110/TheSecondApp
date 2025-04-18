@@ -9,18 +9,31 @@ import {
   HeaderModal,
 } from '@components';
 import {width} from '@responsive';
-import {COLORS} from '@theme';
-import {useState} from 'react';
+import {COLORS, FONTS} from '@theme';
+import {useEffect, useState} from 'react';
 import {Modal, SafeAreaView, ScrollView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
+import {useDispatch, useSelector} from 'react-redux';
+import actions from '@actions';
+import {URL_API} from 'redux/sagas/common';
+import RenderHTML from 'react-native-render-html';
 export default function Help() {
   const [visibleModalHelp, setVisibleModalHelp] = useState(0);
+  const dispatch = useDispatch();
   const handleHelp = () => {
     setVisibleModalHelp(!visibleModalHelp);
   };
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_HELP,
+      params: {number: 11},
+    });
+  }, [dispatch]);
+  const help = useSelector(state => state.getHelp?.data || []);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Hỗ trợ'} canGoBack />
@@ -178,7 +191,9 @@ export default function Help() {
             <ScrollView>
               <Block width={width} height={199.6}>
                 <Image
-                  source={image.image_help}
+                  source={{
+                    uri: `${URL_API.uploads}/${help?.picture}`,
+                  }}
                   width={width}
                   height={199.6}
                   resizeMode="cover"
@@ -214,56 +229,22 @@ export default function Help() {
                   color={COLORS.black1}
                   marginLeft={12}
                   marginTop={15}>
-                  Lợi ích khi sử dụng SAN
+                  {help?.title}
                 </Text>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  marginLeft={12}
-                  marginTop={16}
-                  lineHeight={22}>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been industry's standard
-                  dummy text ever since the 1500s, when anm unknown printer took
-                  a galley of type and scrambledt it to make a type specimen
-                  book. It has survived t only five centuries, but also the leap
-                  into electritypesetting, remaining essentially unchanged. It
-                  was popularisn in the 1960s with the release of Letraset
-                  sheeticontaining Lorem Ipsum passages, and more recently wt
-                  desktop publishing software like Aldus PageMaker incliversions
-                  of Lorem Ipsum.
-                </Text>
-                <Block
-                  width={212}
-                  height={202}
-                  marginHorizontal={96}
-                  marginTop={39}>
-                  <Image
-                    source={image.image_sr_1}
-                    width={212}
-                    height={202}
-                    resizeMode="cover"
+                <Block marginHorizontal={12} marginTop={16}>
+                  <RenderHTML
+                    contentWidth={width - 48}
+                    source={{html: help?.content}}
+                    tagsStyles={{
+                      p: {
+                        fontSize: 14,
+                        fontFamily: FONTS.regular,
+                        color: COLORS.black2,
+                        lineHeight: 22,
+                      },
+                    }}
                   />
                 </Block>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  marginLeft={12}
-                  marginTop={10}
-                  lineHeight={22}>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been industry's standard
-                  dummy text ever since the 1500s, when anm unknown printer took
-                  a galley of type and scrambledt it to make a type specimen
-                  book. It has survived t only five centuries, but also the leap
-                  into electritypesetting, remaining essentially unchanged. It
-                  was popularisn in the 1960s with the release of Letraset
-                  sheeticontaining Lorem Ipsum passages, and more recently wt
-                  desktop publishing software like Aldus PageMaker incliversions
-                  of Lorem Ipsum.
-                </Text>
               </Block>
             </ScrollView>
           </Block>

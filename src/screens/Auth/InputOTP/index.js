@@ -10,6 +10,7 @@ import Toast from 'react-native-toast-message';
 import {getDeviceId, getDeviceName} from 'react-native-device-info';
 import {authRoot, bottomRoot} from 'navigation/navigationRef';
 import router from '@router';
+import OTPInputView from '@twotalltotems/react-native-otp-input';
 export default function InputOTP({route}) {
   let clearOTP = useRef();
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ export default function InputOTP({route}) {
       onFail: e => {
         Toast.show({
           type: 'error',
-          text1: 'OTP is wrong',
+          text1: 'OTP is Wrong',
         });
       },
     });
@@ -90,12 +91,11 @@ export default function InputOTP({route}) {
           <Text fontSize={16} light color={COLORS.black2} marginTop={54} center>
             Nhập mã để tiếp tục
           </Text>
-          <Block marginTop={18} row gap={16}>
+          <Block marginTop={18}>
             <OtpInput
               onFilled={otp => verifyOTP(otp)}
               ref={ref => (clearOTP = ref)}
               theme={{
-                containerStyle: {gap: 16},
                 pinCodeContainerStyle: {
                   width: (width - 128) / 6,
                   height: 50,

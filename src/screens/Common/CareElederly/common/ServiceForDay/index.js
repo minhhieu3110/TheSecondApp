@@ -3,12 +3,7 @@ import {
   Block,
   ButtonSubmitService,
   HeaderChooseTime,
-  HeaderTitle,
-  Icon,
   Image,
-  ModalChooseDay,
-  ModalSANStaffDo,
-  ModalSANStaffNotPerform,
   Pressable,
   SANStaffDuties,
   Switch,
@@ -16,22 +11,23 @@ import {
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {useState} from 'react';
-import {Modal, SafeAreaView, TouchableOpacity} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {useEffect, useState} from 'react';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
+import {useDispatch, useSelector} from 'react-redux';
+import actions from '@actions';
 export default function Elederly_Servicedurationday() {
-  const optionChoose = [
-    {id: 1, title: 'Theo buổi', duration: 'Tối đa 4h/ngày'},
-    {id: 2, title: 'Theo ngày', duration: 'Tối đa 8h/ngày'},
-  ];
-  const [choose, setChoose] = useState(1);
   const [isActive, setIsActive] = useState(false);
-  const selectedOption = optionChoose.find(item => item.id === choose);
-  const [visible, setVisible] = useState(0);
+  const [choose, setChoose] = useState(1);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({type: actions.GET_DETAIL_SERVICE_SUB, params: {item_id: 3}});
+  }, [dispatch]);
+  const detailSub = useSelector(state => state.getDetailServiceSub?.data || []);
+  const durationSelected = detailSub?.durations?.find(
+    item => item.item_id === choose,
+  );
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderChooseTime />
@@ -40,32 +36,36 @@ export default function Elederly_Servicedurationday() {
           Chọn thời lượng
         </Text>
         <Block marginTop={15} row columnGap={12}>
-          {optionChoose.map(item => (
+          {detailSub?.durations?.map(item => (
             <Pressable
-              key={item.id}
-              onPress={() => setChoose(item.id)}
+              key={item.item_id}
+              onPress={() => setChoose(item.item_id)}
               width={(width - 24) / 2 - 6}
               radius={8}
               paddingBottom={18}
               borderWidth={1}
-              borderColor={choose === item.id ? COLORS.red4 : COLORS.white2}
+              borderColor={
+                choose === item.item_id ? COLORS.red4 : COLORS.white2
+              }
               backgroundColor={
-                choose === item.id ? COLORS.pinkWhite2 : COLORS.white
+                choose === item.item_id ? COLORS.pinkWhite2 : COLORS.white
               }
               alignCenter>
               <Text
                 marginTop={19}
                 fontSize={15}
                 medium
-                color={choose === item.id ? COLORS.red4 : COLORS.black2}>
-                {item.title}
+                color={choose === item.item_id ? COLORS.red4 : COLORS.black2}>
+                {item.short}
               </Text>
               <Text
                 marginTop={20}
                 fontSize={15}
                 regular
-                color={choose === item.id ? COLORS.black2 : COLORS.placeholder}>
-                {item.duration}
+                color={
+                  choose === item.item_id ? COLORS.black2 : COLORS.placeholder
+                }>
+                {item.title}
               </Text>
             </Pressable>
           ))}
@@ -86,19 +86,23 @@ export default function Elederly_Servicedurationday() {
             <Switch value={isActive} onValueChange={setIsActive} />
           </Block>
         </Block>
-        <SANStaffDuties top={30} />
-      </Block>
-      {selectedOption && (
-        <ButtonSubmitService
-          titleTop={selectedOption?.duration}
-          titleBottom={'Dịch vụ chăm sóc người già'}
-          onPress={() => setVisible(!visible)}
+        <SANStaffDuties
+          top={30}
+          task_todo={detailSub?.service?.tasks_todo}
+          task_nottodo={detailSub?.service?.tasks_nottodo}
         />
-      )}
-      <ModalChooseDay
-        visible={visible}
-        close={() => setVisible(0)}
-        onPress={() => commonRoot.navigate(router.ELEDERLY_CONFIRM_PAY)}
+      </Block>
+
+      <ButtonSubmitService
+        titleTop={durationSelected?.title}
+        titleBottom={detailSub?.service?.title}
+        onPress={() =>
+          commonRoot.navigate(router.SELECT_DAY_WORKING, {
+            duration_id: durationSelected?.item_id,
+            duration: durationSelected?.title,
+            name_service: detailSub?.service?.title,
+          })
+        }
       />
     </Block>
   );

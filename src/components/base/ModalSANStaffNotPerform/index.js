@@ -5,7 +5,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Modal, TouchableOpacity, SafeAreaView} from 'react-native';
 import {width} from '@responsive';
 import {useState} from 'react';
-const ModalSANStaffNotPerform = ({visible, close}) => {
+const ModalSANStaffNotPerform = ({visible, close, data = []}) => {
   return (
     <Modal
       visible={visible}
@@ -55,138 +55,25 @@ const ModalSANStaffNotPerform = ({visible, close}) => {
               />
             </Pressable>
             <Block marginTop={20} marginHorizontal={12}>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'times-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.red4}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Vì lí do an toàn, các CTV sẽ không thực hiện bất kỳ các thủ
-                  thuật xâm lấn nào
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'times-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.red4}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Vì lí do an toàn, các CTV sẽ không thực hiện
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'times-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.red4}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Vì lí do an toàn, các CTV sẽ không
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'times-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.red4}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Vì lí do an toàn, các CTV sẽ không thực hiện bất kỳ các thủ
-                  thuật xâm lấn nào
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'times-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.red4}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Vì lí do an toàn, các CTV sẽ không thực hiện bất kỳ các thủ
-                  thuật xâm lấn nào
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'times-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.red4}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Vì lí do an toàn, các CTV sẽ không
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'times-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.red4}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Vì lí do an toàn, các CTV sẽ không thực hiện bất kỳ
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'times-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.red4}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Vì lí do an toàn, các CTV sẽ không thực hiện bất kỳ các thủ
-                  thuật xâm lấn nào
-                </Text>
-              </Block>
+              {data?.map(item => (
+                <Block row marginBottom={5} key={item.title}>
+                  <Icon
+                    IconType={FontAwesome}
+                    iconName={'times-circle'}
+                    iconSize={10}
+                    iconColor={COLORS.red4}
+                  />
+                  <Text
+                    marginTop={-5}
+                    marginLeft={10}
+                    fontSize={14}
+                    regular
+                    color={COLORS.black1}
+                    lineHeight={22}>
+                    {item.title}
+                  </Text>
+                </Block>
+              ))}
             </Block>
           </Block>
         </TouchableOpacity>

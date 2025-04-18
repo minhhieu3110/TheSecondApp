@@ -11,7 +11,7 @@ import Withdraw from './Balance/common/Withdraw';
 import History from './Balance/common/History';
 import AccumulatedPoint from './AccumulatedPoints';
 import Address from './Address';
-import AddNewAddress from './Address/AddNewAddress';
+import AddNewAddress from './AddNewAddress';
 import MenbershipRank from './MenbershipRank';
 import HistoryPoint from './MenbershipRank/HistoryPoint';
 import Account from './Account';
@@ -37,8 +37,7 @@ import CareElederly from './CareElederly';
 import CareSicker from './CareSicker';
 import Housework from './Housework';
 import PhysicalTherapy from './Physical_Therapy';
-import Elederly_Servicedurationday from './CareElederly/common/ServiceForDay/Elederly_Servicedurationday';
-import Elederly_ConfirmAndPay from './CareElederly/common/ServiceForDay/Elederly_ConfirmAndPay';
+import Elederly_Servicedurationday from './CareElederly/common/ServiceForDay';
 import Elederly_Servicedurationmonth from './CareElederly/common/ServiceForMonth/ELederly_Servicedurationmonth';
 import Elederly_ConfirmAndPayMonth from './CareElederly/common/ServiceForMonth/Elederly_ConfirmAndPayMonth';
 import Sicker_Servicedurationday from './CareSicker/common/ServiceForDay/Sicker_Servicedurationday';
@@ -67,6 +66,10 @@ import Detail_Complete_Order from './DetailOrder/Detail_Complete_Order';
 import Detail_Cancel_Order from './DetailOrder/Detail_Cancel_Order';
 import EvaluateOrder from './EvaluateOrder';
 import IntroSAN from './IntroSAN';
+import ChooseService from './ChooseService';
+import ChooseTimeForService from './ChooseTimeForService';
+import SelectDayWorking from './SelectDayWorking';
+import ConfirmAndPayService from './ConfirmAndPayService';
 
 export const common = {
   [router.VOUCHER]: Voucher,
@@ -108,7 +111,6 @@ export const common = {
   [router.PHYSICAL_THERAPY]: PhysicalTherapy,
   [router.HOUSEWORK]: Housework,
   [router.ELEDERLY_SERVICE_DURATION_DAY]: Elederly_Servicedurationday,
-  [router.ELEDERLY_CONFIRM_PAY]: Elederly_ConfirmAndPay,
   [router.ELEDERLY_SERVICE_DURATION_MONTH]: Elederly_Servicedurationmonth,
   [router.ELEDERLY_CONFIRM_PAY_MONTH]: Elederly_ConfirmAndPayMonth,
 
@@ -125,6 +127,11 @@ export const common = {
     Housework_OddShiftService_ConfirmAndPay,
   [router.HOUSEWORK_MONTH]: Housework_ServiceMonth,
   [router.HOUSEWORK_MONTH_CONFIRM_AND_PAY]: Housework_Month_ConfirmAndPay,
+
+  //Chung
+  [router.SELECT_DAY_WORKING]: SelectDayWorking,
+  [router.CONFIRM_AND_PAY_SERVICE]: ConfirmAndPayService,
+  //
   [router.DETAIL_MESSAGE]: DetailMessage,
   [router.SHOPPING]: ShoppingScreen,
   [router.ALL_CATEGORY]: AllCategory,
@@ -140,4 +147,7 @@ export const common = {
   [router.DETAIL_COMPLETE_ORDER]: Detail_Complete_Order,
   [router.DETAIL_CANCEL_ORDER]: Detail_Cancel_Order,
   [router.EVALUATE_ORDER]: EvaluateOrder,
+
+  [router.CHOOSE_SERVICE]: ChooseService,
+  [router.CHOOSE_TIME_FOR_SERVICE]: ChooseTimeForService,
 };

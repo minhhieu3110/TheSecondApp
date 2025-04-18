@@ -40,12 +40,14 @@ const commonStack = [
   {name: router.DETAIL_COMPLETE},
   {name: router.EVALUATE_SERVICE},
   {name: router.DETAIL_CANCEL},
+
+  {name: router.CHOOSE_SERVICE},
+  {name: router.CHOOSE_TIME_FOR_SERVICE},
   {name: router.CARE_ELEDERLY},
   {name: router.CARE_SICKER},
   {name: router.PHYSICAL_THERAPY},
   {name: router.HOUSEWORK},
   {name: router.ELEDERLY_SERVICE_DURATION_DAY},
-  {name: router.ELEDERLY_CONFIRM_PAY},
   {name: router.ELEDERLY_SERVICE_DURATION_MONTH},
   {name: router.ELEDERLY_CONFIRM_PAY_MONTH},
 
@@ -62,7 +64,10 @@ const commonStack = [
 
   {name: router.HOUSEWORK_MONTH},
   {name: router.HOUSEWORK_MONTH_CONFIRM_AND_PAY},
-
+  //chung
+  {name: router.SELECT_DAY_WORKING},
+  {name: router.CONFIRM_AND_PAY_SERVICE},
+  //
   {name: router.DETAIL_MESSAGE},
 
   {name: router.SHOPPING},

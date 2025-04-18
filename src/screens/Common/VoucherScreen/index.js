@@ -7,7 +7,9 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import AllVoucher from './components/AllVoucher';
 import UsedVoucher from './components/UsedVoucher';
 import {Modal, ScrollView} from 'react-native';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import actions from '@actions';
 export default function Voucher() {
   const title = [
     {id: 1, title: 'Tất cả'},
@@ -21,6 +23,15 @@ export default function Voucher() {
     if (title === 'Tất cả') setAllVoucher(true);
     if (title === 'Đã dùng') setUsedVoucher(true);
   };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_VOUCHER,
+      params: {apply_for: 'service'},
+    });
+  }, [dispatch]);
+  const vouchers = useSelector(state => state.getVoucher?.data || []);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <Block width={width} height={93} backgroundColor={COLORS.white}>
@@ -70,7 +81,7 @@ export default function Voucher() {
           ))}
         </Block>
       </Block>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{paddingBottom: 100}}>
         {allVoucher && <AllVoucher />}
         {usedVoucher && <UsedVoucher />}
       </ScrollView>

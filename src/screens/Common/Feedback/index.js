@@ -1,3 +1,4 @@
+import actions from '@actions';
 import {icon, image} from '@assets';
 import {
   Block,
@@ -6,18 +7,48 @@ import {
   HeaderTitle,
   Image,
   Pressable,
+  SelectDropdown,
   SelectInput,
   Text,
   TextInput,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {useState} from 'react';
+import {formatPhone} from '@utils';
+import {use, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Modal, SafeAreaView} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 export default function Feedback() {
   const {control} = useForm();
   const [feedbackSent, setFeedbackSent] = useState(0);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_LIST_SERVICE,
+    });
+    dispatch({
+      type: actions.GET_USER_INFO,
+    });
+  }, [dispatch]);
+  const service = useSelector(state => state.getServices?.data || []);
+  const userInfo = useSelector(state => state.getUserInfo?.data || []);
+  const [serviceId, setServiceId] = useState();
+  const [content, setContent] = useState('');
+  const sendFeedback = () => {
+    dispatch({
+      type: actions.FEEDBACK,
+      body: {
+        service_id: serviceId,
+        full_name: userInfo?.full_name,
+        phone: userInfo?.phone,
+        content: content,
+      },
+      onSuccess: () => {
+        setFeedbackSent(!feedbackSent);
+      },
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Phản hồi'} canGoBack />
@@ -31,14 +62,14 @@ export default function Feedback() {
         </Text>
       </Pressable>
       <Block width={width - 24} marginLeft={12} marginTop={20}>
-        <Block>
+        <Block gap={15}>
           <Text fontSize={15} semiBold color={COLORS.black3}>
             Chọn dịch vụ
           </Text>
-          <SelectInput
-            placeholder="Chọn dịch vụ"
-            control={control}
-            name={'abc'}
+          <SelectDropdown
+            data={service}
+            placeholder={'Chọn dịch vụ'}
+            onSelect={selectService => setServiceId(selectService.item_id)}
           />
         </Block>
         <Text fontSize={15} semiBold color={COLORS.black3} marginTop={20}>
@@ -54,9 +85,9 @@ export default function Feedback() {
           paddingLeft={12}
           fontSize={14}
           regular
-          color={COLORS.black1}>
-          Lâm Minh Hoàng
-        </TextInput>
+          color={COLORS.black1}
+          value={userInfo?.full_name}
+        />
         <TextInput
           height={41}
           radius={5}
@@ -67,9 +98,9 @@ export default function Feedback() {
           paddingLeft={12}
           fontSize={14}
           regular
-          color={COLORS.black1}>
-          0909 123 456
-        </TextInput>
+          color={COLORS.black1}
+          value={formatPhone(userInfo?.phone)}
+        />
         <Block marginTop={20}>
           <Text fontSize={15} semiBold color={COLORS.black3}>
             Nội dung
@@ -81,7 +112,10 @@ export default function Feedback() {
             radius={8}
             height={110.67}
             backgroundColor={COLORS.white}
-            marginTop={15}></TextInput>
+            marginTop={15}
+            value={content}
+            onChangeText={setContent}
+          />
         </Block>
         <Text fontSize={15} semiBold color={COLORS.black1} marginTop={20.3}>
           Hình ảnh
@@ -103,7 +137,7 @@ export default function Feedback() {
           </Block>
         </Block>
       </Block>
-      <Button title="Gửi" onPress={() => setFeedbackSent(!feedbackSent)} />
+      <Button title="Gửi" onPress={sendFeedback} />
       <Modal visible={feedbackSent} transparent="fade">
         <SafeAreaView style={{flex: 1}}>
           <Block flex backgroundColor={COLORS.gray10}>

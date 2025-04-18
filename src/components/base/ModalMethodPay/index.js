@@ -4,7 +4,22 @@ import {COLORS} from '@theme';
 import {icon} from '@assets';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {width} from '@responsive';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect, useState} from 'react';
+import actions from '@actions';
+import {URL_API} from 'redux/sagas/common';
 const ModalMethodPay = ({visible, close}) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_PAYMENT_METHOD,
+    });
+  }, [dispatch]);
+  const paymentMethod = useSelector(
+    state => state.getPaymentMethod?.data || [],
+  );
+  const [methodSelected, setMethodSelected] = useState(1);
+
   return (
     <Modal
       visible={visible}
@@ -56,135 +71,55 @@ const ModalMethodPay = ({visible, close}) => {
             marginTop={23}
             borderTopWidth={1}
             borderColor={COLORS.grayBreak}>
-            <Block marginTop={15} marginLeft={24} marginRight={21.2}>
-              <Block alignCenter row>
-                <Image source={icon.icon_cash} width={24.92} height={24.99} />
-                <Text
-                  fontSize={16}
-                  semiBold
-                  color={COLORS.black6}
-                  marginLeft={15.1}>
-                  Tiền mặt
-                </Text>
-                <Block
-                  width={23}
-                  height={23}
-                  borderWidth={1}
-                  borderColor={COLORS.lightGray1}
-                  radius={50}
-                  absolute
-                  right={0}
-                  justifyCenter
-                  alignCenter
-                  backgroundColor={COLORS.red4}>
+            <Block marginTop={15} marginLeft={24} marginRight={21.2} gap={15}>
+              {paymentMethod.map(item => (
+                <Block key={item.method_id}>
+                  <Pressable
+                    onPress={() => setMethodSelected(item.method_id)}
+                    alignCenter
+                    row>
+                    <Image
+                      source={{uri: `${URL_API.uploads}/${item.picture}`}}
+                      width={24.92}
+                      height={24.99}
+                    />
+                    <Text
+                      fontSize={16}
+                      semiBold
+                      color={COLORS.black6}
+                      marginLeft={15.1}>
+                      {item.title}
+                    </Text>
+                    <Block
+                      width={23}
+                      height={23}
+                      borderWidth={1}
+                      borderColor={COLORS.lightGray1}
+                      radius={50}
+                      absolute
+                      right={0}
+                      justifyCenter
+                      alignCenter
+                      backgroundColor={
+                        methodSelected === item.method_id && COLORS.red4
+                      }>
+                      {methodSelected === item.method_id && (
+                        <Block
+                          width={15}
+                          height={15}
+                          radius={50}
+                          backgroundColor={COLORS.white}
+                        />
+                      )}
+                    </Block>
+                  </Pressable>
                   <Block
-                    width={11}
-                    height={11}
-                    backgroundColor={COLORS.white}
-                    radius={50}
-                  />
-                </Block>
-              </Block>
-              <Block
-                marginTop={15}
-                borderWidth={1}
-                borderColor={COLORS.grayBreak}
-              />
-              <Block marginTop={15}>
-                <Block row alignCenter>
-                  <Image
-                    source={icon.icon_logo_san}
-                    width={26}
-                    height={25.57}
-                    radius={5}
-                  />
-                  <Text
-                    fontSize={16}
-                    semiBold
-                    color={COLORS.black6}
-                    marginLeft={15.1}>
-                    Tài khoản SAN
-                  </Text>
-                  <Block
-                    width={23}
-                    height={23}
+                    marginTop={15}
                     borderWidth={1}
-                    borderColor={COLORS.lightGray1}
-                    radius={50}
-                    absolute
-                    right={0}
-                    justifyCenter
-                    alignCenter></Block>
+                    borderColor={COLORS.grayBreak}
+                  />
                 </Block>
-                <Text
-                  marginLeft={40}
-                  marginTop={8.3}
-                  fontSize={14}
-                  regular
-                  color={COLORS.placeholder}>
-                  30.000.000 đ
-                </Text>
-              </Block>
-              <Block
-                marginTop={15}
-                borderWidth={1}
-                borderColor={COLORS.grayBreak}
-              />
-              <Block alignCenter row marginTop={15}>
-                <Image
-                  source={icon.icon_vnpay}
-                  width={26}
-                  height={25.57}
-                  radius={5}
-                />
-                <Text
-                  fontSize={16}
-                  semiBold
-                  color={COLORS.black6}
-                  marginLeft={15.1}>
-                  VN Pay
-                </Text>
-                <Block
-                  width={23}
-                  height={23}
-                  borderWidth={1}
-                  borderColor={COLORS.lightGray1}
-                  radius={50}
-                  absolute
-                  right={0}
-                  justifyCenter
-                  alignCenter></Block>
-              </Block>
-              <Block
-                marginTop={15}
-                borderWidth={1}
-                borderColor={COLORS.grayBreak}
-              />
-              <Block alignCenter row marginTop={15}>
-                <Image
-                  source={icon.icon_momo}
-                  width={26}
-                  height={25.57}
-                  radius={5}
-                />
-                <Text
-                  fontSize={16}
-                  semiBold
-                  color={COLORS.black6}
-                  marginLeft={15.1}>
-                  Ví Momo
-                </Text>
-                <Block
-                  width={23}
-                  height={23}
-                  borderWidth={1}
-                  borderColor={COLORS.lightGray1}
-                  radius={50}
-                  absolute
-                  right={0}
-                  justifyCenter
-                  alignCenter></Block>
-              </Block>
+              ))}
             </Block>
           </Block>
         </Block>

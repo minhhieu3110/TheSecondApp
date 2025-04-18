@@ -7,9 +7,9 @@ import React, {useState} from 'react';
 import {useController} from 'react-hook-form';
 import {useTranslation} from 'react-i18next';
 import {ScrollView} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
+import AntDesign from 'react-native-vector-icons/AntDesign';
 const SelectInput = ({
   label = '',
   placeholder = '-- Select --',
@@ -92,8 +92,8 @@ const SelectInput = ({
             {t(display)}
           </Text>
           <Icon
-            IconType={AntDesign}
-            iconName="down"
+            IconType={Feather}
+            iconName="chevron-down"
             iconColor="textPlaceholder"
           />
         </Pressable>

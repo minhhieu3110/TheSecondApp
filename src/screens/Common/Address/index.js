@@ -1,10 +1,20 @@
+import actions from '@actions';
 import {icon} from '@assets';
-import {Block, Button, HeaderTitle, Image, Pressable, Text} from '@components';
+import {
+  Block,
+  Button,
+  HeaderTitle,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
 export default function Address({route}) {
   const [service, setService] = useState(null);
@@ -20,6 +30,15 @@ export default function Address({route}) {
       commonRoot.navigate(router.PHYSICAL_THERAPY);
     service === 'house_cleaning' && commonRoot.navigate(router.HOUSEWORK);
   };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_ADDRESS_SAVE,
+    });
+  }, [dispatch]);
+  const addressSaved = useSelector(state => state.getAddressSave?.data || []);
+  console.log(service);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Chọn địa điểm'} canGoBack />
@@ -31,46 +50,52 @@ export default function Address({route}) {
         marginTop={19}>
         Danh sách địa điểm
       </Text>
-      <Block
-        width={width - 24}
-        marginHorizontal={12}
-        marginTop={15}
-        spaceBetween>
-        {Array.from({length: 5}).map((_, index) => (
-          <Pressable
-            onPress={handleService}
-            key={index}
-            height={101}
-            radius={8}
-            backgroundColor={COLORS.white}
-            paddingBottom={19}
-            marginBottom={12}>
-            <Block marginLeft={10} marginTop={12} height={25} row alignCenter>
-              <Image
-                source={icon.icon_position_address}
-                width={25}
-                height={25}
-              />
+      <ScrollView contentContainerStyle={{paddingBottom: 100}}>
+        <Block
+          width={width - 24}
+          marginHorizontal={12}
+          marginTop={15}
+          spaceBetween>
+          {addressSaved.map(item => (
+            <Pressable
+              // onPress={() =>
+              //   commonRoot.navigate(router.CHOOSE_SERVICE, {
+              //     id: route.params?.id,
+              //   })
+              // }
+              onPress={handleService}
+              key={item.item_id}
+              radius={8}
+              backgroundColor={COLORS.white}
+              paddingBottom={18}
+              marginBottom={12}>
+              <Block marginLeft={10} marginTop={12} height={25} row alignCenter>
+                <Image
+                  source={icon.icon_position_address}
+                  width={25}
+                  height={25}
+                />
+                <Text
+                  marginLeft={4}
+                  fontSize={14}
+                  regular
+                  color={COLORS.placeholder}>
+                  {item.title}
+                </Text>
+              </Block>
               <Text
-                marginLeft={4}
                 fontSize={14}
                 regular
-                color={COLORS.placeholder}>
-                Nhà riêng
+                color={COLORS.placeholder}
+                numberOfLines={2}
+                marginLeft={39}
+                marginTop={9}>
+                {item.address_full}
               </Text>
-            </Block>
-            <Text
-              fontSize={14}
-              regular
-              color={COLORS.placeholder}
-              numberOfLines={2}
-              marginLeft={39}
-              marginTop={9}>
-              107 đường Cộng Hòa, Phường 12, quận Tân Bình, Tp.HCM
-            </Text>
-          </Pressable>
-        ))}
-      </Block>
+            </Pressable>
+          ))}
+        </Block>
+      </ScrollView>
       <Button
         title="Thêm mới"
         onPress={() => commonRoot.navigate(router.ADD_NEW_ADDRESS)}

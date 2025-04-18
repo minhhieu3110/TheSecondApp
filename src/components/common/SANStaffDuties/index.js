@@ -11,7 +11,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {COLORS} from '@theme';
 import {useState} from 'react';
-export default function SANStaffDuties({top}) {
+export default function SANStaffDuties({
+  top,
+  task_todo = [],
+  task_nottodo = [],
+}) {
   const [doWork, setDoWork] = useState(0);
   const [notWork, setNotWork] = useState(0);
   return (
@@ -79,8 +83,13 @@ export default function SANStaffDuties({top}) {
           />
         </Block>
       </Pressable>
-      <ModalSANStaffDo visible={doWork} close={() => setDoWork(false)} />
+      <ModalSANStaffDo
+        data={task_todo}
+        visible={doWork}
+        close={() => setDoWork(false)}
+      />
       <ModalSANStaffNotPerform
+        data={task_nottodo}
         visible={notWork}
         close={() => setNotWork(false)}
       />

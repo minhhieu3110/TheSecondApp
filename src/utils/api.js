@@ -72,6 +72,20 @@ axios.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+axios.interceptors.request.use(
+  config => {
+    const state = store.getState();
+    const token = state.user.token;
+    console.log(token);
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  error => Promise.reject(error),
+);
 
 export default class HttpService {
   static generateHeader(headers) {
@@ -142,26 +156,27 @@ export default class HttpService {
   }
 
   //TODO: PUT
-  static async put(url, data) {
+  static async put(url, body) {
     try {
       return await axios
-        .put(url, data, {
+        .put(url, body, {
           headers: this.generateHeader(),
         })
-        .then(response => response.data);
+        .then(response => response.body);
     } catch (error) {
       throw error.response;
     }
   }
 
   //TODO: PATCH
-  static async patch(url, data) {
+  static async patch(url, body, params = {}) {
     try {
       return await axios
-        .patch(url, data, {
-          headers: this.generateHeader(),
+        .patch(url, body, {
+          headers: this.generateHeader('application/json'),
+          params: {...params},
         })
-        .then(response => response.data);
+        .then(response => response.body);
     } catch (error) {
       throw error.response;
     }

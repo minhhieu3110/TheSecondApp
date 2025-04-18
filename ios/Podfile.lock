@@ -1275,6 +1275,27 @@ PODS:
     - React-jsiexecutor
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
+  - react-native-date-picker (5.0.12):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - react-native-pager-view (6.7.0):
     - DoubleConversion
     - glog
@@ -1296,6 +1317,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-render-html (6.3.4):
+    - React-Core
   - react-native-safe-area-context (5.3.0):
     - DoubleConversion
     - glog
@@ -1672,6 +1695,48 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - RNCPicker (2.11.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - RNDateTimePicker (8.3.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.11.18.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNDeviceInfo (14.0.4):
     - React-Core
   - RNFastImage (8.6.3):
@@ -2011,7 +2076,9 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
+  - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
+  - react-native-render-html (from `../node_modules/react-native-render-html`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
@@ -2043,6 +2110,8 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
+  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
+  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -2144,8 +2213,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   React-microtasksnativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
+  react-native-date-picker:
+    :path: "../node_modules/react-native-date-picker"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
+  react-native-render-html:
+    :path: "../node_modules/react-native-render-html"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-splash-screen:
@@ -2208,6 +2281,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
+  RNCPicker:
+    :path: "../node_modules/@react-native-picker/picker"
+  RNDateTimePicker:
+    :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFastImage:
@@ -2273,7 +2350,9 @@ SPEC CHECKSUMS:
   React-logger: 795cd5055782db394f187f9db0477d4b25b44291
   React-Mapbuffer: 0502faf46cab8fb89cfc7bf3e6c6109b6ef9b5de
   React-microtasksnativemodule: 663bc64e3a96c5fc91081923ae7481adc1359a78
+  react-native-date-picker: d23f0a313972fe5336540d55380366367f8a2a51
   react-native-pager-view: e26e7a6f1ffb0c12ebfaf858ff9100b054de043d
+  react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-safe-area-context: 286b3e7b5589795bb85ffc38faf4c0706c48a092
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
   React-NativeModulesApple: 16fbd5b040ff6c492dacc361d49e63cba7a6a7a1
@@ -2305,6 +2384,8 @@ SPEC CHECKSUMS:
   ReactCodegen: a63a0ab6ae824aef2e8c744981edd718b16eb9f2
   ReactCommon: 3d39389f8e2a2157d5c999f8fba57bd1c8f226f0
   RNCAsyncStorage: 4f4de141719fef3490c87a0dd779575c64c0472c
+  RNCPicker: ffbd7b9fc7c1341929e61dbef6219f7860f57418
+  RNDateTimePicker: 5567e082958470867c4a27dd90cdaf2ea54bde0c
   RNDeviceInfo: feea80a690d2bde1fe51461cf548039258bd03f2
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
   RNGestureHandler: 9b05fab9a0b48fe48c968de7dbb9ca38a2b4f7ab

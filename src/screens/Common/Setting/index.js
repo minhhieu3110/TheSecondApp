@@ -1,9 +1,21 @@
+import actions from '@actions';
 import {Block, HeaderTitle, Text, Switch} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 export default function Setting() {
-  const [isActive, setIsActive] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_USER_INFO,
+    });
+  }, [dispatch]);
+  const userInfo = useSelector(state => state.getUserInfo?.data || []);
+  const [allowNotification, setAllowNotification] = useState(
+    userInfo?.allow_notifications,
+  );
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -21,8 +33,14 @@ export default function Setting() {
             </Text>
             <Block absolute right={0} width={46} height={23}>
               <Switch
-                value={isActive}
-                onValueChange={setIsActive}
+                value={allowNotification}
+                onValueChange={value => {
+                  setAllowNotification(value);
+                  dispatch({
+                    type: actions.UPDATE_USER_INFO,
+                    body: {allow_notifications: value},
+                  });
+                }}
                 trackColor={{false: COLORS.grayWhite, true: COLORS.green6}}
                 thumbColor={{false: COLORS.white, true: COLORS.white}}
                 width={46}

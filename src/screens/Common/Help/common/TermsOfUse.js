@@ -1,12 +1,24 @@
+import actions from '@actions';
 import {Block, HeaderTitle, Text} from '@components';
 import {width} from '@responsive';
-import {COLORS} from '@theme';
+import {COLORS, FONTS} from '@theme';
+import {useEffect} from 'react';
 import {ScrollView} from 'react-native';
+import RenderHTML from 'react-native-render-html';
+import {useDispatch, useSelector} from 'react-redux';
 
 export default function TermsOfUse() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_HELP,
+      params: {number: 7},
+    });
+  }, [dispatch]);
+  const help = useSelector(state => state.getHelp?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <HeaderTitle canGoBack title={'Điều khoản dử dụng'} />
+      <HeaderTitle canGoBack title={'Điều khoản sử dụng'} />
       <ScrollView>
         <Block
           width={width - 24}
@@ -14,38 +26,32 @@ export default function TermsOfUse() {
           marginTop={12}
           backgroundColor={COLORS.white}>
           <Block marginTop={12} marginLeft={12}>
-            <Text fontSize={14} regular color={COLORS.black1} marginBottom={39}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been industry's standard dummy text ever
-              since the 1500s, when anm unknown printer took a galley of type
-              and scrambledt it to make a type specimen book. It has survived t
-              only five centuries, but also the leap into electritypesetting,
-              remaining essentially unchanged. It was popularisn in the 1960s
-              with the release of Letraset sheeticontaining Lorem Ipsum
-              passages, and more recently wt desktop publishing software like
-              Aldus PageMaker incliversions of Lorem Ipsum.
-            </Text>
-            <Text fontSize={14} regular color={COLORS.black1} marginBottom={39}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been industry's standard dummy text ever
-              since the 1500s, when anm unknown printer took a galley of type
-              and scrambledt it to make a type specimen book. It has survived t
-              only five centuries, but also the leap into electritypesetting,
-              remaining essentially unchanged. It was popularisn in the 1960s
-              with thez recently wt desktop publishing software like Aldus
-              PageMaker incliversions of Lorem Ipsum.
-            </Text>
-            <Text fontSize={14} regular color={COLORS.black1} marginBottom={39}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been industry's standard dummy text ever
-              since the 1500s, when anm unknown printer took a galley of type
-              and scrambledt it to make a type specimen book. It has survived t
-              only five centuries, but also the leap into electritypesetting,
-              remaining essentially unchanged. It was popularisn in the 1960s
-              with the release of Letraset sheeticontaining Lorem Ipsum
-              passages, and more recently wt desktop publishing software like
-              Aldus PageMaker incliversions of Lorem Ipsum.
-            </Text>
+            <RenderHTML
+              contentWidth={width - 24}
+              source={{html: help?.content}}
+              tagsStyles={{
+                p: {
+                  fontSize: 14,
+                  fontWeight: 'regular',
+                  fontFamily: 'SVN-Poppins',
+                  color: COLORS.black2,
+                  lineHeight: 22,
+                },
+                strong: {
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  fontFamily: 'SVN-Poppins',
+                  color: COLORS.black2,
+                  lineHeight: 22,
+                },
+                a: {
+                  fontSize: 14,
+                  fontFamily: FONTS.regular,
+                  color: COLORS.blue,
+                  lineHeight: 22,
+                },
+              }}
+            />
           </Block>
         </Block>
       </ScrollView>

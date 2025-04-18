@@ -1,20 +1,27 @@
+import actions from '@actions';
 import {icon, image} from '@assets';
 import {Block, Icon, Image, Pressable, Text} from '@components';
-import {height, width} from '@responsive';
+import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
-import {
-  authRoot,
-  bottomRoot,
-  commonRoot,
-  topRoot,
-} from 'navigation/navigationRef';
+import {formatPhone} from '@utils';
+import {authRoot, bottomRoot, commonRoot} from 'navigation/navigationRef';
+import {useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import RadialGradient from 'react-native-radial-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {useDispatch, useSelector} from 'react-redux';
+import {URL_API} from 'redux/sagas/common';
 export default function ProfileScreen() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_USER_INFO,
+    });
+  }, [dispatch]);
+
+  const userInfo = useSelector(state => state.getUserInfo?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView
@@ -55,11 +62,11 @@ export default function ProfileScreen() {
               </Pressable>
             </Block>
             <Block height={82} marginLeft={12} marginTop={26}>
-              <Text fontSize={17} medium color={COLORS.white}>
-                Lâm Minh Hoàng
+              <Text fontSize={17} medium color={COLORS.white} capitalize>
+                {userInfo?.full_name}
               </Text>
               <Text fontSize={14} regular color={COLORS.white}>
-                0909 123 456
+                {formatPhone(userInfo?.phone)}
               </Text>
               <Pressable
                 onPress={() => commonRoot.navigate(router.MENBERSHIP_RANK)}
@@ -83,10 +90,11 @@ export default function ProfileScreen() {
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}>
-                  {/* <Block row radius={15} alignCenter justifyCenter> */}
                   <Block width={19} height={19}>
                     <Image
-                      source={icon.icon_bronze_rank}
+                      source={{
+                        uri: `${URL_API.uploads}/${userInfo?.rankinfo?.picture}`,
+                      }}
                       height={19}
                       width={19}
                     />
@@ -102,7 +110,7 @@ export default function ProfileScreen() {
                     fontSize={13}
                     color={COLORS.yellow3}
                     marginLeft={8.5}>
-                    Hạng vàng
+                    {userInfo?.rankinfo?.title}
                   </Text>
                   <Icon
                     IconType={MaterialIcons}
@@ -114,13 +122,19 @@ export default function ProfileScreen() {
                 </RadialGradient>
               </Pressable>
             </Block>
-            <Block width={27.53} height={27.53} absolute top={20} right={11.9}>
+            <Pressable
+              onPress={() => commonRoot.navigate(router.ACCOUNT)}
+              width={27.53}
+              height={27.53}
+              absolute
+              top={20}
+              right={11.9}>
               <Image
                 source={icon.icon_edit_profile}
                 width={27.53}
                 height={27.53}
               />
-            </Block>
+            </Pressable>
           </LinearGradient>
           <Block
             width={width - 24}

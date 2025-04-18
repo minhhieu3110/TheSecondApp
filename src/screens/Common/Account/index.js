@@ -1,9 +1,47 @@
+import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, HeaderTitle, Image, Text, TextInput} from '@components';
+import {
+  Block,
+  HeaderTitle,
+  Image,
+  Pressable,
+  Text,
+  TextInput,
+} from '@components';
 import {width} from '@responsive';
+import router from '@router';
 import {COLORS} from '@theme';
+import {ConvertTimeStamp, formatPhone} from '@utils';
+import {bottomRoot, root} from 'navigation/navigationRef';
+import {use, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {user} from 'redux/reducers/combineReducers/userReducers';
 
 export default function Account() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_USER_INFO,
+    });
+  }, [dispatch]);
+  const userInfo = useSelector(state => state.getUserInfo?.data || []);
+  const [updateName, setUpdateName] = useState(`${userInfo?.full_name}`);
+  const [updateEmail, setUpdateEmail] = useState(`${userInfo?.email}`);
+  const [updateDateOfBirth, setUpdateDateOfBirth] = useState();
+  const update = () => {
+    dispatch({
+      type: actions.UPDATE_USER_INFO,
+      body: {
+        full_name: updateName,
+        email: updateEmail,
+        birthday: updateDateOfBirth,
+      },
+      onSuccess: () => {
+        root.goBack();
+      },
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle canGoBack title={'Thiết lập tài khoản'} />
@@ -47,9 +85,11 @@ export default function Account() {
               color={COLORS.placeholder}
               fontSize={14}
               regular
-              marginTop={15}>
-              Lâm Minh Hoàng
-            </TextInput>
+              marginTop={15}
+              value={updateName}
+              numberOfLines={1}
+              onChangeText={setUpdateName}
+            />
           </Block>
           <Block marginBottom={17}>
             <Text fontSize={15} semiBold color={COLORS.black3}>
@@ -64,9 +104,10 @@ export default function Account() {
               color={COLORS.placeholder}
               fontSize={14}
               regular
-              marginTop={15}>
-              Hoang1234@gmail.com
-            </TextInput>
+              marginTop={15}
+              value={updateEmail}
+              onChangeText={setUpdateEmail}
+            />
           </Block>
           <Block marginBottom={17}>
             <Text fontSize={15} semiBold color={COLORS.black3}>
@@ -82,9 +123,9 @@ export default function Account() {
               color={COLORS.placeholder}
               fontSize={14}
               regular
-              marginTop={15}>
-              0909 123 456
-            </TextInput>
+              marginTop={15}
+              value={formatPhone(userInfo?.phone)}
+            />
           </Block>
           <Block marginBottom={17}>
             <Text fontSize={15} semiBold color={COLORS.black3}>
@@ -100,9 +141,10 @@ export default function Account() {
                 paddingLeft={12}
                 color={COLORS.placeholder}
                 fontSize={14}
-                regular>
-                20/11/2000
-              </TextInput>
+                regular
+                value={updateDateOfBirth}
+                onChangeText={setUpdateDateOfBirth}
+              />
               <Block
                 width={18.3}
                 height={17.13}
@@ -118,7 +160,8 @@ export default function Account() {
             </Block>
           </Block>
         </Block>
-        <Block
+        <Pressable
+          onPress={update}
           width={width - 48}
           height={48}
           justifyCenter
@@ -129,7 +172,7 @@ export default function Account() {
           <Text fontSize={15} regular color={COLORS.white}>
             Cập nhật
           </Text>
-        </Block>
+        </Pressable>
         <Block>
           <Text fontSize={15} regular color={COLORS.red4} marginTop={17}>
             Xoá tài khoản

@@ -1,4 +1,5 @@
 import React from 'react';
+import {PortalProvider} from '@gorhom/portal';
 import {SafeAreaView} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RootStack from 'navigation/RootStack';
@@ -10,8 +11,10 @@ const App = () => {
     <Provider store={store}>
       <SafeAreaProvider>
         <SafeAreaView style={{flex: 1}}>
-          <RootStack />
-          <Toast visibilityTime={3000} />
+          <PortalProvider>
+            <RootStack />
+            <Toast visibilityTime={3000} />
+          </PortalProvider>
         </SafeAreaView>
       </SafeAreaProvider>
     </Provider>

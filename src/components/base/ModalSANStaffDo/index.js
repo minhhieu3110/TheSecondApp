@@ -5,7 +5,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Modal, TouchableOpacity, SafeAreaView} from 'react-native';
 import {width} from '@responsive';
 import {useState} from 'react';
-const ModalSANStaffDo = ({visible, close}) => {
+const ModalSANStaffDo = ({visible, close, data = []}) => {
   return (
     <Modal
       visible={visible}
@@ -55,136 +55,25 @@ const ModalSANStaffDo = ({visible, close}) => {
               />
             </Pressable>
             <Block marginTop={20} marginHorizontal={12}>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'check-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.green6}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Trông nom, chăm sóc người bệnh để người bệnh không có cảm giác
-                  cô đơn.
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'check-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.green6}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Cho người bệnh ăn uống, nghỉ ngơi.
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'check-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.green6}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Vệ sinh cho người bệnh.
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'check-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.green6}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Nâng trở người bệnh khi không di chuyển hoặc hoạt động được.
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'check-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.green6}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Đổ bô, chất thải của người bệnh khi không tự đi vệ sinh được.
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'check-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.green6}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Theo dõi nhiệt độ, huyết áp, mạch.
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'check-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.green6}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Hỗ trợ, giám sát người bệnh uống thuốc theo đơn.
-                </Text>
-              </Block>
-              <Block row alignCenter>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'check-circle'}
-                  iconSize={10}
-                  iconColor={COLORS.green6}
-                />
-                <Text
-                  marginLeft={10}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Thông báo tình trạng bệnh lý cho người thân, bác sĩ, điều
-                  dưỡng và gọi hỗ trợ khám bệnh khi cần thiết.{' '}
-                </Text>
-              </Block>
+              {data?.map(item => (
+                <Block row key={item.title} marginBottom={5}>
+                  <Icon
+                    IconType={FontAwesome}
+                    iconName={'check-circle'}
+                    iconSize={10}
+                    iconColor={COLORS.green6}
+                  />
+                  <Text
+                    marginTop={-5}
+                    marginLeft={10}
+                    fontSize={14}
+                    regular
+                    color={COLORS.black1}
+                    lineHeight={22}>
+                    {item.title}
+                  </Text>
+                </Block>
+              ))}
             </Block>
           </Block>
         </TouchableOpacity>

@@ -1,11 +1,23 @@
+import actions from '@actions';
 import {icon, image} from '@assets';
 import {Block, Icon, Image, Pressable, Text} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {root} from 'navigation/navigationRef';
+import {useEffect} from 'react';
 import {ScrollView} from 'react-native';
+import RenderHTML from 'react-native-render-html';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useDispatch, useSelector} from 'react-redux';
 export default function ReferFriend() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_HELP,
+      params: {number: 12},
+    });
+  }, [dispatch]);
+  const help = useSelector(state => state.getHelp?.data);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -43,7 +55,7 @@ export default function ReferFriend() {
           paddingBottom={57.3}>
           <Block width={width - 48} marginTop={11} marginHorizontal={12}>
             <Text fontSize={18} semiBold color={COLORS.black1}>
-              Giới thiệu ứng dụng và nhận ngay thu nhập hấp dẫn
+              {help?.title}
             </Text>
             <Block row marginTop={34} alignCenter spaceBetween>
               <Block row width={width - 78} spaceBetween>
@@ -123,49 +135,24 @@ export default function ReferFriend() {
             </Block>
           </Block>
           <Block marginTop={17} width={width - 48} marginHorizontal={12}>
-            <Block>
-              <Text fontSize={14} semiBold color={COLORS.black1}>
-                Đối với người giới thiệu
-              </Text>
-              <Text fontSize={14} semiBold color={COLORS.black5} marginTop={13}>
-                Bước 1:{' '}
-                <Text fontSize={14} regular color={COLORS.black5}>
-                  Lorem ipsum dolor sit amet, consec adipiscing elit, sed do
-                  eiusmod tempor
-                </Text>
-              </Text>
-              <Text fontSize={14} semiBold color={COLORS.black5} marginTop={16}>
-                Bước 2:{' '}
-                <Text fontSize={14} regular color={COLORS.black5}>
-                  Lorem psum dolor sit amet, consec adipiscing elit, sed do
-                  eiusmod tempor incididunt ut labor dolore magna aliqua. Ut
-                  enim ad minim veniam, t nostrudmt exercitation ullamco laboris
-                  nisi ut aliquip e commodo consequat
-                </Text>
-              </Text>
-            </Block>
-
-            <Block marginTop={39}>
-              <Text fontSize={14} semiBold color={COLORS.black1}>
-                Đối với người giới thiệu
-              </Text>
-              <Text fontSize={14} semiBold color={COLORS.black5} marginTop={13}>
-                Bước 1:{' '}
-                <Text fontSize={14} regular color={COLORS.black5}>
-                  Lorem ipsum dolor sit amet, consec adipiscing elit, sed do
-                  eiusmod tempor
-                </Text>
-              </Text>
-              <Text fontSize={14} semiBold color={COLORS.black5} marginTop={16}>
-                Bước 2:{' '}
-                <Text fontSize={14} regular color={COLORS.black5}>
-                  Lorem psum dolor sit amet, consec adipiscing elit, sed do
-                  eiusmod tempor incididunt ut labor dolore magna aliqua. Ut
-                  enim ad minim veniam, t nostrudmt exercitation ullamco laboris
-                  nisi ut aliquip e commodo consequat
-                </Text>
-              </Text>
-            </Block>
+            <RenderHTML
+              contentWidth={width - 48}
+              source={{html: help?.content}}
+              tagsStyles={{
+                strong: {
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                  color: COLORS.black1,
+                  lineHeight: 18,
+                },
+                p: {
+                  fontSize: 14,
+                  fontWeight: 'regular',
+                  color: COLORS.black5,
+                  lineHeight: 18,
+                },
+              }}
+            />
           </Block>
           <Block marginLeft={12} marginTop={22.7}>
             <Text fontSize={14} medium color={COLORS.red4}>
