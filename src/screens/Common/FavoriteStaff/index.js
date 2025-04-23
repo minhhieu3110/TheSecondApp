@@ -1,14 +1,50 @@
+import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Button, HeaderTitle, Icon, Image, Text} from '@components';
+import {
+  Block,
+  Button,
+  HeaderTitle,
+  Icon,
+  Image,
+  Pressable,
+  Text,
+} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {bottomRoot, commonRoot} from 'navigation/navigationRef';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
+import Toast from 'react-native-toast-message';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {useDispatch, useSelector} from 'react-redux';
+import {URL_API} from 'redux/sagas/common';
 export default function FavoriteStaff() {
-  const [addStaff, setAddStaff] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_FAVORITE_EMPLOYEE,
+    });
+  }, [dispatch]);
+  const favoriteEmp = useSelector(
+    state => state.getFavoriteEmployee?.data || [],
+  );
+  const removeFavoriteEmployee = item_id => {
+    dispatch({
+      type: actions.FAVORITE_EMPLOYEE,
+      body: {
+        item_id: item_id,
+        type: 'remove',
+      },
+      onSuccess: res => {
+        Toast.show({
+          type: 'success',
+          text1: res?.message,
+        });
+      },
+    });
+  };
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle
@@ -19,103 +55,61 @@ export default function FavoriteStaff() {
       <ScrollView
         contentContainerStyle={{marginTop: 15}}
         showsVerticalScrollIndicator={false}>
-        <Block width={width - 24} marginLeft={12}>
-          <Block
-            height={97}
-            backgroundColor={COLORS.white}
-            radius={8}
-            row
-            marginBottom={12}>
-            <Block
-              width={77}
-              height={77}
+        <Block width={width - 24} marginLeft={12} gap={12}>
+          {favoriteEmp?.map(emp => (
+            <Pressable
+              onPress={() =>
+                commonRoot.navigate(router.PROFILE_STAFF, {id: emp?.id})
+              }
+              key={emp?.id}
+              height={97}
+              backgroundColor={COLORS.white}
               radius={8}
-              marginLeft={10}
-              marginTop={10}>
-              <Image
-                source={image.image_staff}
-                width={'100%'}
-                height={'100%'}
-                resizeMode="contain"
-              />
-            </Block>
-            <Block height={43} marginLeft={10.7} marginTop={15}>
-              <Text fontSize={14} semiBold color={COLORS.black1}>
-                Lê Thu Huyền
-              </Text>
-              <Block marginLeft={2} row alignCenter>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.placeholder}
-                  marginRight={5}>
-                  4.8
-                </Text>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'star'}
-                  iconSize={18}
-                  iconColor={COLORS.yellow3}
+              row>
+              <Block
+                width={77}
+                height={77}
+                radius={8}
+                marginLeft={10}
+                marginTop={10}>
+                <Image
+                  source={{uri: `${URL_API.uploads}/${emp?.picture}`}}
+                  width={'100%'}
+                  height={'100%'}
+                  resizeMode="contain"
                 />
               </Block>
-            </Block>
-            <Image
-              source={icon.icon_heart_staff}
-              height={34}
-              width={34}
-              absolute
-              right={10}
-              marginTop={10}
-            />
-          </Block>
-          <Block
-            height={97}
-            backgroundColor={COLORS.white}
-            radius={8}
-            row
-            marginBottom={12}>
-            <Block
-              width={77}
-              height={77}
-              radius={8}
-              marginLeft={10}
-              marginTop={10}>
-              <Image
-                source={image.image_staff_1}
-                width={'100%'}
-                height={'100%'}
-                resizeMode="contain"
-              />
-            </Block>
-            <Block height={43} marginLeft={10.7} marginTop={15}>
-              <Text fontSize={14} semiBold color={COLORS.black1}>
-                Trịnh Thanh Tâm
-              </Text>
-              <Block marginLeft={2} row alignCenter>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.placeholder}
-                  marginRight={5}>
-                  4.8
+              <Block height={43} marginLeft={10.7} marginTop={15}>
+                <Text fontSize={14} semiBold color={COLORS.black1}>
+                  {emp?.full_name}
                 </Text>
-                <Icon
-                  IconType={FontAwesome}
-                  iconName={'star'}
-                  iconSize={18}
-                  iconColor={COLORS.yellow3}
-                />
+                <Block marginLeft={2} row alignCenter>
+                  <Text
+                    fontSize={14}
+                    regular
+                    color={COLORS.placeholder}
+                    marginRight={5}>
+                    {emp?.star}
+                  </Text>
+                  <Icon
+                    IconType={FontAwesome}
+                    iconName={'star'}
+                    iconSize={18}
+                    iconColor={COLORS.yellow3}
+                  />
+                </Block>
               </Block>
-            </Block>
-            <Image
-              source={icon.icon_heart_staff}
-              height={34}
-              width={34}
-              absolute
-              right={10}
-              marginTop={10}
-            />
-          </Block>
+              <Pressable
+                width={34}
+                height={34}
+                absolute
+                right={10}
+                top={10}
+                onPress={() => removeFavoriteEmployee(emp?.id)}>
+                <Image source={icon.icon_heart_staff} height={34} width={34} />
+              </Pressable>
+            </Pressable>
+          ))}
         </Block>
       </ScrollView>
       <Button

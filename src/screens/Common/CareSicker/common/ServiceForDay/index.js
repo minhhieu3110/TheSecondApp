@@ -16,12 +16,12 @@ import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
-export default function Elederly_Servicedurationday({route}) {
+export default function Sicker_Servicedurationday({route}) {
   const [isActive, setIsActive] = useState(false);
   const [choose, setChoose] = useState(1);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch({type: actions.GET_DETAIL_SERVICE_SUB, params: {item_id: 3}});
+    dispatch({type: actions.GET_DETAIL_SERVICE_SUB, params: {item_id: 5}});
     dispatch({
       type: actions.GET_ADDRESS_SAVE,
     });
@@ -110,7 +110,7 @@ export default function Elederly_Servicedurationday({route}) {
           commonRoot.navigate(router.SELECT_DAY_WORKING, {
             addressId: route?.params?.addressId,
             service_id: route?.params?.service_id,
-            service_sub_id: 3,
+            service_sub_id: 5,
             duration_id: durationSelected?.item_id,
             duration: durationSelected?.title,
             name_service: detailSub?.service?.title,

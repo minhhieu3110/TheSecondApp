@@ -6,7 +6,7 @@ import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default function Housework() {
+export default function Housework({route}) {
   return (
     <Block flex backgroundColor={COLORS.gradient5}>
       <LinearGradient style={{flex: 1}} colors={COLORS.gradient5}>
@@ -20,7 +20,13 @@ export default function Housework() {
           />
         </Block>
         <Pressable
-          onPress={() => commonRoot.navigate(router.HOUSEWORK_ODD_SHIFT)}
+          onPress={() =>
+            commonRoot.navigate(router.HOUSEWORK_ODD_SHIFT, {
+              service_id: route?.params?.service_id,
+              address_id: route?.params?.addressId,
+              service_sub_id: 1,
+            })
+          }
           width={width - 24}
           marginHorizontal={12}
           marginTop={10}>
@@ -51,7 +57,13 @@ export default function Housework() {
           </Block>
         </Pressable>
         <Pressable
-          onPress={() => commonRoot.navigate(router.HOUSEWORK_MONTH)}
+          onPress={() =>
+            commonRoot.navigate(router.HOUSEWORK_MONTH, {
+              service_id: route?.params?.service_id,
+              address_id: route?.params?.addressId,
+              service_sub_id: 2,
+            })
+          }
           width={width - 24}
           marginHorizontal={12}
           marginTop={12}>

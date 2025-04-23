@@ -2,8 +2,10 @@ import {Block, Text, Pressable, Icon} from '@components';
 import {Modal, TouchableOpacity} from 'react-native';
 import {COLORS} from '@theme';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Calendar from '@components';
 import {width} from '@responsive';
+
+import CalendarPicker from 'react-native-calendar-picker';
+import {convertDate, FormatDay} from '@utils';
 const ModalCalendar = ({visible, close}) => {
   return (
     <Modal
@@ -52,7 +54,28 @@ const ModalCalendar = ({visible, close}) => {
               iconSize={14.6}
             />
           </Pressable>
-          <Block marginTop={15}></Block>
+          <Block marginTop={15}>
+            <CalendarPicker
+              weekdays={['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7']}
+              months={[
+                'Tháng 1',
+                'Tháng 2',
+                'Tháng 3',
+                'Tháng 4',
+                'Tháng 5',
+                'Tháng 6',
+                'Tháng 7',
+                'Tháng 8',
+                'Tháng 9',
+                'Tháng 10',
+                'Tháng 11',
+                'Tháng 12',
+              ]}
+              previousTitle="Trước"
+              nextTitle="Sau"
+              onDateChange={day => console.log(convertDate(day))}
+            />
+          </Block>
         </Block>
       </TouchableOpacity>
     </Modal>

@@ -19,8 +19,8 @@ const ButtonSubmitService = ({
       height={72}
       width={width}>
       <Block marginVertical={12} marginHorizontal={12} justifyCenter>
-        <Block>
-          <Text fontSize={16} semiBold color={COLORS.black6}>
+        <Block width={width - 90}>
+          <Text fontSize={16} semiBold color={COLORS.black6} numberOfLines={1}>
             {titleTop}
           </Text>
           <Text marginTop={10} fontSize={14} regular color={COLORS.placeholder}>

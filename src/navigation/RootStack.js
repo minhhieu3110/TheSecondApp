@@ -5,7 +5,6 @@ import router from '@router';
 import AuthContainer from './AuthContainer';
 import BottomTabContainer from './BottomTabContainer';
 import CommonContainer from './CommonContainer';
-import TopTabContainer from './TopTabContainer';
 import TopTabContainerOrder from 'screens/Common/OrderOfYou/TopTabContainerOrder';
 import IntroSAN from 'screens/Common/IntroSAN';
 
@@ -28,10 +27,10 @@ export default function MainStack() {
           name={router.COMMON_CONTAINER}
           component={CommonContainer}
         />
-        <RootStack.Screen
+        {/* <RootStack.Screen
           name={router.TOP_CONTAINER}
           component={TopTabContainer}
-        />
+        /> */}
         <RootStack.Screen
           name={router.TOP_ODER_CONTAINER}
           component={TopTabContainerOrder}

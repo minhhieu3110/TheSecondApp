@@ -7,15 +7,20 @@ import {
   TextInput,
   ButtonSubmitService,
   SANStaffDuties,
+  ChooseStartTime,
 } from '@components';
 import {COLORS} from '@theme';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {icon} from '@assets';
 import {width} from '@responsive';
 import {ScrollView} from 'react-native';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
-export default function Elederly_Servicedurationmonth() {
+import {useDispatch, useSelector} from 'react-redux';
+import actions from '@actions';
+import {formatTime} from '@utils';
+import {duration} from 'moment';
+export default function Sicker_Servicedurationmonth({route}) {
   const dayWeek = [
     {id: 1, title: 'T2'},
     {id: 2, title: 'T3'},
@@ -25,35 +30,78 @@ export default function Elederly_Servicedurationmonth() {
     {id: 6, title: 'T7'},
     {id: 7, title: 'CN'},
   ];
-  const optionChoose = [
-    {id: 1, title: 'Theo buổi', duration: 'Tối đa 4h/ngày'},
-    {id: 2, title: 'Theo ngày', duration: 'Tối đa 8h/ngày'},
-  ];
-  const optionServiceDuration = [
-    {id: 1, title: 'Gói 1 tháng'},
-    {id: 2, title: 'Gói 2 tháng'},
-    {id: 3, title: 'Gói 3 tháng'},
-    {id: 4, title: 'Gói 6 tháng'},
-  ];
+
   const [choose, setChoose] = useState(1);
   const [chooseOptionDuration, setChooseOptionDuration] = useState(1);
   const [againWeek, setAgainWeek] = useState([]);
-  const handleWeekDayPress = id => {
+  const handleWeekDayPress = title => {
     setAgainWeek(prevState => {
-      if (prevState.includes(id)) {
-        return prevState.filter(item => item !== id);
+      if (prevState.includes(title)) {
+        return prevState.filter(item => item !== title);
       }
-      return [...prevState, id];
+      return [...prevState, title];
     });
   };
-  const [doWork, setDoWork] = useState(0);
-  const [notWork, setNotWork] = useState(0);
   const [calendar, setCalendar] = useState(0);
-  const [selected, setSelected] = useState('');
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({type: actions.GET_ADDRESS_SAVE});
+    dispatch({type: actions.GET_DETAIL_SERVICE_SUB, params: {item_id: 6}});
+  }, [dispatch]);
+  const addressInfo = useSelector(state => state.getAddressSave?.data || []);
+  const address = addressInfo?.find(
+    item => item.id === route?.params?.addressId,
+  );
+  const [time, setTime] = useState(new Date());
+  const start_time = formatTime(time);
+  const detailSub = useSelector(state => state.getDetailServiceSub?.data || []);
+  const [content, setContent] = useState('');
+  const durationSelected = detailSub?.durations?.find(
+    item => item.item_id === choose,
+  );
+  const infoOrder = {
+    service_id: route?.params?.service_id,
+    service_sub_id: route?.params?.service_sub_id,
+    duration_id: choose,
+    monthly_package_id: chooseOptionDuration,
+    schedule_week: againWeek,
+    list_day: [],
+    start_time: start_time,
+    note: content,
+    promotion_id: '',
+    method_id: '',
+    address_id: route?.params?.addressId,
+  };
+  const priceCalculation = () => {
+    dispatch({
+      type: actions.PRICE_CALCULATION,
+      body: {
+        service_id: route?.params?.service_id,
+        service_sub_id: route?.params?.service_sub_id,
+        duration_id: choose,
+        monthly_package_id: chooseOptionDuration,
+        schedule_week: againWeek,
+        list_day: ['21/04/2025', '30/04/2025'],
+        start_time: start_time,
+        note: content,
+        promotion_id: '',
+        method_id: '',
+        address_id: route?.params?.addressId,
+      },
+      onSuccess: () => {
+        commonRoot.navigate(router.CONFIRM_AND_SIGNUP_PACKAGE, {
+          data: infoOrder,
+        });
+      },
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView contentContainerStyle={{paddingBottom: 136}}>
-        <HeaderChooseTime />
+        <HeaderChooseTime
+          titleAddress={address?.title}
+          address={address?.address_full}
+        />
         <Block marginTop={20} marginHorizontal={12}>
           <Block row alignCenter>
             <Text fontSize={15} semiBold color={COLORS.black2}>
@@ -71,15 +119,17 @@ export default function Elederly_Servicedurationmonth() {
           <Block marginTop={15} row columnGap={9.9} justifyCenter>
             {dayWeek.map(item => (
               <Pressable
-                onPress={() => handleWeekDayPress(item.id)}
-                key={item.id}
+                onPress={() => handleWeekDayPress(item.title)}
+                key={item.title}
                 width={49.14}
                 height={49.14}
                 radius={5}
-                borderWidth={againWeek.includes(item.id) ? 1 : ''}
-                borderColor={againWeek.includes(item.id) && COLORS.red4}
+                borderWidth={againWeek.includes(item.title) ? 1 : ''}
+                borderColor={againWeek.includes(item.title) && COLORS.red4}
                 backgroundColor={
-                  againWeek.includes(item.id) ? COLORS.pinkWhite2 : COLORS.white
+                  againWeek.includes(item.title)
+                    ? COLORS.pinkWhite2
+                    : COLORS.white
                 }
                 justifyCenter
                 alignCenter>
@@ -87,92 +137,48 @@ export default function Elederly_Servicedurationmonth() {
                   fontSize={15}
                   semiBold
                   color={
-                    againWeek.includes(item.id) ? COLORS.red4 : COLORS.black2
+                    againWeek.includes(item.title) ? COLORS.red4 : COLORS.black2
                   }>
                   {item.title}
                 </Text>
               </Pressable>
             ))}
           </Block>
-          <Block
-            marginTop={15}
-            radius={8}
-            backgroundColor={COLORS.white}
-            paddingBottom={14.7}
-            alignCenter
-            row>
-            <Image
-              source={icon.icon_time_activity}
-              width={22}
-              height={22}
-              marginTop={24}
-              marginLeft={12}
-            />
-            <Text
-              fontSize={15}
-              semiBold
-              color={COLORS.black2}
-              marginTop={28}
-              marginLeft={8}>
-              Chọn giờ bắt đầu
-            </Text>
-            <Block
-              width={width - 277}
-              height={44}
-              backgroundColor={COLORS.pinkWhite2}
-              marginLeft={65}
-              marginTop={15}
-              radius={5}
-              justifyCenter
-              alignCenter>
-              <Block spaceBetween row alignCenter height={31.67} width={92}>
-                <Text fontSize={15} regular color={COLORS.black2}>
-                  08
-                </Text>
-                <Block
-                  width={1}
-                  backgroundColor={COLORS.white}
-                  radius={5}
-                  height={31.67}
-                />
-                <Text fontSize={15} regular color={COLORS.black2}>
-                  00
-                </Text>
-              </Block>
-            </Block>
-          </Block>
+          <ChooseStartTime date={time} onDateChange={setTime} />
           <Text fontSize={15} semiBold color={COLORS.black2} marginTop={20.2}>
             Thời lượng
           </Text>
           <Block marginTop={15} row columnGap={12}>
-            {optionChoose.map(item => (
+            {detailSub?.durations?.map(item => (
               <Pressable
-                key={item.id}
-                onPress={() => setChoose(item.id)}
+                key={item.item_id}
+                onPress={() => setChoose(item.item_id)}
                 width={(width - 24) / 2 - 6}
                 radius={8}
                 paddingBottom={18}
                 borderWidth={1}
-                borderColor={choose === item.id ? COLORS.red4 : COLORS.white2}
+                borderColor={
+                  choose === item.item_id ? COLORS.red4 : COLORS.white2
+                }
                 backgroundColor={
-                  choose === item.id ? COLORS.pinkWhite2 : COLORS.white
+                  choose === item.item_id ? COLORS.pinkWhite2 : COLORS.white
                 }
                 alignCenter>
                 <Text
                   marginTop={19}
                   fontSize={15}
                   medium
-                  color={choose === item.id ? COLORS.red4 : COLORS.black2}>
-                  {item.title}
+                  color={choose === item.item_id ? COLORS.red4 : COLORS.black2}>
+                  {item.short}
                 </Text>
                 <Text
                   marginTop={20}
                   fontSize={15}
                   regular
                   color={
-                    choose === item.id ? COLORS.black2 : COLORS.placeholder
+                    choose === item.item_id ? COLORS.black2 : COLORS.placeholder
                   }>
-                  {item.duration}
+                  {item.title}
                 </Text>
               </Pressable>
             ))}
@@ -181,15 +187,17 @@ export default function Elederly_Servicedurationmonth() {
             Loại gói
           </Text>
           <Block row wrap gap={12} marginTop={15}>
-            {optionServiceDuration.map(item => (
+            {detailSub?.months?.map(item => (
               <Pressable
-                onPress={() => setChooseOptionDuration(item.id)}
-                key={item.id}
-                borderWidth={chooseOptionDuration === item.id ? 1 : ''}
-                borderColor={chooseOptionDuration === item.id && COLORS.red4}
+                onPress={() => setChooseOptionDuration(item.item_id)}
+                key={item.item_id}
+                borderWidth={chooseOptionDuration === item.item_id ? 1 : ''}
+                borderColor={
+                  chooseOptionDuration === item.item_id && COLORS.red4
+                }
                 radius={5}
                 backgroundColor={
-                  chooseOptionDuration === item.id
+                  chooseOptionDuration === item.item_id
                     ? COLORS.pinkWhite2
                     : COLORS.white
                 }
@@ -201,7 +209,7 @@ export default function Elederly_Servicedurationmonth() {
                   fontSize={15}
                   regular
                   color={
-                    chooseOptionDuration === item.id
+                    chooseOptionDuration === item.item_id
                       ? COLORS.red4
                       : COLORS.black2
                   }>
@@ -225,15 +233,21 @@ export default function Elederly_Servicedurationmonth() {
               paddingLeft={12}
               placeholderTextColor={COLORS.placeholder}
               marginTop={13}
+              value={content}
+              onChangeText={setContent}
             />
           </Block>
-          <SANStaffDuties top={20.3} />
+          <SANStaffDuties
+            top={20.3}
+            task_todo={detailSub?.service?.tasks_todo}
+            task_nottodo={detailSub?.service?.tasks_nottodo}
+          />
         </Block>
       </ScrollView>
       <ButtonSubmitService
-        titleTop={'2.050.000 đ/8 buổi'}
-        titleBottom={'Dịch vụ chăm sóc người già'}
-        onPress={() => commonRoot.navigate(router.ELEDERLY_CONFIRM_PAY_MONTH)}
+        titleTop={durationSelected?.title}
+        titleBottom={detailSub?.service?.title}
+        onPress={priceCalculation}
       />
     </Block>
   );

@@ -1,3 +1,4 @@
+import actions from '@actions';
 import {icon} from '@assets';
 import {
   Block,
@@ -13,88 +14,52 @@ import {
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
+import {formatCurrency} from '@utils';
 import {commonRoot} from 'navigation/navigationRef';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {URL_API} from 'redux/sagas/common';
 
-export default function PhysicalTherapy() {
-  const duration = [
-    {
-      id: 1,
-      time: '2 giờ',
-      title: 'Thực hiện theo quy trình vật lý trị liệu từ thấp đến cao',
-    },
-    {
-      id: 2,
-      time: '3 giờ',
-      title: 'Thực hiện theo quy trình vật lý trị liệu từ thấp đến cao',
-    },
-    {
-      id: 3,
-      time: '4 giờ',
-      title: 'Thực hiện theo quy trình vật lý trị liệu từ thấp đến cao',
-    },
-  ];
+export default function PhysicalTherapy({route}) {
   const [chooseDuration, setChooseDuration] = useState(1);
-  const supportEquipment = [
-    {
-      id: 1,
-      equipment: `${icon.icon_hot_stone}`,
-      equipmentChoose: `${icon.icon_hot_stone_choose}`,
-      name: 'Đá nóng',
-      price: '50K',
-    },
-    {
-      id: 2,
-      equipment: `${icon.icon_electric_machine}`,
-      equipmentChoose: `${icon.icon_electric_machine_choose}`,
-      name: 'Máy châm cứu điện',
-      price: '500K',
-    },
-    {
-      id: 3,
-      equipment: `${icon.icon_lamp}`,
-      equipmentChoose: `${icon.icon_lamp_choose}`,
-      name: 'Đèn hồng ngoại',
-      price: '500K',
-    },
-    {
-      id: 4,
-      equipment: `${icon.icon_vibrator}`,
-      equipmentChoose: `${icon.icon_vibrator_choose}`,
-      name: 'Máy rung',
-      price: '200K',
-    },
-    {
-      id: 5,
-      equipment: `${icon.icon_hot_stone}`,
-      equipmentChoose: `${icon.icon_hot_stone_choose}`,
-      name: 'Đá nóng',
-      price: '50K',
-    },
-    {
-      id: 6,
-      equipment: `${icon.icon_electric_machine}`,
-      equipmentChoose: `${icon.icon_electric_machine_choose}`,
-      name: 'Máy châm cứu điện',
-      price: '500K',
-    },
-  ];
-  const [chooseEquipments, setChooseEquipments] = useState([null]);
-  const handleChooseEquipment = id => {
-    setChooseEquipments(prevState => {
-      if (prevState.includes(id)) {
-        return prevState.filter(item => item !== id);
+  const [chooseEquipments, setChooseEquipments] = useState([]);
+  const handleChooseEquipment = (icon, text, hour, price) => {
+    setChooseEquipments(prev => {
+      if (prev.some(item => item.icon === icon)) {
+        return prev.filter(item => item.icon !== icon);
       }
-      return [...prevState, id];
+      return [...prev, {icon: icon, text: text, hour: hour, price: price}];
     });
   };
   const [isActive, setIsActive] = useState(false);
   const [visible, setVisible] = useState(0);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_ADDRESS_SAVE,
+    });
+    dispatch({
+      type: actions.GET_DETAIL_SERVICE_SUB,
+      params: {item_id: 7},
+    });
+  }, [dispatch]);
+  const infoAddress = useSelector(state => state.getAddressSave?.data || []);
+  const address = infoAddress.find(
+    item => item.item_id === route?.params?.addressId,
+  );
+  const detailSub = useSelector(state => state.getDetailServiceSub?.data || []);
+  const selectedDuration = detailSub?.durations?.find(
+    item => item.item_id === chooseDuration,
+  );
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView contentContainerStyle={{paddingBottom: 147}}>
-        <HeaderChooseTime />
+        <HeaderChooseTime
+          titleAddress={address?.title}
+          address={address?.address_full}
+        />
         <Block marginTop={20} marginHorizontal={12}>
           <Text fontSize={15} semiBold color={COLORS.black2}>
             Chọn thời lượng
@@ -109,16 +74,18 @@ export default function PhysicalTherapy() {
             hợp
           </Text>
           <Block marginTop={19} gap={12}>
-            {duration.map(item => (
+            {detailSub?.durations?.map(item => (
               <Pressable
-                onPress={() => setChooseDuration(item.id)}
-                key={item.id}
+                onPress={() => setChooseDuration(item.item_id)}
+                key={item.item_id}
                 paddingBottom={19}
                 radius={8}
-                borderWidth={chooseDuration === item.id ? 1 : ''}
-                borderColor={chooseDuration === item.id && COLORS.red4}
+                borderWidth={chooseDuration === item.item_id ? 1 : ''}
+                borderColor={chooseDuration === item.item_id && COLORS.red4}
                 backgroundColor={
-                  chooseDuration === item.id ? COLORS.pinkWhite2 : COLORS.white
+                  chooseDuration === item.item_id
+                    ? COLORS.pinkWhite2
+                    : COLORS.white
                 }>
                 <Text
                   marginLeft={12}
@@ -126,9 +93,11 @@ export default function PhysicalTherapy() {
                   fontSize={16}
                   semiBold
                   color={
-                    chooseDuration === item.id ? COLORS.red4 : COLORS.black2
+                    chooseDuration === item.item_id
+                      ? COLORS.red4
+                      : COLORS.black2
                   }>
-                  {item.time}
+                  {item.title}
                 </Text>
                 <Text
                   marginTop={8}
@@ -136,7 +105,7 @@ export default function PhysicalTherapy() {
                   fontSize={14}
                   regular
                   color={COLORS.placeholder}>
-                  {item.title}
+                  {item.short}
                 </Text>
               </Pressable>
             ))}
@@ -145,16 +114,28 @@ export default function PhysicalTherapy() {
             Thiết bị hỗ trợ
           </Text>
           <Block marginTop={15} row wrap rowGap={12} columnGap={12.3}>
-            {supportEquipment.map(item => (
+            {detailSub?.extra_services?.map(item => (
               <Pressable
-                onPress={() => handleChooseEquipment(item.id)}
-                key={item.id}
+                onPress={() =>
+                  handleChooseEquipment(
+                    item.icon,
+                    item.text,
+                    item.hour,
+                    item.price,
+                  )
+                }
+                key={item.icon}
                 width={(width - 24) / 3 - 9}
                 height={146}
-                borderWidth={chooseEquipments.includes(item.id) ? 1 : ''}
-                borderColor={chooseEquipments.includes(item.id) && COLORS.red4}
+                borderWidth={
+                  chooseEquipments.some(equip => equip.icon === item.icon) && 1
+                }
+                borderColor={
+                  chooseEquipments.some(equip => equip.icon === item.icon) &&
+                  COLORS.red4
+                }
                 backgroundColor={
-                  chooseEquipments.includes(item.id)
+                  chooseEquipments.some(equip => equip.icon === item.icon)
                     ? COLORS.pinkWhite2
                     : COLORS.white
                 }
@@ -162,9 +143,9 @@ export default function PhysicalTherapy() {
                 alignCenter>
                 <Image
                   source={
-                    chooseEquipments.includes(item.id)
-                      ? item.equipmentChoose
-                      : item.equipment
+                    chooseEquipments.some(equip => equip.icon === item.icon)
+                      ? {uri: `${URL_API.uploads}/${item.icon_color}`}
+                      : {uri: `${URL_API.uploads}/${item.icon}`}
                   }
                   width={40}
                   height={40}
@@ -175,23 +156,23 @@ export default function PhysicalTherapy() {
                   fontSize={14}
                   regular
                   color={
-                    chooseEquipments.includes(item.id)
+                    chooseEquipments.some(equip => equip.icon === item.icon)
                       ? COLORS.red4
                       : COLORS.black2
                   }
                   center>
-                  {item.name}
+                  {item.text}
                 </Text>
                 <Text
                   fontSize={14}
                   regular
                   color={
-                    chooseEquipments.includes(item.id)
+                    chooseEquipments.some(equip => equip.icon === item.icon)
                       ? COLORS.black2
                       : COLORS.placeholder
                   }
                   center>
-                  +{item.price}
+                  +{formatCurrency(item.price)}
                 </Text>
               </Pressable>
             ))}
@@ -216,19 +197,26 @@ export default function PhysicalTherapy() {
               />
             </Block>
           </Block>
-          <SANStaffDuties top={30} />
+          <SANStaffDuties
+            task_todo={detailSub?.service?.tasks_todo}
+            task_nottodo={detailSub?.service?.tasks_nottodo}
+            top={30}
+          />
         </Block>
       </ScrollView>
       <ButtonSubmitService
-        titleTop={'950.000 đ/3 giờ'}
-        titleBottom={'Dịch vụ vật lý trị liệu tại nhà'}
-        onPress={() => setVisible(!0)}
-      />
-      <ModalChooseDay
-        visible={visible}
-        close={() => setVisible(false)}
+        titleTop={selectedDuration?.title}
+        titleBottom={detailSub?.service?.title}
         onPress={() =>
-          commonRoot.navigate(router.PHYSICAL_THERAPY_CONFIRM_AND_PAY)
+          commonRoot.navigate(router.SELECT_DAY_WORKING, {
+            addressId: route?.params?.addressId,
+            service_id: route?.params?.service_id,
+            service_sub_id: 7,
+            duration_id: selectedDuration?.item_id,
+            duration: selectedDuration?.title,
+            extra_services: chooseEquipments,
+            name_service: detailSub?.service?.title,
+          })
         }
       />
     </Block>

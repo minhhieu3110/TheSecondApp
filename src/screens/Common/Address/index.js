@@ -25,11 +25,25 @@ export default function Address({route}) {
   }, [route.params?.service]);
   const handleService = item_id => {
     service === 'elderly_care' &&
-      commonRoot.navigate(router.CARE_ELEDERLY, {addressId: item_id});
-    service === 'patient_care' && commonRoot.navigate(router.CARE_SICKER);
+      commonRoot.navigate(router.CARE_ELEDERLY, {
+        addressId: item_id,
+        service_id: route?.params?.service_id,
+      });
+    service === 'patient_care' &&
+      commonRoot.navigate(router.CARE_SICKER, {
+        addressId: item_id,
+        service_id: route?.params?.service_id,
+      });
     service === 'physical_therapy' &&
-      commonRoot.navigate(router.PHYSICAL_THERAPY);
-    service === 'house_cleaning' && commonRoot.navigate(router.HOUSEWORK);
+      commonRoot.navigate(router.PHYSICAL_THERAPY, {
+        addressId: item_id,
+        service_id: route?.params?.service_id,
+      });
+    service === 'house_cleaning' &&
+      commonRoot.navigate(router.HOUSEWORK, {
+        addressId: item_id,
+        service_id: route?.params?.service_id,
+      });
   };
   const dispatch = useDispatch();
   useEffect(() => {
@@ -38,7 +52,6 @@ export default function Address({route}) {
     });
   }, [dispatch]);
   const addressSaved = useSelector(state => state.getAddressSave?.data || []);
-  console.log(service);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>

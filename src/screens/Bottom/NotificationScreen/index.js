@@ -1,12 +1,25 @@
+import actions from '@actions';
 import {icon, image} from '@assets';
 import {Block, Image, Pressable, Text, Icon} from '@components';
 import {width} from '@responsive';
+import router from '@router';
 import {COLORS} from '@theme';
-import {useState} from 'react';
+import {ConvertDateTimeStamp} from '@utils';
+import {commonRoot} from 'navigation/navigationRef';
+import {useEffect, useState} from 'react';
 import {Modal, SafeAreaView, ScrollView} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useDispatch, useSelector} from 'react-redux';
 export default function NotificationScreen() {
   const [detailNotification, setDetailNotification] = useState(0);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_NOTIFICATION,
+    });
+  }, [dispatch]);
+  const notifications = useSelector(state => state.getNotification?.data || []);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <Block width={width} height={53} backgroundColor={COLORS.white}>
@@ -23,10 +36,14 @@ export default function NotificationScreen() {
         <ScrollView
           contentContainerStyle={{paddingBottom: 300}}
           showsVerticalScrollIndicator={false}>
-          {Array.from({length: 5}).map((_, index) => (
+          {notifications.map(item => (
             <Pressable
-              onPress={() => setDetailNotification(!detailNotification)}
-              key={index}
+              onPress={() =>
+                commonRoot.navigate(router.DETAIL_NOTIFICATION, {
+                  item_id: item.item_id,
+                })
+              }
+              key={item.item_id}
               height={108}
               radius={8}
               backgroundColor={COLORS.white}
@@ -38,9 +55,9 @@ export default function NotificationScreen() {
                 height={77}
                 row
                 paddingBottom={12}>
-                <Block width={60} height={60}>
+                <Block width={60} height={60} radius={60} overflow={'hidden'}>
                   <Image
-                    source={icon.icon_notification_1}
+                    source={{uri: item?.picture}}
                     width={'100%'}
                     height={'100%'}
                     resizeMode="contain"
@@ -48,7 +65,7 @@ export default function NotificationScreen() {
                 </Block>
                 <Block width={294} height={67} marginTop={10} marginLeft={12}>
                   <Text fontSize={15} semiBold color={COLORS.black2}>
-                    Khuyến mãi 30% tất cả dịch vụ
+                    {item?.title}
                   </Text>
                   <Text
                     fontSize={14}
@@ -56,11 +73,10 @@ export default function NotificationScreen() {
                     color={COLORS.black1}
                     marginBottom={14}
                     numberOfLines={1}>
-                    Nhân dịp Giỗ tổ Hùng Vương, chúng tôi...Nhân dịp Giỗ tổ Hùng
-                    Vương, chúng tôi...
+                    {item?.short}
                   </Text>
                   <Text fontSize={14} regular color={COLORS.placeholder}>
-                    13:45, 22/02/2025
+                    {ConvertDateTimeStamp(item?.created_at)}
                   </Text>
                 </Block>
               </Block>
@@ -68,94 +84,6 @@ export default function NotificationScreen() {
           ))}
         </ScrollView>
       </Block>
-      <Modal visible={detailNotification} transparent="fade">
-        <SafeAreaView style={{flex: 1}}>
-          <Block flex backgroundColor={COLORS.gray10}>
-            <Block width={width} height={199.6}>
-              <Image
-                source={image.image_notification}
-                width={width}
-                height={199.6}
-                resizeMode="cover"
-              />
-              <Pressable
-                onPress={() => setDetailNotification(!detailNotification)}
-                width={30}
-                height={30}
-                radius={50}
-                absolute
-                top={13}
-                left={12}
-                backgroundColor={COLORS.black}
-                opacity={0.6}>
-                <Icon
-                  IconType={Ionicons}
-                  iconName={'chevron-back-outline'}
-                  iconSize={30}
-                  iconColor={COLORS.white}
-                />
-              </Pressable>
-            </Block>
-            <Block
-              marginTop={-19.6}
-              width={width - 24}
-              paddingBottom={27}
-              radius={8}
-              backgroundColor={COLORS.white}
-              marginLeft={12}>
-              <Block marginTop={12} marginHorizontal={12} width={width - 48}>
-                <Text
-                  fontSize={18}
-                  semiBold
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Khuyến mãi 30% tất cả dịch vụ nhân dịp quốc tế phụ nữ 8/3
-                </Text>
-                <Text
-                  fontSize={15}
-                  semiBold
-                  color={COLORS.black1}
-                  marginTop={27}>
-                  Ưu đãi
-                </Text>
-                <Text
-                  marginTop={15}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Đặt ngay dịch vụ trông trẻ trên app SAN Nhập mã PHUNUSAN giảm
-                  ngay 30% khi sử dụng dịch vụ tại ứng dụng SAN
-                </Text>
-                <Text
-                  marginTop={24}
-                  fontSize={15}
-                  semiBold
-                  color={COLORS.black1}>
-                  Điều kiện áp dụng
-                </Text>
-                <Text
-                  marginTop={15}
-                  fontSize={14}
-                  regular
-                  color={COLORS.black1}
-                  lineHeight={22}>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been industry's standard
-                  dummy text ever since the 1500s, when anm unknown printer took
-                  a galley of type and scrambledt it to make a type specimen
-                  book. It has survived t only five centuries, but also the leap
-                  into electritypesetting, remaining essentially unchanged. It
-                  was popularisn in the 1960s with the release of Letraset
-                  sheeticontaining Lorem Ipsum passages, and more recently wt
-                  desktop publishing software like Aldus PageMaker incliversions
-                  of Lorem Ipsum.
-                </Text>
-              </Block>
-            </Block>
-          </Block>
-        </SafeAreaView>
-      </Modal>
     </Block>
   );
 }

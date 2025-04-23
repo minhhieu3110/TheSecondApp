@@ -51,10 +51,10 @@ export default function InputOTP({route}) {
           },
         });
       },
-      onFail: e => {
+      onFail(e) {
         Toast.show({
           type: 'error',
-          text1: 'OTP is Wrong',
+          text1: 'OTP Invail',
         });
       },
     });

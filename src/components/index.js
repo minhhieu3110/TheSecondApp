@@ -32,6 +32,8 @@ import PolicyCancelPackageService from './form/PolicyCancelPackageService';
 import SelectDropdown from './form/SelectDropdown';
 import DateTimePicker from './base/DateTimePicker';
 import DateTimeInput from './form/DateTimeInput';
+import ChooseStartTime from './form/ChooseStartTime';
+import ModalCalendar from './base/ModalCalendar';
 export {
   Carousel,
   Block,
@@ -50,7 +52,7 @@ export {
   ModalVoucher,
   ProgressBar,
   ModalMethodPay,
-  // ModalCalendar,
+  ModalCalendar,
   ModalChooseDay,
   ModalSuccess,
   Switch,
@@ -68,4 +70,5 @@ export {
   SelectDropdown,
   DateTimePicker,
   DateTimeInput,
+  ChooseStartTime,
 };

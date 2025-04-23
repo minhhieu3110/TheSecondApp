@@ -41,6 +41,17 @@ export const formatPhone = phone => {
   if (!phone) return '';
   return phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
 };
+export const formatTime = time => {
+  const hours = String(time.getHours()).padStart(2, '0');
+  const minutes = String(time.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+};
+export const convertDate = day => {
+  const date = String(day.getDate()).padStart(2, '0');
+  const month = String(day.getMonth()).padStart(2, '0');
+  const year = String(day.getFullYear());
+  return `${date}/${month}/${year}`;
+};
 // export {
 //   handleFormData,
 //   checkAndRequestPermission,

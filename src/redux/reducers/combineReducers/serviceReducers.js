@@ -24,3 +24,24 @@ export const priceCalculation = (...props) => {
 export const orderService = (...props) => {
   return reducerDefault(...props, actions.ORDER_SERVICE);
 };
+export const getListOrder = (...props) => {
+  return reducerDefault(...props, actions.GET_LIST_ORDER);
+};
+export const getListOrderCancel = (...props) => {
+  return reducerDefault(...props, actions.GET_LIST_ORDER_CANCEL);
+};
+export const reOrder = (...props) => {
+  return reducerDefault(...props, actions.RE_ORDER);
+};
+export const getDetailOrder = (...props) => {
+  return reducerDefault(...props, actions.GET_DETAIL_ORDER);
+};
+export const getListReason = (...props) => {
+  return reducerDefault(...props, actions.GET_LIST_REASON);
+};
+export const cancelOrder = (...props) => {
+  return reducerDefault(...props, actions.CANCEL_ORDER);
+};
+export const getStatistical = (...props) => {
+  return reducerDefault(...props, actions.GET_STATISTICAL);
+};

@@ -16,12 +16,12 @@ import {useState} from 'react';
 
 export default function Recharge() {
   const rechargeMoney = [
-    {id: 1, money: '100.000'},
-    {id: 2, money: '200.000'},
-    {id: 3, money: '300.000'},
-    {id: 4, money: '400.000'},
-    {id: 5, money: '500.000'},
-    {id: 6, money: '600.000'},
+    {id: 1, money: '100000'},
+    {id: 2, money: '200000'},
+    {id: 3, money: '300000'},
+    {id: 4, money: '400000'},
+    {id: 5, money: '500000'},
+    {id: 6, money: '600000'},
   ];
   const [chooseMoney, setChooseMoney] = useState(null);
   const [money, setMoney] = useState(null);
@@ -94,9 +94,8 @@ export default function Recharge() {
             borderColor={'#f1f1f1'}
             paddingLeft={10}
             color={COLORS.red4}
-            onChangeText={text => setMoney(text)}>
-            {money}
-          </TextInput>
+            onChangeText={setMoney}
+            value={money}></TextInput>
           <Block absolute right={12}>
             <Text fontSize={22} regular color={COLORS.black}>
               đ

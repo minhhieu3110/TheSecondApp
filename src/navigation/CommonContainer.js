@@ -34,6 +34,9 @@ const commonStack = [
   {name: router.FEEDBACK},
   {name: router.ABOUT},
   {name: router.INTRODUCE_SAN},
+  //
+  {name: router.DETAIL_SERVICE},
+  //
   {name: router.DETAIL_NEW_ACTIVITY},
   {name: router.DETAIL_RECEPTION},
   {name: router.DETAIL_DOING},
@@ -49,24 +52,17 @@ const commonStack = [
   {name: router.HOUSEWORK},
   {name: router.ELEDERLY_SERVICE_DURATION_DAY},
   {name: router.ELEDERLY_SERVICE_DURATION_MONTH},
-  {name: router.ELEDERLY_CONFIRM_PAY_MONTH},
 
   {name: router.SICKER_SERVICE_DURATION_DAY},
-  {name: router.SICKER_CONFIRM_PAY},
   {name: router.SICKER_SERVICE_DURATION_MONTH},
-  {name: router.SICKER_CONFIRM_PAY_MONTH},
-
-  {name: router.CHOOSE_TIME_PHYSICAL_THERAPY},
-  {name: router.PHYSICAL_THERAPY_CONFIRM_AND_PAY},
 
   {name: router.HOUSEWORK_ODD_SHIFT},
-  {name: router.HOUSEWORK_ODD_SHIFT_CONFIRM_AND_PAY},
 
   {name: router.HOUSEWORK_MONTH},
-  {name: router.HOUSEWORK_MONTH_CONFIRM_AND_PAY},
   //chung
   {name: router.SELECT_DAY_WORKING},
   {name: router.CONFIRM_AND_PAY_SERVICE},
+  {name: router.CONFIRM_AND_SIGNUP_PACKAGE},
   //
   {name: router.DETAIL_MESSAGE},
 
@@ -84,6 +80,7 @@ const commonStack = [
   {name: router.DETAIL_COMPLETE_ORDER},
   {name: router.DETAIL_CANCEL_ORDER},
   {name: router.EVALUATE_ORDER},
+  {name: router.DETAIL_NOTIFICATION},
 ];
 
 export default function CommonContainer() {

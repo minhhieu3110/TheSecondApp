@@ -5,7 +5,7 @@ import {COLORS} from '@theme';
 import LinearGradient from 'react-native-linear-gradient';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
-export default function CareSicker() {
+export default function CareSicker({route}) {
   return (
     <Block flex backgroundColor={COLORS.gradient5}>
       <LinearGradient style={{flex: 1}} colors={COLORS.gradient5}>
@@ -21,7 +21,10 @@ export default function CareSicker() {
         <Block width={width - 24} marginHorizontal={12} marginTop={10}>
           <Pressable
             onPress={() =>
-              commonRoot.navigate(router.SICKER_SERVICE_DURATION_DAY)
+              commonRoot.navigate(router.SICKER_SERVICE_DURATION_DAY, {
+                addressId: route?.params?.addressId,
+                service_id: route?.params?.service_id,
+              })
             }
             paddingBottom={23}
             backgroundColor={COLORS.white}
@@ -49,7 +52,11 @@ export default function CareSicker() {
           </Pressable>
           <Pressable
             onPress={() =>
-              commonRoot.navigate(router.SICKER_SERVICE_DURATION_MONTH)
+              commonRoot.navigate(router.SICKER_SERVICE_DURATION_MONTH, {
+                addressId: route?.params?.addressId,
+                service_id: route?.params?.service_id,
+                service_sub_id: 6,
+              })
             }
             marginTop={12}
             paddingBottom={23}

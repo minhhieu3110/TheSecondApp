@@ -176,6 +176,7 @@ export default function HomeScreen() {
               <Pressable
                 onPress={() =>
                   commonRoot.navigate(router.ADDRESS, {
+                    service_id: item.item_id,
                     service: item.name_service,
                   })
                 }

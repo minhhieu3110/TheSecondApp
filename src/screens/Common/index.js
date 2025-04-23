@@ -38,18 +38,11 @@ import CareSicker from './CareSicker';
 import Housework from './Housework';
 import PhysicalTherapy from './Physical_Therapy';
 import Elederly_Servicedurationday from './CareElederly/common/ServiceForDay';
-import Elederly_Servicedurationmonth from './CareElederly/common/ServiceForMonth/ELederly_Servicedurationmonth';
-import Elederly_ConfirmAndPayMonth from './CareElederly/common/ServiceForMonth/Elederly_ConfirmAndPayMonth';
-import Sicker_Servicedurationday from './CareSicker/common/ServiceForDay/Sicker_Servicedurationday';
-import Sicker_ConfirmAndPay from './CareSicker/common/ServiceForDay/Sicker_ConfirmAndPay';
-import Sicker_ConfirmAndPayMonth from './CareSicker/common/ServiceForMonth/Sicker_ConfirmAndPayMonth';
-import Sicker_Servicedurationmonth from './CareSicker/common/ServiceForMonth/Sicker_Servicedurationmonth';
-import ChooseTime from './Physical_Therapy/ChooseTime';
-import PhysicalTherapy_ConfirmAndPay from './Physical_Therapy/PhysicalTherapy_ConfrimAndPay';
+import Elederly_Servicedurationmonth from './CareElederly/common/ServiceForMonth';
+import Sicker_Servicedurationday from './CareSicker/common/ServiceForDay';
+import Sicker_Servicedurationmonth from './CareSicker/common/ServiceForMonth';
 import Housework_OddShiftService from './Housework/common/OddShiftService';
-import Housework_OddShiftService_ConfirmAndPay from './Housework/common/OddShiftService/ConfirmAndPay';
 import Housework_ServiceMonth from './Housework/common/ServiceMonth';
-import Housework_Month_ConfirmAndPay from './Housework/common/ServiceMonth/ConfirmAndPay';
 import DetailMessage from './DetailMessage';
 import ShoppingScreen from './ShoppingScreen';
 import AllCategory from './AllCategory';
@@ -70,6 +63,10 @@ import ChooseService from './ChooseService';
 import ChooseTimeForService from './ChooseTimeForService';
 import SelectDayWorking from './SelectDayWorking';
 import ConfirmAndPayService from './ConfirmAndPayService';
+import ConfirmAndSignupPackage from './ConfirmAndSignupPackage';
+import DetailOrder from './DetailOrder';
+import DetailService from './DetailService';
+import DetailNotification from 'screens/Common/DetailNotification';
 
 export const common = {
   [router.VOUCHER]: Voucher,
@@ -100,6 +97,9 @@ export const common = {
   [router.FEEDBACK]: Feedback,
   [router.ABOUT]: About,
   [router.INTRODUCE_SAN]: IntroduceSAN,
+  //
+  [router.DETAIL_SERVICE]: DetailService,
+  //
   [router.DETAIL_NEW_ACTIVITY]: Detail_NewActivity,
   [router.DETAIL_RECEPTION]: Detail_Reception,
   [router.DETAIL_DOING]: Detail_Doing,
@@ -112,25 +112,17 @@ export const common = {
   [router.HOUSEWORK]: Housework,
   [router.ELEDERLY_SERVICE_DURATION_DAY]: Elederly_Servicedurationday,
   [router.ELEDERLY_SERVICE_DURATION_MONTH]: Elederly_Servicedurationmonth,
-  [router.ELEDERLY_CONFIRM_PAY_MONTH]: Elederly_ConfirmAndPayMonth,
 
   [router.SICKER_SERVICE_DURATION_DAY]: Sicker_Servicedurationday,
-  [router.SICKER_CONFIRM_PAY]: Sicker_ConfirmAndPay,
   [router.SICKER_SERVICE_DURATION_MONTH]: Sicker_Servicedurationmonth,
-  [router.SICKER_CONFIRM_PAY_MONTH]: Sicker_ConfirmAndPayMonth,
-
-  [router.CHOOSE_TIME_PHYSICAL_THERAPY]: ChooseTime,
-  [router.PHYSICAL_THERAPY_CONFIRM_AND_PAY]: PhysicalTherapy_ConfirmAndPay,
 
   [router.HOUSEWORK_ODD_SHIFT]: Housework_OddShiftService,
-  [router.HOUSEWORK_ODD_SHIFT_CONFIRM_AND_PAY]:
-    Housework_OddShiftService_ConfirmAndPay,
   [router.HOUSEWORK_MONTH]: Housework_ServiceMonth,
-  [router.HOUSEWORK_MONTH_CONFIRM_AND_PAY]: Housework_Month_ConfirmAndPay,
 
   //Chung
   [router.SELECT_DAY_WORKING]: SelectDayWorking,
   [router.CONFIRM_AND_PAY_SERVICE]: ConfirmAndPayService,
+  [router.CONFIRM_AND_SIGNUP_PACKAGE]: ConfirmAndSignupPackage,
   //
   [router.DETAIL_MESSAGE]: DetailMessage,
   [router.SHOPPING]: ShoppingScreen,
@@ -150,4 +142,5 @@ export const common = {
 
   [router.CHOOSE_SERVICE]: ChooseService,
   [router.CHOOSE_TIME_FOR_SERVICE]: ChooseTimeForService,
+  [router.DETAIL_NOTIFICATION]: DetailNotification,
 };

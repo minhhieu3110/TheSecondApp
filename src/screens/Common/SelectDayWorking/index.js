@@ -8,20 +8,31 @@ import {
   Switch,
   Pressable,
   ButtonSubmitService,
+  HeaderChooseTime,
+  ChooseStartTime,
 } from '@components';
 import {ScrollView} from 'react-native';
 import {COLORS} from '@theme';
 import {width} from '@responsive';
 import {icon} from '@assets';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useEffect, useState} from 'react';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
-import {duration} from 'moment';
+import DatePicker from 'react-native-date-picker';
+import {formatTime} from '@utils';
 const SelectDayWorking = ({route}) => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_ADDRESS_SAVE,
+    });
+  }, [dispatch]);
+  const addressInfo = useSelector(state => state.getAddressSave?.data || []);
+  const address = addressInfo?.find(
+    item => item.item_id === route?.params?.addressId,
+  );
   const days = Array.from({length: 7}, (_, index) => {
     const date = new Date();
     date.setDate(date.getDate() + index);
@@ -57,26 +68,35 @@ const SelectDayWorking = ({route}) => {
       return [...prevState, title];
     });
   };
+
+  const [time, setTime] = useState(new Date());
+  const start_time = formatTime(time);
   const infoOrder = {
-    service_id: 1,
-    service_sub_id: 3,
+    service_id: route?.params?.service_id,
+    service_sub_id: route?.params?.service_sub_id,
     duration_id: route?.params?.duration_id,
     schudule_week: againWeek,
     list_day: [`${chooseDay}/${year}`],
-    start_time: '09:00',
+    start_time: start_time,
     note: note,
+    address_id: route?.params?.addressId,
+    extra_services: route?.params?.extra_services,
+    is_favorite_employee: route?.params?.is_favorite_employee,
   };
   const priceCalculation = () => {
     dispatch({
       type: actions.PRICE_CALCULATION,
       body: {
-        service_id: 1,
-        service_sub_id: 3,
+        service_id: route?.params?.service_id,
+        service_sub_id: route?.params?.service_sub_id,
         duration_id: route?.params?.duration_id,
         schudule_week: againWeek,
         list_day: [`${chooseDay}/${year}`],
-        start_time: '09:00',
+        start_time: start_time,
         note: note,
+        address_id: route?.params?.addressId,
+        extra_services: route?.params?.extra_services,
+        is_favorite_employee: route?.params?.is_favorite_employee,
       },
       onSuccess: () => {
         commonRoot.navigate(router.CONFIRM_AND_PAY_SERVICE, {data: infoOrder});
@@ -86,52 +106,11 @@ const SelectDayWorking = ({route}) => {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <Block height={173} backgroundColor={COLORS.red4}>
-        <HeaderTitle
-          background={COLORS.white2}
-          colorIcon={COLORS.white}
-          colorText={COLORS.white}
-          title={'Chọn thời gian làm việc'}
-          absolute={false}
-          canGoBack
-        />
-        <Block
-          width={width - 24}
-          marginHorizontal={12}
-          paddingBottom={19}
-          marginTop={2}
-          backgroundColor={COLORS.solidColorRed}
-          radius={8}>
-          <Block marginTop={12} marginLeft={10} row alignCenter>
-            <Image
-              source={icon.icon_position_address_work}
-              width={25}
-              height={25}
-            />
+      <HeaderChooseTime
+        titleAddress={address?.title}
+        address={address?.address_full}
+      />
 
-            <Text fontSize={15} medium color={COLORS.white} marginLeft={4}>
-              Công ty
-            </Text>
-          </Block>
-          <Text
-            marginLeft={39}
-            marginTop={9}
-            fontSize={14}
-            regular
-            color={COLORS.white}
-            numberOfLines={2}>
-            107 đường Cộng Hòa, Phường 12, quận Tân Bình, Tp.HCM
-          </Text>
-          <Block absolute top={15} right={3}>
-            <Icon
-              IconType={MaterialIcons}
-              iconName={'keyboard-arrow-right'}
-              iconColor={COLORS.yellow3}
-              iconSize={20}
-            />
-          </Block>
-        </Block>
-      </Block>
       <Block marginHorizontal={12} marginTop={20}>
         <Block row alignCenter>
           <Text fontSize={15} semiBold color={COLORS.black6}>
@@ -186,53 +165,7 @@ const SelectDayWorking = ({route}) => {
             ))}
           </ScrollView>
         </Block>
-        <Block
-          marginTop={14.7}
-          radius={8}
-          backgroundColor={COLORS.white}
-          paddingBottom={14.7}
-          alignCenter
-          row>
-          <Image
-            source={icon.icon_time_activity}
-            width={22}
-            height={22}
-            marginTop={24}
-            marginLeft={12}
-          />
-          <Text
-            fontSize={15}
-            semiBold
-            color={COLORS.black2}
-            marginTop={28}
-            marginLeft={8}>
-            Chọn giờ bắt đầu
-          </Text>
-          <Block
-            width={width - 277}
-            height={44}
-            backgroundColor={COLORS.pinkWhite2}
-            marginLeft={65}
-            marginTop={15}
-            radius={5}
-            justifyCenter
-            alignCenter>
-            <Block spaceBetween row alignCenter height={31.67} width={92}>
-              <Text fontSize={15} regular color={COLORS.black2}>
-                17
-              </Text>
-              <Block
-                width={1}
-                backgroundColor={COLORS.white}
-                radius={5}
-                height={31.67}
-              />
-              <Text fontSize={15} regular color={COLORS.black2}>
-                30
-              </Text>
-            </Block>
-          </Block>
-        </Block>
+        <ChooseStartTime date={time} onDateChange={setTime} />
         <Block marginTop={24.3} row>
           <Image source={icon.icon_week_again} width={24.08} height={27} />
           <Text marginLeft={12.9} fontSize={15} regular color={COLORS.black2}>

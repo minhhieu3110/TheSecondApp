@@ -8,6 +8,7 @@ import {
   ButtonSubmitService,
   SANStaffDuties,
   ChooseStartTime,
+  ModalCalendar,
 } from '@components';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
@@ -19,8 +20,7 @@ import router from '@router';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import {formatTime} from '@utils';
-import {duration} from 'moment';
-export default function Housework_ServiceMonth({route}) {
+export default function Elederly_Servicedurationmonth({route}) {
   const dayWeek = [
     {id: 1, title: 'T2'},
     {id: 2, title: 'T3'},
@@ -31,7 +31,7 @@ export default function Housework_ServiceMonth({route}) {
     {id: 7, title: 'CN'},
   ];
 
-  const [chooseDuration, setChooseDuration] = useState(1);
+  const [choose, setChoose] = useState(1);
   const [chooseOptionDuration, setChooseOptionDuration] = useState(1);
   const [againWeek, setAgainWeek] = useState([]);
   const handleWeekDayPress = title => {
@@ -46,26 +46,23 @@ export default function Housework_ServiceMonth({route}) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({type: actions.GET_ADDRESS_SAVE});
-    dispatch({
-      type: actions.GET_DETAIL_SERVICE_SUB,
-      params: {item_id: route?.params?.service_sub_id},
-    });
+    dispatch({type: actions.GET_DETAIL_SERVICE_SUB, params: {item_id: 4}});
   }, [dispatch]);
   const addressInfo = useSelector(state => state.getAddressSave?.data || []);
   const address = addressInfo?.find(
-    item => item.id === route?.params?.address_id,
+    item => item.id === route?.params?.addressId,
   );
   const [time, setTime] = useState(new Date());
   const start_time = formatTime(time);
   const detailSub = useSelector(state => state.getDetailServiceSub?.data || []);
   const [content, setContent] = useState('');
   const durationSelected = detailSub?.durations?.find(
-    item => item.item_id === chooseDuration,
+    item => item.item_id === choose,
   );
   const infoOrder = {
     service_id: route?.params?.service_id,
     service_sub_id: route?.params?.service_sub_id,
-    duration_id: chooseDuration,
+    duration_id: choose,
     monthly_package_id: chooseOptionDuration,
     schedule_week: againWeek,
     list_day: [],
@@ -73,7 +70,7 @@ export default function Housework_ServiceMonth({route}) {
     note: content,
     promotion_id: '',
     method_id: '',
-    address_id: route?.params?.address_id,
+    address_id: route?.params?.addressId,
   };
   const priceCalculation = () => {
     dispatch({
@@ -81,7 +78,7 @@ export default function Housework_ServiceMonth({route}) {
       body: {
         service_id: route?.params?.service_id,
         service_sub_id: route?.params?.service_sub_id,
-        duration_id: chooseDuration,
+        duration_id: choose,
         monthly_package_id: chooseOptionDuration,
         schedule_week: againWeek,
         list_day: [],
@@ -89,7 +86,7 @@ export default function Housework_ServiceMonth({route}) {
         note: content,
         promotion_id: '',
         method_id: '',
-        address_id: route?.params?.address_id,
+        address_id: route?.params?.addressId,
       },
       onSuccess: () => {
         commonRoot.navigate(router.CONFIRM_AND_SIGNUP_PACKAGE, {
@@ -107,18 +104,18 @@ export default function Housework_ServiceMonth({route}) {
           address={address?.address_full}
         />
         <Block marginTop={20} marginHorizontal={12}>
-          <Block row alignCenter>
+          <Block rowCenter spaceBetween>
             <Text fontSize={15} semiBold color={COLORS.black2}>
               Chọn lịch làm việc
             </Text>
-            <Pressable
-              absolute
-              right={0}
+
+            <Text
+              fontSize={15}
+              regular
+              color={COLORS.red4}
               onPress={() => setCalendar(!calendar)}>
-              <Text fontSize={15} regular color={COLORS.red4}>
-                Tuỳ chọn lịch
-              </Text>
-            </Pressable>
+              Tuỳ chọn lịch
+            </Text>
           </Block>
           <Block marginTop={15} row columnGap={9.9} justifyCenter>
             {dayWeek.map(item => (
@@ -152,43 +149,37 @@ export default function Housework_ServiceMonth({route}) {
           <Text fontSize={15} semiBold color={COLORS.black2} marginTop={20.2}>
             Thời lượng
           </Text>
-          <Block marginTop={19} gap={12}>
+          <Block marginTop={15} row columnGap={12}>
             {detailSub?.durations?.map(item => (
               <Pressable
-                onPress={() => setChooseDuration(item.item_id)}
                 key={item.item_id}
-                paddingBottom={19}
+                onPress={() => setChoose(item.item_id)}
+                width={(width - 24) / 2 - 6}
                 radius={8}
-                borderWidth={chooseDuration === item.item_id ? 1 : ''}
-                borderColor={chooseDuration === item.item_id && COLORS.red4}
+                paddingBottom={18}
+                borderWidth={1}
+                borderColor={
+                  choose === item.item_id ? COLORS.red4 : COLORS.white2
+                }
                 backgroundColor={
-                  chooseDuration === item.item_id
-                    ? COLORS.pinkWhite2
-                    : COLORS.white
-                }>
+                  choose === item.item_id ? COLORS.pinkWhite2 : COLORS.white
+                }
+                alignCenter>
                 <Text
-                  marginTop={17}
-                  marginLeft={12}
-                  fontSize={16}
-                  semiBold
-                  color={
-                    chooseDuration === item.item_id
-                      ? COLORS.red4
-                      : COLORS.black2
-                  }>
-                  {item.title}
+                  marginTop={19}
+                  fontSize={15}
+                  medium
+                  color={choose === item.item_id ? COLORS.red4 : COLORS.black2}>
+                  {item.short}
                 </Text>
                 <Text
-                  marginTop={8}
-                  marginLeft={12}
-                  fontSize={14}
+                  marginTop={20}
+                  fontSize={15}
                   regular
                   color={
-                    chooseDuration === item.item_id
-                      ? COLORS.black2
-                      : COLORS.placeholder
+                    choose === item.item_id ? COLORS.black2 : COLORS.placeholder
                   }>
-                  {item.short}
+                  {item.title}
                 </Text>
               </Pressable>
             ))}
@@ -228,6 +219,30 @@ export default function Housework_ServiceMonth({route}) {
               </Pressable>
             ))}
           </Block>
+          <Block marginTop={20}>
+            <Text fontSize={15} semiBold color={COLORS.black2}>
+              Ghi chú
+            </Text>
+            <Text fontSize={14} regular color={COLORS.black2} marginTop={17}>
+              Ghi chú này giúp nhân viên làm việc thuận tiện hơn
+            </Text>
+            <TextInput
+              placeholder={'Nhập nội dung'}
+              height={154.67}
+              radius={8}
+              backgroundColor={COLORS.white}
+              paddingLeft={12}
+              placeholderTextColor={COLORS.placeholder}
+              marginTop={13}
+              value={content}
+              onChangeText={setContent}
+            />
+          </Block>
+          <SANStaffDuties
+            top={20.3}
+            task_todo={detailSub?.service?.tasks_todo}
+            task_nottodo={detailSub?.service?.tasks_nottodo}
+          />
         </Block>
       </ScrollView>
       <ButtonSubmitService
@@ -235,6 +250,7 @@ export default function Housework_ServiceMonth({route}) {
         titleBottom={detailSub?.service?.title}
         onPress={priceCalculation}
       />
+      <ModalCalendar visible={calendar} close={() => setCalendar(!calendar)} />
     </Block>
   );
 }

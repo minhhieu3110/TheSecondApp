@@ -24,6 +24,7 @@ export default function CareElederly({route}) {
             onPress={() =>
               commonRoot.navigate(router.ELEDERLY_SERVICE_DURATION_DAY, {
                 addressId: route?.params?.addressId,
+                service_id: route?.params?.service_id,
               })
             }
             paddingBottom={23}
@@ -52,7 +53,11 @@ export default function CareElederly({route}) {
           </Pressable>
           <Pressable
             onPress={() =>
-              commonRoot.navigate(router.ELEDERLY_SERVICE_DURATION_MONTH)
+              commonRoot.navigate(router.ELEDERLY_SERVICE_DURATION_MONTH, {
+                addressId: route?.params?.addressId,
+                service_id: route?.params?.service_id,
+                service_sub_id: 4,
+              })
             }
             marginTop={12}
             paddingBottom={23}

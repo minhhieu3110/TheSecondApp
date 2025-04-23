@@ -29,11 +29,11 @@ export const commonRoot = {
     rootNavigation(router.COMMON_CONTAINER, screeName, screenParams);
   },
 };
-export const topRoot = {
-  navigate: (screeName, screenParams) => {
-    rootNavigation(router.TOP_CONTAINER, screeName, screenParams);
-  },
-};
+// export const topRoot = {
+//   navigate: (screeName, screenParams) => {
+//     rootNavigation(router.TOP_CONTAINER, screeName, screenParams);
+//   },
+// };
 export const topRootOrder = {
   navigate: (screeName, screenParams) => {
     rootNavigation(router.TOP_ODER_CONTAINER, screeName, screenParams);

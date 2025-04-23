@@ -10,6 +10,7 @@ import {
   TextInput,
   TicketVoucherShape,
   ModalSuccess,
+  PolicyCancelPackageService,
 } from '@components';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -26,10 +27,11 @@ import {URL_API} from 'redux/sagas/common';
 import AllVoucher from '../VoucherScreen/components/AllVoucher';
 import Toast from 'react-native-toast-message';
 
-export default function ConfirmAndPayService({route}) {
+export default function ConfirmAndSignupPackage({route}) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({type: actions.GET_USER_INFO});
+    dispatch({type: actions.GET_ADDRESS_SAVE});
     dispatch({
       type: actions.GET_PAYMENT_METHOD,
     });
@@ -37,59 +39,28 @@ export default function ConfirmAndPayService({route}) {
       type: actions.GET_VOUCHER,
       params: {apply_for: 'service'},
     });
-    dispatch({
-      type: actions.GET_ADDRESS_SAVE,
-    });
   }, [dispatch]);
   const userInfo = useSelector(state => state.getUserInfo?.data || []);
   const addressInfo = useSelector(state => state.getAddressSave?.data || []);
-  const address = addressInfo?.find(
-    item => item.item_id === route?.params?.data?.address_id,
-  );
-  const infoService = useSelector(state => state.priceCalculation?.data || []);
-
   const paymentMethod = useSelector(
     state => state.getPaymentMethod?.data || [],
   );
   const vouchers = useSelector(state => state.getVoucher?.data || []);
+  const address = addressInfo?.find(
+    item => item.item_id === route?.params?.data?.address_id,
+  );
   const [visibleMethodPay, setVisibleMethodPay] = useState(false);
   const [visibleVoucher, setVisibleVoucher] = useState(false);
   const [methodSelected, setMethodSelected] = useState(1);
   const [promotionSelected, setPromotionSelected] = useState();
   const [voucherCode, setVoucherCode] = useState('');
   const method = paymentMethod.find(item => item.method_id === methodSelected);
-
-  const orderService = () => {
-    dispatch({
-      type: actions.ORDER_SERVICE,
-      body: {
-        service_id: route?.params?.data?.service_id,
-        service_sub_id: route?.params?.data?.service_sub_id,
-        duration_id: route?.params?.data?.duration_id,
-        schudule_week: route?.params?.data?.schudule_week,
-        list_day: route?.params?.data?.list_day,
-        start_time: route?.params?.data?.start_time,
-        note: route?.params?.data?.note,
-        promotion_id: promotionSelected,
-        method_id: methodSelected,
-        address_id: route?.params?.data?.address_id,
-        extra_services: route?.params?.data?.extra_services,
-      },
-      onSuccess: () => {
-        setShow(!show);
-      },
-      onFail(e) {
-        console.log(e?.data?.message);
-      },
-    });
-  };
   const [show, setShow] = useState(0);
   const useVoucherCode = () => {
     if (vouchers.filter(item => item.promotion_id === voucherCode)) {
       setPromotionSelected(voucherCode);
     }
   };
-
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Xác nhận và thanh toán'} canGoBack />
@@ -203,12 +174,38 @@ export default function ConfirmAndPayService({route}) {
                     regular
                     color={COLORS.placeholder}
                     marginLeft={8}>
-                    Ngày làm việc
+                    Ngày bắt đầu
                   </Text>
                 </Block>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    {infoService?.start_date}
+                    Thứ 7, 25/01/2025
+                  </Text>
+                </Block>
+              </Block>
+              <Block marginTop={13}>
+                <Block
+                  absolute
+                  right={0}
+                  width={width - 76}
+                  borderWidth={1}
+                  borderColor={COLORS.borderColor1}
+                />
+              </Block>
+              <Block row marginTop={12} alignCenter>
+                <Block row alignCenter>
+                  <Image source={icon.icon_day_end} width={22} height={22} />
+                  <Text
+                    fontSize={14}
+                    regular
+                    color={COLORS.placeholder}
+                    marginLeft={8}>
+                    Ngày kết thúc
+                  </Text>
+                </Block>
+                <Block absolute right={0}>
+                  <Text fontSize={14} regular color={COLORS.black2}>
+                    Thứ 7, 25/02/2025
                   </Text>
                 </Block>
               </Block>
@@ -238,9 +235,7 @@ export default function ConfirmAndPayService({route}) {
                 </Block>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    {infoService?.time?.hours} giờ,{' '}
-                    {infoService?.time?.start_time} đến{' '}
-                    {infoService?.time?.end_time}
+                    8 giờ, 8:00 đến 16:00
                   </Text>
                 </Block>
               </Block>
@@ -255,22 +250,18 @@ export default function ConfirmAndPayService({route}) {
               </Block>
               <Block row marginTop={12} alignCenter>
                 <Block row alignCenter>
-                  <Image
-                    source={icon.icon_calendar_days}
-                    width={22}
-                    height={22}
-                  />
+                  <Image source={icon.icon_day_again} width={22} height={22} />
                   <Text
                     fontSize={14}
                     regular
                     color={COLORS.placeholder}
                     marginLeft={8}>
-                    Lặp lại hàng tuần
+                    Số buổi
                   </Text>
                 </Block>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    T4-T5
+                    8 buổi
                   </Text>
                 </Block>
               </Block>
@@ -304,7 +295,7 @@ export default function ConfirmAndPayService({route}) {
                   color={COLORS.black2}
                   marginLeft={30}
                   marginTop={9}>
-                  {infoService?.service?.title}
+                  Chăm sóc người già tại nhà
                 </Text>
                 <Text
                   fontSize={14}
@@ -312,7 +303,7 @@ export default function ConfirmAndPayService({route}) {
                   color={COLORS.placeholder}
                   marginLeft={30}
                   marginTop={11}>
-                  {infoService?.note && `Ghi chú: ${infoService?.note}`}
+                  Ghi chú: Ưu tiên nữ lớn tuổi, có nhiều kinh nghiệm
                 </Text>
               </Block>
             </Block>
@@ -332,7 +323,7 @@ export default function ConfirmAndPayService({route}) {
                 </Text>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    {formatCurrency(infoService?.amount_estimated)}
+                    2.050.000 đ
                   </Text>
                 </Block>
               </Block>
@@ -351,13 +342,12 @@ export default function ConfirmAndPayService({route}) {
                 </Text>
                 <Block absolute right={0}>
                   <Text fontSize={15} medium color={COLORS.red4}>
-                    {formatCurrency(infoService?.amount_final)}
+                    2.050.000 đ
                   </Text>
                 </Block>
               </Block>
             </Block>
           </Block>
-
           <Block marginTop={20}>
             <Text fontSize={15} semiBold color={COLORS.black2}>
               Phương thức thanh toán
@@ -415,6 +405,7 @@ export default function ConfirmAndPayService({route}) {
               </Pressable>
             </Block>
           </Block>
+          <PolicyCancelPackageService top={20} title={'Quy định huỷ gói'} />
         </Block>
       </ScrollView>
       <Block
@@ -429,13 +420,12 @@ export default function ConfirmAndPayService({route}) {
           </Text>
           <Block absolute right={0}>
             <Text fontSize={15} semiBold color={COLORS.red4}>
-              {formatCurrency(infoService?.amount_final)}
+              2.050.000 đ
             </Text>
           </Block>
         </Block>
-
         <Pressable
-          onPress={orderService}
+          onPress={() => setShow(!show)}
           marginTop={13}
           marginHorizontal={12}
           height={43}
@@ -444,10 +434,11 @@ export default function ConfirmAndPayService({route}) {
           justifyCenter
           alignCenter>
           <Text fontSize={15} regular color={COLORS.white}>
-            Đăng việc
+            Đăng ký gói
           </Text>
         </Pressable>
       </Block>
+      <ModalSuccess visible={show} close={() => setShow(false)} />
       <Modal
         visible={visibleMethodPay}
         transparent={false}
@@ -734,7 +725,6 @@ export default function ConfirmAndPayService({route}) {
           </Block>
         </TouchableOpacity>
       </Modal>
-      <ModalSuccess visible={show} close={() => setShow(false)} />
     </Block>
   );
 }

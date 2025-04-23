@@ -19,9 +19,21 @@ export default function ProfileScreen() {
     dispatch({
       type: actions.GET_USER_INFO,
     });
+    dispatch({
+      type: actions.GET_STATISTICAL,
+    });
   }, [dispatch]);
 
   const userInfo = useSelector(state => state.getUserInfo?.data || []);
+  const statistical = useSelector(state => state.getStatistical?.data || []);
+  const logout = () => {
+    dispatch({
+      type: actions.LOGOUT,
+      onSuccess: () => {
+        authRoot.navigate(router.ONBOARDING_SCREEN);
+      },
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView
@@ -217,106 +229,47 @@ export default function ProfileScreen() {
               height={74}
               row
               spaceBetween>
-              <Pressable
-                onPress={() =>
-                  bottomRoot.navigate(router.ACTIVITY_SCREEN, {activity: 'new'})
-                }
-                width={width - 352}
-                height={74}
-                alignCenter>
-                <Image
-                  source={icon.union_new_activity}
-                  width={40.85}
-                  height={37.98}
-                />
-                <Text
-                  marginTop={13.1}
-                  fontSize={13}
-                  regular
-                  color={COLORS.black4}>
-                  Mới
-                </Text>
-                <Block
-                  width={18}
-                  height={18}
-                  radius={50}
-                  backgroundColor={COLORS.yellow3}
-                  alignCenter
-                  justifyCenter
-                  absolute
-                  top={0}
-                  right={0}>
-                  <Text fontSize={12} regular color={COLORS.white}>
-                    1
+              {statistical.map(item => (
+                <Pressable
+                  key={item.value}
+                  onPress={() =>
+                    bottomRoot.navigate(router.ACTIVITY_SCREEN, {
+                      activity: 'new',
+                    })
+                  }
+                  width={width - 352}
+                  height={74}
+                  alignCenter>
+                  <Image
+                    source={{uri: `${URL_API.uploads}/${item?.picture}`}}
+                    width={40.85}
+                    height={37.98}
+                  />
+                  <Text
+                    marginTop={13.1}
+                    fontSize={13}
+                    regular
+                    color={COLORS.black4}>
+                    {item?.title}
                   </Text>
-                </Block>
-              </Pressable>
-              <Block width={width - 352} height={74} alignCenter>
-                <Image
-                  source={icon.union_reception}
-                  width={40.85}
-                  height={37.98}
-                />
-                <Text
-                  marginTop={13.1}
-                  fontSize={13}
-                  regular
-                  color={COLORS.black4}>
-                  Tiếp nhận
-                </Text>
-                <Block
-                  width={18}
-                  height={18}
-                  radius={50}
-                  backgroundColor={COLORS.yellow3}
-                  alignCenter
-                  justifyCenter
-                  absolute
-                  top={0}
-                  right={0}>
-                  <Text fontSize={12} regular color={COLORS.white}>
-                    1
-                  </Text>
-                </Block>
-              </Block>
-              <Block width={width - 352} height={74} alignCenter>
-                <Image source={icon.union_doing} width={40.85} height={37.98} />
-                <Text
-                  marginTop={13.1}
-                  fontSize={13}
-                  regular
-                  color={COLORS.black4}>
-                  Đang làm
-                </Text>
-                <Block
-                  width={18}
-                  height={18}
-                  radius={50}
-                  backgroundColor={COLORS.yellow3}
-                  alignCenter
-                  justifyCenter
-                  absolute
-                  top={0}
-                  right={0}>
-                  <Text fontSize={12} regular color={COLORS.white}>
-                    1
-                  </Text>
-                </Block>
-              </Block>
-              <Block width={width - 352} height={74} alignCenter>
-                <Image
-                  source={icon.union_complete}
-                  width={40.85}
-                  height={37.98}
-                />
-                <Text
-                  marginTop={13.1}
-                  fontSize={13}
-                  regular
-                  color={COLORS.black4}>
-                  Hoàn thành
-                </Text>
-              </Block>
+                  {item?.count !== 0 && (
+                    <Block
+                      width={18}
+                      height={18}
+                      radius={50}
+                      backgroundColor={COLORS.yellow3}
+                      alignCenter
+                      justifyCenter
+                      absolute
+                      top={0}
+                      right={0}>
+                      <Text fontSize={12} regular color={COLORS.white}>
+                        {item?.count}
+                      </Text>
+                    </Block>
+                  )}
+                </Pressable>
+              ))}
             </Block>
           </Block>
         </Block>
@@ -606,12 +559,7 @@ export default function ProfileScreen() {
           </Block>
         </Block>
         <Block marginTop={12}>
-          <Pressable
-            onPress={() => authRoot.navigate(router.ONBOARDING_SCREEN)}
-            absolute
-            right={12}
-            row
-            alignCenter>
+          <Pressable onPress={logout} absolute right={12} row alignCenter>
             <Image source={icon.icon_logout} width={30} height={30} />
             <Text fontSize={15} regular color={COLORS.red4} marginLeft={10}>
               Đăng xuất
