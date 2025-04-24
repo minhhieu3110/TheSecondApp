@@ -66,7 +66,7 @@ export default function Elederly_Servicedurationday({route}) {
                 fontSize={15}
                 medium
                 color={choose === item.item_id ? COLORS.red4 : COLORS.black2}>
-                {item.short}
+                {item?.short}
               </Text>
               <Text
                 marginTop={20}
@@ -75,7 +75,7 @@ export default function Elederly_Servicedurationday({route}) {
                 color={
                   choose === item.item_id ? COLORS.black2 : COLORS.placeholder
                 }>
-                {item.title}
+                {item?.title}
               </Text>
             </Pressable>
           ))}

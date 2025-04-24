@@ -41,6 +41,9 @@ export default function FavoriteStaff() {
           type: 'success',
           text1: res?.message,
         });
+        dispatch({
+          type: actions.GET_FAVORITE_EMPLOYEE,
+        });
       },
     });
   };
@@ -59,7 +62,7 @@ export default function FavoriteStaff() {
           {favoriteEmp?.map(emp => (
             <Pressable
               onPress={() =>
-                commonRoot.navigate(router.PROFILE_STAFF, {id: emp?.id})
+                commonRoot.navigate(router.PROFILE_EMPLOYEE, {id: emp?.id})
               }
               key={emp?.id}
               height={97}
@@ -71,6 +74,7 @@ export default function FavoriteStaff() {
                 height={77}
                 radius={8}
                 marginLeft={10}
+                overflow={'hidden'}
                 marginTop={10}>
                 <Image
                   source={{uri: `${URL_API.uploads}/${emp?.picture}`}}

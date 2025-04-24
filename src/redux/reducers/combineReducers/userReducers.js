@@ -68,3 +68,12 @@ export const favoriteEmployee = (...props) => {
 export const getFavoriteEmployee = (...props) => {
   return reducerDefault(...props, actions.GET_FAVORITE_EMPLOYEE);
 };
+export const blockEmployee = (...props) => {
+  return reducerDefault(...props, actions.BLOCK_EMPLOYEE);
+};
+export const getBlockedEmployee = (...props) => {
+  return reducerDefault(...props, actions.GET_BLOCK_EMPLOYEE);
+};
+export const getRef = (...props) => {
+  return reducerDefault(...props, actions.GET_REF);
+};

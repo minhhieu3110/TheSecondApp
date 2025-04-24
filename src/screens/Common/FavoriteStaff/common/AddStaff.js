@@ -54,7 +54,7 @@ export default function AddStaff() {
           {employees.map(emp => (
             <Pressable
               onPress={() =>
-                commonRoot.navigate(router.PROFILE_STAFF, {id: emp.id})
+                commonRoot.navigate(router.PROFILE_EMPLOYEE, {id: emp.id})
               }
               key={emp.id}
               backgroundColor={COLORS.white}
@@ -66,6 +66,7 @@ export default function AddStaff() {
                 height={77}
                 radius={8}
                 marginLeft={10}
+                overflow={'hidden'}
                 marginTop={10}>
                 <Image
                   source={{uri: `${URL_API.uploads}/${emp?.picture}`}}

@@ -5,7 +5,7 @@ import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {root} from 'navigation/navigationRef';
 import {useEffect} from 'react';
-import {ScrollView} from 'react-native';
+import {Linking, ScrollView} from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
@@ -16,8 +16,13 @@ export default function ReferFriend() {
       type: actions.GET_HELP,
       params: {number: 12},
     });
+    dispatch({
+      type: actions.GET_REF,
+    });
   }, [dispatch]);
   const help = useSelector(state => state.getHelp?.data);
+  const ref = useSelector(state => state.getRef?.data || []);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -95,13 +100,21 @@ export default function ReferFriend() {
                 Ứng dụng San
               </Text>
               <Block height={45} row marginLeft={95} absolute right={12}>
-                <Image width={45} height={45} source={icon.icon_qr_refer} />
-                <Image
-                  width={45}
-                  height={45}
-                  source={icon.icon_share_refer}
-                  marginLeft={12}
-                />
+                <Pressable
+                  onPress={() =>
+                    Linking.openURL(ref?.qrcode_customer_referral_link)
+                  }>
+                  <Image width={45} height={45} source={icon.icon_qr_refer} />
+                </Pressable>
+                <Pressable
+                  onPress={() => Linking.openURL(ref?.customer_referral_link)}>
+                  <Image
+                    width={45}
+                    height={45}
+                    source={icon.icon_share_refer}
+                    marginLeft={12}
+                  />
+                </Pressable>
               </Block>
             </Block>
             <Block
@@ -124,13 +137,21 @@ export default function ReferFriend() {
                 Ứng dụng CTV San
               </Text>
               <Block height={45} row marginLeft={95} absolute right={12}>
-                <Image width={45} height={45} source={icon.icon_qr_refer} />
-                <Image
-                  width={45}
-                  height={45}
-                  source={icon.icon_share_refer}
-                  marginLeft={12}
-                />
+                <Pressable
+                  onPress={() =>
+                    Linking.openURL(ref?.qrcode_employee_referral_link)
+                  }>
+                  <Image width={45} height={45} source={icon.icon_qr_refer} />
+                </Pressable>
+                <Pressable
+                  onPress={() => Linking.openURL(ref?.employee_referral_link)}>
+                  <Image
+                    width={45}
+                    height={45}
+                    source={icon.icon_share_refer}
+                    marginLeft={12}
+                  />
+                </Pressable>
               </Block>
             </Block>
           </Block>

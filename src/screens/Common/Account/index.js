@@ -37,8 +37,10 @@ export default function Account() {
         email: updateEmail,
         birthday: updateDateOfBirth,
       },
-      onSuccess: () => {
-        root.goBack();
+      onSuccess: res => {
+        console.log(res?.message);
+
+        // root.goBack();
       },
     });
   };

@@ -14,9 +14,20 @@ export default function Setting() {
   }, [dispatch]);
   const userInfo = useSelector(state => state.getUserInfo?.data || []);
   const [allowNotification, setAllowNotification] = useState(
-    userInfo?.allow_notifications,
+    userInfo?.allow_notifications ?? true,
   );
-
+  useEffect(() => {
+    if (typeof userInfo?.allow_notifications !== 'undefined') {
+      setAllowNotification(userInfo.allow_notifications);
+    }
+  }, [userInfo?.allow_notifications]);
+  const handleNotificationToggle = value => {
+    setAllowNotification(value);
+    dispatch({
+      type: actions.UPDATE_USER_INFO,
+      body: {allow_notifications: value},
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Cài đặt'} canGoBack />
@@ -35,11 +46,7 @@ export default function Setting() {
               <Switch
                 value={allowNotification}
                 onValueChange={value => {
-                  setAllowNotification(value);
-                  dispatch({
-                    type: actions.UPDATE_USER_INFO,
-                    body: {allow_notifications: value},
-                  });
+                  handleNotificationToggle(value);
                 }}
                 trackColor={{false: COLORS.grayWhite, true: COLORS.green6}}
                 thumbColor={{false: COLORS.white, true: COLORS.white}}

@@ -69,6 +69,8 @@ export const URL_API = {
     detail_notification: 'user/detail-notification',
     list_employee: 'user/list-employee',
     favorite_employee: 'user/favorite-employee',
+    block_employee: 'user/blocked-employee',
+    ref: 'user/link-ref',
   },
   promotion: {
     list: 'promotion/list',
@@ -93,6 +95,8 @@ export const URL_API = {
   news: {
     list: 'news/list',
   },
+  social: 'socical',
+  about: 'about',
   get_province: 'get-province',
   get_district: 'get-district',
   get_ward: 'get-ward',

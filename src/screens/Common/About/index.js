@@ -10,14 +10,26 @@ import {
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {useState} from 'react';
-import {Modal, SafeAreaView, ScrollView} from 'react-native';
+import {useEffect, useState} from 'react';
+import {Linking, Modal, SafeAreaView, ScrollView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
+import {useDispatch, useSelector} from 'react-redux';
+import actions from '@actions';
+import {URL_API} from 'redux/sagas/common';
 export default function About() {
   const [modal, setModal] = useState(0);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.SOCIAL,
+    });
+  }, [dispatch]);
+  const socials = useSelector(state => state.getSocial?.data || []);
+  console.log(socials);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Về chúng tôi'} canGoBack />
@@ -77,39 +89,22 @@ export default function About() {
         color={COLORS.black2}>
         Mạng xã hội
       </Text>
-      <Block row marginTop={15} marginLeft={12}>
-        <Block width={59.95} height={59.95} marginRight={12}>
-          <Image
-            source={icon.icon_fb}
+      <Block row marginTop={15} marginLeft={12} gap={12}>
+        {socials.map(social => (
+          <Pressable
+            onPress={() => Linking.openURL(social?.link)}
             width={59.95}
             height={59.95}
             radius={8}
-          />
-        </Block>
-        <Block width={59.95} height={59.95} marginRight={12}>
-          <Image
-            source={icon.icon_youtube}
-            width={59.95}
-            height={59.95}
-            radius={8}
-          />
-        </Block>
-        <Block width={59.95} height={59.95} marginRight={12}>
-          <Image
-            source={icon.icon_instagram}
-            width={59.95}
-            height={59.95}
-            radius={8}
-          />
-        </Block>
-        <Block width={59.95} height={59.95} marginRight={12}>
-          <Image
-            source={icon.icon_zalo1}
-            width={59.95}
-            height={59.95}
-            radius={8}
-          />
-        </Block>
+            overflow={'hidden'}
+            key={social?.title}>
+            <Image
+              source={{uri: `${URL_API.uploads}/${social?.picture}`}}
+              width={59.95}
+              height={59.95}
+            />
+          </Pressable>
+        ))}
       </Block>
       <Modal visible={modal}>
         <SafeAreaView style={{flex: 1}}>

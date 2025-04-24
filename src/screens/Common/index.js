@@ -3,7 +3,6 @@ import Voucher from './VoucherScreen';
 import DetailVoucher from './VoucherScreen/DetailVoucher';
 import FavoriteStaff from './FavoriteStaff';
 import AddStaff from './FavoriteStaff/common/AddStaff';
-import ProfileStaff from './FavoriteStaff/common/ProfileStaff';
 import Balance from './Balance';
 import Recharge from './Balance/common/Recharge';
 import InfoRecharge from './Balance/common/InfoRecharge';
@@ -18,7 +17,6 @@ import Account from './Account';
 import ReferFriend from './ReferFriend';
 import BlockStaff from './BlockStaff';
 import AddBlockStaff from './BlockStaff/common/AddBlockStaff';
-import ProfileStaffBlocked from './BlockStaff/common/ProfileStaffBlocked';
 import Help from './Help';
 import TheQuestion from './Help/common/TheQuestion';
 import TermsOfUse from './Help/common/TermsOfUse';
@@ -67,13 +65,13 @@ import ConfirmAndSignupPackage from './ConfirmAndSignupPackage';
 import DetailOrder from './DetailOrder';
 import DetailService from './DetailService';
 import DetailNotification from 'screens/Common/DetailNotification';
+import ProfileEmployee from './ProfileEmployee';
 
 export const common = {
   [router.VOUCHER]: Voucher,
   [router.DETAIL_VOUCHER]: DetailVoucher,
   [router.FAVORITE_STAFF]: FavoriteStaff,
   [router.ADD_STAFF]: AddStaff,
-  [router.PROFILE_STAFF]: ProfileStaff,
   [router.BALANCE]: Balance,
   [router.RECHARGE]: Recharge,
   [router.INFO_RECHARGE]: InfoRecharge,
@@ -88,7 +86,6 @@ export const common = {
   [router.REFER_FRIEND]: ReferFriend,
   [router.BLOCK_STAFF]: BlockStaff,
   [router.ADD_BLOCK_STAFF]: AddBlockStaff,
-  [router.PROFILE_STAFF_BLOCKED]: ProfileStaffBlocked,
   [router.HELP]: Help,
   [router.THEQUESTION]: TheQuestion,
   [router.TERMS_OF_USE]: TermsOfUse,
@@ -143,4 +140,5 @@ export const common = {
   [router.CHOOSE_SERVICE]: ChooseService,
   [router.CHOOSE_TIME_FOR_SERVICE]: ChooseTimeForService,
   [router.DETAIL_NOTIFICATION]: DetailNotification,
+  [router.PROFILE_EMPLOYEE]: ProfileEmployee,
 };

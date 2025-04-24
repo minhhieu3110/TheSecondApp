@@ -40,12 +40,13 @@ export default function AllVoucher() {
                   height={117.98}
                   marginTop={16}
                   marginLeft={13.8}
-                  radius={11}>
+                  radius={11}
+                  overflow={'hidden'}>
                   <Image
                     source={{uri: `${URL_API.uploads}/${item.picture}`}}
                     resizeMode="contain"
-                    width={'100%'}
-                    height={'100%'}
+                    width={width - 335.94}
+                    height={117.98}
                   />
                 </Block>
                 <TicketVoucherShape />

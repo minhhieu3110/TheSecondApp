@@ -140,9 +140,11 @@ export default function InputInformation({route}) {
                     color={COLORS.placeholder}
                     fontSize={14}
                     regular
+                    value={dateOfBirth}
+                    onChangeText={setDateOfBirth}
                     placeholder={'Nhập ngày sinh'}
                   />
-                  <Block
+                  <Pressable
                     width={18.3}
                     height={17.13}
                     absolute
@@ -153,7 +155,7 @@ export default function InputInformation({route}) {
                       width={18.3}
                       height={17.13}
                     />
-                  </Block>
+                  </Pressable>
                 </Block>
               </Block>
               <Block marginBottom={17}>

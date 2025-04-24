@@ -72,11 +72,6 @@ export default function Address({route}) {
           spaceBetween>
           {addressSaved.map(item => (
             <Pressable
-              // onPress={() =>
-              //   commonRoot.navigate(router.CHOOSE_SERVICE, {
-              //     id: route.params?.id,
-              //   })
-              // }
               onPress={() => handleService(item.item_id)}
               key={item.item_id}
               radius={8}

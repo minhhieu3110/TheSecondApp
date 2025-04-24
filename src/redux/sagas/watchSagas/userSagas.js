@@ -244,6 +244,46 @@ function* getFavoriteEmployee(action) {
     action.onFail?.(error);
   }
 }
+function* blockEmployee(action) {
+  const body = yield action.body;
+  try {
+    const res = yield api.post(URL_API.user.block_employee, body);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
+function* getBlockedEmployee(action) {
+  try {
+    const res = yield api.get(URL_API.user.block_employee);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
+function* getRef(action) {
+  try {
+    const res = yield api.get(URL_API.user.ref);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 export default function* watchUserSagas() {
   yield takeLatest(actions.SEND_OTP, sendOTP);
   yield takeLatest(actions.VERIFY_OTP, verifyOTP);
@@ -262,4 +302,7 @@ export default function* watchUserSagas() {
   yield takeLatest(actions.GET_DETAIL_EMPLOYEE, getDetailEmployee);
   yield takeLatest(actions.FAVORITE_EMPLOYEE, favoriteEmployee);
   yield takeLatest(actions.GET_FAVORITE_EMPLOYEE, getFavoriteEmployee);
+  yield takeLatest(actions.BLOCK_EMPLOYEE, blockEmployee);
+  yield takeLatest(actions.GET_BLOCK_EMPLOYEE, getBlockedEmployee);
+  yield takeLatest(actions.GET_REF, getRef);
 }

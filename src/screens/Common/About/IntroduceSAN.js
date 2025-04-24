@@ -5,13 +5,23 @@ import {COLORS} from '@theme';
 import {ScrollView} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {root} from 'navigation/navigationRef';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect} from 'react';
+import actions from '@actions';
+import {URL_API} from 'redux/sagas/common';
+import RenderHTML from 'react-native-render-html';
 export default function IntroduceSAN() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({type: actions.ABOUT});
+  }, []);
+  const about = useSelector(state => state.getAbout?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView>
         <Block width={width} height={199.6}>
           <Image
-            source={image.image_header_intro_san}
+            source={{uri: `${URL_API.uploads}/${about?.picture}`}}
             width={width}
             height={199.6}
             resizeMode="cover"
@@ -48,50 +58,22 @@ export default function IntroduceSAN() {
             marginLeft={12}
             marginTop={14}
             uppercase>
-            Giới thiệu về SAN
+            {about?.title}
           </Text>
-          <Text
-            fontSize={14}
-            regular
-            color={COLORS.black1}
-            marginLeft={12}
-            marginTop={16}
-            lineHeight={22}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been industry's standard dummy text ever
-            since the 1500s, when anm unknown printer took a galley of type and
-            scrambledt it to make a type specimen book. It has survived t only
-            five centuries, but also the leap into electritypesetting, remaining
-            essentially unchanged. It was popularisn in the 1960s with the
-            release of Letraset sheeticontaining Lorem Ipsum passages, and more
-            recently wt desktop publishing software like Aldus PageMaker
-            incliversions of Lorem Ipsum.
-          </Text>
-          <Block width={212} height={202} marginHorizontal={96} marginTop={39}>
-            <Image
-              source={image.image_intro_san}
-              width={212}
-              height={202}
-              resizeMode="cover"
+          <Block marginHorizontal={12} marginTop={16}>
+            <RenderHTML
+              contentWidth={width - 48}
+              source={{html: about?.content}}
+              tagsStyles={{
+                p: {
+                  fontSize: 14,
+                  color: COLORS.black2,
+                  fontWeight: 'regular',
+                  lineHeight: 22,
+                },
+              }}
             />
           </Block>
-          <Text
-            fontSize={14}
-            regular
-            color={COLORS.black1}
-            marginLeft={12}
-            marginTop={10}
-            lineHeight={22}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been industry's standard dummy text ever
-            since the 1500s, when anm unknown printer took a galley of type and
-            scrambledt it to make a type specimen book. It has survived t only
-            five centuries, but also the leap into electritypesetting, remaining
-            essentially unchanged. It was popularisn in the 1960s with the
-            release of Letraset sheeticontaining Lorem Ipsum passages, and more
-            recently wt desktop publishing software like Aldus PageMaker
-            incliversions of Lorem Ipsum.
-          </Text>
         </Block>
       </ScrollView>
     </Block>

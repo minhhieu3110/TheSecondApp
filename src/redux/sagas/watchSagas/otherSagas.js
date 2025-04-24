@@ -57,9 +57,37 @@ function* getNews(action) {
     yield put({type: _onFail(action.type)});
   }
 }
+function* getSocial(action) {
+  try {
+    const res = yield api.get(URL_API.social);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
+function* getAbout(action) {
+  try {
+    const res = yield api.get(URL_API.about);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 export default function* watchOtherSagas() {
   yield takeLatest(actions.GET_BANNER, getBanner);
   yield takeLatest(actions.GET_VOUCHER, getVoucher);
   yield takeLatest(actions.GET_LIST_PROMO, getPromo);
   yield takeLatest(actions.GET_NEWS, getNews);
+  yield takeLatest(actions.SOCIAL, getSocial);
+  yield takeLatest(actions.ABOUT, getAbout);
 }
