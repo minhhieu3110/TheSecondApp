@@ -83,6 +83,19 @@ function* getAbout(action) {
     action.onFail?.(error);
   }
 }
+function* sysoptions(action) {
+  try {
+    const res = yield api.get(URL_API.sysoptions);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 export default function* watchOtherSagas() {
   yield takeLatest(actions.GET_BANNER, getBanner);
   yield takeLatest(actions.GET_VOUCHER, getVoucher);
@@ -90,4 +103,5 @@ export default function* watchOtherSagas() {
   yield takeLatest(actions.GET_NEWS, getNews);
   yield takeLatest(actions.SOCIAL, getSocial);
   yield takeLatest(actions.ABOUT, getAbout);
+  yield takeLatest(actions.SYSOPTIONS, sysoptions);
 }

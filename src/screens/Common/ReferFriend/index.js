@@ -9,6 +9,7 @@ import {Linking, ScrollView} from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
+import Clipboard from '@react-native-clipboard/clipboard';
 export default function ReferFriend() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -19,9 +20,14 @@ export default function ReferFriend() {
     dispatch({
       type: actions.GET_REF,
     });
+    dispatch({
+      type: actions.GET_USER_INFO,
+    });
   }, [dispatch]);
   const help = useSelector(state => state.getHelp?.data);
   const ref = useSelector(state => state.getRef?.data || []);
+  const userInfo = useSelector(state => state.getUserInfo?.data || []);
+  console.log(Clipboard.getString());
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -68,17 +74,20 @@ export default function ReferFriend() {
                   Mã giới thiệu
                 </Text>
                 <Text fontSize={14} regular color={COLORS.red4}>
-                  SAN01234
+                  {userInfo?.user_code}
                 </Text>
               </Block>
-              <Block width={21} height={21}>
+              <Pressable
+                onPress={() => Clipboard.setString(userInfo?.user_code)}
+                width={21}
+                height={21}>
                 <Icon
                   IconType={Ionicons}
                   iconName={'copy-outline'}
                   iconSize={21}
                   iconColor={COLORS.red4}
                 />
-              </Block>
+              </Pressable>
             </Block>
             <Block
               height={69}

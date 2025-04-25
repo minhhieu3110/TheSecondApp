@@ -34,6 +34,8 @@ import DateTimePicker from './base/DateTimePicker';
 import DateTimeInput from './form/DateTimeInput';
 import ChooseStartTime from './form/ChooseStartTime';
 import ModalCalendar from './base/ModalCalendar';
+import DateOfBirthPicker from './base/DateOfBirthPicker';
+import Loading from './base/Loading';
 export {
   Carousel,
   Block,
@@ -71,4 +73,6 @@ export {
   DateTimePicker,
   DateTimeInput,
   ChooseStartTime,
+  DateOfBirthPicker,
+  Loading,
 };

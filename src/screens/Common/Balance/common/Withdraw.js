@@ -1,3 +1,4 @@
+import actions from '@actions';
 import {icon} from '@assets';
 import {
   Block,
@@ -5,6 +6,7 @@ import {
   HeaderTitle,
   Image,
   Pressable,
+  ScrollView,
   Text,
   TextInput,
 } from '@components';
@@ -12,7 +14,9 @@ import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {formatCurrency} from 'utils/helper';
 
 export default function Withdraw() {
   const rechargeMoney = [
@@ -29,127 +33,132 @@ export default function Withdraw() {
     setChooseMoney(id);
     setMoney(money);
   };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({type: actions.GET_USER_INFO});
+    dispatch({type: actions.GET_LIST_BANK});
+  }, [dispatch]);
+  const userInfo = useSelector(state => state.getUserInfo?.data || []);
+  const listBank = useSelector(state => state.getListBank?.data || []);
+  const [bankSelected, setBankSelected] = useState();
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Rút tiền'} canGoBack />
-      <Block
-        width={width - 24}
-        radius={8}
-        backgroundColor={COLORS.white}
-        marginLeft={12}
-        marginTop={15}
-        paddingBottom={12}>
-        <Text
-          fontSize={15}
-          semiBold
-          color={COLORS.black1}
-          marginTop={17}
-          marginLeft={17}>
-          Số dư khả dụng
-        </Text>
+      <ScrollView contentContainerStyle={{paddingBottom: 150}}>
         <Block
+          width={width - 24}
+          radius={8}
+          backgroundColor={COLORS.white}
           marginLeft={12}
           marginTop={15}
-          justifyCenter
-          alignCenter
-          width={width - 48}
-          height={60}
-          radius={5}
-          backgroundColor={COLORS.pinkWhite2}>
-          <Text fontSize={22} semiBold color={COLORS.red4}>
-            30.000.000 đ
+          paddingBottom={12}>
+          <Text
+            fontSize={15}
+            semiBold
+            color={COLORS.black1}
+            marginTop={17}
+            marginLeft={17}>
+            Số dư khả dụng
           </Text>
-        </Block>
-        <Text
-          fontSize={15}
-          semiBold
-          color={COLORS.black1}
-          marginTop={20}
-          marginLeft={20}>
-          Nhập số tiền rút
-        </Text>
-        <Block
-          row
-          alignCenter
-          width={width - 48}
-          height={48}
-          marginTop={15}
-          marginLeft={12}>
-          <TextInput
-            placeholder={'Nhập số tiền cần nạp'}
+          <Block
+            marginLeft={12}
+            marginTop={15}
+            justifyCenter
+            alignCenter
             width={width - 48}
-            borderWidth={1}
+            height={60}
             radius={5}
-            borderColor={'#f1f1f1'}
-            paddingLeft={10}
-            color={COLORS.red4}
-            onChangeText={text => setMoney(text)}>
-            100.000
-          </TextInput>
-          <Block absolute right={12}>
-            <Text fontSize={22} regular color={COLORS.black}>
-              đ
+            backgroundColor={COLORS.pinkWhite2}>
+            <Text fontSize={22} semiBold color={COLORS.red4}>
+              {formatCurrency(userInfo?.wcoin)}
             </Text>
+          </Block>
+          <Text
+            fontSize={15}
+            semiBold
+            color={COLORS.black1}
+            marginTop={20}
+            marginLeft={20}>
+            Nhập số tiền rút
+          </Text>
+          <Block
+            row
+            alignCenter
+            width={width - 48}
+            height={48}
+            marginTop={15}
+            marginLeft={12}>
+            <TextInput
+              placeholder={'Nhập số tiền cần rút'}
+              width={width - 48}
+              borderWidth={1}
+              radius={5}
+              borderColor={'#f1f1f1'}
+              paddingLeft={10}
+              color={COLORS.red4}
+            />
+            <Block absolute right={12}>
+              <Text fontSize={22} regular color={COLORS.black}>
+                đ
+              </Text>
+            </Block>
           </Block>
         </Block>
-      </Block>
-      <Block
-        width={width - 24}
-        backgroundColor={COLORS.white}
-        radius={8}
-        marginTop={12}
-        marginHorizontal={12}
-        paddingTop={17}
-        paddingBottom={12}>
-        <Text fontSize={15} semiBold color={COLORS.black1} marginLeft={20.1}>
-          Tài khoản nhận tiền
-        </Text>
-        <Block marginLeft={12} marginTop={18} width={width - 48}>
-          <Block row height={23} alignCenter marginBottom={12}>
-            <Block width={30} height={30}>
-              <Image
-                source={icon.icon_NH_BIDV}
-                width={'100%'}
-                height={'100%'}
-                resizeMode="contain"
-              />
-            </Block>
-            <Text fontSize={15} regular color={COLORS.black1} marginLeft={10}>
-              Ngân hàng BIDV
-            </Text>
-            <Block
-              width={23}
-              height={23}
-              radius={15}
-              absolute
-              right={0}
-              borderWidth={1}
-              borderColor={COLORS.placeholder}></Block>
-          </Block>
-          <Block row height={23} alignCenter marginBottom={12}>
-            <Block width={30} height={30}>
-              <Image
-                source={icon.icon_NH_TP}
-                width={'100%'}
-                height={'100%'}
-                resizeMode="contain"
-              />
-            </Block>
-            <Text fontSize={15} regular color={COLORS.black1} marginLeft={10}>
-              Ngân hàng TP
-            </Text>
-            <Block
-              width={23}
-              height={23}
-              radius={15}
-              absolute
-              right={0}
-              borderWidth={1}
-              borderColor={COLORS.placeholder}></Block>
+        <Block
+          width={width - 24}
+          backgroundColor={COLORS.white}
+          radius={8}
+          marginTop={12}
+          marginHorizontal={12}
+          paddingTop={17}
+          paddingBottom={12}>
+          <Text fontSize={15} semiBold color={COLORS.black1} marginLeft={20.1}>
+            Tài khoản nhận tiền
+          </Text>
+          <Block marginLeft={12} marginTop={18} width={width - 48} gap={12}>
+            {listBank?.map(bank => (
+              <Pressable
+                onPress={() => setBankSelected(bank.item_id)}
+                rowCenter
+                spaceBetween
+                key={bank.item_id}>
+                <Block rowCenter>
+                  <Image
+                    source={icon.icon_NH_BIDV}
+                    width={30}
+                    height={30}
+                    resizeMode="contain"
+                  />
+                  <Text
+                    fontSize={15}
+                    regular
+                    color={COLORS.black1}
+                    marginLeft={10}>
+                    {bank?.title_short}
+                  </Text>
+                </Block>
+                <Block
+                  width={23}
+                  height={23}
+                  radius={15}
+                  borderWidth={1}
+                  borderColor={COLORS.placeholder}
+                  backgroundColor={
+                    bankSelected === bank.item_id ? COLORS.red4 : COLORS.white
+                  }
+                  justifyCenter
+                  alignCenter>
+                  <Block
+                    width={11}
+                    height={11}
+                    backgroundColor={COLORS.white}
+                    radius={11}></Block>
+                </Block>
+              </Pressable>
+            ))}
           </Block>
         </Block>
-      </Block>
-      <Pressable>
         <Text
           marginTop={20}
           marginLeft={20}
@@ -158,7 +167,7 @@ export default function Withdraw() {
           color={COLORS.green5}>
           + Thêm tài khoản
         </Text>
-      </Pressable>
+      </ScrollView>
       <Button title="Gửi lệnh" />
     </Block>
   );

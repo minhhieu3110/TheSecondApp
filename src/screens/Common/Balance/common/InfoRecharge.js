@@ -1,3 +1,4 @@
+import actions from '@actions';
 import {icon, image} from '@assets';
 import {
   Block,
@@ -8,10 +9,28 @@ import {
   Pressable,
   Button,
 } from '@components';
+import Clipboard from '@react-native-clipboard/clipboard';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
+import {formatCurrency} from '@utils';
+import {useEffect, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-export default function InfoRecharge() {
+import {useDispatch, useSelector} from 'react-redux';
+import {URL_API} from 'redux/sagas/common';
+
+export default function InfoRecharge({route}) {
+  const [rechargeInfo, setRechargeInfo] = useState();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (route?.params?.rechargeInfo) {
+      setRechargeInfo(route?.params?.rechargeInfo);
+    }
+    dispatch({
+      type: actions.GET_USER_INFO,
+    });
+  }, [rechargeInfo, dispatch]);
+  const userInfo = useSelector(state => state.getUserInfo?.data || []);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Thông tin chuyển khoản'} canGoBack />
@@ -27,7 +46,7 @@ export default function InfoRecharge() {
           Giá trị quý khách cần nạp
         </Text>
         <Text fontSize={22} color={COLORS.red4} semiBold>
-          100.000 đ
+          {formatCurrency(route?.params?.value)}
         </Text>
         <Block
           width={width - 48}
@@ -44,7 +63,7 @@ export default function InfoRecharge() {
               Ngân hàng
             </Text>
             <Text fontSize={14} regular color={COLORS.black1}>
-              Vietcombank
+              {rechargeInfo?.bank_name}
             </Text>
           </Block>
           <Block marginTop={22} row spaceBetween>
@@ -52,18 +71,19 @@ export default function InfoRecharge() {
               Chủ tài khoản
             </Text>
             <Text fontSize={14} regular color={COLORS.black1}>
-              Công ty TNHH San
+              {rechargeInfo?.bank_account}
             </Text>
           </Block>
           <Block marginTop={18} row spaceBetween>
             <Text fontSize={14} regular color={COLORS.placeholder}>
               Số tài khoản
             </Text>
-            <Block row>
+            <Block rowCenter gap={9}>
               <Text fontSize={14} regular color={COLORS.black1}>
-                123456789
+                {rechargeInfo?.bank_number}
               </Text>
-              <Pressable marginLeft={9}>
+              <Pressable
+                onPress={() => Clipboard.setString(rechargeInfo?.bank_number)}>
                 <Icon
                   IconType={Ionicons}
                   iconName={'copy-outline'}
@@ -77,11 +97,12 @@ export default function InfoRecharge() {
             <Text fontSize={14} regular color={COLORS.placeholder}>
               Nội dung
             </Text>
-            <Block row>
+            <Block rowCenter gap={9}>
               <Text fontSize={14} regular color={COLORS.black1} uppercase>
-                NAPTIENSAN_345KHJM
+                {rechargeInfo?.bank_content}
               </Text>
-              <Pressable marginLeft={9}>
+              <Pressable
+                onPress={() => Clipboard.setString(rechargeInfo?.bank_content)}>
                 <Icon
                   IconType={Ionicons}
                   iconName={'copy-outline'}
@@ -114,10 +135,10 @@ export default function InfoRecharge() {
             justifyCenter>
             <Block width={width - 275.5} height={width - 275.5}>
               <Image
-                source={image.image_qr_code}
+                source={{uri: `${URL_API.uploads}/${userInfo?.bank_qrcode}`}}
                 width={'100%'}
                 height={'100%'}
-                resizeMode="contain"
+                resizeMode="cover"
               />
             </Block>
           </Block>

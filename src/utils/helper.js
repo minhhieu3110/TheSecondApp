@@ -12,9 +12,9 @@ export const randomNumberString = () => {
   return `${Date.now()}${Math.floor(Math.random() * 1000)}`;
 };
 
-const formatter = new Intl.NumberFormat('en-US');
-export const formatCurrency = (number, suffix = CURRENCY.lao) => {
-  return number ? `${formatter.format(+number)}${suffix}` : `0${suffix}`;
+const formatter = new Intl.NumberFormat('vn-VN');
+export const formatCurrency = (number, suffix = CURRENCY.vn) => {
+  return number ? `${formatter.format(+number)} ${suffix}` : `0 ${suffix}`;
 };
 
 export const convertHidePrice = price => {

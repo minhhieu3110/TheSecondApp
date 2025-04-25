@@ -5,3 +5,7 @@ export const HEADER = {
   titleSize: 15,
   fontFamily: FONTS.semiBold,
 };
+export const CURRENCY = {
+  lao: '₭',
+  vn: 'đ',
+};

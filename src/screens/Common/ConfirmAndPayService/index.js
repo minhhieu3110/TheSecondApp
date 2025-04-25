@@ -17,7 +17,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Modal, TouchableOpacity} from 'react-native';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {ConvertTimeStamp, formatCurrency, formatPhone} from '@utils';
+import {ConvertTimeStamp, formatPhone} from '@utils';
 import {use, useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
 import RadialGradient from 'react-native-radial-gradient';
@@ -25,6 +25,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
 import AllVoucher from '../VoucherScreen/components/AllVoucher';
 import Toast from 'react-native-toast-message';
+import {formatCurrency} from 'utils/helper';
 
 export default function ConfirmAndPayService({route}) {
   const dispatch = useDispatch();

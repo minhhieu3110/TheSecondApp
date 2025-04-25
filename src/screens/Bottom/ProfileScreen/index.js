@@ -13,6 +13,7 @@ import RadialGradient from 'react-native-radial-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
+import {formatCurrency} from 'utils/helper';
 export default function ProfileScreen() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -56,7 +57,11 @@ export default function ProfileScreen() {
               marginTop={20}
               marginLeft={12}>
               <Image
-                source={image.image_user}
+                source={
+                  userInfo?.picture === ''
+                    ? icon.icon_user_activity
+                    : {uri: `${URL_API.uploads}/${userInfo?.picture}`}
+                }
                 width={90}
                 height={90}
                 resizeMode="center"
@@ -169,7 +174,7 @@ export default function ProfileScreen() {
               />
               <Block height={39} marginLeft={12}>
                 <Text fontSize={16} semiBold color={COLORS.red4}>
-                  30.000.000 đ
+                  {formatCurrency(userInfo?.wcoin)}
                 </Text>
                 <Text fontSize={13} regular color={COLORS.black1}>
                   Số dư khả dụng
@@ -192,7 +197,7 @@ export default function ProfileScreen() {
               />
               <Block height={39} marginLeft={12}>
                 <Text fontSize={16} semiBold color={COLORS.red4}>
-                  3600 điểm
+                  {userInfo?.point} điểm
                 </Text>
                 <Text fontSize={13} regular color={COLORS.black1}>
                   Điểm tích luỹ
@@ -234,7 +239,7 @@ export default function ProfileScreen() {
                   key={item.value}
                   onPress={() =>
                     bottomRoot.navigate(router.ACTIVITY_SCREEN, {
-                      activity: 'new',
+                      title: item.title,
                     })
                   }
                   width={width - 352}

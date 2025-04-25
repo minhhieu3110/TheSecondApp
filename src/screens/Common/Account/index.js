@@ -2,6 +2,7 @@ import actions from '@actions';
 import {icon, image} from '@assets';
 import {
   Block,
+  DateOfBirthPicker,
   HeaderTitle,
   Image,
   Pressable,
@@ -14,6 +15,7 @@ import {COLORS} from '@theme';
 import {ConvertTimeStamp, formatPhone} from '@utils';
 import {bottomRoot, root} from 'navigation/navigationRef';
 import {use, useEffect, useState} from 'react';
+import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {user} from 'redux/reducers/combineReducers/userReducers';
 
@@ -25,10 +27,13 @@ export default function Account() {
       type: actions.GET_USER_INFO,
     });
   }, [dispatch]);
+  const [dateOfBirth, setDateOfBirth] = useState(false);
   const userInfo = useSelector(state => state.getUserInfo?.data || []);
   const [updateName, setUpdateName] = useState(`${userInfo?.full_name}`);
   const [updateEmail, setUpdateEmail] = useState(`${userInfo?.email}`);
-  const [updateDateOfBirth, setUpdateDateOfBirth] = useState();
+  const [updateDateOfBirth, setUpdateDateOfBirth] = useState(
+    `${ConvertTimeStamp(userInfo?.birthday)}`,
+  );
   const update = () => {
     dispatch({
       type: actions.UPDATE_USER_INFO,
@@ -37,13 +42,12 @@ export default function Account() {
         email: updateEmail,
         birthday: updateDateOfBirth,
       },
-      onSuccess: res => {
-        console.log(res?.message);
-
-        // root.goBack();
+      onSuccess: () => {
+        root.goBack();
       },
     });
   };
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle canGoBack title={'Thiết lập tài khoản'} />
@@ -147,7 +151,8 @@ export default function Account() {
                 value={updateDateOfBirth}
                 onChangeText={setUpdateDateOfBirth}
               />
-              <Block
+              <Pressable
+                onPress={() => setDateOfBirth(true)}
                 width={18.3}
                 height={17.13}
                 absolute
@@ -158,7 +163,7 @@ export default function Account() {
                   width={18.3}
                   height={17.13}
                 />
-              </Block>
+              </Pressable>
             </Block>
           </Block>
         </Block>
@@ -181,6 +186,13 @@ export default function Account() {
           </Text>
         </Block>
       </Block>
+      <DateOfBirthPicker
+        visible={dateOfBirth}
+        close={() => setDateOfBirth(false)}
+        onChange={day => {
+          setUpdateDateOfBirth(day);
+        }}
+      />
     </Block>
   );
 }

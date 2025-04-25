@@ -92,5 +92,16 @@
 		<string>SVN-Poppins-Thin.otf</string>
 		<string>SVN-Poppins-ThinItalic.otf</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+
+	<string>Ứng dụng của bạn cần quyền truy cập vào camera.</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+
+	<string>Ứng dụng của bạn cần quyền truy cập vào thư viện ảnh.</string>
+
+	<key>NSPhotoLibraryAddUsageDescription</key>
+
+	<string>Ứng dụng của bạn cần quyền lưu trữ ảnh vào thư viện.</string>
 </dict>
 </plist>

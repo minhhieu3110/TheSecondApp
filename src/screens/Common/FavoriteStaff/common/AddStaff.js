@@ -41,6 +41,9 @@ export default function AddStaff() {
           type: 'success',
           text1: res?.message,
         });
+        dispatch({
+          type: actions.GET_LIST_EMPLOYEE,
+        });
       },
     });
   };

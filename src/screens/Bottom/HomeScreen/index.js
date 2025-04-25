@@ -1,9 +1,8 @@
 import {height, width} from '@responsive';
 import {COLORS, FONTS} from '@theme';
 import RadialGradient from 'react-native-radial-gradient';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {icon, image} from '@assets';
-import {Block, Text, Carousel, Image, ScrollView} from '@components';
+import {Block, Text, Carousel, Image, ScrollView, Icon} from '@components';
 import Pressable from 'components/base/Pressable';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
@@ -11,9 +10,15 @@ import {useCallback, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import {ConvertTimeStamp} from '@utils';
+import {formatCurrency} from 'utils/helper';
+import {URL_API} from 'redux/sagas/common';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 export default function HomeScreen() {
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch({
+      type: actions.GET_USER_INFO,
+    });
     dispatch({
       type: actions.GET_LIST_SERVICE,
     });
@@ -28,6 +33,7 @@ export default function HomeScreen() {
       params: {group: 'banner-home'},
     });
   }, [dispatch]);
+  const userInfo = useSelector(state => state.getUserInfo?.data || []);
   const service = useSelector(state => state.getServices?.data || []);
   const serviceReverse = service.reverse();
   const promo = useSelector(state => state.getPromo?.data || []);
@@ -55,10 +61,10 @@ export default function HomeScreen() {
         contentContainerStyle={{
           flex: 1,
           backgroundColor: COLORS.gray10,
-          paddingBottom: 1700,
+          paddingBottom: 1800,
         }}>
         <Block width={width} height={337} backgroundColor={COLORS.white}>
-          <Block width={width - 24} height={46} row left={12}>
+          <Block width={width - 24} height={46} row left={12} spaceBetween>
             <Block marginTop={3} height={43}>
               <Text
                 color={COLORS.red4}
@@ -67,17 +73,54 @@ export default function HomeScreen() {
                 fontSize={16}>
                 Ứng dụng chăm sóc người già
               </Text>
-              <Text color={COLORS.black1} light={true} fontSize={14}>
+              <Text color={COLORS.black1} light fontSize={14}>
                 Nhỏ cậy Cha, Già cậy SAN
               </Text>
             </Block>
-            <Block absolute={true} right={0} row spaceBetween width={84}>
-              <Pressable onPress={() => commonRoot.navigate(router.VOUCHER)}>
-                <Image source={icon.icon_percent} width={37} height={37} />
+            <Block row spaceBetween width={84}>
+              <Pressable
+                onPress={() => commonRoot.navigate(router.VOUCHER)}
+                width={37}
+                height={37}
+                radius={8}
+                overflow={'hidden'}>
+                <RadialGradient
+                  colors={COLORS.gradient5}
+                  style={{
+                    width: 37,
+                    height: 37,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Icon
+                    IconType={MaterialCommunityIcons}
+                    iconColor={COLORS.white}
+                    iconSize={25}
+                    iconName={'ticket-percent-outline'}
+                  />
+                </RadialGradient>
               </Pressable>
               <Pressable
-                onPress={() => commonRoot.navigate(router.FAVORITE_STAFF)}>
-                <Image source={icon.icon_heart} width={37} height={37} />
+                onPress={() => commonRoot.navigate(router.FAVORITE_STAFF)}
+                width={37}
+                height={37}
+                radius={8}
+                overflow={'hidden'}>
+                <RadialGradient
+                  colors={COLORS.gradient5}
+                  style={{
+                    width: 37,
+                    height: 37,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Icon
+                    IconType={MaterialCommunityIcons}
+                    iconColor={COLORS.white}
+                    iconSize={25}
+                    iconName={'cards-heart-outline'}
+                  />
+                </RadialGradient>
               </Pressable>
             </Block>
           </Block>
@@ -106,7 +149,7 @@ export default function HomeScreen() {
                   Số dư khả dụng
                 </Text>
                 <Text fontSize={14} semiBold color={COLORS.red4}>
-                  3.000.000 đ
+                  {formatCurrency(userInfo?.wcoin)}
                 </Text>
               </Pressable>
             </Block>
@@ -132,7 +175,7 @@ export default function HomeScreen() {
                   Điểm tích luỹ
                 </Text>
                 <Text fontSize={14} semiBold color={COLORS.red4}>
-                  2500 điểm
+                  {userInfo?.point} điểm
                 </Text>
               </Pressable>
             </Block>
@@ -278,7 +321,12 @@ export default function HomeScreen() {
                       height={196}
                     />
                   </Block>
-                  <Text fontSize={15} semiBold uppercase color={COLORS.black1}>
+                  <Text
+                    fontSize={15}
+                    semiBold
+                    uppercase
+                    color={COLORS.black1}
+                    numberOfLines={2}>
                     ưu đãi:{' '}
                     <Text capitalize regular>
                       {item.title}
@@ -288,11 +336,7 @@ export default function HomeScreen() {
               ))}
             </ScrollView>
           </Block>
-          <Block
-            marginTop={24}
-            width={width}
-            height={424}
-            backgroundColor={COLORS.white}>
+          <Block marginTop={24} width={width} backgroundColor={COLORS.white}>
             <Block
               marginLeft={12}
               marginTop={17.8}
@@ -308,12 +352,11 @@ export default function HomeScreen() {
             </Block>
             <Block
               width={width - 24}
-              // height={363}
               marginTop={12.3}
               marginHorizontal={12}
               marginBottom={15}
               gap={12}>
-              {limitNews.map(item => (
+              {news?.slice(0, 4)?.map(item => (
                 <Block row spaceBetween height={113} key={item.item_id}>
                   <Block
                     width={width - 278}
@@ -321,16 +364,12 @@ export default function HomeScreen() {
                     radius={10}
                     overflow={'hidden'}>
                     <Image
-                      source={{uri: item.picture}}
+                      source={{uri: `${URL_API.uploads}/${item?.picture}`}}
                       width={width - 278}
                       height={113}
                     />
                   </Block>
-                  <Block
-                    marginLeft={10}
-                    marginTop={17.9}
-                    width={width - 184}
-                    height={61.08}>
+                  <Block marginLeft={10} marginTop={17.9} width={width - 190}>
                     <Block row alignCenter>
                       <Image
                         source={icon.icon_calendar}
@@ -350,7 +389,8 @@ export default function HomeScreen() {
                       marginTop={10}
                       fontSize={15}
                       medium
-                      color={COLORS.black1}>
+                      color={COLORS.black1}
+                      numberOfLines={2}>
                       {item.title}
                     </Text>
                   </Block>

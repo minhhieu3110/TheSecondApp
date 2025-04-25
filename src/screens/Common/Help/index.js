@@ -31,9 +31,12 @@ export default function Help() {
       type: actions.GET_HELP,
       params: {number: 11},
     });
+    dispatch({
+      type: actions.SYSOPTIONS,
+    });
   }, [dispatch]);
   const help = useSelector(state => state.getHelp?.data || []);
-
+  const sysoptions = useSelector(state => state.sysoptions?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Hỗ trợ'} canGoBack />
@@ -139,7 +142,7 @@ export default function Help() {
             </Text>
             <Block absolute right={0} row alignCenter>
               <Text fontSize={15} regular color={COLORS.red4} marginRight={10}>
-                SupportSAN@gmail.com
+                {sysoptions?.email}
               </Text>
               <Icon
                 iconName={'keyboard-arrow-right'}
@@ -160,7 +163,7 @@ export default function Help() {
             </Text>
             <Block absolute right={0} row alignCenter>
               <Text fontSize={15} regular color={COLORS.red4} marginRight={10}>
-                1900 1234
+                {sysoptions?.hotline}
               </Text>
               <Icon
                 iconName={'keyboard-arrow-right'}

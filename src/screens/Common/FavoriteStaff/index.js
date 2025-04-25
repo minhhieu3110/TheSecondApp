@@ -6,6 +6,7 @@ import {
   HeaderTitle,
   Icon,
   Image,
+  Loading,
   Pressable,
   Text,
 } from '@components';
@@ -20,15 +21,16 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
 export default function FavoriteStaff() {
+  const favoriteEmp = useSelector(
+    state => state.getFavoriteEmployee?.data || [],
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
       type: actions.GET_FAVORITE_EMPLOYEE,
     });
   }, [dispatch]);
-  const favoriteEmp = useSelector(
-    state => state.getFavoriteEmployee?.data || [],
-  );
+
   const removeFavoriteEmployee = item_id => {
     dispatch({
       type: actions.FAVORITE_EMPLOYEE,
@@ -55,6 +57,7 @@ export default function FavoriteStaff() {
         root={bottomRoot}
         screenName={router.PROFILE_SCREEN}
       />
+      {favoriteEmp?.isLoading && <Loading />}
       <ScrollView
         contentContainerStyle={{marginTop: 15}}
         showsVerticalScrollIndicator={false}>

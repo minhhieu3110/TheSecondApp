@@ -23,3 +23,6 @@ export const getSocial = (...props) => {
 export const getAbout = (...props) => {
   return reducerDefault(...props, actions.ABOUT);
 };
+export const sysoptions = (...props) => {
+  return reducerDefault(...props, actions.SYSOPTIONS);
+};

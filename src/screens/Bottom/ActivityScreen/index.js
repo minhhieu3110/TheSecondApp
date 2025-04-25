@@ -5,9 +5,12 @@ import {useEffect, useState} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import router from '@router';
 import {top} from 'screens/Bottom/ActivityScreen/common/top';
+import NewActivity from './common/NewActivity';
+import Reception from './common/Reception';
+import Doing from './common/Doing';
+import Complete from './common/Complete';
+import Cancel from './common/Cancel';
 export default function ActivityScreen({route}) {
-  console.log(route?.params?.activity);
-
   const tabs = [
     {name: router.NEW_ACTIVITY, lable: 'Mới'},
     {name: router.RECEPTION, lable: 'Tiếp nhận'},
@@ -16,6 +19,7 @@ export default function ActivityScreen({route}) {
     {name: router.CANCEL, lable: 'Huỷ'},
   ];
   const Tab = createMaterialTopTabNavigator();
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <Block width={width} backgroundColor={COLORS.white}>
@@ -29,7 +33,6 @@ export default function ActivityScreen({route}) {
         </Text>
       </Block>
       <Tab.Navigator
-        // initialRouteName={'router.DOING'}
         screenOptions={{
           tabBarLabelStyle: {
             fontSize: 15,
@@ -58,14 +61,39 @@ export default function ActivityScreen({route}) {
           },
           tabBarScrollEnabled: true,
         }}>
-        {tabs.map(tab => (
+        {/* {tabs.map(tab => (
           <Tab.Screen
             key={tab.name}
             name={tab.name}
             component={top[tab.name]}
             options={{tabBarLabel: tab.lable}}
           />
-        ))}
+        ))} */}
+        <Tab.Screen
+          name="NEW_ACTIVITY"
+          component={NewActivity}
+          options={{tabBarLabel: 'Mới'}}
+        />
+        <Tab.Screen
+          name="RECEPTION"
+          component={Reception}
+          options={{tabBarLabel: 'Tiếp nhận'}}
+        />
+        <Tab.Screen
+          name="DOING"
+          component={Doing}
+          options={{tabBarLabel: 'Đang làm'}}
+        />
+        <Tab.Screen
+          name="COMPLETE"
+          component={Complete}
+          options={{tabBarLabel: 'Hoàn thành'}}
+        />
+        <Tab.Screen
+          name="CANCEL"
+          component={Cancel}
+          options={{tabBarLabel: 'Huỷ'}}
+        />
       </Tab.Navigator>
     </Block>
   );

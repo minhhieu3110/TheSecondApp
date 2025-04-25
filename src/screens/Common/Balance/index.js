@@ -1,11 +1,22 @@
+import actions from '@actions';
 import {icon, image} from '@assets';
 import {Block, HeaderTitle, Image, Pressable, Text} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {bottomRoot, commonRoot} from 'navigation/navigationRef';
+import {useEffect} from 'react';
 import {ScrollView} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {formatCurrency} from 'utils/helper';
 export default function Balance() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_USER_INFO,
+    });
+  }, [dispatch]);
+  const userInfo = useSelector(state => state.getUserInfo?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <Block
@@ -29,7 +40,7 @@ export default function Balance() {
         />
         <Block absolute zIndex={10} top={74} alignCenter>
           <Text fontSize={40} bold color={COLORS.white}>
-            30.000.000 đ
+            {formatCurrency(userInfo?.wcoin)}
           </Text>
           <Text fontSize={14} regular color={COLORS.gray11}>
             Số dư khả dụng

@@ -1,3 +1,4 @@
+import actions from '@actions';
 import {icon} from '@assets';
 import {
   Block,
@@ -11,24 +12,58 @@ import {
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
+import {formatCurrency} from '@utils';
 import {commonRoot} from 'navigation/navigationRef';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import Toast from 'react-native-toast-message';
+import {useDispatch, useSelector} from 'react-redux';
 
 export default function Recharge() {
   const rechargeMoney = [
-    {id: 1, money: '100000'},
-    {id: 2, money: '200000'},
-    {id: 3, money: '300000'},
-    {id: 4, money: '400000'},
-    {id: 5, money: '500000'},
-    {id: 6, money: '600000'},
+    {id: 1, title: '100.000', value: 100000},
+    {id: 2, title: '200.000', value: 200000},
+    {id: 3, title: '300.000', value: 300000},
+    {id: 4, title: '400.000', value: 400000},
+    {id: 5, title: '500.000', value: 500000},
+    {id: 6, title: '600.000', value: 600000},
   ];
-  const [chooseMoney, setChooseMoney] = useState(null);
-  const [money, setMoney] = useState(null);
-  const handleChooseMoney = (id, money) => {
+  const [chooseMoney, setChooseMoney] = useState();
+  const [value, setValue] = useState();
+  const handleChooseMoney = (id, value) => {
     setChooseMoney(id);
-    setMoney(money);
+    setValue(value);
   };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_USER_INFO,
+    });
+  }, [dispatch]);
+  const userInfo = useSelector(state => state.getUserInfo?.data || []);
+
+  const recharge = async () => {
+    const numericValue = Number(value);
+    numericValue < userInfo?.minimum_recharge ||
+    numericValue > userInfo?.maximum_recharge
+      ? Toast.show({
+          type: 'error',
+          text1: `Số tiền nạp từ ${formatCurrency(
+            userInfo?.minimum_recharge,
+          )} đến ${formatCurrency(userInfo?.maximum_recharge)}`,
+        })
+      : dispatch({
+          type: actions.RECHARGE,
+          body: {value: numericValue},
+          onSuccess: () => {
+            commonRoot.navigate(router.INFO_RECHARGE, {
+              value: value,
+              rechargeInfo: rechargeInfo,
+            });
+          },
+        });
+  };
+  const rechargeInfo = useSelector(state => state.recharge?.data || []);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Nạp tiền'} canGoBack />
@@ -50,7 +85,7 @@ export default function Recharge() {
         <Block marginLeft={12} marginTop={15} wrap row spaceBetween>
           {rechargeMoney.map(item => (
             <Pressable
-              onPress={() => handleChooseMoney(item.id, item.money)}
+              onPress={() => handleChooseMoney(item.id, item.value)}
               key={item.id}
               width={118.67}
               radius={5}
@@ -66,7 +101,7 @@ export default function Recharge() {
                 fontSize={14}
                 medium
                 color={chooseMoney === item.id ? COLORS.white : COLORS.black1}>
-                {item.money} đ
+                {item.title} đ
               </Text>
             </Pressable>
           ))}
@@ -94,8 +129,9 @@ export default function Recharge() {
             borderColor={'#f1f1f1'}
             paddingLeft={10}
             color={COLORS.red4}
-            onChangeText={setMoney}
-            value={money}></TextInput>
+            value={value}
+            onChangeText={setValue}
+          />
           <Block absolute right={12}>
             <Text fontSize={22} regular color={COLORS.black}>
               đ
@@ -115,33 +151,38 @@ export default function Recharge() {
           Phương thức nạp tiền
         </Text>
         <Block marginLeft={12} marginTop={18} width={width - 48}>
-          <Block row height={23} alignCenter>
-            <Block width={25.09} height={21.5}>
+          <Block row height={23} alignCenter spaceBetween>
+            <Block rowCenter>
               <Image
                 source={icon.icon_transfer}
-                width={'100%'}
-                height={'100%'}
+                width={25.09}
+                height={21.5}
                 resizeMode="contain"
               />
+              <Text fontSize={15} regular color={COLORS.black1} marginLeft={17}>
+                Chuyển khoản
+              </Text>
             </Block>
-            <Text fontSize={15} regular color={COLORS.black1} marginLeft={17}>
-              Chuyển khoản
-            </Text>
+
             <Block
               width={23}
               height={23}
               radius={15}
-              absolute
-              right={0}
               borderWidth={1}
-              borderColor={COLORS.placeholder}></Block>
+              borderColor={COLORS.placeholder}
+              backgroundColor={COLORS.red4}
+              justifyCenter
+              alignCenter>
+              <Block
+                width={11}
+                height={11}
+                backgroundColor={COLORS.white}
+                radius={11}></Block>
+            </Block>
           </Block>
         </Block>
       </Block>
-      <Button
-        title="Tiếp tục"
-        onPress={() => commonRoot.navigate(router.INFO_RECHARGE)}
-      />
+      <Button title="Tiếp tục" onPress={recharge} />
     </Block>
   );
 }

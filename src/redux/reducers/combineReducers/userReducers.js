@@ -77,3 +77,9 @@ export const getBlockedEmployee = (...props) => {
 export const getRef = (...props) => {
   return reducerDefault(...props, actions.GET_REF);
 };
+export const recharge = (...props) => {
+  return reducerDefault(...props, actions.RECHARGE);
+};
+export const getListBank = (...props) => {
+  return reducerDefault(...props, actions.GET_LIST_BANK);
+};

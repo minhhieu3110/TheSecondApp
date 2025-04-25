@@ -110,8 +110,8 @@ function* logoutUser(action) {
   }
 }
 function* updateUserInfo(action) {
+  const body = yield action.body;
   try {
-    const body = action.body;
     const res = yield api.patch(URL_API.user.update, body);
     yield put({
       type: _onSuccess(action.type),
@@ -284,6 +284,33 @@ function* getRef(action) {
     action.onFail?.(error);
   }
 }
+function* recharge(action) {
+  const body = yield action.body;
+  try {
+    const res = yield api.post(URL_API.user.recharge, body);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
+function* getListBank(action) {
+  try {
+    const res = yield api.get(URL_API.user.list_bank);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 export default function* watchUserSagas() {
   yield takeLatest(actions.SEND_OTP, sendOTP);
   yield takeLatest(actions.VERIFY_OTP, verifyOTP);
@@ -305,4 +332,6 @@ export default function* watchUserSagas() {
   yield takeLatest(actions.BLOCK_EMPLOYEE, blockEmployee);
   yield takeLatest(actions.GET_BLOCK_EMPLOYEE, getBlockedEmployee);
   yield takeLatest(actions.GET_REF, getRef);
+  yield takeLatest(actions.RECHARGE, recharge);
+  yield takeLatest(actions.GET_LIST_BANK, getListBank);
 }

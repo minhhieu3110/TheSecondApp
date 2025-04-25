@@ -71,6 +71,8 @@ export const URL_API = {
     favorite_employee: 'user/favorite-employee',
     block_employee: 'user/blocked-employee',
     ref: 'user/link-ref',
+    recharge: 'user/recharge',
+    list_bank: 'user/list-bank',
   },
   promotion: {
     list: 'promotion/list',
@@ -100,6 +102,7 @@ export const URL_API = {
   get_province: 'get-province',
   get_district: 'get-district',
   get_ward: 'get-ward',
+  sysoptions: 'sysoptions',
   page: {
     help: 'page/detail',
   },
