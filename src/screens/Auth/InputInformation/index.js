@@ -20,6 +20,7 @@ export default function InputInformation({route}) {
   const data = route?.params.data;
 
   const dispatch = useDispatch();
+  // const [date, setDate] =
   const signUp = () => {
     dispatch({
       type: actions.SIGN_UP,
@@ -30,6 +31,7 @@ export default function InputInformation({route}) {
         password: `${data?.otpCode}00`,
         device_name: getDeviceName(),
         device_token: getDeviceId(),
+        birthday: dateOfBirth,
         referral_code: referralCode,
       },
       onSuccess: () => {

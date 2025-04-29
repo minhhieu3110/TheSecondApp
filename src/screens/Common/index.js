@@ -25,12 +25,7 @@ import Setting from './Setting';
 import Feedback from './Feedback';
 import About from './About';
 import IntroduceSAN from './About/IntroduceSAN';
-import Detail_NewActivity from './DetailService/Detail_NewActivity';
-import Detail_Reception from './DetailService/Detail_Reception';
-import Detail_Doing from './DetailService/Detail_Doing';
-import Detail_Complete from './DetailService/Detail_Complete';
 import EvaluateService from './EvaluateService';
-import Detail_Cancel from './DetailService/Detail_Cancel';
 import CareElederly from './CareElederly';
 import CareSicker from './CareSicker';
 import Housework from './Housework';
@@ -56,16 +51,18 @@ import Detail_Shipping from './DetailOrder/Detail_Shipping';
 import Detail_Complete_Order from './DetailOrder/Detail_Complete_Order';
 import Detail_Cancel_Order from './DetailOrder/Detail_Cancel_Order';
 import EvaluateOrder from './EvaluateOrder';
-import IntroSAN from './IntroSAN';
 import ChooseService from './ChooseService';
 import ChooseTimeForService from './ChooseTimeForService';
 import SelectDayWorking from './SelectDayWorking';
 import ConfirmAndPayService from './ConfirmAndPayService';
 import ConfirmAndSignupPackage from './ConfirmAndSignupPackage';
-import DetailOrder from './DetailOrder';
 import DetailService from './DetailService';
 import DetailNotification from 'screens/Common/DetailNotification';
 import ProfileEmployee from './ProfileEmployee';
+import ExchangePoint from './ExchangePoint';
+import DetailVoucherExchange from './ExchangePoint/common';
+import RepeatService from './RepeatService';
+import RepeatServiceDetail from './RepeatServiceDetail';
 
 export const common = {
   [router.VOUCHER]: Voucher,
@@ -94,14 +91,7 @@ export const common = {
   [router.FEEDBACK]: Feedback,
   [router.ABOUT]: About,
   [router.INTRODUCE_SAN]: IntroduceSAN,
-  //
   [router.DETAIL_SERVICE]: DetailService,
-  //
-  [router.DETAIL_NEW_ACTIVITY]: Detail_NewActivity,
-  [router.DETAIL_RECEPTION]: Detail_Reception,
-  [router.DETAIL_DOING]: Detail_Doing,
-  [router.DETAIL_COMPLETE]: Detail_Complete,
-  [router.DETAIL_CANCEL]: Detail_Cancel,
   [router.EVALUATE_SERVICE]: EvaluateService,
   [router.CARE_ELEDERLY]: CareElederly,
   [router.CARE_SICKER]: CareSicker,
@@ -109,18 +99,13 @@ export const common = {
   [router.HOUSEWORK]: Housework,
   [router.ELEDERLY_SERVICE_DURATION_DAY]: Elederly_Servicedurationday,
   [router.ELEDERLY_SERVICE_DURATION_MONTH]: Elederly_Servicedurationmonth,
-
   [router.SICKER_SERVICE_DURATION_DAY]: Sicker_Servicedurationday,
   [router.SICKER_SERVICE_DURATION_MONTH]: Sicker_Servicedurationmonth,
-
   [router.HOUSEWORK_ODD_SHIFT]: Housework_OddShiftService,
   [router.HOUSEWORK_MONTH]: Housework_ServiceMonth,
-
-  //Chung
   [router.SELECT_DAY_WORKING]: SelectDayWorking,
   [router.CONFIRM_AND_PAY_SERVICE]: ConfirmAndPayService,
   [router.CONFIRM_AND_SIGNUP_PACKAGE]: ConfirmAndSignupPackage,
-  //
   [router.DETAIL_MESSAGE]: DetailMessage,
   [router.SHOPPING]: ShoppingScreen,
   [router.ALL_CATEGORY]: AllCategory,
@@ -136,9 +121,12 @@ export const common = {
   [router.DETAIL_COMPLETE_ORDER]: Detail_Complete_Order,
   [router.DETAIL_CANCEL_ORDER]: Detail_Cancel_Order,
   [router.EVALUATE_ORDER]: EvaluateOrder,
-
   [router.CHOOSE_SERVICE]: ChooseService,
   [router.CHOOSE_TIME_FOR_SERVICE]: ChooseTimeForService,
   [router.DETAIL_NOTIFICATION]: DetailNotification,
   [router.PROFILE_EMPLOYEE]: ProfileEmployee,
+  [router.EXCHANGE_POINT]: ExchangePoint,
+  [router.DETAIL_EXCHANGE_VOUCHER]: DetailVoucherExchange,
+  [router.REPEAT_SERVICE]: RepeatService,
+  [router.DETAIL_REPEAT_SERVICE]: RepeatServiceDetail,
 };

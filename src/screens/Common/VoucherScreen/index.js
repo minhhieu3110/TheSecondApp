@@ -1,8 +1,8 @@
-import {Block, HeaderTitle, Pressable, Text} from '@components';
+import {Block, HeaderTitle, Image, Pressable, Text} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS, FONTS} from '@theme';
-import {bottomRoot} from 'navigation/navigationRef';
+import {bottomRoot, commonRoot} from 'navigation/navigationRef';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import AllVoucher from './components/AllVoucher';
 import UsedVoucher from './components/UsedVoucher';
@@ -10,6 +10,7 @@ import {Modal, ScrollView} from 'react-native';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
+import {icon} from '@assets';
 export default function Voucher() {
   const title = [
     {id: 1, title: 'Tất cả'},
@@ -42,6 +43,28 @@ export default function Voucher() {
           colorIcon={COLORS.black1}
           colorText={COLORS.black1}
         />
+        {allVoucher && (
+          <Pressable
+            onPress={() => commonRoot.navigate(router.EXCHANGE_POINT)}
+            width={width - 322}
+            height={28}
+            absolute
+            zIndex={10}
+            right={12}
+            top={13}
+            backgroundColor={COLORS.pinkWhite2}
+            radius={17}
+            justifyCenter
+            alignCenter>
+            <Block rowCenter>
+              <Image source={icon.icon_exchange_point} width={21} height={15} />
+              <Text fontSize={12} regular color={COLORS.red4} marginLeft={14}>
+                Đổi điểm
+              </Text>
+            </Block>
+          </Pressable>
+        )}
+
         <Block
           marginTop={63}
           width={width - 24}

@@ -114,6 +114,10 @@ export const icon = {
   icon_message_1: require('./icon/icon_message_1.png'),
   icon_fingerprint: require('./icon/icon_fingerprint.png'),
   icon_email: require('./icon/icon_email.png'),
+  icon_exchange_point: require('./icon/exchange_point.png'),
+  icon_point_exchange: require('./icon/icon_point.png'),
+  icon_repeat: require('./icon/icon_repeat.png'),
+  title_repeat_icon: require('./icon/repeat.png'),
 };
 export const image = {
   image_top_home_1: require('./image/image_top_home_1.png'),

@@ -1,28 +1,90 @@
-import {icon, image} from '@assets';
+import actions from '@actions';
+import {icon} from '@assets';
 import {
   Block,
   HeaderTitle,
   Icon,
   Image,
-  PolicyCancelPackageService,
   Pressable,
   Text,
+  PolicyCancelPackageService,
+  ModalTurnOffRepeat,
 } from '@components';
 import {width} from '@responsive';
+import router from '@router';
 import {COLORS} from '@theme';
-import {root} from 'navigation/navigationRef';
-import {useState} from 'react';
+import {formatCurrency, formatPhone} from '@utils';
+import {commonRoot, root} from 'navigation/navigationRef';
+import {useEffect, useState} from 'react';
 import {ScrollView, Modal, SafeAreaView, TouchableOpacity} from 'react-native';
+import RenderHTML from 'react-native-render-html';
+import Toast from 'react-native-toast-message';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-export default function Detail_Reception() {
+import {useDispatch, useSelector} from 'react-redux';
+export default function RepeatServiceDetail({route}) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_DETAIL_ORDER,
+      params: {orderId: route?.params?.orderId},
+    });
+    dispatch({
+      type: actions.GET_LIST_REASON,
+    });
+  }, [dispatch]);
   const [show, setShow] = useState(0);
+  const [visible, setVisible] = useState(0);
   const [showNotification, setShowNotification] = useState(0);
+  const detailOrder = useSelector(state => state.getDetailOrder?.data || []);
+  const reasons = useSelector(state => state.getListReason?.data || []);
+  const [reasonsCancel, setReasonCancel] = useState('');
   const handleConfirmCancel = () => {
-    setShow(!show);
-    setShowNotification(!showNotification);
+    dispatch({
+      type: actions.CANCEL_ORDER,
+      body: {id: route?.params?.orderId, reason_id: reasonsCancel},
+      onSuccess: () => {
+        dispatch({
+          type: actions.GET_LIST_ORDER,
+          params: {is_status: 0},
+        });
+        root.goBack();
+      },
+    });
   };
-
+  const onPress = status => {
+    status === -1 &&
+      dispatch({
+        type: actions.RE_ORDER,
+        body: {order_id: route?.params?.orderId},
+      });
+  };
+  const reasonCancel = reasons.find(
+    item => item.item_id === detailOrder?.reason_id,
+  );
+  const handle = () => {
+    detailOrder?.order?.repeat_weekly.length === 0
+      ? setShow(!show)
+      : setVisible(!visible);
+  };
+  const handleCancelRepeat = order_id => {
+    dispatch({
+      type: actions.CANCEL_REPEAT,
+      body: {order_id: order_id},
+      onSuccess: res => {
+        Toast.show({
+          type: 'success',
+          text1: res?.message,
+        });
+        setVisible(!visible);
+        root.goBack();
+        dispatch({
+          type: actions.GET_LIST_ORDER,
+          params: {is_status: 0},
+        });
+        dispatch({type: actions.GET_LIST_ORDER, params: {repeat_weekly: 1}});
+      },
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Chi tiết dịch vụ'} canGoBack />
@@ -30,49 +92,43 @@ export default function Detail_Reception() {
         contentContainerStyle={{paddingBottom: 153}}
         showsVerticalScrollIndicator={false}>
         <Block marginTop={12} marginHorizontal={12}>
-          <Block
-            width={width - 24}
-            height={72}
-            radius={8}
-            backgroundColor={COLORS.yellowwhite}
-            row
-            alignCenter>
-            <Image
-              source={image.image_staff}
-              width={42}
-              height={42}
-              radius={50}
-              marginLeft={11.7}
-            />
-            <Block marginLeft={13.3} width={width - 101}>
-              <Text fontSize={14} medium color={COLORS.black1}>
-                Lê Thu Huyền
-              </Text>
-              <Block row alignCenter>
-                <Text fontSize={14} regular color={COLORS.black2}>
-                  4.8
+          {detailOrder?.is_status === -1 ? (
+            ''
+          ) : (
+            <Block
+              width={width - 24}
+              height={72}
+              radius={8}
+              backgroundColor={`${detailOrder?.status?.background}`}
+              row
+              alignCenter>
+              <Image
+                source={
+                  detailOrder?.order?.repeat_weekly.length === 0
+                    ? icon.icon_user_activity
+                    : icon.title_repeat_icon
+                }
+                width={42}
+                height={42}
+                marginLeft={11.7}
+              />
+              <Block marginLeft={13.3}>
+                <Text
+                  fontSize={14}
+                  medium
+                  color={`${detailOrder?.status?.color}`}>
+                  {detailOrder?.order?.repeat_weekly.length === 0
+                    ? detailOrder?.status?.note_title
+                    : `Lặp ${detailOrder?.order?.repeat_weekly?.join('-')}`}
                 </Text>
-                <Icon
-                  marginLeft={5}
-                  IconType={Ionicons}
-                  iconName={'star'}
-                  iconSize={18}
-                  iconColor={COLORS.yellow3}
-                />
-              </Block>
-              <Block absolute top={0} right={0} row alignCenter>
                 <Text fontSize={14} regular color={COLORS.black2}>
-                  Hồ sơ
+                  {detailOrder?.order?.repeat_weekly.length === 0
+                    ? detailOrder?.status?.note_content
+                    : 'Giúp bạn tiết kiệm thời gian và chi phí'}
                 </Text>
-                <Icon
-                  IconType={MaterialIcon}
-                  iconName={'keyboard-arrow-right'}
-                  iconColor={COLORS.black2}
-                  iconSize={18}
-                />
               </Block>
             </Block>
-          </Block>
+          )}
           <Text fontSize={15} semiBold color={COLORS.black2} marginTop={20}>
             Vị trí làm việc
           </Text>
@@ -104,7 +160,7 @@ export default function Detail_Reception() {
                   marginLeft={30}
                   marginTop={11}
                   numberOfLines={2}>
-                  107 đường Cộng Hòa, Phường 12, quận Tân Bình, Tp.HCM
+                  {detailOrder?.address_full}
                 </Text>
               </Block>
               <Block
@@ -123,7 +179,7 @@ export default function Detail_Reception() {
                     medium
                     color={COLORS.black2}
                     marginLeft={8}>
-                    Lâm Minh Hoàng
+                    {detailOrder?.order?.full_name}
                   </Text>
                 </Block>
                 <Text
@@ -133,7 +189,7 @@ export default function Detail_Reception() {
                   marginLeft={30}
                   marginTop={11}
                   numberOfLines={2}>
-                  0909 123 456
+                  {formatPhone(detailOrder?.order?.phone)}
                 </Text>
               </Block>
             </Block>
@@ -164,7 +220,7 @@ export default function Detail_Reception() {
                 </Block>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    Thứ 7, 25/01/2025
+                    {detailOrder?.order?.start_date}
                   </Text>
                 </Block>
               </Block>
@@ -193,7 +249,9 @@ export default function Detail_Reception() {
                 </Block>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    4 giờ, 17:30 đến 21:30
+                    {detailOrder?.order?.hour} giờ,{' '}
+                    {detailOrder?.order?.start_time} đến{' '}
+                    {detailOrder?.order?.end_time}
                   </Text>
                 </Block>
               </Block>
@@ -205,35 +263,44 @@ export default function Detail_Reception() {
                 borderColor={COLORS.borderColor1}
                 marginBottom={12}
               />
-              <Block row alignCenter>
-                <Block row alignCenter>
-                  <Image
-                    source={icon.icon_calendar_days}
-                    width={22}
-                    height={22}
+
+              {detailOrder?.order?.repeat_weekly === null ||
+              detailOrder?.order?.repeat_weekly.length === 0 ? (
+                ''
+              ) : (
+                <>
+                  <Block row alignCenter>
+                    <Block row alignCenter>
+                      <Image
+                        source={icon.icon_calendar_days}
+                        width={22}
+                        height={22}
+                      />
+                      <Text
+                        fontSize={14}
+                        regular
+                        color={COLORS.placeholder}
+                        marginLeft={8}>
+                        Lặp lại hàng tuần
+                      </Text>
+                    </Block>
+                    <Block absolute right={0}>
+                      <Text fontSize={14} regular color={COLORS.black2}>
+                        {detailOrder?.order?.repeat_weekly?.join('-')}
+                      </Text>
+                    </Block>
+                  </Block>
+                  <Block
+                    marginTop={13}
+                    marginLeft={28}
+                    width={width - 76}
+                    borderWidth={1}
+                    borderColor={COLORS.borderColor1}
+                    marginBottom={12}
                   />
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.placeholder}
-                    marginLeft={8}>
-                    Lặp lại hàng tuần
-                  </Text>
-                </Block>
-                <Block absolute right={0}>
-                  <Text fontSize={14} regular color={COLORS.black2}>
-                    T4-T5
-                  </Text>
-                </Block>
-              </Block>
-              <Block
-                marginTop={13}
-                marginLeft={28}
-                width={width - 76}
-                borderWidth={1}
-                borderColor={COLORS.borderColor1}
-                marginBottom={12}
-              />
+                </>
+              )}
+
               <Block>
                 <Block row alignCenter>
                   <Image
@@ -255,19 +322,44 @@ export default function Detail_Reception() {
                   color={COLORS.placeholder}
                   marginLeft={30}
                   marginTop={9}>
-                  Chăm sóc người già tại nhà
+                  {detailOrder?.order?.service?.title}
                 </Text>
+                {detailOrder?.order?.note && (
+                  <Text
+                    fontSize={14}
+                    regular
+                    color={COLORS.black2}
+                    marginLeft={30}
+                    marginTop={11}>
+                    Ghi chú: {detailOrder?.order?.note}
+                  </Text>
+                )}
+              </Block>
+            </Block>
+          </Block>
+          {detailOrder?.reason_id === null ? (
+            ''
+          ) : (
+            <Block>
+              <Text fontSize={15} semiBold color={COLORS.black2} marginTop={23}>
+                Lý do huỷ
+              </Text>
+              <Block
+                marginTop={15}
+                height={45}
+                radius={8}
+                backgroundColor={COLORS.white}
+                justifyCenter>
                 <Text
                   fontSize={14}
                   regular
                   color={COLORS.black2}
-                  marginLeft={30}
-                  marginTop={11}>
-                  Ghi chú: Ưu tiên nữ lớn tuổi, có nhiều kinh nghiệm
+                  marginLeft={12}>
+                  {reasonCancel?.title}
                 </Text>
               </Block>
             </Block>
-          </Block>
+          )}
           <Text fontSize={15} semiBold color={COLORS.black2} marginTop={20}>
             Chi tiết thanh toán
           </Text>
@@ -283,7 +375,7 @@ export default function Detail_Reception() {
                 </Text>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.placeholder}>
-                    2.050.000 đ
+                    {formatCurrency(detailOrder?.amount_estimated)}
                   </Text>
                 </Block>
               </Block>
@@ -301,7 +393,7 @@ export default function Detail_Reception() {
                 </Text>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    -50.000 đ
+                    -{formatCurrency(detailOrder?.amount_promotion)}
                   </Text>
                 </Block>
               </Block>
@@ -319,7 +411,7 @@ export default function Detail_Reception() {
                 </Text>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.placeholder}>
-                    Tiền mặt
+                    {detailOrder?.order?.method?.title}
                   </Text>
                 </Block>
               </Block>
@@ -337,41 +429,82 @@ export default function Detail_Reception() {
                 </Text>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.red4}>
-                    2.000.000 đ
+                    {formatCurrency(detailOrder?.amount_final)}
                   </Text>
                 </Block>
               </Block>
             </Block>
           </Block>
-          <PolicyCancelPackageService top={23} title={'Quy định huỷ dịch vụ'} />
-
-          <Block marginTop={23} row height={48}>
+          <Block marginTop={23} gap={15}>
+            <Text fontSize={15} semiBold color={COLORS.black2}>
+              Quy định huỷ dịch vụ
+            </Text>
+            <RenderHTML
+              contentWidth={width - 24}
+              source={{html: detailOrder?.service_cancellation_policy}}
+              tagsStyles={{
+                p: {
+                  fontSize: 14,
+                  fontWeight: 'regular',
+                  color: COLORS.black2,
+                  lineHeight: 22,
+                },
+                strong: {
+                  fontSize: 14,
+                  fontWeight: 'semibold',
+                  color: COLORS.black2,
+                  lineHeight: 22,
+                },
+              }}
+            />
+          </Block>
+          {detailOrder?.is_status !== 0 && detailOrder?.is_status !== 1 ? (
             <Pressable
-              onPress={() => setShow(!show)}
-              width={(width - 24) / 2 - 6}
+              onPress={() => onPress(detailOrder?.is_status)}
+              marginTop={23}
+              height={48}
+              backgroundColor={COLORS.red4}
+              radius={8}
               justifyCenter
-              alignCenter
-              borderWidth={1}
-              borderColor={COLORS.red4}
-              radius={8}>
-              <Text fontSize={15} regular color={COLORS.red4}>
-                Huỷ dịch vụ
+              alignCenter>
+              <Text fontSize={15} regular color={COLORS.white}>
+                {detailOrder?.is_status === 2 && 'Hỗ trợ'}
+                {detailOrder?.is_status === 3 && 'Đánh giá'}
+                {detailOrder?.is_status === -1 && 'Đặt lại'}
               </Text>
             </Pressable>
-            <Block
-              width={(width - 24) / 2 - 6}
-              justifyCenter
-              alignCenter
-              borderWidth={1}
-              borderColor={COLORS.red4}
-              radius={8}
-              backgroundColor={COLORS.red4}
-              marginLeft={12}>
-              <Text fontSize={15} regular color={COLORS.white}>
-                Hỗ trợ
-              </Text>
+          ) : (
+            <Block marginTop={23} row height={48}>
+              <Pressable
+                onPress={handle}
+                width={(width - 24) / 2 - 6}
+                justifyCenter
+                alignCenter
+                borderWidth={1}
+                borderColor={COLORS.red4}
+                radius={8}>
+                <Text fontSize={15} regular color={COLORS.red4}>
+                  {detailOrder?.order?.repeat_weekly.length === 0
+                    ? 'Huỷ dịch vụ'
+                    : 'Tắt lặp lại'}
+                </Text>
+              </Pressable>
+              <Pressable
+                onPress={() => commonRoot.navigate(router.HELP)}
+                width={(width - 24) / 2 - 6}
+                justifyCenter
+                alignCenter
+                borderWidth={1}
+                borderColor={COLORS.red4}
+                radius={8}
+                backgroundColor={COLORS.red4}
+                marginLeft={12}>
+                <Text fontSize={15} regular color={COLORS.white}>
+                  Hỗ trợ
+                </Text>
+              </Pressable>
             </Block>
-          </Block>
+          )}
         </Block>
       </ScrollView>
       <Modal visible={show} transparent={false} animationType="fade">
@@ -402,74 +535,43 @@ export default function Detail_Reception() {
                   />
                 </Pressable>
               </Block>
-              <Block marginTop={19.6} width={width - 48} marginHorizontal={12}>
-                <Block
-                  justifyCenter
-                  height={45}
-                  radius={8}
-                  backgroundColor={COLORS.white}>
-                  <Text
-                    marginLeft={12}
-                    fontSize={14}
-                    color={COLORS.placeholder}>
-                    Bận việc đột xuất
-                  </Text>
-                </Block>
-                <Block
-                  marginTop={12}
-                  justifyCenter
-                  height={45}
-                  radius={8}
-                  backgroundColor={COLORS.white}>
-                  <Text
-                    marginLeft={12}
-                    fontSize={14}
-                    color={COLORS.placeholder}>
-                    Nhầm ngày
-                  </Text>
-                </Block>
-                <Block
-                  justifyCenter
-                  height={45}
-                  radius={8}
-                  backgroundColor={COLORS.white}
-                  marginTop={12}>
-                  <Text
-                    marginLeft={12}
-                    fontSize={14}
-                    color={COLORS.placeholder}>
-                    Không cần dịch vụ này nữa
-                  </Text>
-                </Block>
-                <Block
-                  justifyCenter
-                  height={45}
-                  radius={8}
-                  backgroundColor={COLORS.white}
-                  marginTop={12}>
-                  <Text
-                    marginLeft={12}
-                    fontSize={14}
-                    color={COLORS.placeholder}>
-                    Chưa có nguời nhận
-                  </Text>
-                </Block>
-                <Block
-                  justifyCenter
-                  height={45}
-                  radius={8}
-                  backgroundColor={COLORS.white}
-                  marginTop={12}>
-                  <Text
-                    marginLeft={12}
-                    fontSize={14}
-                    color={COLORS.placeholder}>
-                    Lý do khác
-                  </Text>
-                </Block>
+              <Block
+                marginTop={19.6}
+                width={width - 48}
+                marginHorizontal={12}
+                gap={12}>
+                {reasons.map(item => (
+                  <Pressable
+                    onPress={() => setReasonCancel(item.item_id)}
+                    key={item.item_id}
+                    justifyCenter
+                    height={45}
+                    radius={8}
+                    borderWidth={reasonsCancel === item.item_id && 1}
+                    borderColor={reasonsCancel === item.item_id && COLORS.red4}
+                    backgroundColor={
+                      reasonsCancel === item.item_id
+                        ? COLORS.pinkWhite2
+                        : COLORS.white
+                    }>
+                    <Text
+                      marginLeft={12}
+                      fontSize={14}
+                      color={
+                        reasonsCancel === item.item_id
+                          ? COLORS.red4
+                          : COLORS.placeholder
+                      }>
+                      {item.title}
+                    </Text>
+                  </Pressable>
+                ))}
               </Block>
               <Pressable
-                onPress={handleConfirmCancel}
+                onPress={() => {
+                  setShowNotification(!showNotification);
+                  setShow(false);
+                }}
                 backgroundColor={COLORS.red4}
                 height={48}
                 width={width - 48}
@@ -508,7 +610,10 @@ export default function Detail_Reception() {
                 <Text fontSize={15} semiBold color={COLORS.black2}>
                   Thông báo
                 </Text>
-                <Pressable absolute right={0} onPress={handleConfirmCancel}>
+                <Pressable
+                  absolute
+                  right={0}
+                  onPress={() => setShowNotification(false)}>
                   <Icon
                     IconType={Ionicons}
                     iconName={'close'}
@@ -532,59 +637,39 @@ export default function Detail_Reception() {
                     </Text>
                   </Block>
                 </Block>
-                <Text
-                  fontSize={14}
-                  semiBold
-                  color={COLORS.black2}
-                  marginTop={15}>
-                  Bạn được hủy miễn phí trong 3 trường hợp sau:
-                </Text>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.black2}
-                  marginTop={20}
-                  lineHeight={22}>
-                  1 - Hủy trong 10 phút sau khi đăng việc {'\n'} 2 - Hủy khi
-                  chưa có ai nhận việc {'\n'} 3 - Hủy trước giờ làm việc ít nhất
-                  6 tiếng
-                </Text>
-                <Text
-                  fontSize={14}
-                  semiBold
-                  color={COLORS.black2}
-                  marginTop={19}>
-                  Ngoài 3 trường hợp trên chúng tôi sẽ tính phí:
-                </Text>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.black2}
-                  marginTop={20}
-                  lineHeight={22}>
-                  1 - 20.000đ nếu hủy trước công việc bắt đầu 1 tiếng{'\n'}2 -
-                  30% giá trị coongg việc nếu hủy từ sau 1 tiếng bắt đầu công
-                  việc
-                </Text>
-                <Text
-                  fontSize={18}
-                  semiBold
-                  color={COLORS.red4}
-                  center
-                  marginTop={19}>
-                  Phí huỷ: 0đ
-                </Text>
+                <Block marginTop={15}>
+                  <RenderHTML
+                    contentWidth={width - 48}
+                    source={{html: detailOrder?.cancellation_policy_popup}}
+                    tagsStyles={{
+                      p: {
+                        fontSize: 14,
+                        fontWeight: 'regular',
+                        color: COLORS.black2,
+                        lineHeight: 22,
+                      },
+                      strong: {
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                        color: COLORS.black2,
+                        lineHeight: 22,
+                      },
+                    }}
+                  />
+                </Block>
                 <Text
                   marginTop={22}
                   lineHeight={22}
                   fontSize={14}
                   italic
-                  color={COLORS.red4}>
+                  color={COLORS.red4}
+                  center>
                   Độ tin cậy của bạn sẽ giảm đáng kể nếu bạn hủy nhiều lần. Bạn
                   chắc chân hủy công việc này?
                 </Text>
                 <Block marginTop={37} row height={48}>
-                  <Block
+                  <Pressable
+                    onPress={handleConfirmCancel}
                     width={(width - 48) / 2 - 6}
                     justifyCenter
                     alignCenter
@@ -594,7 +679,7 @@ export default function Detail_Reception() {
                     <Text fontSize={15} regular color={COLORS.red4}>
                       Đồng ý
                     </Text>
-                  </Block>
+                  </Pressable>
                   <Pressable
                     onPress={() => root.goBack()}
                     marginLeft={12}
@@ -613,6 +698,11 @@ export default function Detail_Reception() {
           </TouchableOpacity>
         </SafeAreaView>
       </Modal>
+      <ModalTurnOffRepeat
+        visible={visible}
+        close={() => setVisible(false)}
+        onPress={() => handleCancelRepeat(detailOrder?.order?.id)}
+      />
     </Block>
   );
 }

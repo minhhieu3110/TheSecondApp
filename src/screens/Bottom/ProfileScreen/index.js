@@ -1,12 +1,20 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Icon, Image, Pressable, Text} from '@components';
+import {
+  Block,
+  Icon,
+  Image,
+  ImagePicker,
+  Pressable,
+  Text,
+  UpdateAvatar,
+} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {formatPhone} from '@utils';
 import {authRoot, bottomRoot, commonRoot} from 'navigation/navigationRef';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import RadialGradient from 'react-native-radial-gradient';
@@ -33,6 +41,35 @@ export default function ProfileScreen() {
       onSuccess: () => {
         authRoot.navigate(router.ONBOARDING_SCREEN);
       },
+    });
+  };
+  const [show, setShow] = useState(false);
+  const handleUpdateAvatar = e => {
+    const formData = new FormData();
+    formData.append('picture', {
+      uri: e.path,
+      name: 'profile.jpg',
+      type: 'image/jpeg',
+    });
+    formData.append('update_avatar', 1);
+    dispatch({
+      type: actions.UPDATE_AVATAR,
+      body: {
+        picture: {
+          uri: e.path,
+          name: 'profile.jpg',
+          type: 'image/jpeg',
+        },
+      },
+      onSuccess: res => {
+        dispatch({type: actions.GET_USER_INFO});
+      },
+      // onFail: err => {
+      //   Toast.show({
+      //     type: 'error',
+      //     text1: 'wrong',
+      //   });
+      // },
     });
   };
   return (
@@ -69,6 +106,7 @@ export default function ProfileScreen() {
                 borderBottomLeftRadius={40}
               />
               <Pressable
+                onPress={() => setShow(!show)}
                 width={25}
                 height={25}
                 radius={50}
@@ -572,6 +610,16 @@ export default function ProfileScreen() {
           </Pressable>
         </Block>
       </ScrollView>
+      {show && (
+        <ImagePicker
+          hidePicker={e => {
+            setShow(!show);
+          }}
+          onImagePick={e => {
+            handleUpdateAvatar(e);
+          }}
+        />
+      )}
     </Block>
   );
 }

@@ -123,6 +123,20 @@ function* updateUserInfo(action) {
     action.onFail?.(error);
   }
 }
+function* updateAvatar(action) {
+  const body = yield action.body;
+  try {
+    const res = yield api.postFormData(URL_API.user.update_avatar, body);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 function* sendFeedback(action) {
   const body = yield action.body;
   try {
@@ -334,4 +348,5 @@ export default function* watchUserSagas() {
   yield takeLatest(actions.GET_REF, getRef);
   yield takeLatest(actions.RECHARGE, recharge);
   yield takeLatest(actions.GET_LIST_BANK, getListBank);
+  yield takeLatest(actions.UPDATE_AVATAR, updateAvatar);
 }

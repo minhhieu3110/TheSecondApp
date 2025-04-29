@@ -26,6 +26,8 @@ import {URL_API} from 'redux/sagas/common';
 import AllVoucher from '../VoucherScreen/components/AllVoucher';
 import Toast from 'react-native-toast-message';
 import {formatCurrency} from 'utils/helper';
+import {bottomRoot} from 'navigation/navigationRef';
+import router from '@router';
 
 export default function ConfirmAndPayService({route}) {
   const dispatch = useDispatch();
@@ -67,7 +69,7 @@ export default function ConfirmAndPayService({route}) {
         service_id: route?.params?.data?.service_id,
         service_sub_id: route?.params?.data?.service_sub_id,
         duration_id: route?.params?.data?.duration_id,
-        schudule_week: route?.params?.data?.schudule_week,
+        repeat_weekly: route?.params?.data?.repeat_weekly,
         list_day: route?.params?.data?.list_day,
         start_time: route?.params?.data?.start_time,
         note: route?.params?.data?.note,
@@ -90,7 +92,10 @@ export default function ConfirmAndPayService({route}) {
       setPromotionSelected(voucherCode);
     }
   };
-
+  const backHome = () => {
+    bottomRoot.navigate(router.HOME_SCREEN);
+    setShow(false);
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Xác nhận và thanh toán'} canGoBack />
@@ -271,7 +276,7 @@ export default function ConfirmAndPayService({route}) {
                 </Block>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    T4-T5
+                    {route?.params?.data?.repeat_weekly?.join('-')}
                   </Text>
                 </Block>
               </Block>
@@ -735,7 +740,11 @@ export default function ConfirmAndPayService({route}) {
           </Block>
         </TouchableOpacity>
       </Modal>
-      <ModalSuccess visible={show} close={() => setShow(false)} />
+      <ModalSuccess
+        visible={show}
+        close={() => setShow(false)}
+        onPress={backHome}
+      />
     </Block>
   );
 }

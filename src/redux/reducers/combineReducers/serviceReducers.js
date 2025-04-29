@@ -45,3 +45,6 @@ export const cancelOrder = (...props) => {
 export const getStatistical = (...props) => {
   return reducerDefault(...props, actions.GET_STATISTICAL);
 };
+export const cancelRepeat = (...props) => {
+  return reducerDefault(...props, actions.CANCEL_REPEAT);
+};

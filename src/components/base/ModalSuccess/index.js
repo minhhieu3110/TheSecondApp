@@ -7,11 +7,7 @@ import {width} from '@responsive';
 import {lotties} from '@assets';
 import {bottomRoot} from 'navigation/navigationRef';
 import router from '@router';
-export default function ModalSuccess({visible, close}) {
-  const backHome = () => {
-    bottomRoot.navigate(router.HOME_SCREEN);
-    close();
-  };
+export default function ModalSuccess({visible, close, onPress}) {
   return (
     <Modal
       visible={visible}
@@ -66,7 +62,7 @@ export default function ModalSuccess({visible, close}) {
             loop
           />
           <Pressable
-            onPress={backHome}
+            onPress={onPress}
             width={width - 48}
             height={48}
             marginTop={43}

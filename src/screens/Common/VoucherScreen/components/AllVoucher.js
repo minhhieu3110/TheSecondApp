@@ -18,7 +18,6 @@ export default function AllVoucher() {
     });
   }, [dispatch]);
   const vouchers = useSelector(state => state.getVoucher?.data || []);
-  console.log(vouchers);
   return (
     <Block backgroundColor={COLORS.gray10} flex>
       <Block marginTop={15}>
@@ -26,7 +25,9 @@ export default function AllVoucher() {
           {vouchers.map(item => (
             <Pressable
               key={item.id}
-              onPress={() => commonRoot.navigate(router.DETAIL_VOUCHER)}
+              onPress={() =>
+                commonRoot.navigate(router.DETAIL_VOUCHER, {id: item.id})
+              }
               width={width - 24}
               radius={15}
               overflow={'hidden'}>

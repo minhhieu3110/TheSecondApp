@@ -1,4 +1,4 @@
-import useCurrentPosition from './common/useCurrentPosition';
+// import useCurrentPosition from './common/useCurrentPosition';
 import useLayoutSize from './common/useLayoutSize';
 import usePrevious from './common/usePrevious';
 import useDeviceName from './deviceInfo/useDeviceName';
@@ -31,7 +31,7 @@ export {
   usePhotoPermission,
   useNotificationPermission,
   //user
-  useCurrentPosition,
+  // useCurrentPosition,
   useMomo,
   useCustomToast,
 };

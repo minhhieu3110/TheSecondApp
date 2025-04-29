@@ -35,7 +35,6 @@ export default function HomeScreen() {
   }, [dispatch]);
   const userInfo = useSelector(state => state.getUserInfo?.data || []);
   const service = useSelector(state => state.getServices?.data || []);
-  const serviceReverse = service.reverse();
   const promo = useSelector(state => state.getPromo?.data || []);
   const news = useSelector(state => state.getNews?.data || []);
   const limitNews = news.slice(0, 3);
@@ -59,7 +58,6 @@ export default function HomeScreen() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          flex: 1,
           backgroundColor: COLORS.gray10,
           paddingBottom: 1800,
         }}>
@@ -197,9 +195,7 @@ export default function HomeScreen() {
           marginTop={15}
           marginHorizontal={12}
           radius={15}
-          backgroundColor={COLORS.white}
-          width={width - 24}
-          height={547}>
+          backgroundColor={COLORS.white}>
           <Text
             fontSize={16}
             bold
@@ -215,7 +211,7 @@ export default function HomeScreen() {
             wrap
             columnGap={30}
             rowGap={28}>
-            {serviceReverse.map(item => (
+            {service?.map(item => (
               <Pressable
                 onPress={() =>
                   commonRoot.navigate(router.ADDRESS, {
@@ -231,7 +227,6 @@ export default function HomeScreen() {
                   width={100}
                   height={105.56}
                   radius={12}
-                  // backgroundColor={COLORS.pinkWhite2}
                   justifyCenter
                   alignCenter>
                   <Image
@@ -261,7 +256,7 @@ export default function HomeScreen() {
           </Block>
           <Pressable
             onPress={() => commonRoot.navigate(router.SHOPPING)}
-            width={width - 24}
+            marginTop={27.9}
             backgroundColor={COLORS.pinkWhite2}
             borderBottomLeftRadius={15}
             borderBottomRightRadius={15}
@@ -289,6 +284,7 @@ export default function HomeScreen() {
             </Block>
           </Pressable>
         </Block>
+
         <Block marginTop={20} width={width} height={723}>
           <Block width={width - 24} left={12} row spaceBetween>
             <Text fontSize={16} semiBold color={COLORS.black1}>

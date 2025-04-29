@@ -5,9 +5,11 @@ import {
   DateOfBirthPicker,
   HeaderTitle,
   Image,
+  ImagePicker,
   Pressable,
   Text,
   TextInput,
+  UpdateAvatar,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -42,12 +44,43 @@ export default function Account() {
         email: updateEmail,
         birthday: updateDateOfBirth,
       },
-      onSuccess: () => {
-        root.goBack();
+      onSuccess: res => {
+        Toast.show({
+          type: 'success',
+          text1: res?.message,
+        });
       },
     });
   };
-
+  const [show, setShow] = useState(false);
+  const handleUpdateAvatar = e => {
+    const formData = new FormData();
+    formData.append('picture', {
+      uri: e.path,
+      name: 'profile.jpg',
+      type: 'image/jpeg',
+    });
+    formData.append('update_avatar', 1);
+    dispatch({
+      type: actions.UPDATE_AVATAR,
+      body: {
+        picture: {
+          uri: e.path,
+          name: 'profile.jpg',
+          type: 'image/jpeg',
+        },
+      },
+      onSuccess: res => {
+        dispatch({type: actions.GET_USER_INFO});
+      },
+      // onFail: err => {
+      //   Toast.show({
+      //     type: 'error',
+      //     text1: 'wrong',
+      //   });
+      // },
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle canGoBack title={'Thiết lập tài khoản'} />
@@ -67,7 +100,8 @@ export default function Account() {
             radius={50}
             resizeMode="cover"
           />
-          <Block
+          <Pressable
+            onPress={() => setShow(true)}
             width={25}
             height={25}
             radius={50}
@@ -75,7 +109,7 @@ export default function Account() {
             bottom={0}
             right={0}>
             <Image source={icon.icon_camera} width={25} height={25} />
-          </Block>
+          </Pressable>
         </Block>
         <Block width={width - 48} marginTop={33}>
           <Block marginBottom={17}>
@@ -193,6 +227,16 @@ export default function Account() {
           setUpdateDateOfBirth(day);
         }}
       />
+      {show && (
+        <ImagePicker
+          hidePicker={e => {
+            setShow(!show);
+          }}
+          onImagePick={e => {
+            handleUpdateAvatar(e);
+          }}
+        />
+      )}
     </Block>
   );
 }

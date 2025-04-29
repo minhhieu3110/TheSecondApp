@@ -73,9 +73,14 @@ export const URL_API = {
     ref: 'user/link-ref',
     recharge: 'user/recharge',
     list_bank: 'user/list-bank',
+    update_avatar: 'user/update-avatar',
   },
   promotion: {
     list: 'promotion/list',
+    detail: 'promotion/detail',
+    exchange: 'promotion/list-exchange',
+    detail_exchange: 'promotion/detail-exchange',
+    redeem_voucher: 'promotion/redeem-voucher',
   },
   banner: 'banner',
   service: {
@@ -90,6 +95,7 @@ export const URL_API = {
     list_reason: 'service/list-reason',
     cancel_order: 'service/cancel-order',
     statistical: 'service/statistical',
+    cancel_repeat: 'service/cancel-repeat',
   },
   promo: {
     list: 'promo/list',

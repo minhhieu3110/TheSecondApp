@@ -1,4 +1,4 @@
-import {Block, Text, Pressable} from '@components';
+import {Block, Text, Pressable, Image} from '@components';
 import {width} from '@responsive';
 import {COLORS, FONTS} from '@theme';
 import {useEffect, useState} from 'react';
@@ -10,6 +10,8 @@ import Reception from './common/Reception';
 import Doing from './common/Doing';
 import Complete from './common/Complete';
 import Cancel from './common/Cancel';
+import {icon} from '@assets';
+import {commonRoot} from 'navigation/navigationRef';
 export default function ActivityScreen({route}) {
   const tabs = [
     {name: router.NEW_ACTIVITY, lable: 'Mới'},
@@ -32,6 +34,20 @@ export default function ActivityScreen({route}) {
           Hoạt động
         </Text>
       </Block>
+      <Pressable
+        onPress={() => commonRoot.navigate(router.REPEAT_SERVICE)}
+        absolute
+        top={17.9}
+        right={12}
+        width={width - 360.8}
+        height={18}
+        rowCenter
+        spaceBetween>
+        <Image source={icon.icon_repeat} width={22.2} height={18} />
+        <Text fontSize={12} regular color={COLORS.darkRed1}>
+          Lặp lại
+        </Text>
+      </Pressable>
       <Tab.Navigator
         screenOptions={{
           tabBarLabelStyle: {

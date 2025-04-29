@@ -36,6 +36,9 @@ import ChooseStartTime from './form/ChooseStartTime';
 import ModalCalendar from './base/ModalCalendar';
 import DateOfBirthPicker from './base/DateOfBirthPicker';
 import Loading from './base/Loading';
+import ModalConfirmExchange from './base/ModalConfirmExchange';
+import ModalTurnOffRepeat from './base/ModalTurnOffRepeat';
+import ImagePicker from './base/ImagePicker';
 export {
   Carousel,
   Block,
@@ -75,4 +78,7 @@ export {
   ChooseStartTime,
   DateOfBirthPicker,
   Loading,
+  ModalConfirmExchange,
+  ModalTurnOffRepeat,
+  ImagePicker,
 };

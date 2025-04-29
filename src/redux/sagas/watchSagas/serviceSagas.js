@@ -198,6 +198,23 @@ function* getStatistical(action) {
     action.onFail?.(error);
   }
 }
+function* cancelRepeat(action) {
+  const body = yield action.body;
+  try {
+    const res = yield api.post(URL_API.service.cancel_repeat, body);
+
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({
+      type: _onFail(action.type),
+    });
+    action.onFail?.(error);
+  }
+}
 export default function* watchServiceSagas() {
   yield takeLatest(actions.GET_LIST_SERVICE, getServices);
   yield takeLatest(actions.GET_SERVICE_SUB, getServiceSub);
@@ -212,4 +229,5 @@ export default function* watchServiceSagas() {
   yield takeLatest(actions.GET_LIST_REASON, getListReason);
   yield takeLatest(actions.CANCEL_ORDER, cancelOrder);
   yield takeLatest(actions.GET_STATISTICAL, getStatistical);
+  yield takeLatest(actions.CANCEL_REPEAT, cancelRepeat);
 }

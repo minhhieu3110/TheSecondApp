@@ -70,6 +70,7 @@ export default function AddNewAddress() {
       },
       onSuccess: () => {
         root.goBack();
+        dispatch({type: actions.GET_ADDRESS_SAVE});
       },
     });
   };

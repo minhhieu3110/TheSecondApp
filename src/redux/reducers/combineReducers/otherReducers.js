@@ -26,3 +26,15 @@ export const getAbout = (...props) => {
 export const sysoptions = (...props) => {
   return reducerDefault(...props, actions.SYSOPTIONS);
 };
+export const getDetailVoucher = (...props) => {
+  return reducerDefault(...props, actions.DETAIL_VOUCHER);
+};
+export const getListExchange = (...props) => {
+  return reducerDefault(...props, actions.EXCHANGE_POINT);
+};
+export const getDetailExchange = (...props) => {
+  return reducerDefault(...props, actions.DETAIL_EXCHANGE_POINT);
+};
+export const redeemVoucher = (...props) => {
+  return reducerDefault(...props, actions.REDEEM_VOUCHER);
+};

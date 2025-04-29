@@ -4,11 +4,11 @@ import {Block, Image, Pressable, Text, ScrollView} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
-import {formatCurrency} from '@utils';
 import {bottomRoot, commonRoot} from 'navigation/navigationRef';
 import {useEffect} from 'react';
 import {RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {formatCurrency} from 'utils/helper';
 
 export default function NewActivity() {
   const dispatch = useDispatch();
@@ -26,7 +26,6 @@ export default function NewActivity() {
       params: {is_status: 0},
     });
   };
-  // console.log(isLoading);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -142,6 +141,24 @@ export default function NewActivity() {
                         {item?.order?.end_time}
                       </Text>
                     </Block>
+                    {item?.order?.repeat_weekly.length === 0 ? (
+                      ''
+                    ) : (
+                      <Block marginLeft={23} row marginBottom={12}>
+                        <Image
+                          source={icon.icon_calendar_days}
+                          width={22}
+                          height={22}
+                        />
+                        <Text
+                          marginLeft={8}
+                          fontSize={14}
+                          regular
+                          color={COLORS.red4}>
+                          {item?.order?.repeat_weekly?.join('-')} hàng tuần
+                        </Text>
+                      </Block>
+                    )}
                     <Block marginLeft={23} row marginBottom={12}>
                       <Image
                         source={icon.icon_price_service}

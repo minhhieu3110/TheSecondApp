@@ -83,3 +83,6 @@ export const recharge = (...props) => {
 export const getListBank = (...props) => {
   return reducerDefault(...props, actions.GET_LIST_BANK);
 };
+export const updateAvatar = (...props) => {
+  return reducerDefault(...props, actions.UPDATE_AVATAR);
+};

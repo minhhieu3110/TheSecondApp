@@ -8,14 +8,17 @@ import {
   Pressable,
   Text,
   PolicyCancelPackageService,
+  ModalTurnOffRepeat,
 } from '@components';
 import {width} from '@responsive';
+import router from '@router';
 import {COLORS} from '@theme';
 import {formatCurrency, formatPhone} from '@utils';
-import {root} from 'navigation/navigationRef';
+import {commonRoot, root} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
 import {ScrollView, Modal, SafeAreaView, TouchableOpacity} from 'react-native';
 import RenderHTML from 'react-native-render-html';
+import Toast from 'react-native-toast-message';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 export default function DetailService({route}) {
@@ -30,20 +33,24 @@ export default function DetailService({route}) {
     });
   }, [dispatch]);
   const [show, setShow] = useState(0);
+  const [visible, setVisible] = useState(0);
   const [showNotification, setShowNotification] = useState(0);
   const detailOrder = useSelector(state => state.getDetailOrder?.data || []);
   const reasons = useSelector(state => state.getListReason?.data || []);
-  const [reasonsCancel, setReasonCancel] = useState();
+  const [reasonsCancel, setReasonCancel] = useState('');
   const handleConfirmCancel = () => {
     dispatch({
       type: actions.CANCEL_ORDER,
       body: {id: route?.params?.orderId, reason_id: reasonsCancel},
+      onSuccess: () => {
+        dispatch({
+          type: actions.GET_LIST_ORDER,
+          params: {is_status: 0},
+        });
+        root.goBack();
+      },
     });
-    setShow(!show);
-    setShowNotification(!showNotification);
   };
-  const cancel = useSelector(state => state.cancelOrder?.data || []);
-  console.log(cancel.cancel_id);
   const onPress = status => {
     status === -1 &&
       dispatch({
@@ -54,6 +61,30 @@ export default function DetailService({route}) {
   const reasonCancel = reasons.find(
     item => item.item_id === detailOrder?.reason_id,
   );
+  const handle = () => {
+    detailOrder?.order?.repeat_weekly.length === 0
+      ? setShow(!show)
+      : setVisible(!visible);
+  };
+  // const handleCancelRepeat = order_id => {
+  //   dispatch({
+  //     type: actions.CANCEL_REPEAT,
+  //     body: {order_id: order_id},
+  //     onSuccess: res => {
+  //       Toast.show({
+  //         type: 'success',
+  //         text1: res?.message,
+  //       });
+  //       setVisible(!visible);
+  //       root.goBack();
+  //       dispatch({
+  //         type: actions.GET_LIST_ORDER,
+  //         params: {is_status: 0},
+  //       });
+  //       dispatch({type: actions.GET_LIST_ORDER, params: {repeat_weekly: 1}});
+  //     },
+  //   });
+  // };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Chi tiết dịch vụ'} canGoBack />
@@ -224,6 +255,44 @@ export default function DetailService({route}) {
                 borderColor={COLORS.borderColor1}
                 marginBottom={12}
               />
+
+              {detailOrder?.order?.repeat_weekly === null ||
+              detailOrder?.order?.repeat_weekly.length === 0 ? (
+                ''
+              ) : (
+                <>
+                  <Block row alignCenter>
+                    <Block row alignCenter>
+                      <Image
+                        source={icon.icon_calendar_days}
+                        width={22}
+                        height={22}
+                      />
+                      <Text
+                        fontSize={14}
+                        regular
+                        color={COLORS.placeholder}
+                        marginLeft={8}>
+                        Lặp lại hàng tuần
+                      </Text>
+                    </Block>
+                    <Block absolute right={0}>
+                      <Text fontSize={14} regular color={COLORS.black2}>
+                        {detailOrder?.order?.repeat_weekly?.join('-')}
+                      </Text>
+                    </Block>
+                  </Block>
+                  <Block
+                    marginTop={13}
+                    marginLeft={28}
+                    width={width - 76}
+                    borderWidth={1}
+                    borderColor={COLORS.borderColor1}
+                    marginBottom={12}
+                  />
+                </>
+              )}
+
               <Block>
                 <Block row alignCenter>
                   <Image
@@ -399,7 +468,7 @@ export default function DetailService({route}) {
           ) : (
             <Block marginTop={23} row height={48}>
               <Pressable
-                onPress={() => setShow(!show)}
+                onPress={handle}
                 width={(width - 24) / 2 - 6}
                 justifyCenter
                 alignCenter
@@ -410,7 +479,8 @@ export default function DetailService({route}) {
                   Huỷ dịch vụ
                 </Text>
               </Pressable>
-              <Block
+              <Pressable
+                onPress={() => commonRoot.navigate(router.HELP)}
                 width={(width - 24) / 2 - 6}
                 justifyCenter
                 alignCenter
@@ -422,7 +492,7 @@ export default function DetailService({route}) {
                 <Text fontSize={15} regular color={COLORS.white}>
                   Hỗ trợ
                 </Text>
-              </Block>
+              </Pressable>
             </Block>
           )}
         </Block>
@@ -488,7 +558,10 @@ export default function DetailService({route}) {
                 ))}
               </Block>
               <Pressable
-                onPress={handleConfirmCancel}
+                onPress={() => {
+                  setShowNotification(!showNotification);
+                  setShow(false);
+                }}
                 backgroundColor={COLORS.red4}
                 height={48}
                 width={width - 48}
@@ -527,7 +600,10 @@ export default function DetailService({route}) {
                 <Text fontSize={15} semiBold color={COLORS.black2}>
                   Thông báo
                 </Text>
-                <Pressable absolute right={0} onPress={handleConfirmCancel}>
+                <Pressable
+                  absolute
+                  right={0}
+                  onPress={() => setShowNotification(false)}>
                   <Icon
                     IconType={Ionicons}
                     iconName={'close'}
@@ -551,59 +627,39 @@ export default function DetailService({route}) {
                     </Text>
                   </Block>
                 </Block>
-                <Text
-                  fontSize={14}
-                  semiBold
-                  color={COLORS.black2}
-                  marginTop={15}>
-                  Bạn được hủy miễn phí trong 3 trường hợp sau:
-                </Text>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.black2}
-                  marginTop={20}
-                  lineHeight={22}>
-                  1 - Hủy trong 10 phút sau khi đăng việc {'\n'} 2 - Hủy khi
-                  chưa có ai nhận việc {'\n'} 3 - Hủy trước giờ làm việc ít nhất
-                  6 tiếng
-                </Text>
-                <Text
-                  fontSize={14}
-                  semiBold
-                  color={COLORS.black2}
-                  marginTop={19}>
-                  Ngoài 3 trường hợp trên chúng tôi sẽ tính phí:
-                </Text>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.black2}
-                  marginTop={20}
-                  lineHeight={22}>
-                  1 - 20.000đ nếu hủy trước công việc bắt đầu 1 tiếng{'\n'}2 -
-                  30% giá trị coongg việc nếu hủy từ sau 1 tiếng bắt đầu công
-                  việc
-                </Text>
-                <Text
-                  fontSize={18}
-                  semiBold
-                  color={COLORS.red4}
-                  center
-                  marginTop={19}>
-                  Phí huỷ: 0đ
-                </Text>
+                <Block marginTop={15}>
+                  <RenderHTML
+                    contentWidth={width - 48}
+                    source={{html: detailOrder?.cancellation_policy_popup}}
+                    tagsStyles={{
+                      p: {
+                        fontSize: 14,
+                        fontWeight: 'regular',
+                        color: COLORS.black2,
+                        lineHeight: 22,
+                      },
+                      strong: {
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                        color: COLORS.black2,
+                        lineHeight: 22,
+                      },
+                    }}
+                  />
+                </Block>
                 <Text
                   marginTop={22}
                   lineHeight={22}
                   fontSize={14}
                   italic
-                  color={COLORS.red4}>
+                  color={COLORS.red4}
+                  center>
                   Độ tin cậy của bạn sẽ giảm đáng kể nếu bạn hủy nhiều lần. Bạn
                   chắc chân hủy công việc này?
                 </Text>
                 <Block marginTop={37} row height={48}>
-                  <Block
+                  <Pressable
+                    onPress={handleConfirmCancel}
                     width={(width - 48) / 2 - 6}
                     justifyCenter
                     alignCenter
@@ -613,7 +669,7 @@ export default function DetailService({route}) {
                     <Text fontSize={15} regular color={COLORS.red4}>
                       Đồng ý
                     </Text>
-                  </Block>
+                  </Pressable>
                   <Pressable
                     onPress={() => root.goBack()}
                     marginLeft={12}
@@ -632,6 +688,11 @@ export default function DetailService({route}) {
           </TouchableOpacity>
         </SafeAreaView>
       </Modal>
+      {/* <ModalTurnOffRepeat
+        visible={visible}
+        close={() => setVisible(false)}
+        onPress={() => handleCancelRepeat(detailOrder?.order?.id)}
+      /> */}
     </Block>
   );
 }

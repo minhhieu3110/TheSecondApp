@@ -36,12 +36,8 @@ const commonStack = [
   //
   {name: router.DETAIL_SERVICE},
   //
-  {name: router.DETAIL_NEW_ACTIVITY},
-  {name: router.DETAIL_RECEPTION},
-  {name: router.DETAIL_DOING},
-  {name: router.DETAIL_COMPLETE},
+
   {name: router.EVALUATE_SERVICE},
-  {name: router.DETAIL_CANCEL},
 
   {name: router.CHOOSE_SERVICE},
   {name: router.CHOOSE_TIME_FOR_SERVICE},
@@ -80,6 +76,10 @@ const commonStack = [
   {name: router.DETAIL_CANCEL_ORDER},
   {name: router.EVALUATE_ORDER},
   {name: router.DETAIL_NOTIFICATION},
+  {name: router.EXCHANGE_POINT},
+  {name: router.DETAIL_EXCHANGE_VOUCHER},
+  {name: router.REPEAT_SERVICE},
+  {name: router.DETAIL_REPEAT_SERVICE},
 ];
 
 export default function CommonContainer() {
