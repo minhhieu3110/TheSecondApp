@@ -1,15 +1,6 @@
 import actions from '@actions';
 import {icon} from '@assets';
-import {
-  Block,
-  HeaderTitle,
-  Icon,
-  Image,
-  Pressable,
-  Text,
-  PolicyCancelPackageService,
-  ModalTurnOffRepeat,
-} from '@components';
+import {Block, HeaderTitle, Icon, Image, Pressable, Text} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
@@ -18,7 +9,6 @@ import {commonRoot, root} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
 import {ScrollView, Modal, SafeAreaView, TouchableOpacity} from 'react-native';
 import RenderHTML from 'react-native-render-html';
-import Toast from 'react-native-toast-message';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 export default function DetailService({route}) {
@@ -66,25 +56,7 @@ export default function DetailService({route}) {
       ? setShow(!show)
       : setVisible(!visible);
   };
-  // const handleCancelRepeat = order_id => {
-  //   dispatch({
-  //     type: actions.CANCEL_REPEAT,
-  //     body: {order_id: order_id},
-  //     onSuccess: res => {
-  //       Toast.show({
-  //         type: 'success',
-  //         text1: res?.message,
-  //       });
-  //       setVisible(!visible);
-  //       root.goBack();
-  //       dispatch({
-  //         type: actions.GET_LIST_ORDER,
-  //         params: {is_status: 0},
-  //       });
-  //       dispatch({type: actions.GET_LIST_ORDER, params: {repeat_weekly: 1}});
-  //     },
-  //   });
-  // };
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Chi tiết dịch vụ'} canGoBack />
@@ -688,11 +660,6 @@ export default function DetailService({route}) {
           </TouchableOpacity>
         </SafeAreaView>
       </Modal>
-      {/* <ModalTurnOffRepeat
-        visible={visible}
-        close={() => setVisible(false)}
-        onPress={() => handleCancelRepeat(detailOrder?.order?.id)}
-      /> */}
     </Block>
   );
 }
