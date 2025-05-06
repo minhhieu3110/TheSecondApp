@@ -4,7 +4,7 @@ import {Block, Image, Pressable, Text, TextInput} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
-import {bottomRoot, commonRoot} from 'navigation/navigationRef';
+import {authRoot, bottomRoot, commonRoot} from 'navigation/navigationRef';
 import {useState} from 'react';
 import {ScrollView} from 'react-native';
 import {getDeviceId, getDeviceName} from 'react-native-device-info';
@@ -35,7 +35,7 @@ export default function InputInformation({route}) {
         referral_code: referralCode,
       },
       onSuccess: () => {
-        bottomRoot.navigate(router.HOME_SCREEN);
+        authRoot.navigate(router.LOGIN_SCREEN);
       },
       onFail: e => {
         console.log(e?.message);

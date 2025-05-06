@@ -20,6 +20,7 @@ import router from '@router';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import {formatTime} from '@utils';
+// import DatePicker from 'react-multi-date-picker';
 export default function Elederly_Servicedurationmonth({route}) {
   const dayWeek = [
     {id: 1, title: 'T2'},
@@ -59,13 +60,25 @@ export default function Elederly_Servicedurationmonth({route}) {
   const durationSelected = detailSub?.durations?.find(
     item => item.item_id === choose,
   );
+  const [listDay, setListDay] = useState(new Date());
   const infoOrder = {
     service_id: route?.params?.service_id,
     service_sub_id: route?.params?.service_sub_id,
     duration_id: choose,
     monthly_package_id: chooseOptionDuration,
     schedule_week: againWeek,
-    list_day: [],
+    list_day: [
+      '24/05/2025',
+      '25/05/2025',
+      '31/05/2025',
+      '01/06/2025',
+      '07/06/2025',
+      '08/06/2025',
+      '14/06/2025',
+      '15/06/2025',
+      '21/06/2025',
+      '22/06/2025',
+    ],
     start_time: start_time,
     note: content,
     promotion_id: '',
@@ -81,7 +94,18 @@ export default function Elederly_Servicedurationmonth({route}) {
         duration_id: choose,
         monthly_package_id: chooseOptionDuration,
         schedule_week: againWeek,
-        list_day: [],
+        list_day: [
+          '24/05/2025',
+          '25/05/2025',
+          '31/05/2025',
+          '01/06/2025',
+          '07/06/2025',
+          '08/06/2025',
+          '14/06/2025',
+          '15/06/2025',
+          '21/06/2025',
+          '22/06/2025',
+        ],
         start_time: start_time,
         note: content,
         promotion_id: '',
@@ -250,7 +274,8 @@ export default function Elederly_Servicedurationmonth({route}) {
         titleBottom={detailSub?.service?.title}
         onPress={priceCalculation}
       />
-      <ModalCalendar visible={calendar} close={() => setCalendar(!calendar)} />
+      {/* <ModalCalendar visible={calendar} close={() => setCalendar(!calendar)} /> */}
+      {/* {calendar && <DatePicker value={listDay} onChange={setListDay} />} */}
     </Block>
   );
 }

@@ -14,8 +14,14 @@ export const getVoucher = (...props) => {
 export const getPromo = (...props) => {
   return reducerDefault(...props, actions.GET_LIST_PROMO);
 };
+export const detailPromo = (...props) => {
+  return reducerDefault(...props, actions.DETAIL_PROMO);
+};
 export const getNews = (...props) => {
   return reducerDefault(...props, actions.GET_NEWS);
+};
+export const detailNew = (...props) => {
+  return reducerDefault(...props, actions.DETAIL_NEW);
 };
 export const getSocial = (...props) => {
   return reducerDefault(...props, actions.SOCIAL);

@@ -37,7 +37,6 @@ export default function HomeScreen() {
   const service = useSelector(state => state.getServices?.data || []);
   const promo = useSelector(state => state.getPromo?.data || []);
   const news = useSelector(state => state.getNews?.data || []);
-  const limitNews = news.slice(0, 3);
   const banner = useSelector(state => state.getBanner?.data || []);
   const renderItemBanner = useCallback(({item}) => {
     return (
@@ -220,7 +219,6 @@ export default function HomeScreen() {
                   })
                 }
                 width={(width - 84) / 2}
-                height={175.56}
                 key={item.item_id}
                 alignCenter>
                 <Block
@@ -290,7 +288,11 @@ export default function HomeScreen() {
             <Text fontSize={16} semiBold color={COLORS.black1}>
               Ưu đãi
             </Text>
-            <Text fontSize={13} regular color={COLORS.red4}>
+            <Text
+              onPress={() => commonRoot.navigate(router.ALL_PROMO)}
+              fontSize={13}
+              regular
+              color={COLORS.red4}>
               Xem tất cả
             </Text>
           </Block>
@@ -304,8 +306,16 @@ export default function HomeScreen() {
               }}
               horizontal
               showsHorizontalScrollIndicator={false}>
-              {promo.map(item => (
-                <Block width={width - 232} rowGap={11} key={item.item_id}>
+              {promo?.slice(0, 3)?.map(item => (
+                <Pressable
+                  onPress={() =>
+                    commonRoot.navigate(router.DETAIL_PROMO, {
+                      item_id: item.item_id,
+                    })
+                  }
+                  width={width - 232}
+                  rowGap={11}
+                  key={item.item_id}>
                   <Block
                     width={width - 232}
                     height={196}
@@ -328,7 +338,7 @@ export default function HomeScreen() {
                       {item.title}
                     </Text>
                   </Text>
-                </Block>
+                </Pressable>
               ))}
             </ScrollView>
           </Block>
@@ -342,7 +352,12 @@ export default function HomeScreen() {
               <Text fontSize={16} bold color={COLORS.black1}>
                 Tin tức
               </Text>
-              <Text fontSize={13} regular color={COLORS.red4} marginRight={3}>
+              <Text
+                onPress={() => commonRoot.navigate(router.ALL_NEWS)}
+                fontSize={13}
+                regular
+                color={COLORS.red4}
+                marginRight={3}>
                 Xem tất cả
               </Text>
             </Block>
@@ -353,7 +368,16 @@ export default function HomeScreen() {
               marginBottom={15}
               gap={12}>
               {news?.slice(0, 4)?.map(item => (
-                <Block row spaceBetween height={113} key={item.item_id}>
+                <Pressable
+                  onPress={() =>
+                    commonRoot.navigate(router.DETAIL_NEW, {
+                      item_id: item.item_id,
+                    })
+                  }
+                  row
+                  spaceBetween
+                  height={113}
+                  key={item.item_id}>
                   <Block
                     width={width - 278}
                     height={113}
@@ -390,7 +414,7 @@ export default function HomeScreen() {
                       {item.title}
                     </Text>
                   </Block>
-                </Block>
+                </Pressable>
               ))}
             </Block>
           </Block>

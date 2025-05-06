@@ -74,6 +74,7 @@ export const URL_API = {
     recharge: 'user/recharge',
     list_bank: 'user/list-bank',
     update_avatar: 'user/update-avatar',
+    delete: 'user/delete',
   },
   promotion: {
     list: 'promotion/list',
@@ -99,9 +100,11 @@ export const URL_API = {
   },
   promo: {
     list: 'promo/list',
+    detail: 'promo/detail',
   },
   news: {
     list: 'news/list',
+    detail: 'news/detail',
   },
   social: 'socical',
   about: 'about',

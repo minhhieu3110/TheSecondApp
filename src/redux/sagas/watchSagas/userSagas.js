@@ -109,6 +109,21 @@ function* logoutUser(action) {
     yield put({type: _onFail(actions.type)});
   }
 }
+function* deleteAccount(action) {
+  const token = yield select(state => state.user.token);
+  try {
+    const res = yield api.post(URL_API.user.logout, {token: token});
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    yield put({type: actions.UNMOUNT_USER});
+    action.onSuccess?.(res);
+  } catch (error) {
+    action.onFail?.(error.data.message);
+    yield put({type: _onFail(actions.type)});
+  }
+}
 function* updateUserInfo(action) {
   const body = yield action.body;
   try {
@@ -127,6 +142,8 @@ function* updateAvatar(action) {
   const body = yield action.body;
   try {
     const res = yield api.postFormData(URL_API.user.update_avatar, body);
+    console.log(res.data);
+
     yield put({
       type: _onSuccess(action.type),
       data: res.data,
@@ -349,4 +366,5 @@ export default function* watchUserSagas() {
   yield takeLatest(actions.RECHARGE, recharge);
   yield takeLatest(actions.GET_LIST_BANK, getListBank);
   yield takeLatest(actions.UPDATE_AVATAR, updateAvatar);
+  yield takeLatest(actions.DELETE_ACCOUNT, deleteAccount);
 }

@@ -86,3 +86,6 @@ export const getListBank = (...props) => {
 export const updateAvatar = (...props) => {
   return reducerDefault(...props, actions.UPDATE_AVATAR);
 };
+export const deleteAccount = (...props) => {
+  return reducerDefault(...props, actions.DELETE_ACCOUNT);
+};

@@ -8,13 +8,13 @@ import {
   Image,
   Pressable,
   Text,
+  ScrollView,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {bottomRoot, commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
-import {ScrollView} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import RadialGradient from 'react-native-radial-gradient';
 import Toast from 'react-native-toast-message';
@@ -45,12 +45,15 @@ export default function BlockStaff() {
       },
     });
   };
+  const onRefresh = () => {
+    dispatch({
+      type: actions.GET_BLOCK_EMPLOYEE,
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Danh sách chặn'} canGoBack />
-      <ScrollView
-        contentContainerStyle={{marginTop: 15}}
-        showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={{marginTop: 15}} onRefresh={onRefresh}>
         <Block width={width - 24} marginLeft={12} gap={12}>
           {empBlock?.map(emp => (
             <Pressable

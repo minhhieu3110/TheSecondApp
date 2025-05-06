@@ -141,7 +141,7 @@ export default function NewActivity() {
                         {item?.order?.end_time}
                       </Text>
                     </Block>
-                    {item?.order?.repeat_weekly.length === 0 ? (
+                    {item?.order?.repeat_weekly === null ? (
                       ''
                     ) : (
                       <Block marginLeft={23} row marginBottom={12}>

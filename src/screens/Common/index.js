@@ -63,6 +63,10 @@ import ExchangePoint from './ExchangePoint';
 import DetailVoucherExchange from './ExchangePoint/common';
 import RepeatService from './RepeatService';
 import RepeatServiceDetail from './RepeatServiceDetail';
+import AllPromo from './Promo';
+import DetailPromo from './Promo/common';
+import AllNews from './AllNews';
+import DetailNew from './AllNews/common';
 
 export const common = {
   [router.VOUCHER]: Voucher,
@@ -129,4 +133,8 @@ export const common = {
   [router.DETAIL_EXCHANGE_VOUCHER]: DetailVoucherExchange,
   [router.REPEAT_SERVICE]: RepeatService,
   [router.DETAIL_REPEAT_SERVICE]: RepeatServiceDetail,
+  [router.ALL_PROMO]: AllPromo,
+  [router.DETAIL_PROMO]: DetailPromo,
+  [router.ALL_NEWS]: AllNews,
+  [router.DETAIL_NEW]: DetailNew,
 };

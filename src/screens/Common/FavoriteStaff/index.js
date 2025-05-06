@@ -9,13 +9,14 @@ import {
   Loading,
   Pressable,
   Text,
+  ScrollView,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {bottomRoot, commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
-import {ScrollView} from 'react-native';
+import {RefreshControl} from 'react-native';
 import Toast from 'react-native-toast-message';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
@@ -49,7 +50,11 @@ export default function FavoriteStaff() {
       },
     });
   };
-
+  const onRefresh = () => {
+    dispatch({
+      type: actions.GET_FAVORITE_EMPLOYEE,
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle
@@ -57,10 +62,7 @@ export default function FavoriteStaff() {
         root={bottomRoot}
         screenName={router.PROFILE_SCREEN}
       />
-      {favoriteEmp?.isLoading && <Loading />}
-      <ScrollView
-        contentContainerStyle={{marginTop: 15}}
-        showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={{marginTop: 15}} onRefresh={onRefresh}>
         <Block width={width - 24} marginLeft={12} gap={12}>
           {favoriteEmp?.map(emp => (
             <Pressable

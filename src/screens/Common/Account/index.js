@@ -15,11 +15,11 @@ import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {ConvertTimeStamp, formatPhone} from '@utils';
-import {bottomRoot, root} from 'navigation/navigationRef';
-import {use, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
-import {user} from 'redux/reducers/combineReducers/userReducers';
+import {Modal, SafeAreaView, TouchableOpacity} from 'react-native';
+import {authRoot} from 'navigation/navigationRef';
 
 export default function Account() {
   const dispatch = useDispatch();
@@ -73,14 +73,19 @@ export default function Account() {
       onSuccess: res => {
         dispatch({type: actions.GET_USER_INFO});
       },
-      // onFail: err => {
-      //   Toast.show({
-      //     type: 'error',
-      //     text1: 'wrong',
-      //   });
-      // },
     });
   };
+  const [visible, setVisible] = useState(0);
+  const deleteAccount = () => {
+    dispatch({
+      type: actions.DELETE_ACCOUNT,
+      onSuccess: () => {
+        authRoot.navigate(router.ONBOARDING_SCREEN);
+        setVisible(!visible);
+      },
+    });
+  };
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle canGoBack title={'Thiết lập tài khoản'} />
@@ -214,11 +219,15 @@ export default function Account() {
             Cập nhật
           </Text>
         </Pressable>
-        <Block>
-          <Text fontSize={15} regular color={COLORS.red4} marginTop={17}>
-            Xoá tài khoản
-          </Text>
-        </Block>
+
+        <Text
+          onPress={() => setVisible(!visible)}
+          fontSize={15}
+          regular
+          color={COLORS.red4}
+          marginTop={17}>
+          Xoá tài khoản
+        </Text>
       </Block>
       <DateOfBirthPicker
         visible={dateOfBirth}
@@ -237,6 +246,69 @@ export default function Account() {
           }}
         />
       )}
+      <Modal visible={visible} transparent={true} animationType="fade">
+        <SafeAreaView style={{flex: 1}}>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'rgba(0,0,0,0.6)',
+              flex: 1,
+            }}>
+            <Block
+              width={width - 24}
+              backgroundColor={COLORS.white}
+              paddingHorizontal={12}
+              paddingBottom={15}
+              paddingTop={25}
+              radius={10}
+              alignCenter>
+              <Text fontSize={16} bold color={COLORS.red4} center>
+                Xoá tài khoản
+              </Text>
+              <Text
+                center
+                fontSize={14}
+                regular
+                color={COLORS.black2}
+                marginTop={23}>
+                Bạn có đồng ý xoá tài khoản không ?
+              </Text>
+              <Block marginTop={42} row gap={10}>
+                <Pressable
+                  onPress={() => setVisible(!visible)}
+                  width={(width - 58) / 2}
+                  height={45}
+                  justifyCenter
+                  alignCenter
+                  backgroundColor={COLORS.white}
+                  radius={5}
+                  borderColor={COLORS.red4}
+                  borderWidth={1}>
+                  <Text fontSize={15} medium color={COLORS.red4}>
+                    Huỷ
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={deleteAccount}
+                  width={(width - 58) / 2}
+                  height={45}
+                  justifyCenter
+                  alignCenter
+                  backgroundColor={COLORS.red4}
+                  radius={5}
+                  borderColor={COLORS.red4}
+                  borderWidth={1}>
+                  <Text fontSize={15} medium color={COLORS.white}>
+                    Xác nhận
+                  </Text>
+                </Pressable>
+              </Block>
+            </Block>
+          </TouchableOpacity>
+        </SafeAreaView>
+      </Modal>
     </Block>
   );
 }

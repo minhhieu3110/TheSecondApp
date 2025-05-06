@@ -80,6 +80,10 @@ const commonStack = [
   {name: router.DETAIL_EXCHANGE_VOUCHER},
   {name: router.REPEAT_SERVICE},
   {name: router.DETAIL_REPEAT_SERVICE},
+  {name: router.ALL_PROMO},
+  {name: router.DETAIL_PROMO},
+  {name: router.ALL_NEWS},
+  {name: router.DETAIL_NEW},
 ];
 
 export default function CommonContainer() {

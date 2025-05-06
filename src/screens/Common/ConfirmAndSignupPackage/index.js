@@ -18,14 +18,15 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {Modal, TouchableOpacity} from 'react-native';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {ConvertTimeStamp, formatCurrency, formatPhone} from '@utils';
-import {use, useEffect, useState} from 'react';
+import {ConvertTimeStamp, formatPhone} from '@utils';
+import {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native';
 import RadialGradient from 'react-native-radial-gradient';
 import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
-import AllVoucher from '../VoucherScreen/components/AllVoucher';
-import Toast from 'react-native-toast-message';
+import {formatCurrency} from 'utils/helper';
+import {bottomRoot} from 'navigation/navigationRef';
+import router from '@router';
 
 export default function ConfirmAndSignupPackage({route}) {
   const dispatch = useDispatch();
@@ -60,6 +61,35 @@ export default function ConfirmAndSignupPackage({route}) {
     if (vouchers.filter(item => item.promotion_id === voucherCode)) {
       setPromotionSelected(voucherCode);
     }
+  };
+  const infoService = useSelector(state => state.priceCalculation?.data || []);
+  const orderService = () => {
+    dispatch({
+      type: actions.ORDER_SERVICE,
+      body: {
+        service_id: route?.params?.data?.service_id,
+        service_sub_id: route?.params?.data?.service_sub_id,
+        duration_id: route?.params?.data?.duration_id,
+        repeat_weekly: route?.params?.data?.repeat_weekly,
+        list_day: route?.params?.data?.list_day,
+        start_time: route?.params?.data?.start_time,
+        note: route?.params?.data?.note,
+        promotion_id: promotionSelected,
+        method_id: methodSelected,
+        address_id: route?.params?.data?.address_id,
+        extra_services: route?.params?.data?.extra_services,
+      },
+      onSuccess: () => {
+        setShow(!show);
+      },
+      onFail(e) {
+        console.log(e?.data?.message);
+      },
+    });
+  };
+  const backHome = () => {
+    bottomRoot.navigate(router.HOME_SCREEN);
+    setShow(false);
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -179,7 +209,7 @@ export default function ConfirmAndSignupPackage({route}) {
                 </Block>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    Thứ 7, 25/01/2025
+                    {infoService?.start_date}
                   </Text>
                 </Block>
               </Block>
@@ -205,7 +235,7 @@ export default function ConfirmAndSignupPackage({route}) {
                 </Block>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    Thứ 7, 25/02/2025
+                    {infoService?.end_date}
                   </Text>
                 </Block>
               </Block>
@@ -235,7 +265,9 @@ export default function ConfirmAndSignupPackage({route}) {
                 </Block>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    8 giờ, 8:00 đến 16:00
+                    {infoService?.time?.hours} giờ,{' '}
+                    {infoService?.time?.start_time} đến{' '}
+                    {infoService?.time?.end_time}
                   </Text>
                 </Block>
               </Block>
@@ -261,7 +293,7 @@ export default function ConfirmAndSignupPackage({route}) {
                 </Block>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    8 buổi
+                    {infoService?.work_shifts} buổi
                   </Text>
                 </Block>
               </Block>
@@ -297,14 +329,18 @@ export default function ConfirmAndSignupPackage({route}) {
                   marginTop={9}>
                   Chăm sóc người già tại nhà
                 </Text>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.placeholder}
-                  marginLeft={30}
-                  marginTop={11}>
-                  Ghi chú: Ưu tiên nữ lớn tuổi, có nhiều kinh nghiệm
-                </Text>
+                {infoService?.note === '' ? (
+                  ''
+                ) : (
+                  <Text
+                    fontSize={14}
+                    regular
+                    color={COLORS.placeholder}
+                    marginLeft={30}
+                    marginTop={11}>
+                    Ghi chú: {infoService?.note}
+                  </Text>
+                )}
               </Block>
             </Block>
           </Block>
@@ -323,7 +359,7 @@ export default function ConfirmAndSignupPackage({route}) {
                 </Text>
                 <Block absolute right={0}>
                   <Text fontSize={14} regular color={COLORS.black2}>
-                    2.050.000 đ
+                    {formatCurrency(infoService?.amount_estimated)}
                   </Text>
                 </Block>
               </Block>
@@ -342,7 +378,7 @@ export default function ConfirmAndSignupPackage({route}) {
                 </Text>
                 <Block absolute right={0}>
                   <Text fontSize={15} medium color={COLORS.red4}>
-                    2.050.000 đ
+                    {formatCurrency(infoService?.amount_final)}
                   </Text>
                 </Block>
               </Block>
@@ -420,12 +456,12 @@ export default function ConfirmAndSignupPackage({route}) {
           </Text>
           <Block absolute right={0}>
             <Text fontSize={15} semiBold color={COLORS.red4}>
-              2.050.000 đ
+              {formatCurrency(infoService?.amount_final)}
             </Text>
           </Block>
         </Block>
         <Pressable
-          onPress={() => setShow(!show)}
+          onPress={orderService}
           marginTop={13}
           marginHorizontal={12}
           height={43}
@@ -438,7 +474,11 @@ export default function ConfirmAndSignupPackage({route}) {
           </Text>
         </Pressable>
       </Block>
-      <ModalSuccess visible={show} close={() => setShow(false)} />
+      <ModalSuccess
+        visible={show}
+        close={() => setShow(false)}
+        onPress={backHome}
+      />
       <Modal
         visible={visibleMethodPay}
         transparent={false}
