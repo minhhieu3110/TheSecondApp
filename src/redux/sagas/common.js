@@ -97,6 +97,7 @@ export const URL_API = {
     cancel_order: 'service/cancel-order',
     statistical: 'service/statistical',
     cancel_repeat: 'service/cancel-repeat',
+    recharge_method: 'service/recharge-method',
   },
   promo: {
     list: 'promo/list',
@@ -117,5 +118,10 @@ export const URL_API = {
   },
   faq: {
     list: 'faq/list',
+  },
+  chat: {
+    history: 'chat/history',
+    room: 'chat/room',
+    send: 'chat/send',
   },
 };

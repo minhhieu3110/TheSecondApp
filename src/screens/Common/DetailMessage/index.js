@@ -1,134 +1,140 @@
-import {image} from '@assets';
-import {Block, HeaderTitle, Icon, Image, Text, TextInput} from '@components';
+import actions from '@actions';
+import {icon, image} from '@assets';
+import {
+  Block,
+  HeaderTitle,
+  Icon,
+  Image,
+  Text,
+  TextInput,
+  ScrollView,
+  Pressable,
+} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {ScrollView} from 'react-native';
+import {ConvertDateTimeStamp} from '@utils';
+import {useEffect, useState} from 'react';
 import RadialGradient from 'react-native-radial-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-export default function DetailMessage() {
+import {useDispatch, useSelector} from 'react-redux';
+import {URL_API} from 'redux/sagas/common';
+export default function DetailMessage({route}) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.ROOM,
+      params: {room_key: route?.params?.room},
+    });
+  }, [dispatch]);
+  const room = useSelector(state => state.room?.data || []);
+  const messageFromEmp = room.filter(mess => mess.type_from === 'employee');
+  const messageFromUser = room.filter(mess => mess.type_from === 'user');
+  const messEmp = messageFromEmp?.reverse();
+  const messUser = messageFromUser?.reverse();
+  const [content, setContent] = useState('');
+  const onRefresh = () => {
+    dispatch({
+      type: actions.ROOM,
+      params: {room_key: route?.params?.room},
+    });
+  };
+  const sendMessage = () => {
+    dispatch({
+      type: actions.SEND_MESSAGE,
+      body: {
+        message: content,
+        employee_id: route?.params?.employee_id,
+        from: 'user',
+      },
+      onSuccess: () => {
+        dispatch({
+          type: actions.ROOM,
+          params: {room_key: route?.params?.room},
+        });
+        setContent('');
+      },
+    });
+  };
+  console.log(room);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Lê Thu Huyền'} canGoBack />
-      <ScrollView>
+      <ScrollView onRefresh={onRefresh}>
         <Block marginTop={13} marginHorizontal={12} gap={22}>
-          <Block row width={width - 117}>
-            <Image
-              source={image.image_staff}
-              width={30}
-              height={30}
-              radius={50}
-            />
-            <Block
-              width={width - 209}
-              paddingLeft={10}
-              paddingTop={10}
-              paddingRight={11}
-              paddingBottom={17}
-              marginLeft={10}
-              backgroundColor={COLORS.white}
-              radius={8}>
-              <Text fontSize={14} regular color={COLORS.black2} lineHeight={22}>
-                Lorem ipsum dolor sit amet, cons adipiscing elit, sed diam nonum
-                nib euismod tincidunt ut laoreet
-              </Text>
-            </Block>
-            <Block absolute bottom={0} right={0}>
-              <Text
-                marginLeft={10}
-                fontSize={10}
-                regular
-                color={COLORS.textLineThrough}>
-                08:05 AM
-              </Text>
-            </Block>
-          </Block>
-          <Block alignEnd>
-            <Block row width={width - 154}>
-              <Block justifyEnd>
-                <Block>
-                  <Text fontSize={10} regular color={COLORS.textLineThrough}>
-                    08:05 AM
-                  </Text>
-                </Block>
-              </Block>
+          {messEmp?.map(mess => (
+            <Block row key={mess?.id}>
+              <Image
+                source={
+                  // icon.icon_user_activity
+                  mess?.send_employee?.picture === ''
+                    ? icon.icon_user_activity
+                    : {
+                        uri: `${URL_API.uploads}/${mess?.send_employee?.picture}`,
+                      }
+                }
+                width={30}
+                height={30}
+                radius={50}
+              />
               <Block
                 width={width - 209}
                 paddingLeft={10}
                 paddingTop={10}
                 paddingRight={11}
                 paddingBottom={17}
-                backgroundColor={COLORS.darkRed1}
                 marginLeft={10}
+                backgroundColor={COLORS.white}
                 radius={8}>
                 <Text
                   fontSize={14}
                   regular
-                  color={COLORS.white}
+                  color={COLORS.black2}
                   lineHeight={22}>
-                  Lorem ipsum dolor sit amet, cons adipiscing elit, sed diam non
+                  {mess?.message}
+                </Text>
+              </Block>
+              <Block justifyEnd>
+                <Text
+                  marginLeft={10}
+                  fontSize={10}
+                  regular
+                  color={COLORS.textLineThrough}>
+                  {ConvertDateTimeStamp(mess?.created_at)}
                 </Text>
               </Block>
             </Block>
-          </Block>
-          <Block row width={width - 117}>
-            <Image
-              source={image.image_staff}
-              width={30}
-              height={30}
-              radius={50}
-            />
-            <Block
-              width={width - 209}
-              paddingLeft={10}
-              paddingTop={10}
-              paddingRight={11}
-              paddingBottom={17}
-              marginLeft={10}
-              backgroundColor={COLORS.white}
-              radius={8}>
-              <Text fontSize={14} regular color={COLORS.black2} lineHeight={22}>
-                Lorem ipsum dolor sit amet, cons adipiscing elit, sed diam nonum
-                nib euismod tincidunt ut laoreet
-              </Text>
-            </Block>
-            <Block absolute bottom={0} right={0}>
-              <Text
-                marginLeft={10}
-                fontSize={10}
-                regular
-                color={COLORS.textLineThrough}>
-                08:05 AM
-              </Text>
-            </Block>
-          </Block>
-          <Block alignEnd>
-            <Block row width={width - 154}>
-              <Block justifyEnd>
-                <Block>
-                  <Text fontSize={10} regular color={COLORS.textLineThrough}>
-                    08:05 AM
+          ))}
+          {messUser?.map(mess => (
+            <Block alignEnd key={mess?.id}>
+              <Block row>
+                <Block justifyEnd>
+                  <Block>
+                    <Text fontSize={10} regular color={COLORS.textLineThrough}>
+                      {ConvertDateTimeStamp(mess?.created_at)}
+                    </Text>
+                  </Block>
+                </Block>
+                <Block
+                  width={width - 209}
+                  paddingLeft={10}
+                  paddingTop={10}
+                  paddingRight={11}
+                  paddingBottom={17}
+                  backgroundColor={COLORS.darkRed1}
+                  marginLeft={10}
+                  radius={8}>
+                  <Text
+                    fontSize={14}
+                    regular
+                    color={COLORS.white}
+                    lineHeight={22}>
+                    {mess?.message}
                   </Text>
                 </Block>
               </Block>
-              <Block
-                width={width - 209}
-                paddingLeft={10}
-                paddingTop={10}
-                paddingRight={11}
-                paddingBottom={17}
-                backgroundColor={COLORS.darkRed1}
-                marginLeft={10}
-                radius={8}>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.white}
-                  lineHeight={22}>
-                  Lorem ipsum dolor sit amet, cons adipiscing elit, sed diam non
-                </Text>
-              </Block>
             </Block>
-          </Block>
+          ))}
         </Block>
       </ScrollView>
       <Block
@@ -147,8 +153,11 @@ export default function DetailMessage() {
           paddingLeft={26}
           radius={24}
           placeholder={'Soạn nội dung'}
+          value={content}
+          onChangeText={setContent}
         />
-        <Block
+        <Pressable
+          onPress={sendMessage}
           width={48}
           height={48}
           overflow={'hidden'}
@@ -168,7 +177,7 @@ export default function DetailMessage() {
               iconColor={COLORS.white}
             />
           </RadialGradient>
-        </Block>
+        </Pressable>
       </Block>
     </Block>
   );

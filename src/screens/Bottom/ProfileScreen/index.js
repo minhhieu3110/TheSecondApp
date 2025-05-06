@@ -54,22 +54,10 @@ export default function ProfileScreen() {
     formData.append('update_avatar', 1);
     dispatch({
       type: actions.UPDATE_AVATAR,
-      body: {
-        picture: {
-          uri: e.path,
-          name: 'profile.jpg',
-          type: 'image/jpeg',
-        },
-      },
+      body: formData,
       onSuccess: res => {
         dispatch({type: actions.GET_USER_INFO});
       },
-      // onFail: err => {
-      //   Toast.show({
-      //     type: 'error',
-      //     text1: 'wrong',
-      //   });
-      // },
     });
   };
   return (

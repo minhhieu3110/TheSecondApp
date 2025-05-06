@@ -17,6 +17,7 @@ import {commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
 import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
+import {URL_API} from 'redux/sagas/common';
 
 export default function Recharge() {
   const rechargeMoney = [
@@ -38,9 +39,11 @@ export default function Recharge() {
     dispatch({
       type: actions.GET_USER_INFO,
     });
+    dispatch({type: actions.RECHARGE_METHOD});
   }, [dispatch]);
   const userInfo = useSelector(state => state.getUserInfo?.data || []);
-
+  const rechargeMethod = useSelector(state => state.rechargeMethod?.data || []);
+  const [method, setMethod] = useState();
   const recharge = async () => {
     const numericValue = Number(value);
     numericValue < userInfo?.minimum_recharge ||
@@ -53,17 +56,16 @@ export default function Recharge() {
         })
       : dispatch({
           type: actions.RECHARGE,
-          body: {value: numericValue},
+          body: {value: numericValue, method_id: method},
           onSuccess: () => {
             commonRoot.navigate(router.INFO_RECHARGE, {
               value: value,
-              rechargeInfo: rechargeInfo,
+              // rechargeInfo: rechargeInfo,
             });
           },
         });
   };
-  const rechargeInfo = useSelector(state => state.recharge?.data || []);
-
+  // const rechargeInfo = useSelector(state => state.recharge?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Nạp tiền'} canGoBack />
@@ -150,36 +152,51 @@ export default function Recharge() {
         <Text fontSize={15} semiBold color={COLORS.black1} marginLeft={20.1}>
           Phương thức nạp tiền
         </Text>
-        <Block marginLeft={12} marginTop={18} width={width - 48}>
-          <Block row height={23} alignCenter spaceBetween>
-            <Block rowCenter>
-              <Image
-                source={icon.icon_transfer}
-                width={25.09}
-                height={21.5}
-                resizeMode="contain"
-              />
-              <Text fontSize={15} regular color={COLORS.black1} marginLeft={17}>
-                Chuyển khoản
-              </Text>
-            </Block>
-
-            <Block
-              width={23}
+        <Block marginLeft={12} marginTop={18} width={width - 48} gap={10}>
+          {rechargeMethod?.map(item => (
+            <Pressable
+              onPress={() => setMethod(item.method_id)}
+              row
               height={23}
-              radius={15}
-              borderWidth={1}
-              borderColor={COLORS.placeholder}
-              backgroundColor={COLORS.red4}
-              justifyCenter
-              alignCenter>
+              alignCenter
+              spaceBetween
+              key={item.method_id}>
+              <Block rowCenter>
+                <Block width={25.09} height={25.09}>
+                  <Image
+                    source={{uri: `${URL_API.uploads}/${item?.picture}`}}
+                    width={25.09}
+                    height={25.09}
+                  />
+                </Block>
+                <Text
+                  fontSize={15}
+                  regular
+                  color={COLORS.black1}
+                  marginLeft={17}>
+                  {item?.title}
+                </Text>
+              </Block>
+
               <Block
-                width={11}
-                height={11}
-                backgroundColor={COLORS.white}
-                radius={11}></Block>
-            </Block>
-          </Block>
+                width={23}
+                height={23}
+                radius={15}
+                borderWidth={1}
+                borderColor={COLORS.placeholder}
+                backgroundColor={
+                  method === item.method_id ? COLORS.red4 : COLORS.white
+                }
+                justifyCenter
+                alignCenter>
+                <Block
+                  width={11}
+                  height={11}
+                  backgroundColor={COLORS.white}
+                  radius={11}></Block>
+              </Block>
+            </Pressable>
+          ))}
         </Block>
       </Block>
       <Button title="Tiếp tục" onPress={recharge} />

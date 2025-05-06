@@ -4,6 +4,7 @@ import watchServiceSagas from './watchSagas/serviceSagas';
 import watchOtherSagas from './watchSagas/otherSagas';
 import watchAddressSagas from './watchSagas/addressSagas';
 import watchHelpSagas from './watchSagas/helpSagas';
+import watchChatSagas from './watchSagas/chatSagas';
 
 export default function* rootSaga() {
   yield all([
@@ -12,5 +13,6 @@ export default function* rootSaga() {
     fork(watchOtherSagas),
     fork(watchAddressSagas),
     fork(watchHelpSagas),
+    fork(watchChatSagas),
   ]);
 }

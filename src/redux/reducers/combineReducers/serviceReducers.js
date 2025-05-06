@@ -48,3 +48,6 @@ export const getStatistical = (...props) => {
 export const cancelRepeat = (...props) => {
   return reducerDefault(...props, actions.CANCEL_REPEAT);
 };
+export const rechargeMethod = (...props) => {
+  return reducerDefault(...props, actions.RECHARGE_METHOD);
+};

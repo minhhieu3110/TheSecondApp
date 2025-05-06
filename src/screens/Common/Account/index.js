@@ -20,6 +20,7 @@ import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {Modal, SafeAreaView, TouchableOpacity} from 'react-native';
 import {authRoot} from 'navigation/navigationRef';
+import {URL_API} from 'redux/sagas/common';
 
 export default function Account() {
   const dispatch = useDispatch();
@@ -63,13 +64,7 @@ export default function Account() {
     formData.append('update_avatar', 1);
     dispatch({
       type: actions.UPDATE_AVATAR,
-      body: {
-        picture: {
-          uri: e.path,
-          name: 'profile.jpg',
-          type: 'image/jpeg',
-        },
-      },
+      body: formData,
       onSuccess: res => {
         dispatch({type: actions.GET_USER_INFO});
       },
@@ -99,7 +94,11 @@ export default function Account() {
         alignCenter>
         <Block height={94} width={94} radius={50} marginTop={15}>
           <Image
-            source={image.image_user}
+            source={
+              userInfo?.picture === ''
+                ? icon.icon_user_activity
+                : {uri: `${URL_API.uploads}/${userInfo?.picture}`}
+            }
             width={94}
             height={94}
             radius={50}

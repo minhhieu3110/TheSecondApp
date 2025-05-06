@@ -19,18 +19,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
 
 export default function InfoRecharge({route}) {
-  const [rechargeInfo, setRechargeInfo] = useState();
   const dispatch = useDispatch();
   useEffect(() => {
-    if (route?.params?.rechargeInfo) {
-      setRechargeInfo(route?.params?.rechargeInfo);
-    }
     dispatch({
       type: actions.GET_USER_INFO,
     });
   }, [rechargeInfo, dispatch]);
   const userInfo = useSelector(state => state.getUserInfo?.data || []);
-
+  const rechargeInfo = useSelector(state => state.recharge?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Thông tin chuyển khoản'} canGoBack />
