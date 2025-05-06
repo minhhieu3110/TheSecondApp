@@ -55,18 +55,16 @@ export default function DetailMessage({route}) {
       },
     });
   };
-  console.log(room);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <HeaderTitle title={'Lê Thu Huyền'} canGoBack />
+      <HeaderTitle title={route?.params?.name} canGoBack />
       <ScrollView onRefresh={onRefresh}>
         <Block marginTop={13} marginHorizontal={12} gap={22}>
           {messEmp?.map(mess => (
             <Block row key={mess?.id}>
               <Image
                 source={
-                  // icon.icon_user_activity
                   mess?.send_employee?.picture === ''
                     ? icon.icon_user_activity
                     : {

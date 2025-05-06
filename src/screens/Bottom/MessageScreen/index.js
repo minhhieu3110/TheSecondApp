@@ -46,6 +46,7 @@ export default function MessageScreen() {
                 commonRoot.navigate(router.DETAIL_MESSAGE, {
                   room: item?.room_key,
                   employee_id: item.employee_id,
+                  name: item?.employee?.full_name,
                 })
               }
               radius={8}
