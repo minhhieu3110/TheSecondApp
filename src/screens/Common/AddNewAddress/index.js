@@ -6,10 +6,10 @@ import {
   Icon,
   Image,
   SelectDropdown,
-  SelectInput,
   Text,
   TextInput,
   Pressable,
+  SelectInput,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -127,46 +127,44 @@ export default function AddNewAddress() {
         <Text fontSize={15} semiBold color={COLORS.black1} marginTop={20}>
           Thông tin địa chỉ
         </Text>
-        <Block marginTop={15} wrap row>
-          <Block width={width - 24} marginBottom={12}>
-            <SelectDropdown
+        <Block marginTop={15}>
+          <Block wrap row gap={12}>
+            <SelectInput
               data={province}
-              placeholder={'Tỉnh/Thành phố'}
-              onSelect={selectedProvince => {
-                setProvinceCode(selectedProvince.code);
+              width={width - 24}
+              height={41}
+              placeholder={'Tỉnh/Thành Phố'}
+              onChange={item => {
+                setProvinceCode(item.code);
                 setDistrictCode(null);
                 setWardCode(null);
                 dispatch({
                   type: actions.GET_DISTRICT,
-                  params: {province_code: selectedProvince.code},
+                  params: {province_code: item.code},
                 });
               }}
             />
-          </Block>
-          <Block
-            width={(width - 24) / 2 - 5}
-            marginBottom={12}
-            marginRight={10}>
-            <SelectDropdown
+            <SelectInput
               data={district}
+              width={(width - 36) / 2}
+              height={41}
               placeholder={'Quận/Huyện'}
-              // defaultValue={districtCode === null && 'Quận/Huyện'}
-              onSelect={selectedDistrict => {
-                setDistrictCode(selectedDistrict.code);
+              onChange={item => {
+                setDistrictCode(item.code);
                 setWardCode(null);
                 dispatch({
                   type: actions.GET_WARD,
-                  params: {district_code: selectedDistrict.code},
+                  params: {district_code: item.code},
                 });
               }}
             />
-          </Block>
-          <Block width={(width - 24) / 2 - 5} marginBottom={12}>
-            <SelectDropdown
+            <SelectInput
               data={ward}
+              width={(width - 36) / 2}
+              height={41}
               placeholder={'Phường/Xã'}
-              onSelect={selectedWard => {
-                setWardCode(selectedWard.code);
+              onChange={item => {
+                setWardCode(item.code);
               }}
             />
           </Block>
@@ -185,7 +183,6 @@ export default function AddNewAddress() {
             fontSize={14}
             regular
             color={COLORS.black1}
-            marginBottom={12}
             value={address}
             onChangeText={setAddress}
           />

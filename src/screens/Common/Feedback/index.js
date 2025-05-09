@@ -8,7 +8,6 @@ import {
   Image,
   Pressable,
   SelectDropdown,
-  SelectInput,
   Text,
   TextInput,
 } from '@components';

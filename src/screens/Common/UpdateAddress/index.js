@@ -5,29 +5,25 @@ import {
   HeaderTitle,
   Icon,
   Image,
-  SelectDropdown,
-  SelectInput,
   Text,
   TextInput,
   Pressable,
+  SelectInput,
 } from '@components';
 import {width} from '@responsive';
-import router from '@router';
 import {COLORS} from '@theme';
-import {bottomRoot, commonRoot, root} from 'navigation/navigationRef';
-import {set, useForm} from 'react-hook-form';
+import {root} from 'navigation/navigationRef';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {use, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
-import {Picker} from '@react-native-picker/picker';
-import SelectDrop from '@components/form/SelectDropdown';
 export default function UpdateAddress({route}) {
   const addressSaved = useSelector(state => state.getAddressSave?.data || []);
   const updateAdd = addressSaved?.find(
     item => item.item_id === route?.params?.item_id,
   );
+
   const dispatch = useDispatch();
   const [fullName, setFullName] = useState(updateAdd?.full_name);
   const [phone, setPhone] = useState(updateAdd?.phone);
@@ -71,7 +67,11 @@ export default function UpdateAddress({route}) {
         is_default: defaultAddress,
         item_id: route?.params?.item_id,
       },
-      onSuccess: () => {
+      onSuccess: res => {
+        Toast.show({
+          type: 'success',
+          text1: res?.message,
+        });
         root.goBack();
         dispatch({type: actions.GET_ADDRESS_SAVE});
       },
@@ -127,45 +127,47 @@ export default function UpdateAddress({route}) {
         <Text fontSize={15} semiBold color={COLORS.black1} marginTop={20}>
           Thông tin địa chỉ
         </Text>
-        <Block marginTop={15} wrap row>
-          <Block width={width - 24} marginBottom={12}>
-            <SelectDropdown
+        <Block marginTop={15}>
+          <Block wrap row gap={12}>
+            <SelectInput
               data={province}
-              placeholder={'Tỉnh/Thành phố'}
-              onSelect={selectedProvince => {
-                setProvinceCode(selectedProvince.code);
+              width={width - 24}
+              height={41}
+              placeholder={'Tỉnh/Thành Phố'}
+              value={updateAdd?.province}
+              onChange={item => {
+                setProvinceCode(item.code);
                 setDistrictCode(null);
                 setWardCode(null);
                 dispatch({
                   type: actions.GET_DISTRICT,
-                  params: {province_code: selectedProvince.code},
+                  params: {province_code: item.code},
                 });
               }}
             />
-          </Block>
-          <Block
-            width={(width - 24) / 2 - 5}
-            marginBottom={12}
-            marginRight={10}>
-            <SelectDropdown
+            <SelectInput
               data={district}
+              width={(width - 36) / 2}
+              height={41}
               placeholder={'Quận/Huyện'}
-              onSelect={selectedDistrict => {
-                setDistrictCode(selectedDistrict.code);
+              value={updateAdd?.district}
+              onChange={item => {
+                setDistrictCode(item.code);
                 setWardCode(null);
                 dispatch({
                   type: actions.GET_WARD,
-                  params: {district_code: selectedDistrict.code},
+                  params: {district_code: item.code},
                 });
               }}
             />
-          </Block>
-          <Block width={(width - 24) / 2 - 5} marginBottom={12}>
-            <SelectDropdown
+            <SelectInput
               data={ward}
+              width={(width - 36) / 2}
+              height={41}
               placeholder={'Phường/Xã'}
-              onSelect={selectedWard => {
-                setWardCode(selectedWard.code);
+              value={updateAdd?.ward}
+              onChange={item => {
+                setWardCode(item.code);
               }}
             />
           </Block>
@@ -184,7 +186,6 @@ export default function UpdateAddress({route}) {
             fontSize={14}
             regular
             color={COLORS.black1}
-            marginBottom={12}
             value={address}
             onChangeText={setAddress}
           />

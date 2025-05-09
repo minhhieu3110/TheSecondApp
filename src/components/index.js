@@ -17,7 +17,6 @@ import ModalVoucher from './base/ModalVoucher';
 import ModalMethodPay from './base/ModalMethodPay';
 // import ModalCalendar from './base/ModalCalendar';
 import ModalSuccess from './base/ModalSuccess';
-import SelectInput from './form/SelectInput';
 import HeaderTitle from './header/HeaderTitle';
 import HeaderModal from './header/HeaderModal';
 import ModalChooseDay from './base/ModalChooseDay';
@@ -39,6 +38,7 @@ import Loading from './base/Loading';
 import ModalConfirmExchange from './base/ModalConfirmExchange';
 import ModalTurnOffRepeat from './base/ModalTurnOffRepeat';
 import ImagePicker from './base/ImagePicker';
+import SelectInput from './form/SelectInput';
 export {
   Carousel,
   Block,
@@ -51,7 +51,6 @@ export {
   DoubleButton,
   RankStar,
   TextInput,
-  SelectInput,
   ModalSANStaffDo,
   ModalSANStaffNotPerform,
   ModalVoucher,
@@ -81,4 +80,5 @@ export {
   ModalConfirmExchange,
   ModalTurnOffRepeat,
   ImagePicker,
+  SelectInput,
 };
