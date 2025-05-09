@@ -61,7 +61,9 @@ export default function Account() {
       name: 'profile.jpg',
       type: 'image/jpeg',
     });
-    formData.append('update_avatar', 1);
+    // formData.append('update_avatar', 1);
+    // console.log('formData', formData);
+
     dispatch({
       type: actions.UPDATE_AVATAR,
       body: formData,

@@ -168,6 +168,19 @@ function* sendFeedback(action) {
     action.onFail?.(error);
   }
 }
+function* getFeedback(action) {
+  try {
+    const res = yield api.get(URL_API.user.feedback);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 function* getInfoRank(action) {
   try {
     const res = yield api.get(URL_API.user.info_rank);
@@ -352,6 +365,7 @@ export default function* watchUserSagas() {
   yield takeLatest(actions.LOGOUT, logoutUser);
   yield takeLatest(actions.UPDATE_USER_INFO, updateUserInfo);
   yield takeLatest(actions.FEEDBACK, sendFeedback);
+  yield takeLatest(actions.GET_FEEDBACK, getFeedback);
   yield takeLatest(actions.INFO_RANK, getInfoRank);
   yield takeLatest(actions.LIST_RANK, getListRank);
   yield takeLatest(actions.GET_NOTIFICATION, getNotification);

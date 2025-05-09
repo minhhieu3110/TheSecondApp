@@ -2,32 +2,30 @@ import actions from '@actions';
 import {Block, HeaderTitle, Text, Switch} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
+import {root} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 export default function Setting() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch({
-      type: actions.GET_USER_INFO,
-    });
-  }, [dispatch]);
   const userInfo = useSelector(state => state.getUserInfo?.data || []);
   const [allowNotification, setAllowNotification] = useState(
-    userInfo?.allow_notifications ?? true,
+    userInfo?.allow_notifications,
   );
   useEffect(() => {
-    if (typeof userInfo?.allow_notifications !== 'undefined') {
-      setAllowNotification(userInfo.allow_notifications);
-    }
+    setAllowNotification(userInfo?.allow_notifications === 1 ? true : false);
   }, [userInfo?.allow_notifications]);
-  const handleNotificationToggle = value => {
-    setAllowNotification(value);
-    dispatch({
-      type: actions.UPDATE_USER_INFO,
-      body: {allow_notifications: value},
-    });
+
+  const onToggleNotification = value => {
+    if (value !== allowNotification) {
+      setAllowNotification(value);
+      dispatch({
+        type: actions.UPDATE_USER_INFO,
+        body: {allow_notifications: value ? 1 : 0},
+      });
+    }
   };
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Cài đặt'} canGoBack />
@@ -45,9 +43,7 @@ export default function Setting() {
             <Block absolute right={0} width={46} height={23}>
               <Switch
                 value={allowNotification}
-                onValueChange={value => {
-                  handleNotificationToggle(value);
-                }}
+                onValueChange={onToggleNotification}
                 trackColor={{false: COLORS.grayWhite, true: COLORS.green6}}
                 thumbColor={{false: COLORS.white, true: COLORS.white}}
                 width={46}

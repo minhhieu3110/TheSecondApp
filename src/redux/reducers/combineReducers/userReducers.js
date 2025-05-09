@@ -44,6 +44,9 @@ export const user = (state = initialState, action) => {
 export const sendFeedback = (...props) => {
   return reducerDefault(...props, actions.FEEDBACK);
 };
+export const getFeedback = (...props) => {
+  return reducerDefault(...props, actions.GET_FEEDBACK);
+};
 export const getInfoRank = (...props) => {
   return reducerDefault(...props, actions.INFO_RANK);
 };

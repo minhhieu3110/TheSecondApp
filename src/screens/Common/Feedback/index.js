@@ -6,18 +6,21 @@ import {
   HeaderModal,
   HeaderTitle,
   Image,
+  ImagePicker,
   Pressable,
+  ScrollView,
   SelectDropdown,
   Text,
   TextInput,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {formatPhone} from '@utils';
+import {ConvertDateTimeStamp, formatPhone} from '@utils';
 import {use, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Modal, SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {URL_API} from 'redux/sagas/common';
 export default function Feedback() {
   const {control} = useForm();
   const [feedbackSent, setFeedbackSent] = useState(0);
@@ -29,12 +32,24 @@ export default function Feedback() {
     dispatch({
       type: actions.GET_USER_INFO,
     });
+    dispatch({
+      type: actions.GET_FEEDBACK,
+    });
   }, [dispatch]);
   const service = useSelector(state => state.getServices?.data || []);
   const userInfo = useSelector(state => state.getUserInfo?.data || []);
+  const [visible, setVisible] = useState(false);
+  const [image, setImage] = useState();
   const [serviceId, setServiceId] = useState();
   const [content, setContent] = useState('');
   const sendFeedback = () => {
+    const file_attach = new FormData();
+    file_attach.append('file_attach', {
+      uri: image?.path,
+      name: image?.filename,
+      type: image?.mime,
+    });
+
     dispatch({
       type: actions.FEEDBACK,
       body: {
@@ -42,12 +57,15 @@ export default function Feedback() {
         full_name: userInfo?.full_name,
         phone: userInfo?.phone,
         content: content,
+        file_attach: file_attach,
       },
       onSuccess: () => {
         setFeedbackSent(!feedbackSent);
       },
     });
   };
+  const feedback = useSelector(state => state.getFeedback?.data || []);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Phản hồi'} canGoBack />
@@ -119,7 +137,8 @@ export default function Feedback() {
         <Text fontSize={15} semiBold color={COLORS.black1} marginTop={20.3}>
           Hình ảnh
         </Text>
-        <Block
+        <Pressable
+          onPress={() => setVisible(!visible)}
           width={177}
           height={177}
           backgroundColor={COLORS.pinkWhite}
@@ -134,7 +153,7 @@ export default function Feedback() {
               Ảnh đính kèm
             </Text>
           </Block>
-        </Block>
+        </Pressable>
       </Block>
       <Button title="Gửi" onPress={sendFeedback} />
       <Modal visible={feedbackSent} transparent="fade">
@@ -144,49 +163,66 @@ export default function Feedback() {
               title={'Phản hồi đã gửi'}
               onPress={() => setFeedbackSent(!feedbackSent)}
             />
-            <Block width={width - 24} marginLeft={12} marginTop={14}>
-              <Block
-                width={width - 24}
-                backgroundColor={COLORS.white}
-                radius={8}
-                paddingBottom={12}>
-                <Block width={width - 48} marginLeft={12} marginTop={17}>
-                  <Text fontSize={15} semiBold color={COLORS.red4}>
-                    Chăm sóc nguòi già
-                  </Text>
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.placeholder}
-                    marginTop={17}>
-                    12:30, 15/02/2025
-                  </Text>
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.black1}
-                    marginTop={13}>
-                    Tôi muốn biết là dịch vụ này có bao gồm việc dẫn người già
-                    đi dạo không ạ?
-                  </Text>
-                  <Block marginTop={17} row>
-                    <Image
-                      source={image.image_feedback}
-                      width={width - 275}
-                      height={96}
-                    />
-                    <Image
-                      source={image.image_feedback}
-                      width={width - 275}
-                      height={96}
-                    />
+            <ScrollView>
+              <Block width={width - 24} marginLeft={12} marginTop={14} gap={10}>
+                {feedback?.map(item => (
+                  <Block
+                    key={item.id}
+                    width={width - 24}
+                    backgroundColor={COLORS.white}
+                    radius={8}
+                    paddingBottom={12}>
+                    <Block width={width - 48} marginLeft={12} marginTop={17}>
+                      <Text fontSize={15} semiBold color={COLORS.red4}>
+                        {item?.service?.title}
+                      </Text>
+                      <Text
+                        fontSize={14}
+                        regular
+                        color={COLORS.placeholder}
+                        marginTop={17}>
+                        {ConvertDateTimeStamp(item?.created_at)}
+                      </Text>
+                      <Text
+                        fontSize={14}
+                        regular
+                        color={COLORS.black1}
+                        marginTop={13}>
+                        {item?.content}
+                      </Text>
+                      <Block marginTop={17} row gap={10}>
+                        <Block
+                          width={width - 275}
+                          height={96}
+                          overflow={'hidden'}>
+                          <Image
+                            source={{
+                              uri: `${URL_API.uploads}/${item?.file_attach}`,
+                            }}
+                            width={width - 275}
+                            height={96}
+                            resizeMode="cover"
+                          />
+                        </Block>
+                      </Block>
+                    </Block>
                   </Block>
-                </Block>
+                ))}
               </Block>
-            </Block>
+            </ScrollView>
           </Block>
         </SafeAreaView>
       </Modal>
+      {visible && (
+        <ImagePicker
+          hidePicker={e => {
+            setVisible(!visible);
+          }}
+          onImagePick={e => {
+            setImage(e);
+          }}
+        />
+      )}
     </Block>
   );
 }
