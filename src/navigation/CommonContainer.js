@@ -19,6 +19,7 @@ const commonStack = [
   {name: router.ACCUMULATED_POINT},
   {name: router.ADDRESS},
   {name: router.ADD_NEW_ADDRESS},
+  {name: router.UPDATE_ADDRESS},
   {name: router.MENBERSHIP_RANK},
   {name: router.HISTORY_POINT},
   {name: router.ACCOUNT},

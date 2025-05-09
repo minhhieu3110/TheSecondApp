@@ -160,7 +160,7 @@ export default class HttpService {
     try {
       return await axios
         .put(url, body, {
-          headers: this.generateHeader(),
+          headers: HttpService.generateHeader(),
         })
         .then(response => response.body);
     } catch (error) {
@@ -183,11 +183,12 @@ export default class HttpService {
   }
 
   //TODO: DELETE
-  static async delete(url) {
+  static async delete(url, params = {}) {
     try {
       return await axios
         .delete(url, {
           headers: this.generateHeader(),
+          params: {...params},
         })
         .then(response => response.data);
     } catch (error) {

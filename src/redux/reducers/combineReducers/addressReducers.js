@@ -16,3 +16,9 @@ export const getWard = (...props) => {
 export const addAddressBook = (...props) => {
   return reducerDefault(...props, actions.ADD_ADDRESS_BOOK);
 };
+export const deleteAddress = (...props) => {
+  return reducerDefault(...props, actions.DELETE_ADDRESS);
+};
+export const updateAddress = (...props) => {
+  return reducerDefault(...props, actions.UPDATE_ADDRESS);
+};

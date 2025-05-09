@@ -67,6 +67,7 @@ import AllPromo from './Promo';
 import DetailPromo from './Promo/common';
 import AllNews from './AllNews';
 import DetailNew from './AllNews/common';
+import UpdateAddress from './UpdateAddress';
 
 export const common = {
   [router.VOUCHER]: Voucher,
@@ -81,6 +82,7 @@ export const common = {
   [router.ACCUMULATED_POINT]: AccumulatedPoint,
   [router.ADDRESS]: Address,
   [router.ADD_NEW_ADDRESS]: AddNewAddress,
+  [router.UPDATE_ADDRESS]: UpdateAddress,
   [router.MENBERSHIP_RANK]: MenbershipRank,
   [router.HISTORY_POINT]: HistoryPoint,
   [router.ACCOUNT]: Account,

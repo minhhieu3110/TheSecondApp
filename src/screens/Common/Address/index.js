@@ -4,6 +4,7 @@ import {
   Block,
   Button,
   HeaderTitle,
+  Icon,
   Image,
   Pressable,
   ScrollView,
@@ -14,8 +15,10 @@ import router from '@router';
 import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
+import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
-
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Feather from 'react-native-vector-icons/Feather';
 export default function Address({route}) {
   const [service, setService] = useState(null);
   useEffect(() => {
@@ -52,7 +55,22 @@ export default function Address({route}) {
     });
   }, [dispatch]);
   const addressSaved = useSelector(state => state.getAddressSave?.data || []);
-
+  const deleteAddress = item_id => {
+    dispatch({
+      type: actions.DELETE_ADDRESS,
+      params: {item_id: item_id},
+      onSuccess: res => {
+        dispatch({
+          type: actions.GET_ADDRESS_SAVE,
+        });
+        Toast.show({
+          type: 'success',
+          text1: res?.message,
+        });
+      },
+    });
+  };
+  const [visible, setVisible] = useState(false);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Chọn địa điểm'} canGoBack />
@@ -71,37 +89,77 @@ export default function Address({route}) {
           marginTop={15}
           spaceBetween>
           {addressSaved.map(item => (
-            <Pressable
-              onPress={() => handleService(item.item_id)}
-              key={item.item_id}
-              radius={8}
-              backgroundColor={COLORS.white}
-              paddingBottom={18}
-              marginBottom={12}>
-              <Block marginLeft={10} marginTop={12} height={25} row alignCenter>
-                <Image
-                  source={icon.icon_position_address}
-                  width={25}
+            <ScrollView key={item.item_id} horizontal={true}>
+              <Pressable
+                width={width - 24}
+                onPress={() => handleService(item.item_id)}
+                borderLeftRadius={8}
+                backgroundColor={COLORS.white}
+                paddingBottom={18}
+                marginBottom={12}>
+                <Block
+                  marginLeft={10}
+                  marginTop={12}
                   height={25}
-                />
+                  row
+                  alignCenter>
+                  <Image
+                    source={icon.icon_position_address}
+                    width={25}
+                    height={25}
+                  />
+                  <Text
+                    marginLeft={4}
+                    fontSize={14}
+                    regular
+                    color={COLORS.placeholder}>
+                    {item.title}
+                  </Text>
+                </Block>
                 <Text
-                  marginLeft={4}
                   fontSize={14}
                   regular
-                  color={COLORS.placeholder}>
-                  {item.title}
+                  color={COLORS.placeholder}
+                  numberOfLines={2}
+                  marginLeft={39}
+                  marginTop={9}>
+                  {item.address_full}
                 </Text>
-              </Block>
-              <Text
-                fontSize={14}
-                regular
-                color={COLORS.placeholder}
-                numberOfLines={2}
-                marginLeft={39}
-                marginTop={9}>
-                {item.address_full}
-              </Text>
-            </Pressable>
+              </Pressable>
+              <Pressable
+                onPress={() => deleteAddress(item.item_id)}
+                justifyCenter
+                alignCenter
+                backgroundColor={COLORS.red4}
+                width={width - 350}
+                marginBottom={12}>
+                <Icon
+                  IconType={AntDesign}
+                  iconName={'delete'}
+                  iconSize={30}
+                  iconColor={COLORS.white}
+                />
+              </Pressable>
+              <Pressable
+                onPress={() =>
+                  commonRoot.navigate(router.UPDATE_ADDRESS, {
+                    item_id: item.item_id,
+                  })
+                }
+                justifyCenter
+                alignCenter
+                backgroundColor={COLORS.green}
+                width={width - 350}
+                marginBottom={12}
+                borderRightRadius={8}>
+                <Icon
+                  IconType={Feather}
+                  iconName={'edit'}
+                  iconSize={30}
+                  iconColor={COLORS.white}
+                />
+              </Pressable>
+            </ScrollView>
           ))}
         </Block>
       </ScrollView>

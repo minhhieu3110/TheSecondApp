@@ -23,44 +23,45 @@ import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import {Picker} from '@react-native-picker/picker';
 import SelectDrop from '@components/form/SelectDropdown';
-import Toast from 'react-native-toast-message';
-export default function AddNewAddress() {
+export default function UpdateAddress({route}) {
+  const addressSaved = useSelector(state => state.getAddressSave?.data || []);
+  const updateAdd = addressSaved?.find(
+    item => item.item_id === route?.params?.item_id,
+  );
   const dispatch = useDispatch();
-  const [defaultAddress, setDefaultAddress] = useState(0);
-  const handleSetDefault = () => {
-    setDefaultAddress(!defaultAddress);
-  };
+  const [fullName, setFullName] = useState(updateAdd?.full_name);
+  const [phone, setPhone] = useState(updateAdd?.phone);
   const [provinceCode, setProvinceCode] = useState();
   const [districtCode, setDistrictCode] = useState();
   const [wardCode, setWardCode] = useState();
-  const [address, setAddress] = useState('');
-  const [title, setTitle] = useState('');
-  const [type, setType] = useState('');
+  const [address, setAddress] = useState(updateAdd?.address);
+  const [title, setTitle] = useState(updateAdd?.title);
+  const [type, setType] = useState(updateAdd?.type);
   const types = [
     {id: 1, title: 'Nhà/Nhà phố'},
     {id: 2, title: 'Căn hộ'},
     {id: 3, title: 'Biệt thự'},
   ];
-
+  const [defaultAddress, setDefaultAddress] = useState(updateAdd?.is_default);
+  const handleSetDefault = () => {
+    setDefaultAddress(!defaultAddress);
+  };
   useEffect(() => {
     dispatch({
       type: actions.GET_PROVINCE,
-    });
-    dispatch({
-      type: actions.GET_USER_INFO,
     });
   }, [dispatch]);
 
   const province = useSelector(state => state.getProvince?.data || []);
   const district = useSelector(state => state.getDistrict?.data || []);
   const ward = useSelector(state => state.getWard?.data || []);
-  const userInfo = useSelector(state => state.getUserInfo?.data || []);
-  const saveAddress = () => {
+
+  const updateAddress = () => {
     dispatch({
-      type: actions.ADD_ADDRESS_BOOK,
+      type: actions.UPDATE_ADDRESS,
       body: {
-        full_name: userInfo?.full_name,
-        phone: userInfo?.phone,
+        full_name: fullName,
+        phone: phone,
         province: provinceCode,
         district: districtCode,
         ward: wardCode,
@@ -68,12 +69,9 @@ export default function AddNewAddress() {
         title: title,
         type: type,
         is_default: defaultAddress,
+        item_id: route?.params?.item_id,
       },
-      onSuccess: res => {
-        Toast.show({
-          type: 'success',
-          text1: res?.message,
-        });
+      onSuccess: () => {
         root.goBack();
         dispatch({type: actions.GET_ADDRESS_SAVE});
       },
@@ -82,7 +80,7 @@ export default function AddNewAddress() {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <HeaderTitle title={'Thêm mới địa chỉ'} canGoBack />
+      <HeaderTitle title={'Cập nhật địa chỉ'} canGoBack />
       <Block row absolute top={15} right={8} alignCenter height={25}>
         <Text fontSize={14} regular color={COLORS.red4}>
           Bản đồ
@@ -109,7 +107,8 @@ export default function AddNewAddress() {
           fontSize={14}
           regular
           color={COLORS.black1}
-          value={userInfo?.full_name}
+          value={fullName}
+          onChangeText={setFullName}
         />
         <TextInput
           height={41}
@@ -122,7 +121,8 @@ export default function AddNewAddress() {
           fontSize={14}
           regular
           color={COLORS.black1}
-          value={userInfo?.phone}
+          value={phone}
+          onChangeText={setPhone}
         />
         <Text fontSize={15} semiBold color={COLORS.black1} marginTop={20}>
           Thông tin địa chỉ
@@ -150,7 +150,6 @@ export default function AddNewAddress() {
             <SelectDropdown
               data={district}
               placeholder={'Quận/Huyện'}
-              // defaultValue={districtCode === null && 'Quận/Huyện'}
               onSelect={selectedDistrict => {
                 setDistrictCode(selectedDistrict.code);
                 setWardCode(null);
@@ -246,7 +245,7 @@ export default function AddNewAddress() {
           </Text>
         </Block>
       </Block>
-      <Button title="Lưu" onPress={saveAddress} />
+      <Button title="Cập nhập" onPress={updateAddress} />
     </Block>
   );
 }

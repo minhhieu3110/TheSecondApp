@@ -81,10 +81,42 @@ function* addAddressBook(action) {
     action.onFail?.(error);
   }
 }
+function* deleteAddress(action) {
+  const params = yield action.params;
+
+  try {
+    const res = yield api.delete(URL_API.user.delete_address, params);
+
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
+function* updateAddress(action) {
+  const body = yield action.body;
+  try {
+    const res = yield api.patch(URL_API.user.update_address, body);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 export default function* watchAddressSagas() {
   yield takeLatest(actions.GET_ADDRESS_SAVE, getAddressSave);
   yield takeLatest(actions.GET_PROVINCE, getProvince);
   yield takeLatest(actions.GET_DISTRICT, getDistrict);
   yield takeLatest(actions.GET_WARD, getWard);
   yield takeLatest(actions.ADD_ADDRESS_BOOK, addAddressBook);
+  yield takeLatest(actions.DELETE_ADDRESS, deleteAddress);
+  yield takeLatest(actions.UPDATE_ADDRESS, updateAddress);
 }

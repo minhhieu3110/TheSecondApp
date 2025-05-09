@@ -75,6 +75,8 @@ export const URL_API = {
     list_bank: 'user/list-bank',
     update_avatar: 'user/update-avatar',
     delete: 'user/delete',
+    delete_address: 'user/delete-addressbook',
+    update_address: 'user/update-addressbook',
   },
   promotion: {
     list: 'promotion/list',

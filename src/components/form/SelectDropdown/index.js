@@ -11,6 +11,7 @@ const SelectDrop = ({
   height,
   onSelect,
   search,
+  defaultValue,
 }) => {
   return (
     <SelectDropdown
@@ -18,7 +19,8 @@ const SelectDrop = ({
       search={search}
       data={data}
       onSelect={onSelect}
-      renderButton={(selectedItem, isOpened) => {
+      defaultValue={defaultValue}
+      renderButton={selectedItem => {
         return (
           <View style={[styles.dropdownButtonStyle, (width = width)]}>
             <Text style={styles.dropdownButtonTxtStyle}>
@@ -35,7 +37,7 @@ const SelectDrop = ({
           </View>
         );
       }}
-      renderItem={(item, index, isSelected) => {
+      renderItem={(item, isSelected) => {
         return (
           <View
             style={{
