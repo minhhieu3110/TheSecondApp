@@ -59,7 +59,7 @@ export default function InputOTP({route}) {
       },
     });
   };
-
+  const otp = useSelector(state => state.sendOTP?.data?.otp_code || '');
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <Block width={width} height={328}>
@@ -78,7 +78,7 @@ export default function InputOTP({route}) {
         radius={8}>
         <Block marginTop={18} marginLeft={12}>
           <Text fontSize={18} semiBold color={COLORS.red4}>
-            Xác nhận mã OTP
+            Xác nhận mã OTP {otp}
           </Text>
           <Text
             marginTop={10}

@@ -25,7 +25,7 @@ export default function Cancel() {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <ScrollView contentContainerStyle={{paddingBottom: 1000}}>
+      <ScrollView contentContainerStyle={{paddingBottom: 171}}>
         <Block width={width - 24} marginTop={15} marginHorizontal={12}>
           {cancelOrder?.map(item => (
             <Pressable

@@ -126,4 +126,11 @@ export const URL_API = {
     room: 'chat/room',
     send: 'chat/send',
   },
+  order: {
+    list_status: 'order/list-status',
+  },
+  product: {
+    list_category: 'product/list-category',
+    list: 'product/list',
+  },
 };

@@ -12,10 +12,8 @@ export default function Complete() {
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView contentContainerStyle={{paddingBottom: 1000}}>
         <Block width={width - 24} marginTop={15} marginHorizontal={12}>
-          {/* {Array.from({length: 1}).map((_, index) => ( */}
           <Pressable
             onPress={() => commonRoot.navigate(router.DETAIL_COMPLETE)}
-            //   key={index}
             paddingBottom={13.9}
             backgroundColor={COLORS.white}
             radius={8}
@@ -151,7 +149,6 @@ export default function Complete() {
               </Pressable>
             </Block>
           </Pressable>
-          {/* ))} */}
         </Block>
       </ScrollView>
     </Block>

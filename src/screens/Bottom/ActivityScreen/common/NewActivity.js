@@ -74,6 +74,7 @@ export default function NewActivity() {
                     })
                   }
                   paddingBottom={13.9}
+                  borderWidth={1}
                   backgroundColor={COLORS.white}
                   radius={8}
                   marginBottom={15}>

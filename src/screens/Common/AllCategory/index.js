@@ -3,8 +3,10 @@ import {Block, HeaderTitle, Image, Pressable, Text} from '@components';
 import router from '@router';
 import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
+import {useSelector} from 'react-redux';
 
 export default function AllCategory() {
+  const listCategory = useSelector(state => state.getListCategory?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle
@@ -13,10 +15,10 @@ export default function AllCategory() {
         screenName={router.SHOPPING}
       />
       <Block marginTop={15} marginHorizontal={12} gap={12}>
-        {Array.from({length: 5}).map((_, index) => (
+        {listCategory?.map(item => (
           <Pressable
             onPress={() => commonRoot.navigate(router.PRODUCT_OF_CATEGORY)}
-            key={index}
+            key={item.group_id}
             row
             alignCenter
             paddingVertical={12}
@@ -31,16 +33,15 @@ export default function AllCategory() {
               radius={8}
               overflow={'hidden'}>
               <Image
-                source={image.image_san}
-                width={'100%'}
-                height={'100%'}
+                source={{uri: item?.picture}}
+                width={50}
+                height={50}
                 resizeMode="cover"
-                // radius={8}
               />
             </Block>
             <Block marginLeft={18}>
               <Text fontSize={15} medium color={COLORS.black2}>
-                Phục hồi chức năng
+                {item.title}
               </Text>
               <Text fontSize={14} regular color={COLORS.red4} marginTop={12}>
                 123 sản phẩm

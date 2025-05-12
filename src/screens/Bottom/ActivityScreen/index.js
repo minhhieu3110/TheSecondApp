@@ -1,10 +1,8 @@
 import {Block, Text, Pressable, Image} from '@components';
 import {width} from '@responsive';
 import {COLORS, FONTS} from '@theme';
-import {useEffect, useState} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import router from '@router';
-import {top} from 'screens/Bottom/ActivityScreen/common/top';
 import NewActivity from './common/NewActivity';
 import Reception from './common/Reception';
 import Doing from './common/Doing';
@@ -53,7 +51,6 @@ export default function ActivityScreen({route}) {
           tabBarLabelStyle: {
             fontSize: 15,
             fontFamily: FONTS.regular,
-            includeFontPadding: 0,
             marginTop: -20,
           },
           tabBarItemStyle: {
@@ -77,14 +74,6 @@ export default function ActivityScreen({route}) {
           },
           tabBarScrollEnabled: true,
         }}>
-        {/* {tabs.map(tab => (
-          <Tab.Screen
-            key={tab.name}
-            name={tab.name}
-            component={top[tab.name]}
-            options={{tabBarLabel: tab.lable}}
-          />
-        ))} */}
         <Tab.Screen
           name="NEW_ACTIVITY"
           component={NewActivity}

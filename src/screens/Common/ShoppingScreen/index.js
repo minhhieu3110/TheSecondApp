@@ -9,6 +9,10 @@ import LinearGradient from 'react-native-linear-gradient';
 import {bottomRoot, commonRoot} from 'navigation/navigationRef';
 import router from '@router';
 import RadialGradient from 'react-native-radial-gradient';
+import {useDispatch, useSelector} from 'react-redux';
+import {useCallback, useEffect} from 'react';
+import actions from '@actions';
+import {URL_API} from 'redux/sagas/common';
 export default function ShoppingScreen() {
   const imageTopHome = [
     {
@@ -56,30 +60,59 @@ export default function ShoppingScreen() {
       height: '127',
     },
   ];
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.GET_BANNER,
+      params: {
+        group: 'main-eshop',
+      },
+    });
+    dispatch({
+      type: actions.LIST_STATUS,
+    });
+    dispatch({
+      type: actions.LIST_CATEGORY,
+      params: {is_paginate: 0},
+    });
+    dispatch({
+      type: actions.LIST_PRODUCT,
+      params: {type: 'discount'},
+    });
+  }, [dispatch]);
+  const bannerEShop = useSelector(state => state.getBanner?.data || []);
+  const listStatus = useSelector(state => state.getListStatus?.data || []);
+  const listCategory = useSelector(state => state.getListCategory?.data || []);
+  const listProduct = useSelector(state => state.getListProduct?.data || []);
+  const renderItemBanner = useCallback(({item}) => {
+    return (
+      <Block>
+        <Image
+          radius={10}
+          source={{uri: item.content}}
+          width={width - 68}
+          height={164}
+          resizeMode="cover"
+          marginRight={10}
+        />
+      </Block>
+    );
+  }, []);
+  // console.log('listCategory', listCategory);
+
   return (
     <Block flex backgroundColor={COLORS.gray10} marginBottom>
       <ScrollView contentContainerStyle={{paddingBottom: 135}}>
         <Block height={197}>
           <Carousel
-            data={imageTopHome}
+            data={bannerEShop || []}
             dotInside={true}
             dotStyles={{width: 8, height: 8}}
             dotContainerStyles={{marginTop: -37}}
             duration={2000}
             itemHeight={197}
             itemWidth={width}
-            renderItem={(item, index) => (
-              <Block key={index} width={width} height={197}>
-                <Image
-                  source={{
-                    uri: 'https://static.wikia.nocookie.net/bach-khoa-the-gioi-toan-thu/images/e/e4/Son_goku.png/revision/latest?cb=20211030082932',
-                  }}
-                  resizeMode="cover"
-                  width={'100%'}
-                  height={'100%'}
-                />
-              </Block>
-            )}
+            renderItem={renderItemBanner}
           />
           <Block absolute top={16} right={6} left={12} row>
             <Pressable
@@ -145,146 +178,36 @@ export default function ShoppingScreen() {
               paddingBottom={18.4}
               radius={15}>
               <Block marginHorizontal={12} marginTop={12} row columnGap={10}>
-                <Pressable
-                  onPress={() =>
-                    commonRoot.navigate(router.ORDER_OF_YOU, {name: 'new'})
-                  }
-                  width={(width - 48) / 5 - 8.5}
-                  alignCenter>
-                  <Block
-                    width={62}
-                    height={62}
-                    backgroundColor={COLORS.pinkWhite3}
-                    justifyCenter
-                    alignCenter
-                    radius={12}>
-                    <Image
-                      source={icon.icon_shopping_new}
-                      width={33}
-                      height={33}
-                    />
-                  </Block>
-                  <Text
-                    marginTop={15.6}
-                    fontSize={12}
-                    regular
-                    color={COLORS.black2}
-                    center>
-                    Mới
-                  </Text>
-                </Pressable>
-                <Pressable
-                  onPress={() =>
-                    commonRoot.navigate(router.ORDER_OF_YOU, {name: 'confirm'})
-                  }
-                  width={(width - 48) / 5 - 8.5}
-                  alignCenter>
-                  <Block
-                    width={62}
-                    height={62}
-                    backgroundColor={COLORS.pinkWhite3}
-                    justifyCenter
-                    alignCenter
-                    radius={12}>
-                    <Image
-                      source={icon.icon_shopping_confirm}
-                      width={33}
-                      height={33}
-                    />
-                  </Block>
-                  <Text
-                    marginTop={15.6}
-                    fontSize={12}
-                    regular
-                    color={COLORS.black2}
-                    center>
-                    Xác nhận
-                  </Text>
-                </Pressable>
-                <Pressable
-                  onPress={() =>
-                    commonRoot.navigate(router.ORDER_OF_YOU, {name: 'shipping'})
-                  }
-                  width={(width - 48) / 5 - 8.5}
-                  alignCenter>
-                  <Block
-                    width={62}
-                    height={62}
-                    backgroundColor={COLORS.pinkWhite3}
-                    justifyCenter
-                    alignCenter
-                    radius={12}>
-                    <Image
-                      source={icon.icon_shipping}
-                      width={41.68}
-                      height={33}
-                    />
-                  </Block>
-                  <Text
-                    marginTop={15.6}
-                    fontSize={12}
-                    regular
-                    color={COLORS.black2}
-                    center>
-                    Đang giao
-                  </Text>
-                </Pressable>
-                <Pressable
-                  onPress={() =>
-                    commonRoot.navigate(router.ORDER_OF_YOU, {name: 'complete'})
-                  }
-                  width={(width - 48) / 5 - 8.5}
-                  alignCenter>
-                  <Block
-                    width={62}
-                    height={62}
-                    backgroundColor={COLORS.pinkWhite3}
-                    justifyCenter
-                    alignCenter
-                    radius={12}>
-                    <Image
-                      source={icon.icon_shopping_complete}
-                      width={33}
-                      height={33}
-                    />
-                  </Block>
-                  <Text
-                    marginTop={15.6}
-                    fontSize={12}
-                    regular
-                    color={COLORS.black2}
-                    center>
-                    Đã giao
-                  </Text>
-                </Pressable>
-                <Pressable
-                  onPress={() =>
-                    commonRoot.navigate(router.ORDER_OF_YOU, {name: 'cancel'})
-                  }
-                  width={(width - 48) / 5 - 8.5}
-                  alignCenter>
-                  <Block
-                    width={62}
-                    height={62}
-                    backgroundColor={COLORS.pinkWhite3}
-                    justifyCenter
-                    alignCenter
-                    radius={12}>
-                    <Image
-                      source={icon.icon_shopping_cancel}
-                      width={33}
-                      height={33}
-                    />
-                  </Block>
-                  <Text
-                    marginTop={15.6}
-                    fontSize={12}
-                    regular
-                    color={COLORS.black2}
-                    center>
-                    Đã huỷ
-                  </Text>
-                </Pressable>
+                {listStatus?.map((status, index) => (
+                  <Pressable
+                    key={index}
+                    onPress={() => commonRoot.navigate(router.ORDER_OF_YOU)}
+                    width={(width - 48) / 5 - 8.5}
+                    alignCenter>
+                    <Block
+                      width={62}
+                      height={62}
+                      backgroundColor={COLORS.pinkWhite3}
+                      justifyCenter
+                      alignCenter
+                      radius={12}
+                      overflow={'hidden'}>
+                      <Image
+                        source={{uri: `${URL_API.uploads}/${status?.picture}`}}
+                        width={62}
+                        height={62}
+                      />
+                    </Block>
+                    <Text
+                      marginTop={15.6}
+                      fontSize={12}
+                      regular
+                      color={COLORS.black2}
+                      center>
+                      {status?.title}
+                    </Text>
+                  </Pressable>
+                ))}
               </Block>
             </Block>
           </Block>
@@ -302,43 +225,29 @@ export default function ShoppingScreen() {
             </Pressable>
           </Block>
           <Block
-            marginTop={15}
             marginHorizontal={12}
-            column
-            height={304}
-            wrap
-            gap={10}>
-            {dataCategory.map(item => (
+            marginTop={14}
+            columnGap={6}
+            rowGap={7}
+            row
+            wrap>
+            {listCategory?.map(item => (
               <Pressable
-                onPress={() => commonRoot.navigate(router.PRODUCT_OF_CATEGORY)}
-                key={item.id}
-                width={(width - 24 - 20) / 3}
-                height={item.height}
+                key={item.group_id}
+                width={(width - 36) / 3}
+                height={152}
                 radius={5}
                 overflow={'hidden'}>
-                <Image source={item.image} width={'100%'} height={'100%'} />
-                <LinearGradient
-                  colors={COLORS.gradient6}
-                  width={(width - 24) / 3 - 7.5}
-                  height={item.height}
-                  style={{
-                    position: 'absolute',
-                    opacity: 0.8,
-                    alignItems: 'center',
-                    justifyContent: 'flex-end',
-                  }}>
-                  <Text
-                    fontSize={15}
-                    semiBold
-                    color={COLORS.white}
-                    uppercase
-                    marginLeft={11}
-                    marginBottom={12}
-                    marginRight={13}
-                    numberOfLines={2}>
+                <Image
+                  source={{uri: item.picture}}
+                  width={(width - 36) / 3}
+                  height={152}
+                />
+                <Block absolute bottom={11} left={11} right={11} zIndex={10}>
+                  <Text fontSize={15} semiBold color={COLORS.white}>
                     {item.title}
                   </Text>
-                </LinearGradient>
+                </Block>
               </Pressable>
             ))}
           </Block>
@@ -355,10 +264,10 @@ export default function ShoppingScreen() {
             </Block>
           </Block>
           <Block marginTop={15} row wrap columnGap={10} rowGap={12}>
-            {Array.from({length: 4}).map((_, index) => (
+            {listProduct?.map(item => (
               <Pressable
                 onPress={() => commonRoot.navigate(router.DETAIL_PRODUCT)}
-                key={index}
+                key={item.item_id}
                 width={(width - 34) / 2}
                 paddingBottom={11}
                 radius={8}
@@ -370,9 +279,9 @@ export default function ShoppingScreen() {
                   borderTopRightRadius={5}
                   overflow={'hidden'}>
                   <Image
-                    source={image.image_san}
-                    width={'100%'}
-                    height={'100%'}
+                    source={{uri: item.picture}}
+                    width={(width - 34) / 2}
+                    height={(width - 34) / 2}
                     resizeMode="cover"
                   />
                   <Block

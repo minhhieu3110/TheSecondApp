@@ -77,21 +77,20 @@ export default function ProfileScreen() {
             <Block
               width={width - 334}
               height={88}
-              borderTopRadius={40}
-              borderBottomLeftRadius={40}
               marginTop={20}
-              marginLeft={12}>
+              marginLeft={12}
+              overflow={'hidden'}>
               <Image
                 source={
                   userInfo?.picture === ''
                     ? icon.icon_user_activity
                     : {uri: `${URL_API.uploads}/${userInfo?.picture}`}
                 }
-                width={90}
-                height={90}
-                resizeMode="center"
-                borderTopRadius={40}
-                borderBottomLeftRadius={40}
+                width={width - 334}
+                height={88}
+                resizeMode="cover"
+                borderTopRadius={35}
+                borderBottomLeftRadius={35}
               />
               <Pressable
                 onPress={() => setShow(!show)}
@@ -100,11 +99,11 @@ export default function ProfileScreen() {
                 radius={50}
                 absolute
                 top={57}
-                left={60}>
+                right={3}>
                 <Image source={icon.icon_camera} width={25} height={25} />
               </Pressable>
             </Block>
-            <Block height={82} marginLeft={12} marginTop={26}>
+            <Block height={82} marginLeft={12} marginTop={26} paddingBottom={5}>
               <Text fontSize={17} medium color={COLORS.white} capitalize>
                 {userInfo?.full_name}
               </Text>
@@ -120,7 +119,6 @@ export default function ProfileScreen() {
                 backgroundColor={COLORS.gradient5}
                 row
                 alignCenter
-                marginLeft={8}
                 overflow={'hidden'}>
                 <RadialGradient
                   colors={COLORS.gradient5}

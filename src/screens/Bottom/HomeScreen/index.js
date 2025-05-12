@@ -6,7 +6,7 @@ import {Block, Text, Carousel, Image, ScrollView, Icon} from '@components';
 import Pressable from 'components/base/Pressable';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
-import {useCallback, useEffect, useMemo} from 'react';
+import {use, useCallback, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import {ConvertTimeStamp} from '@utils';
@@ -58,7 +58,7 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           backgroundColor: COLORS.gray10,
-          paddingBottom: 1800,
+          paddingBottom: 171,
         }}>
         <Block width={width} height={337} backgroundColor={COLORS.white}>
           <Block width={width - 24} height={46} row left={12} spaceBetween>
@@ -122,58 +122,47 @@ export default function HomeScreen() {
             </Block>
           </Block>
           <Block
+            marginHorizontal={12}
             width={width - 24}
-            height={69}
-            radius={12}
             backgroundColor={COLORS.pinkWhite2}
-            row
-            left={12}
-            top={14}
-            alignCenter>
+            marginTop={13}
+            radius={12}>
             <Block
-              left={15}
-              row
-              height={38}
-              spaceBetween
-              width={width - 288}
-              alignCenter>
-              <Image source={icon.icon_balance} width={28} height={34.48} />
+              marginHorizontal={15}
+              marginBottom={14}
+              marginTop={11}
+              rowCenter
+              spaceBetween>
               <Pressable
-                onPress={() => commonRoot.navigate(router.BALANCE)}
+                rowCenter
                 spaceBetween
-                width={width - 328}>
-                <Text fontSize={14} regular color={COLORS.black1}>
-                  Số dư khả dụng
-                </Text>
-                <Text fontSize={14} semiBold color={COLORS.red4}>
-                  {formatCurrency(userInfo?.wcoin)}
-                </Text>
+                gap={12}
+                onPress={() => commonRoot.navigate(router.BALANCE)}>
+                <Image source={icon.icon_balance} width={28} height={34.71} />
+                <Block height={44}>
+                  <Text fontSize={15} regular color={COLORS.black1}>
+                    Số dư khả dụng
+                  </Text>
+                  <Text fontSize={14} semiBold color={COLORS.red4}>
+                    {formatCurrency(userInfo?.wcoin)}
+                  </Text>
+                </Block>
               </Pressable>
-            </Block>
-            <Block
-              height={44}
-              borderWidth={1}
-              borderColor={COLORS.red4}
-              marginLeft={47.5}
-              marginRight={15}
-            />
-            <Block
-              left={15}
-              row
-              height={38}
-              spaceBetween
-              width={width - 306.5}
-              alignCenter>
-              <Image source={icon.icon_point} width={28} height={34.71} />
+              <Block height={44} borderWidth={1} borderColor={COLORS.red4} />
               <Pressable
-                onPress={() => commonRoot.navigate(router.ACCUMULATED_POINT)}
-                spaceBetween>
-                <Text fontSize={14} regular color={COLORS.black1}>
-                  Điểm tích luỹ
-                </Text>
-                <Text fontSize={14} semiBold color={COLORS.red4}>
-                  {userInfo?.point} điểm
-                </Text>
+                rowCenter
+                spaceBetween
+                gap={12}
+                onPress={() => commonRoot.navigate(router.ACCUMULATED_POINT)}>
+                <Image source={icon.icon_point} width={28} height={34.71} />
+                <Block height={44}>
+                  <Text fontSize={15} regular color={COLORS.black1}>
+                    Điểm tích lũy
+                  </Text>
+                  <Text fontSize={14} semiBold color={COLORS.red4}>
+                    {userInfo?.point} điểm
+                  </Text>
+                </Block>
               </Pressable>
             </Block>
           </Block>
