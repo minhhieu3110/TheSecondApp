@@ -343,11 +343,39 @@ function* recharge(action) {
   }
 }
 function* getListBank(action) {
+  const params = yield action.params;
   try {
-    const res = yield api.get(URL_API.user.list_bank);
+    const res = yield api.get(URL_API.user.list_bank, params);
     yield put({
       type: _onSuccess(action.type),
       data: res.data.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
+function* getBankCard(action) {
+  try {
+    const res = yield api.get(URL_API.user.get_bankcard);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
+function* addBank(action) {
+  const body = yield action.body;
+  try {
+    const res = yield api.post(URL_API.user.add_bankcard, body);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
     });
     action.onSuccess?.(res);
   } catch (error) {
@@ -368,6 +396,8 @@ export default function* watchUserSagas() {
   yield takeLatest(actions.GET_FEEDBACK, getFeedback);
   yield takeLatest(actions.INFO_RANK, getInfoRank);
   yield takeLatest(actions.LIST_RANK, getListRank);
+  yield takeLatest(actions.GET_BANK_CARD, getBankCard);
+  yield takeLatest(actions.ADD_BANK, addBank);
   yield takeLatest(actions.GET_NOTIFICATION, getNotification);
   yield takeLatest(actions.GET_DETAIL_NOTIFICATION, getDetailNotification);
   yield takeLatest(actions.GET_LIST_EMPLOYEE, getListEmployee);

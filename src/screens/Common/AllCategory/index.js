@@ -17,7 +17,12 @@ export default function AllCategory() {
       <Block marginTop={15} marginHorizontal={12} gap={12}>
         {listCategory?.map(item => (
           <Pressable
-            onPress={() => commonRoot.navigate(router.PRODUCT_OF_CATEGORY)}
+            onPress={() =>
+              commonRoot.navigate(router.PRODUCT_OF_CATEGORY, {
+                group_id: item.group_id,
+                title: item.title,
+              })
+            }
             key={item.group_id}
             row
             alignCenter
@@ -44,7 +49,7 @@ export default function AllCategory() {
                 {item.title}
               </Text>
               <Text fontSize={14} regular color={COLORS.red4} marginTop={12}>
-                123 sản phẩm
+                {item?.products_count} sản phẩm
               </Text>
             </Block>
           </Pressable>

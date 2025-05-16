@@ -1,6 +1,13 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Image, Pressable, Text, TextInput} from '@components';
+import {
+  Block,
+  DateOfBirthPicker,
+  Image,
+  Pressable,
+  Text,
+  TextInput,
+} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
@@ -12,6 +19,7 @@ import Toast from 'react-native-toast-message';
 import {useDispatch} from 'react-redux';
 
 export default function InputInformation({route}) {
+  const [visible, setVisible] = useState(false);
   const [fullname, setFullName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -20,7 +28,6 @@ export default function InputInformation({route}) {
   const data = route?.params.data;
 
   const dispatch = useDispatch();
-  // const [date, setDate] =
   const signUp = () => {
     dispatch({
       type: actions.SIGN_UP,
@@ -147,6 +154,7 @@ export default function InputInformation({route}) {
                     placeholder={'Nhập ngày sinh'}
                   />
                   <Pressable
+                    onPress={() => setVisible(true)}
                     width={18.3}
                     height={17.13}
                     absolute
@@ -195,6 +203,13 @@ export default function InputInformation({route}) {
           </Block>
         </Block>
       </ScrollView>
+      <DateOfBirthPicker
+        visible={visible}
+        close={() => setVisible(false)}
+        onChange={day => {
+          setDateOfBirth(day);
+        }}
+      />
     </Block>
   );
 }

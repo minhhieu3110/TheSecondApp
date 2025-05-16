@@ -185,7 +185,21 @@ function* redeemVoucher(action) {
     action.onFail?.('Số điểm của bạn không đủ');
   }
 }
+function* getBannerSuggest(action) {
+  const params = yield action.params;
+  try {
+    const res = yield api.get(URL_API.banner, params);
 
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 export default function* watchOtherSagas() {
   yield takeLatest(actions.GET_BANNER, getBanner);
   yield takeLatest(actions.GET_VOUCHER, getVoucher);
@@ -200,4 +214,5 @@ export default function* watchOtherSagas() {
   yield takeLatest(actions.EXCHANGE_POINT, getListExchange);
   yield takeLatest(actions.DETAIL_EXCHANGE_POINT, getDetailExchange);
   yield takeLatest(actions.REDEEM_VOUCHER, redeemVoucher);
+  yield takeLatest(actions.BANNER_SUGGESTION, getBannerSuggest);
 }

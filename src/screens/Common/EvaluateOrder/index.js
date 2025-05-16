@@ -1,3 +1,4 @@
+import actions from '@actions';
 import {icon, image} from '@assets';
 import {
   Block,
@@ -9,45 +10,62 @@ import {
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {formatCurrency} from '@utils';
-
-export default function EvaluateOrder() {
+import {formatCurrency} from '@utils/helper';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {AirbnbRating} from 'react-native-ratings';
+export default function EvaluateOrder({route}) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.DETAIL_ORDER,
+      params: {id: route?.params?.id},
+    });
+  }, [dispatch, route?.params?.id]);
+  const detailOrder = useSelector(state => state.detailOrder?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle canGoBack title={'Đánh giá'} />
       <Block marginTop={15} marginHorizontal={12}>
         <Block paddingBottom={14} radius={8} backgroundColor={COLORS.white}>
-          <Block row marginTop={12} marginLeft={12} marginRight={17}>
-            <Block width={73} height={73} radius={5} overflow={'hidden'}>
-              <Image
-                source={image.image_san}
-                width={'100%'}
-                height={'100%'}
-                resizeMode="cover"
-              />
-            </Block>
-            <Block marginLeft={12}>
-              <Text
-                fontSize={15}
-                medium
-                color={COLORS.black2}
-                numberOfLines={1}>
-                Xe đạp tập thể dục OKACHI JP-599A
-              </Text>
-              <Block rowCenter gap={20} marginTop={21}>
-                <Text fontSize={14} semiBold color={COLORS.red4}>
-                  {formatCurrency(40290000)}
-                </Text>
+          {detailOrder?.details?.map(item => (
+            <Block
+              key={item.product_item_id}
+              row
+              marginTop={12}
+              marginLeft={12}
+              marginRight={17}>
+              <Block width={73} height={73} radius={5} overflow={'hidden'}>
+                <Image
+                  source={{uri: item?.product?.picture}}
+                  width={'100%'}
+                  height={'100%'}
+                  resizeMode="cover"
+                />
+              </Block>
+              <Block marginLeft={12}>
                 <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.placeholder}
-                  lineThrough>
-                  {formatCurrency(40990000)}
+                  fontSize={15}
+                  medium
+                  color={COLORS.black2}
+                  numberOfLines={1}>
+                  {item?.product?.title}
                 </Text>
+                <Block rowCenter gap={20} marginTop={21}>
+                  <Text fontSize={14} semiBold color={COLORS.red4}>
+                    {formatCurrency(item?.price_sale)}
+                  </Text>
+                  <Text
+                    fontSize={14}
+                    regular
+                    color={COLORS.placeholder}
+                    lineThrough>
+                    {formatCurrency(item?.price)}
+                  </Text>
+                </Block>
               </Block>
             </Block>
-          </Block>
+          ))}
         </Block>
         <Block
           radius={8}
@@ -58,7 +76,20 @@ export default function EvaluateOrder() {
           <Text fontSize={16} semiBold color={COLORS.black2} marginTop={21}>
             Đánh giá
           </Text>
-          <RankStar top={15} width={width - 201.51} size={36.5} />
+          {/* <RankStar top={15} width={width - 201.51} size={36.5} /> */}
+
+          <AirbnbRating
+            count={5}
+            defaultRating={0}
+            size={36.5}
+            // selectedColor={COLORS.yellow}
+            // showRating
+            starContainerStyle={{
+              marginTop: 10,
+              justifyContent: 'space-between',
+              width: 220,
+            }}
+          />
           <Block
             width={width - 48}
             marginTop={15.5}

@@ -11,7 +11,7 @@ import {COLORS} from '@theme';
 import {width} from '@responsive';
 import {useState} from 'react';
 
-export default function MethodPay({top}) {
+export default function MethodPay({top, payData = [], voucherData = []}) {
   const [methodPay, setMethodPay] = useState(0);
   const [voucher, setVoucher] = useState(0);
   return (
@@ -71,8 +71,16 @@ export default function MethodPay({top}) {
           </Block>
         </Pressable>
       </Block>
-      <ModalMethodPay visible={methodPay} close={() => setMethodPay(false)} />
-      <ModalVoucher visible={voucher} close={() => setVoucher(false)} />
+      <ModalMethodPay
+        visible={methodPay}
+        close={() => setMethodPay(false)}
+        data={payData}
+      />
+      <ModalVoucher
+        visible={voucher}
+        close={() => setVoucher(false)}
+        data={voucherData}
+      />
     </Block>
   );
 }

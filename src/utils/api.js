@@ -156,11 +156,12 @@ export default class HttpService {
   }
 
   //TODO: PUT
-  static async put(url, body) {
+  static async put(url, body, params = {}) {
     try {
       return await axios
         .put(url, body, {
           headers: HttpService.generateHeader(),
+          params: {...params},
         })
         .then(response => response.body);
     } catch (error) {

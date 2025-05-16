@@ -73,6 +73,8 @@ export const URL_API = {
     ref: 'user/link-ref',
     recharge: 'user/recharge',
     list_bank: 'user/list-bank',
+    get_bankcard: 'user/get-bankcard',
+    add_bankcard: 'user/add-bankcard',
     update_avatar: 'user/update-avatar',
     delete: 'user/delete',
     delete_address: 'user/delete-addressbook',
@@ -128,9 +130,16 @@ export const URL_API = {
   },
   order: {
     list_status: 'order/list-status',
+    cart: 'order/cart',
+    checkout: 'order/checkout',
+    list: 'order/list',
+    cancel_order: 'order/cancel-order',
   },
   product: {
     list_category: 'product/list-category',
     list: 'product/list',
+    detail: 'product/detail',
+    list_rating: 'product/list-rating',
+    report: 'product/report',
   },
 };

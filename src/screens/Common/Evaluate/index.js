@@ -1,3 +1,4 @@
+import actions from '@actions';
 import {image} from '@assets';
 import {
   Block,
@@ -9,9 +10,13 @@ import {
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {formatCurrency} from '@utils';
+import {ConvertDateTimeStamp} from '@utils';
+import {formatCurrency} from '@utils/helper';
+import {useEffect} from 'react';
 import {ScrollView} from 'react-native';
-export default function Evaluate() {
+import {useDispatch, useSelector} from 'react-redux';
+import {URL_API} from 'redux/sagas/common';
+export default function Evaluate({route}) {
   const evaluate = [
     {id: 1, star: 5, total: 148, used: 50},
     {id: 2, star: 4, total: 148, used: 75},
@@ -19,6 +24,22 @@ export default function Evaluate() {
     {id: 4, star: 2, total: 148, used: 9},
     {id: 5, star: 1, total: 148, used: 0},
   ];
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.DETAIL_PRODUCT,
+      params: {item_id: route?.params?.item_id},
+    });
+    dispatch({
+      type: actions.RATING,
+      params: {item_id: route?.params?.item_id},
+    });
+  }, [route?.params?.item_id, dispatch]);
+  const detailProduct = useSelector(state => state.detailProduct?.data || []);
+  const listRating = useSelector(state => state.listRating?.data || []);
+  const starStats = useSelector(state => state.listRating?.star_stats || []);
+  const average = useSelector(state => state?.listRating?.average || 0);
+  const total = useSelector(state => state?.listRating?.total || 0);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle canGoBack title={'Đánh giá sản phẩm'} />
@@ -28,7 +49,7 @@ export default function Evaluate() {
             <Block row marginTop={12} marginLeft={12} marginRight={17}>
               <Block width={73} height={73} radius={5} overflow={'hidden'}>
                 <Image
-                  source={image.image_san}
+                  source={{uri: detailProduct?.picture}}
                   width={'100%'}
                   height={'100%'}
                   resizeMode="cover"
@@ -40,18 +61,18 @@ export default function Evaluate() {
                   medium
                   color={COLORS.black2}
                   numberOfLines={1}>
-                  Xe đạp tập thể dục OKACHI JP-599A
+                  {detailProduct?.title}
                 </Text>
                 <Block rowCenter gap={20} marginTop={21}>
                   <Text fontSize={14} semiBold color={COLORS.red4}>
-                    {formatCurrency(40290000)}
+                    {formatCurrency(detailProduct?.price_sale)}
                   </Text>
                   <Text
                     fontSize={14}
                     regular
                     color={COLORS.placeholder}
                     lineThrough>
-                    {formatCurrency(40990000)}
+                    {formatCurrency(detailProduct?.price)}
                   </Text>
                 </Block>
               </Block>
@@ -64,24 +85,24 @@ export default function Evaluate() {
             backgroundColor={COLORS.white}>
             <Block marginTop={14} marginHorizontal={12} row>
               <Block>
-                <Text fontSize={52} regular color={COLORS.black2}>
-                  4.2
+                <Text fontSize={52} regular color={COLORS.black2} center>
+                  {average}
                 </Text>
                 <Block width={71.36} marginTop={8.2}>
-                  <RankStar value={4} size={12} />
+                  <RankStar value={average} size={12} />
                 </Block>
               </Block>
               <Block marginLeft={25.2} gap={10.9}>
-                {evaluate.map(item => (
-                  <Block key={item.id} rowCenter>
+                {starStats?.map(item => (
+                  <Block key={item.star} rowCenter>
                     <RankStar width={55.64} size={9.55} value={item.star} />
                     <ProgressBar
                       marginLeft={8.4}
                       radius={0}
                       width={width - 228.89}
                       height={8.06}
-                      used={item.used}
-                      total={item.total}
+                      used={item.total}
+                      total={total}
                     />
                     <Text
                       marginLeft={7.7}
@@ -89,7 +110,7 @@ export default function Evaluate() {
                       fontSize={10}
                       medium
                       color={COLORS.black2}>
-                      {item.used}
+                      {item.total}
                     </Text>
                   </Block>
                 ))}
@@ -100,8 +121,8 @@ export default function Evaluate() {
               borderTopWidth={1}
               borderColor={COLORS.gray15}
               paddingBottom={24}>
-              {Array.from({length: 7}).map((_, index) => (
-                <Block key={index} marginTop={12} marginHorizontal={12}>
+              {listRating?.map(item => (
+                <Block key={item.user_id} marginTop={12} marginHorizontal={12}>
                   <Block row paddingBottom={5}>
                     <Block
                       width={25}
@@ -109,7 +130,9 @@ export default function Evaluate() {
                       radius={50}
                       overflow={'hidden'}>
                       <Image
-                        source={image.image_staff}
+                        source={{
+                          uri: `${URL_API.uploads}/${item?.user?.picture}`,
+                        }}
                         width={25}
                         height={25}
                         resizeMode="cover"
@@ -117,10 +140,10 @@ export default function Evaluate() {
                     </Block>
                     <Block marginLeft={8} marginTop={5}>
                       <Text fontSize={14} medium color={COLORS.black2}>
-                        Lê Thu Huyền
+                        {item?.user?.full_name}
                       </Text>
                       <Block width={width - 343} marginTop={11}>
-                        <RankStar size={12} value={4} />
+                        <RankStar size={12} value={item?.star} />
                       </Block>
                       <Text
                         fontSize={14}
@@ -128,15 +151,14 @@ export default function Evaluate() {
                         color={COLORS.black2}
                         marginTop={8}
                         numberOfLines={2}>
-                        Hàng nhận đẹp đúng như mô tả, shop tư vấn nhiệt tình.
-                        Chính hãng 100%, nguyên seal, giao nhanh
+                        {item?.content}
                       </Text>
                       <Text
                         fontSize={14}
                         regular
                         color={COLORS.lightGray1}
                         marginTop={37}>
-                        15:15 11/11/2023
+                        {ConvertDateTimeStamp(item?.created_at)}
                       </Text>
                     </Block>
                   </Block>

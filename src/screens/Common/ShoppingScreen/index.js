@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useCallback, useEffect} from 'react';
 import actions from '@actions';
 import {URL_API} from 'redux/sagas/common';
+import {formatCurrency} from 'utils/helper';
 export default function ShoppingScreen() {
   const imageTopHome = [
     {
@@ -20,45 +21,6 @@ export default function ShoppingScreen() {
       image: `${image.image_top_home_1}`,
     },
     {id: 2, image: `${image.image_top_home_2}`},
-  ];
-  const dataCategory = [
-    {
-      id: 1,
-      title: 'Phục hồi chức năng',
-      image: `${image.image_cate_1}`,
-      height: '164',
-    },
-    {
-      id: 4,
-      title: 'Thiết bị vật lý trị liệu',
-      image: `${image.image_cate_4}`,
-      height: '127',
-    },
-    {
-      id: 2,
-      title: 'Dụng cụ y tế',
-      image: `${image.image_cate_2}`,
-      height: '127',
-    },
-    {
-      id: 5,
-      title: 'Máy đo thính lực',
-      image: `${image.image_cate_5}`,
-      height: '165',
-    },
-    {
-      id: 3,
-      title: 'Giường Massage',
-      image: `${image.image_cate_3}`,
-      height: '164',
-    },
-
-    {
-      id: 6,
-      title: 'Thực phẩm chức năng',
-      image: `${image.image_cate_6}`,
-      height: '127',
-    },
   ];
   const dispatch = useDispatch();
   useEffect(() => {
@@ -76,14 +38,34 @@ export default function ShoppingScreen() {
       params: {is_paginate: 0},
     });
     dispatch({
-      type: actions.LIST_PRODUCT,
+      type: actions.LIST_PRODUCT_DISCOUNT,
       params: {type: 'discount'},
+    });
+    dispatch({
+      type: actions.BANNER_SUGGESTION,
+      params: {group: 'suggestions-for-you'},
+    });
+    dispatch({
+      type: actions.LIST_PRODUCT_SUGGESTION,
+      params: {type: 'suggestions-for-you'},
+    });
+    dispatch({
+      type: actions.GET_CART,
     });
   }, [dispatch]);
   const bannerEShop = useSelector(state => state.getBanner?.data || []);
   const listStatus = useSelector(state => state.getListStatus?.data || []);
   const listCategory = useSelector(state => state.getListCategory?.data || []);
-  const listProduct = useSelector(state => state.getListProduct?.data || []);
+  const listProductDiscount = useSelector(
+    state => state.getListProductDiscount?.data || [],
+  );
+  const bannerSuggestions = useSelector(
+    state => state.getBannerSuggest?.data || [],
+  );
+  const listProductSuggestion = useSelector(
+    state => state.getListProductSuggestion?.data || [],
+  );
+  const carts = useSelector(state => state.getCart?.data || []);
   const renderItemBanner = useCallback(({item}) => {
     return (
       <Block>
@@ -98,7 +80,6 @@ export default function ShoppingScreen() {
       </Block>
     );
   }, []);
-  // console.log('listCategory', listCategory);
 
   return (
     <Block flex backgroundColor={COLORS.gray10} marginBottom>
@@ -151,21 +132,27 @@ export default function ShoppingScreen() {
                 marginLeft={10}
                 row>
                 <Image source={icon.icon_cart} width={35} height={35} />
-                <Block
-                  absolute
-                  top={3}
-                  right={0}
-                  backgroundColor={COLORS.red4}
-                  radius={8}
-                  paddingBottom={2}
-                  width={26}
-                  height={15}
-                  justifyCenter
-                  alignCenter>
-                  <Text fontSize={10} regular color={COLORS.white}>
-                    99+
-                  </Text>
-                </Block>
+                {carts?.total_quantity === 0 ? (
+                  ''
+                ) : (
+                  <Block
+                    absolute
+                    top={-6}
+                    right={0}
+                    backgroundColor={COLORS.red4}
+                    radius={20}
+                    paddingBottom={2}
+                    width={20}
+                    height={20}
+                    justifyCenter
+                    alignCenter>
+                    <Text fontSize={10} regular color={COLORS.white}>
+                      {carts?.total_quantity > 99
+                        ? '99+'
+                        : carts?.total_quantity}
+                    </Text>
+                  </Block>
+                )}
               </Pressable>
             </Block>
           </Block>
@@ -184,20 +171,11 @@ export default function ShoppingScreen() {
                     onPress={() => commonRoot.navigate(router.ORDER_OF_YOU)}
                     width={(width - 48) / 5 - 8.5}
                     alignCenter>
-                    <Block
+                    <Image
+                      source={{uri: `${URL_API.uploads}/${status?.picture}`}}
                       width={62}
                       height={62}
-                      backgroundColor={COLORS.pinkWhite3}
-                      justifyCenter
-                      alignCenter
-                      radius={12}
-                      overflow={'hidden'}>
-                      <Image
-                        source={{uri: `${URL_API.uploads}/${status?.picture}`}}
-                        width={62}
-                        height={62}
-                      />
-                    </Block>
+                    />
                     <Text
                       marginTop={15.6}
                       fontSize={12}
@@ -233,6 +211,12 @@ export default function ShoppingScreen() {
             wrap>
             {listCategory?.map(item => (
               <Pressable
+                onPress={() =>
+                  commonRoot.navigate(router.PRODUCT_OF_CATEGORY, {
+                    group_id: item.group_id,
+                    title: item.title,
+                  })
+                }
                 key={item.group_id}
                 width={(width - 36) / 3}
                 height={152}
@@ -264,9 +248,13 @@ export default function ShoppingScreen() {
             </Block>
           </Block>
           <Block marginTop={15} row wrap columnGap={10} rowGap={12}>
-            {listProduct?.map(item => (
+            {listProductDiscount?.slice(0, 6)?.map(item => (
               <Pressable
-                onPress={() => commonRoot.navigate(router.DETAIL_PRODUCT)}
+                onPress={() =>
+                  commonRoot.navigate(router.DETAIL_PRODUCT, {
+                    item_id: item.item_id,
+                  })
+                }
                 key={item.item_id}
                 width={(width - 34) / 2}
                 paddingBottom={11}
@@ -279,33 +267,36 @@ export default function ShoppingScreen() {
                   borderTopRightRadius={5}
                   overflow={'hidden'}>
                   <Image
-                    source={{uri: item.picture}}
+                    source={{uri: item?.picture}}
                     width={(width - 34) / 2}
                     height={(width - 34) / 2}
-                    resizeMode="cover"
                   />
-                  <Block
-                    width={39}
-                    height={28}
-                    absolute
-                    top={4}
-                    left={5}
-                    overflow={'hidden'}
-                    borderTopLeftRadius={5}
-                    borderBottomRightRadius={5}>
-                    <RadialGradient
-                      colors={COLORS.gradient5}
-                      style={{
-                        width: 39,
-                        height: 28,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <Text fontSize={12} regular color={COLORS.white}>
-                        -10%
-                      </Text>
-                    </RadialGradient>
-                  </Block>
+                  {item?.percent_discount === 0 ? (
+                    ''
+                  ) : (
+                    <Block
+                      width={39}
+                      height={28}
+                      absolute
+                      top={4}
+                      left={5}
+                      overflow={'hidden'}
+                      borderTopLeftRadius={5}
+                      borderBottomRightRadius={5}>
+                      <RadialGradient
+                        colors={COLORS.gradient5}
+                        style={{
+                          width: 39,
+                          height: 28,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text fontSize={12} regular color={COLORS.white}>
+                          {item?.percent_discount} %
+                        </Text>
+                      </RadialGradient>
+                    </Block>
+                  )}
                 </Block>
                 <Block marginTop={10} marginHorizontal={10}>
                   <Text
@@ -314,7 +305,7 @@ export default function ShoppingScreen() {
                     color={COLORS.black2}
                     lineHeight={22}
                     numberOfLines={2}>
-                    Máy chiếu sóng Terahertz trị liệu
+                    {item?.title}
                   </Text>
                   <Text
                     fontSize={15}
@@ -322,7 +313,7 @@ export default function ShoppingScreen() {
                     color={COLORS.red4}
                     lineHeight={17}
                     marginTop={18}>
-                    14.000.000đ
+                    {formatCurrency(item?.price_sale)}
                   </Text>
                   <Text
                     fontSize={11}
@@ -330,7 +321,7 @@ export default function ShoppingScreen() {
                     color={COLORS.placeholder}
                     lineThrough
                     marginTop={12}>
-                    16.000.000đ
+                    {formatCurrency(item?.price)}
                   </Text>
                 </Block>
               </Pressable>
@@ -338,36 +329,26 @@ export default function ShoppingScreen() {
           </Block>
           <Block marginTop={10} height={164}>
             <Carousel
-              data={imageTopHome}
+              data={bannerSuggestions || []}
               duration={2000}
               isDots={false}
               itemHeight={164}
               itemWidth={width - 68}
-              renderItem={(item, index) => (
-                <Block
-                  key={index}
-                  width={width - 68}
-                  height={164}
-                  marginRight={10}>
-                  <Image
-                    source={{
-                      uri: 'https://static.wikia.nocookie.net/bach-khoa-the-gioi-toan-thu/images/e/e4/Son_goku.png/revision/latest?cb=20211030082932',
-                    }}
-                    resizeMode="cover"
-                    width={'100%'}
-                    height={'100%'}
-                  />
-                </Block>
-              )}
+              renderItem={renderItemBanner}
             />
           </Block>
           <Text fontSize={15} semiBold color={COLORS.black2} marginTop={20}>
             Gợi ý cho bạn
           </Text>
           <Block marginTop={15} row wrap columnGap={10} rowGap={12}>
-            {Array.from({length: 10}).map((_, index) => (
-              <Block
-                key={index}
+            {listProductSuggestion?.map(item => (
+              <Pressable
+                onPress={() =>
+                  commonRoot.navigate(router.DETAIL_PRODUCT, {
+                    item_id: item.item_id,
+                  })
+                }
+                key={item.item_id}
                 width={(width - 34) / 2}
                 paddingBottom={11}
                 radius={8}
@@ -379,11 +360,36 @@ export default function ShoppingScreen() {
                   borderTopRightRadius={5}
                   overflow={'hidden'}>
                   <Image
-                    source={image.image_san}
-                    width={'100%'}
-                    height={'100%'}
-                    resizeMode="cover"
+                    source={{uri: item?.picture}}
+                    width={(width - 34) / 2}
+                    height={(width - 34) / 2}
                   />
+                  {item?.percent_discount === 0 ? (
+                    ''
+                  ) : (
+                    <Block
+                      width={39}
+                      height={28}
+                      absolute
+                      top={4}
+                      left={5}
+                      overflow={'hidden'}
+                      borderTopLeftRadius={5}
+                      borderBottomRightRadius={5}>
+                      <RadialGradient
+                        colors={COLORS.gradient5}
+                        style={{
+                          width: 39,
+                          height: 28,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text fontSize={12} regular color={COLORS.white}>
+                          {item?.percent_discount} %
+                        </Text>
+                      </RadialGradient>
+                    </Block>
+                  )}
                 </Block>
                 <Block marginTop={10} marginHorizontal={10}>
                   <Text
@@ -392,18 +398,33 @@ export default function ShoppingScreen() {
                     color={COLORS.black2}
                     lineHeight={22}
                     numberOfLines={2}>
-                    Máy chiếu sóng Terahertz trị liệu
+                    {item?.title}
                   </Text>
-                  <Text
-                    fontSize={15}
-                    semiBold
-                    color={COLORS.red4}
-                    lineHeight={17}
-                    marginTop={18}>
-                    14.000.000đ
-                  </Text>
+                  <Block marginTop={18} height={40} justifyCenter>
+                    <Text
+                      fontSize={15}
+                      semiBold
+                      color={COLORS.red4}
+                      lineHeight={17}>
+                      {item?.price === item?.price_sale ||
+                      item?.price_sale === 0
+                        ? formatCurrency(item?.price)
+                        : formatCurrency(item?.price_sale)}
+                    </Text>
+                    {item?.percent_discount === 0 ? (
+                      ''
+                    ) : (
+                      <Text
+                        fontSize={11}
+                        regular
+                        color={COLORS.placeholder}
+                        lineThrough>
+                        {formatCurrency(item?.price)}
+                      </Text>
+                    )}
+                  </Block>
                 </Block>
-              </Block>
+              </Pressable>
             ))}
           </Block>
           <Text

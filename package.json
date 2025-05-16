@@ -51,6 +51,7 @@
     "react-native-pager-view": "^6.7.0",
     "react-native-permissions": "^5.3.0",
     "react-native-radial-gradient": "^1.2.1",
+    "react-native-ratings": "^8.1.0",
     "react-native-reanimated": "^3.17.1",
     "react-native-reanimated-carousel": "^4.0.2",
     "react-native-render-html": "^6.3.4",

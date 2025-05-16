@@ -101,6 +101,9 @@ const Pressable = ({
 
   labelProps,
   onPress,
+  onLongPress,
+  onPressOut,
+  onHoverOut,
   onLayout,
   style,
   disabled,
@@ -224,7 +227,10 @@ const Pressable = ({
       style={customStyles}
       disabled={disabled}
       onPress={onPress}
-      onLayout={onLayout}>
+      onLayout={onLayout}
+      onLongPress={onLongPress}
+      onHoverOut={onHoverOut}
+      onPressOut={onPressOut}>
       {typeof children === 'string' ? (
         <Text {...labelProps}>{children}</Text>
       ) : (

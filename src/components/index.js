@@ -39,6 +39,7 @@ import ModalConfirmExchange from './base/ModalConfirmExchange';
 import ModalTurnOffRepeat from './base/ModalTurnOffRepeat';
 import ImagePicker from './base/ImagePicker';
 import SelectInput from './form/SelectInput';
+import DateMultiPicker from './form/DateMultiPicker';
 export {
   Carousel,
   Block,
@@ -81,4 +82,5 @@ export {
   ModalTurnOffRepeat,
   ImagePicker,
   SelectInput,
+  DateMultiPicker,
 };

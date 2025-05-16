@@ -9,6 +9,7 @@ import {
   SANStaffDuties,
   ChooseStartTime,
   ModalCalendar,
+  DateMultiPicker,
 } from '@components';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
@@ -276,6 +277,7 @@ export default function Elederly_Servicedurationmonth({route}) {
       />
       {/* <ModalCalendar visible={calendar} close={() => setCalendar(!calendar)} /> */}
       {/* {calendar && <DatePicker value={listDay} onChange={setListDay} />} */}
+      {calendar && <DateMultiPicker />}
     </Block>
   );
 }

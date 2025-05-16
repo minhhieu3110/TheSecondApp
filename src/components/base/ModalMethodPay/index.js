@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
 import actions from '@actions';
 import {URL_API} from 'redux/sagas/common';
-const ModalMethodPay = ({visible, close}) => {
+const ModalMethodPay = ({visible, close, data = []}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({

@@ -86,6 +86,12 @@ export const recharge = (...props) => {
 export const getListBank = (...props) => {
   return reducerDefault(...props, actions.GET_LIST_BANK);
 };
+export const getBankCard = (...props) => {
+  return reducerDefault(...props, actions.GET_BANK_CARD);
+};
+export const addBank = (...props) => {
+  return reducerDefault(...props, actions.ADD_BANK);
+};
 export const updateAvatar = (...props) => {
   return reducerDefault(...props, actions.UPDATE_AVATAR);
 };

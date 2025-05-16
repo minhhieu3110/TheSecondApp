@@ -8,6 +8,9 @@ const initialState = {
 export const getBanner = (...props) => {
   return reducerDefault(...props, actions.GET_BANNER);
 };
+export const getBannerSuggest = (...props) => {
+  return reducerDefault(...props, actions.BANNER_SUGGESTION);
+};
 export const getVoucher = (...props) => {
   return reducerDefault(...props, actions.GET_VOUCHER);
 };

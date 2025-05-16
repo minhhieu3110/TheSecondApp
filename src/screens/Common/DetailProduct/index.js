@@ -1,29 +1,136 @@
 import {icon, image} from '@assets';
-import {Block, Image, Pressable, Icon, Text, RankStar} from '@components';
+import {
+  Block,
+  Image,
+  Pressable,
+  Icon,
+  Text,
+  RankStar,
+  ScrollView,
+  Carousel,
+  TextInput,
+} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {commonRoot} from 'navigation/navigationRef';
+import {bottomRoot, commonRoot} from 'navigation/navigationRef';
 import router from '@router';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {useState} from 'react';
-import {formatCurrency} from '@utils';
-import {ScrollView} from 'react-native';
-export default function DetailProduct() {
+import {useCallback, useEffect, useState} from 'react';
+import {formatCurrency} from '@utils/helper';
+import {useDispatch, useSelector} from 'react-redux';
+import actions from '@actions';
+import RenderHTML from 'react-native-render-html';
+import RadialGradient from 'react-native-radial-gradient';
+import Toast from 'react-native-toast-message';
+import {URL_API} from 'redux/sagas/common';
+import {ConvertDateTimeStamp} from '@utils';
+import {Modal, SafeAreaView, TouchableOpacity} from 'react-native';
+
+export default function DetailProduct({route}) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.DETAIL_PRODUCT,
+      params: {item_id: route?.params?.item_id},
+    });
+    dispatch({
+      type: actions.RATING,
+      params: {item_id: route?.params?.item_id},
+    });
+  }, [route?.params?.item_id, dispatch]);
+  const detailProduct = useSelector(state => state.detailProduct?.data || []);
   const [menuVertical, setMenuVertical] = useState(false);
+  const carts = useSelector(state => state.getCart?.data || []);
+  const listRating = useSelector(state => state.listRating?.data || []);
+  const average = useSelector(state => state?.listRating?.average || 0);
+  const total = useSelector(state => state?.listRating?.total || 0);
+
+  const renderPicture = useCallback(({item}) => {
+    return (
+      <Block>
+        <Image
+          source={{uri: item}}
+          width={width}
+          height={width}
+          resizeMode="cover"
+        />
+      </Block>
+    );
+  }, []);
+  const [numberImg, setNumberImg] = useState(1);
+  const addToCart = item_id => {
+    dispatch({
+      type: actions.ADD_CART,
+      body: {
+        product_id: item_id,
+        quantity: 1,
+      },
+      onSuccess: res => {
+        Toast.show({
+          type: 'success',
+          text1: res?.message,
+        });
+        dispatch({
+          type: actions.GET_CART,
+        });
+      },
+    });
+  };
+  const buyNow = item_id => {
+    dispatch({
+      type: actions.ADD_CART,
+      body: {
+        product_id: item_id,
+        quantity: 1,
+      },
+      onSuccess: res => {
+        Toast.show({
+          type: 'success',
+          text1: res?.message,
+        });
+        commonRoot.navigate(router.PAY_SHOPPING);
+      },
+    });
+  };
+  const [showReport, setShowReport] = useState(0);
+  const [content, setContent] = useState('');
+  const handleReport = () => {
+    dispatch({
+      type: actions.REPORT_PRODUCT,
+      body: {product_id: route?.params?.item_id, content: content},
+      onSuccess: res => {
+        Toast.show({
+          type: 'success',
+          text1: res?.message,
+        });
+        setShowReport(!showReport);
+        setMenuVertical(!menuVertical);
+      },
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView contentContainerStyle={{paddingBottom: 203}}>
         <Block backgroundColor={COLORS.white} paddingBottom={22}>
           <Block width={width} height={width}>
-            <Image
-              source={image.image_san}
-              width={'100%'}
-              height={'100%'}
-              resizeMode="cover"
-            />
+            {detailProduct?.arr_picture === '' ? (
+              <Image
+                source={{uri: detailProduct?.picture}}
+                width={'100%'}
+                height={'100%'}
+                resizeMode="cover"
+              />
+            ) : (
+              <Carousel
+                data={detailProduct?.arr_picture || []}
+                renderItem={renderPicture}
+                isDots={false}
+                onChangeIndex={index => setNumberImg(index)}
+              />
+            )}
             <Block absolute top={16} left={12} right={12} row>
               <Pressable
                 onPress={() => commonRoot.navigate(router.SHOPPING)}
@@ -55,21 +162,27 @@ export default function DetailProduct() {
                     marginLeft={10}
                     row>
                     <Image source={icon.icon_cart} width={35} height={35} />
-                    <Block
-                      absolute
-                      top={3}
-                      right={0}
-                      backgroundColor={COLORS.red4}
-                      radius={8}
-                      paddingBottom={2}
-                      width={26}
-                      height={15}
-                      justifyCenter
-                      alignCenter>
-                      <Text fontSize={10} regular color={COLORS.white}>
-                        99+
-                      </Text>
-                    </Block>
+                    {carts?.total_quantity === 0 ? (
+                      ''
+                    ) : (
+                      <Block
+                        absolute
+                        top={-6}
+                        right={0}
+                        backgroundColor={COLORS.red4}
+                        radius={20}
+                        paddingBottom={2}
+                        width={20}
+                        height={20}
+                        justifyCenter
+                        alignCenter>
+                        <Text fontSize={10} regular color={COLORS.white}>
+                          {carts?.total_quantity > 99
+                            ? '99+'
+                            : carts?.total_quantity}
+                        </Text>
+                      </Block>
+                    )}
                   </Pressable>
                   <Pressable
                     onPress={() => setMenuVertical(!menuVertical)}
@@ -91,13 +204,18 @@ export default function DetailProduct() {
                   </Pressable>
                 </Block>
                 {menuVertical === true && (
-                  <Block
+                  <Pressable
+                    onPressOut={() => setMenuVertical(false)}
                     paddingBottom={13}
                     marginTop={10}
                     backgroundColor={COLORS.black70}
                     radius={10}>
                     <Block marginTop={13.9}>
-                      <Block row marginLeft={10} alignCenter>
+                      <Pressable
+                        onPress={() => bottomRoot.navigate(router.HOME_SCREEN)}
+                        row
+                        marginLeft={10}
+                        alignCenter>
                         <Icon
                           IconType={Ionicons}
                           iconName={'home'}
@@ -112,7 +230,7 @@ export default function DetailProduct() {
                           marginTop={1.1}>
                           Trở về trang chủ
                         </Text>
-                      </Block>
+                      </Pressable>
                       <Block
                         width={width - 218}
                         borderWidth={0.5}
@@ -143,7 +261,11 @@ export default function DetailProduct() {
                         marginTop={11}
                         marginBottom={12}
                       />
-                      <Block row marginLeft={10} alignCenter>
+                      <Pressable
+                        row
+                        marginLeft={10}
+                        alignCenter
+                        onPress={() => setShowReport(!showReport)}>
                         <Icon
                           IconType={MaterialIcons}
                           iconName={'report-problem'}
@@ -158,7 +280,7 @@ export default function DetailProduct() {
                           marginTop={1.1}>
                           Báo cáo sản phẩm này
                         </Text>
-                      </Block>
+                      </Pressable>
                       <Block
                         width={width - 218}
                         borderWidth={0.5}
@@ -183,56 +305,66 @@ export default function DetailProduct() {
                         </Text>
                       </Block>
                     </Block>
-                  </Block>
+                  </Pressable>
                 )}
               </Block>
             </Block>
-            <Block
-              paddingVertical={4}
-              absolute
-              right={12}
-              bottom={8}
-              radius={15}
-              width={37}
-              height={23}
-              justifyCenter
-              alignCenter
-              backgroundColor={COLORS.black70}>
-              <Text fontSize={12} regular color={COLORS.white}>
-                1/9
-              </Text>
-            </Block>
+            {detailProduct?.arr_picture === '' ? (
+              ''
+            ) : (
+              <Block
+                paddingVertical={4}
+                absolute
+                right={12}
+                bottom={8}
+                radius={15}
+                width={37}
+                height={23}
+                justifyCenter
+                alignCenter
+                backgroundColor={COLORS.black70}>
+                <Text fontSize={12} regular color={COLORS.white}>
+                  {numberImg}/{detailProduct?.arr_picture?.length}
+                </Text>
+              </Block>
+            )}
           </Block>
           <Block marginTop={10} marginHorizontal={12}>
-            <Block row gap={10}>
-              {Array.from({length: 5}).map((_, index) => (
-                <Block
-                  key={index}
-                  width={(width - 64) / 5}
-                  height={73}
-                  radius={5}
-                  overflow={'hidden'}>
-                  <Image
-                    source={image.image_san}
-                    width={'100%'}
-                    height={'100%'}
-                    resizeMode="cover"
-                  />
+            {detailProduct?.arr_picture === '' ? (
+              ''
+            ) : (
+              <ScrollView horizontal={true}>
+                <Block row gap={10}>
+                  {detailProduct?.arr_picture?.map(item => (
+                    <Block
+                      key={item}
+                      width={(width - 64) / 5}
+                      height={73}
+                      radius={5}
+                      overflow={'hidden'}>
+                      <Image
+                        source={{uri: item}}
+                        width={'100%'}
+                        height={'100%'}
+                        resizeMode="cover"
+                      />
+                    </Block>
+                  ))}
                 </Block>
-              ))}
-            </Block>
+              </ScrollView>
+            )}
             <Text
               fontSize={18}
               bold
               color={COLORS.black2}
               marginTop={24}
               numberOfLines={1}>
-              Xe đạp tập thể dục OKACHI JP-599A
+              {detailProduct?.title}
             </Text>
             <Block marginTop={14} row>
               <Block marginTop={3}>
                 <Text fontSize={16} semiBold color={COLORS.red4}>
-                  {formatCurrency(40200000)}
+                  {formatCurrency(detailProduct?.price_sale)}
                 </Text>
                 <Text
                   marginTop={8}
@@ -240,7 +372,7 @@ export default function DetailProduct() {
                   regular
                   color={COLORS.placeholder}
                   lineThrough>
-                  {formatCurrency(40990000)}
+                  {formatCurrency(detailProduct?.price)}
                 </Text>
               </Block>
               <Block
@@ -253,7 +385,7 @@ export default function DetailProduct() {
                 width={35}
                 height={28}>
                 <Text fontSize={12} regular color={COLORS.white}>
-                  -2%
+                  -{detailProduct?.percent_discount}%
                 </Text>
               </Block>
             </Block>
@@ -268,22 +400,20 @@ export default function DetailProduct() {
               <Text fontSize={15} semiBold color={COLORS.black2}>
                 Mô tả sản phẩm
               </Text>
-              <Text
-                fontSize={14}
-                regular
-                color={COLORS.black2}
-                marginTop={15}
-                lineHeight={22}>
-                Xe đạp tập thể dục OKACHI JP-599A là thiết bị chăm sóc sức khỏe
-                tiên tiến, thiết kế đặc biệt để cải thiện tuần hoàn máu, giảm
-                đau và mang lại cảm giác thư giãn tuyệt vời cho người sử dụng.
-                Sản phẩm này không chỉ hỗ trợ massage cho chân mà còn tác động
-                lên tới toàn thân. (Các phiên bản cũ sẽ chỉ dừng lại tác động ở
-                phần bụng, vì thế sẽ cần phải hỗ trợ thêm bằng đai quấn bụng)
-                {'\n'}Thông số kỹ thuật của Máy xung chân bằng sóng Terahertz
-                P110:{'\n'}- Điện áp: 220/110V
-                {'\n'}- Công suất: 60W{'\n'}- Tần số: 50/60Hz
-              </Text>
+              <Block marginTop={15}>
+                <RenderHTML
+                  contentWidth={width - 24}
+                  source={{html: detailProduct?.content}}
+                  tagsStyles={{
+                    p: {
+                      fontSize: 14,
+                      fontWeight: 'regular',
+                      color: COLORS.black2,
+                      lineHeight: 22,
+                    },
+                  }}
+                />
+              </Block>
               <Block marginTop={23} alignCenter>
                 <Block row alignCenter>
                   <Text fontSize={12} regular color={COLORS.red4}>
@@ -312,7 +442,11 @@ export default function DetailProduct() {
                   Đánh giá sản phẩm
                 </Text>
                 <Text
-                  onPress={() => commonRoot.navigate(router.EVALUATE_PRODUCT)}
+                  onPress={() =>
+                    commonRoot.navigate(router.EVALUATE_PRODUCT, {
+                      item_id: route?.params?.item_id,
+                    })
+                  }
                   fontSize={13}
                   regular
                   color={COLORS.red4}>
@@ -321,65 +455,68 @@ export default function DetailProduct() {
               </Block>
               <Block marginTop={14} rowCenter>
                 <Block width={width - 343}>
-                  <RankStar size={12} value={4} />
+                  <RankStar size={12} value={average} />
                 </Block>
                 <Text fontSize={12} regular color={COLORS.black2}>
-                  4/5
+                  {average}/5
                 </Text>
                 <Text
                   marginLeft={12}
                   fontSize={12}
                   regular
                   color={COLORS.placeholder}>
-                  (1,4k đánh giá)
+                  ({total} đánh giá)
                 </Text>
               </Block>
               <Block marginTop={12} paddingVertical={12} gap={12}>
-                <Block>
-                  <Block row paddingBottom={5}>
-                    <Block
-                      width={25}
-                      height={25}
-                      radius={50}
-                      overflow={'hidden'}>
-                      <Image
-                        source={image.image_staff}
+                {listRating?.map(rate => (
+                  <Block key={rate.user_id}>
+                    <Block row paddingBottom={5}>
+                      <Block
                         width={25}
                         height={25}
-                        resizeMode="cover"
-                      />
-                    </Block>
-                    <Block marginLeft={8} marginTop={5}>
-                      <Text fontSize={14} medium color={COLORS.black2}>
-                        Lê Thu Huyền
-                      </Text>
-                      <Block width={width - 343} marginTop={11}>
-                        <RankStar size={12} value={4} />
+                        radius={50}
+                        overflow={'hidden'}>
+                        <Image
+                          source={{
+                            uri: `${URL_API.uploads}/${rate?.user?.picture}`,
+                          }}
+                          width={25}
+                          height={25}
+                          resizeMode="cover"
+                        />
                       </Block>
-                      <Text
-                        fontSize={14}
-                        regular
-                        color={COLORS.black2}
-                        marginTop={8}
-                        numberOfLines={2}>
-                        Hàng nhận đẹp đúng như mô tả, shop tư vấn nhiệt tình.
-                        Chính hãng 100%, nguyên seal, giao nhanh
-                      </Text>
-                      <Text
-                        fontSize={14}
-                        regular
-                        color={COLORS.lightGray1}
-                        marginTop={19}>
-                        15:15 11/11/2023
-                      </Text>
+                      <Block marginLeft={8} marginTop={5}>
+                        <Text fontSize={14} medium color={COLORS.black2}>
+                          {rate?.user?.full_name}
+                        </Text>
+                        <Block width={width - 343} marginTop={11}>
+                          <RankStar size={12} value={rate?.star} />
+                        </Block>
+                        <Text
+                          fontSize={14}
+                          regular
+                          color={COLORS.black2}
+                          marginTop={8}
+                          numberOfLines={2}>
+                          {rate?.content}
+                        </Text>
+                        <Text
+                          fontSize={14}
+                          regular
+                          color={COLORS.lightGray1}
+                          marginTop={19}>
+                          {ConvertDateTimeStamp(rate?.created_at)}
+                        </Text>
+                      </Block>
                     </Block>
+                    <Block
+                      height={1}
+                      backgroundColor={COLORS.gray15}
+                      marginTop={12}
+                    />
                   </Block>
-                  <Block
-                    height={1}
-                    backgroundColor={COLORS.gray15}
-                    marginTop={12}
-                  />
-                </Block>
+                ))}
               </Block>
               <Block marginTop={16} alignCenter>
                 <Block row alignCenter>
@@ -403,9 +540,14 @@ export default function DetailProduct() {
             Sản phẩm liên quan
           </Text>
           <Block marginTop={15} row wrap columnGap={10} rowGap={12}>
-            {Array.from({length: 10}).map((_, index) => (
-              <Block
-                key={index}
+            {detailProduct?.related?.map(item => (
+              <Pressable
+                onPress={() =>
+                  commonRoot.navigate(router.DETAIL_PRODUCT, {
+                    item_id: item.item_id,
+                  })
+                }
+                key={item.item_id}
                 width={(width - 34) / 2}
                 paddingBottom={11}
                 radius={8}
@@ -417,11 +559,36 @@ export default function DetailProduct() {
                   borderTopRightRadius={5}
                   overflow={'hidden'}>
                   <Image
-                    source={image.image_san}
-                    width={'100%'}
-                    height={'100%'}
-                    resizeMode="cover"
+                    source={{uri: item?.picture}}
+                    width={(width - 34) / 2}
+                    height={(width - 34) / 2}
                   />
+                  {item?.percent_discount === 0 ? (
+                    ''
+                  ) : (
+                    <Block
+                      width={39}
+                      height={28}
+                      absolute
+                      top={4}
+                      left={5}
+                      overflow={'hidden'}
+                      borderTopLeftRadius={5}
+                      borderBottomRightRadius={5}>
+                      <RadialGradient
+                        colors={COLORS.gradient5}
+                        style={{
+                          width: 39,
+                          height: 28,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text fontSize={12} regular color={COLORS.white}>
+                          {item?.percent_discount} %
+                        </Text>
+                      </RadialGradient>
+                    </Block>
+                  )}
                 </Block>
                 <Block marginTop={10} marginHorizontal={10}>
                   <Text
@@ -430,18 +597,33 @@ export default function DetailProduct() {
                     color={COLORS.black2}
                     lineHeight={22}
                     numberOfLines={2}>
-                    Máy chiếu sóng Terahertz trị liệu
+                    {item?.title}
                   </Text>
-                  <Text
-                    fontSize={15}
-                    semiBold
-                    color={COLORS.red4}
-                    lineHeight={17}
-                    marginTop={18}>
-                    14.000.000đ
-                  </Text>
+                  <Block marginTop={18} height={40} justifyCenter>
+                    <Text
+                      fontSize={15}
+                      semiBold
+                      color={COLORS.red4}
+                      lineHeight={17}>
+                      {item?.price === item?.price_sale ||
+                      item?.price_sale === 0
+                        ? formatCurrency(item?.price)
+                        : formatCurrency(item?.price_sale)}
+                    </Text>
+                    {item?.percent_discount === 0 ? (
+                      ''
+                    ) : (
+                      <Text
+                        fontSize={11}
+                        regular
+                        color={COLORS.placeholder}
+                        lineThrough>
+                        {formatCurrency(item?.price)}
+                      </Text>
+                    )}
+                  </Block>
                 </Block>
-              </Block>
+              </Pressable>
             ))}
           </Block>
           <Text
@@ -462,7 +644,8 @@ export default function DetailProduct() {
         padding={12}
         shadow3>
         <Block row gap={10}>
-          <Block
+          <Pressable
+            onPress={() => addToCart(detailProduct?.item_id)}
             width={(width - 34) / 2}
             height={48}
             radius={8}
@@ -472,8 +655,9 @@ export default function DetailProduct() {
             <Text fontSize={15} regular color={COLORS.white}>
               Thêm vào giỏ hàng
             </Text>
-          </Block>
-          <Block
+          </Pressable>
+          <Pressable
+            onPress={() => buyNow(detailProduct?.item_id)}
             width={(width - 34) / 2}
             height={48}
             radius={8}
@@ -483,9 +667,78 @@ export default function DetailProduct() {
             <Text fontSize={15} regular color={COLORS.white}>
               Mua ngay
             </Text>
-          </Block>
+          </Pressable>
         </Block>
       </Block>
+      <Modal transparent={true} animationType="fade" visible={showReport}>
+        <SafeAreaView style={{flex: 1}}>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+              backgroundColor: COLORS.transparentColor4,
+            }}>
+            <Block
+              width={width - 24}
+              backgroundColor={COLORS.white}
+              radius={8}
+              paddingBottom={15}>
+              <Block marginTop={10}>
+                <Text fontSize={15} semiBold color={COLORS.red4} center>
+                  Báo cáo sản phẩm
+                </Text>
+              </Block>
+              <Block marginTop={15} gap={10} marginHorizontal={12}>
+                <Text fontSize={13} regular color={COLORS.black2}>
+                  Nội dung báo cáo <Text color={COLORS.red4}>*</Text>
+                </Text>
+                <TextInput
+                  paddingLeft={16}
+                  placeholder={'Nhập nội dung báo cáo '}
+                  borderWidth={0.5}
+                  borderColor={COLORS.lightGray1}
+                  height={41}
+                  radius={8}
+                  fontSize={13}
+                  regular
+                  color={COLORS.black2}
+                  value={content}
+                  onChangeText={setContent}
+                />
+              </Block>
+              <Block marginTop={20} marginHorizontal={12} row gap={10}>
+                <Pressable
+                  onPress={handleReport}
+                  width={(width - 58) / 2}
+                  height={41}
+                  borderWidth={1}
+                  borderColor={COLORS.red4}
+                  radius={8}
+                  justifyCenter
+                  alignCenter>
+                  <Text fontSize={15} regular color={COLORS.red4}>
+                    Đồng ý
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => setShowReport(!showReport)}
+                  width={(width - 58) / 2}
+                  height={41}
+                  backgroundColor={COLORS.red4}
+                  radius={8}
+                  justifyCenter
+                  alignCenter>
+                  <Text fontSize={15} regular color={COLORS.white}>
+                    Bỏ qua
+                  </Text>
+                </Pressable>
+              </Block>
+            </Block>
+          </TouchableOpacity>
+        </SafeAreaView>
+      </Modal>
     </Block>
   );
 }

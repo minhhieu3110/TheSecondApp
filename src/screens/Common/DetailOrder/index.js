@@ -1,34 +1,83 @@
 import {icon} from '@assets';
-import {Block, HeaderTitle, Image, Text} from '@components';
+import {
+  Block,
+  HeaderTitle,
+  Image,
+  Text,
+  ScrollView,
+  Pressable,
+  TextInput,
+} from '@components';
 import {COLORS} from '@theme';
 import {image} from '@assets';
 import {width} from '@responsive';
-import {formatCurrency} from '@utils';
-import {ScrollView} from 'react-native';
-export default function DetailOrder() {
+import {formatCurrency, formatPhone} from '@utils';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect, useState} from 'react';
+import actions from '@actions';
+import {Modal, SafeAreaView, TouchableOpacity} from 'react-native';
+import Toast from 'react-native-toast-message';
+import {root} from 'navigation/navigationRef';
+import {URL_API} from 'redux/sagas/common';
+export default function DetailOrder({route}) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: actions.DETAIL_ORDER,
+      params: {id: route?.params?.id},
+    });
+  }, [dispatch, route?.params?.id]);
+  const detailOrder = useSelector(state => state.detailOrder?.data || []);
+  const [showCancel, setShowCancel] = useState(false);
+  const [reason, setReason] = useState('');
+  const handleCancel = () => {
+    dispatch({
+      type: actions.CANCEL_ORDER,
+      body: {
+        order_id: route?.params?.id,
+        reason: reason,
+      },
+      onSuccess: res => {
+        Toast.show({
+          type: 'success',
+          text1: res?.message,
+        });
+        root.goBack();
+      },
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <HeaderTitle canGoBack title={'Chi tiết đơn hàngss'} />
-      <ScrollView contentContainerStyle={{paddingBottom: 279}}>
+      <HeaderTitle canGoBack title={'Chi tiết đơn hàng'} />
+      <ScrollView contentContainerStyle={{paddingBottom: 110}}>
         <Block marginTop={16} marginHorizontal={12}>
           <Block
-            backgroundColor={COLORS.pinkWhite2}
+            backgroundColor={detailOrder?.status?.color_bg}
             radius={8}
             paddingVertical={12}
             paddingLeft={12}
             paddingRight={18}>
             <Block rowCenter>
-              <Image source={icon.icon_shopping_new} width={53} height={53} />
+              <Image
+                source={{
+                  uri: `${URL_API.uploads}/${detailOrder?.status?.picture}`,
+                }}
+                width={53}
+                height={53}
+              />
               <Block marginLeft={15}>
-                <Text fontSize={14} medium color={COLORS.red4}>
-                  Mới
+                <Text
+                  fontSize={14}
+                  medium
+                  color={detailOrder?.status?.color_title}>
+                  {detailOrder?.status?.title}
                 </Text>
                 <Text
                   marginTop={11}
                   fontSize={14}
                   regular
                   color={COLORS.black2}>
-                  Đơn hàng đang được xử lý
+                  {detailOrder?.status?.title_small}
                 </Text>
               </Block>
             </Block>
@@ -45,7 +94,7 @@ export default function DetailOrder() {
               <Block row alignCenter>
                 <Image source={icon.icon_name_user} width={22} height={22} />
                 <Text fontSize={15} medium color={COLORS.black2} marginLeft={8}>
-                  Lâm Minh Hoàng
+                  {detailOrder?.full_name}
                 </Text>
               </Block>
               <Text
@@ -54,7 +103,7 @@ export default function DetailOrder() {
                 fontSize={14}
                 regular
                 color={COLORS.red4}>
-                0909 123 456
+                {formatPhone(detailOrder?.phone)}
               </Text>
               <Text
                 marginTop={11}
@@ -63,7 +112,7 @@ export default function DetailOrder() {
                 regular
                 color={COLORS.black2}
                 numberOfLines={2}>
-                107 đường Cộng Hòa, Phường 12, quận Tân Bình, Tp.HCM
+                {detailOrder?.address_full}
               </Text>
             </Block>
           </Block>
@@ -71,9 +120,9 @@ export default function DetailOrder() {
             Sản phẩm
           </Text>
           <Block marginTop={15} gap={12}>
-            {Array.from({length: 3}).map((_, index) => (
+            {detailOrder?.details?.map(item => (
               <Block
-                key={index}
+                key={item.product_item_id}
                 paddingBottom={14}
                 radius={8}
                 backgroundColor={COLORS.white}>
@@ -84,7 +133,7 @@ export default function DetailOrder() {
                   marginRight={17}>
                   <Block width={73} height={73} radius={5} overflow={'hidden'}>
                     <Image
-                      source={image.image_san}
+                      source={{uri: item?.product?.picture}}
                       height={'100%'}
                       width={'100%'}
                       resizeMode="cover"
@@ -98,25 +147,25 @@ export default function DetailOrder() {
                       medium
                       color={COLORS.black2}
                       numberOfLines={1}>
-                      Xe đạp tập thể dục OKACHI JP-599A
+                      {item?.product?.title}
                     </Text>
                     <Text
                       fontSize={14}
                       regular
                       color={COLORS.black2}
                       marginTop={14}>
-                      x1
+                      x{item?.quantity}
                     </Text>
                     <Block marginTop={12} row columnGap={20} alignCenter>
                       <Text fontSize={14} regular color={COLORS.red4}>
-                        {formatCurrency(40200000)}
+                        {formatCurrency(item?.price_sale)}
                       </Text>
                       <Text
                         fontSize={14}
                         regular
                         color={COLORS.lightGray1}
                         lineThrough>
-                        {formatCurrency(40990000)}
+                        {formatCurrency(item?.price)}
                       </Text>
                     </Block>
                   </Block>
@@ -140,7 +189,7 @@ export default function DetailOrder() {
                       Tổng tiền
                     </Text>
                     <Text fontSize={15} medium color={COLORS.black2}>
-                      {formatCurrency('120600000')}
+                      {formatCurrency(detailOrder?.total_order)}
                     </Text>
                   </Block>
                   <Block
@@ -157,7 +206,7 @@ export default function DetailOrder() {
                       Voucher
                     </Text>
                     <Text fontSize={15} medium color={COLORS.red4}>
-                      -{formatCurrency('3000000')}
+                      -{formatCurrency(detailOrder?.promotion_price)}
                     </Text>
                   </Block>
                   <Block
@@ -174,7 +223,7 @@ export default function DetailOrder() {
                       Điểm tích luỹ
                     </Text>
                     <Text fontSize={15} medium color={COLORS.black2}>
-                      -{formatCurrency('3000')}
+                      -{formatCurrency(detailOrder?.use_point_price)}
                     </Text>
                   </Block>
                   <Block
@@ -191,7 +240,7 @@ export default function DetailOrder() {
                       Tổng thanh toán
                     </Text>
                     <Text fontSize={15} medium color={COLORS.red4}>
-                      {formatCurrency('127597000')}
+                      {formatCurrency(detailOrder?.total_payment)}
                     </Text>
                   </Block>
                 </Block>
@@ -199,7 +248,8 @@ export default function DetailOrder() {
             </Block>
           </Block>
           <Block marginTop={28} row gap={12}>
-            <Block
+            <Pressable
+              onPress={() => setShowCancel(!showCancel)}
               width={(width - 36) / 2}
               height={48}
               radius={8}
@@ -208,9 +258,9 @@ export default function DetailOrder() {
               justifyCenter
               alignCenter>
               <Text fontSize={15} regular color={COLORS.red4}>
-                Huỷ đơn
+                {detailOrder?.is_status === 17 ? 'Hỗ trợ' : 'Huỷ'}
               </Text>
-            </Block>
+            </Pressable>
             <Block
               width={(width - 36) / 2}
               height={48}
@@ -219,12 +269,81 @@ export default function DetailOrder() {
               justifyCenter
               alignCenter>
               <Text fontSize={15} regular color={COLORS.white}>
-                Hỗ trợ
+                {detailOrder?.is_status === 17 ? 'Đặt lại' : 'Hỗ trợ'}
               </Text>
             </Block>
           </Block>
         </Block>
       </ScrollView>
+      <Modal transparent={true} animationType="fade" visible={showCancel}>
+        <SafeAreaView style={{flex: 1}}>
+          <TouchableOpacity
+            activeOpacity={1}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+              backgroundColor: COLORS.transparentColor4,
+            }}>
+            <Block
+              width={width - 24}
+              backgroundColor={COLORS.white}
+              radius={8}
+              paddingBottom={15}>
+              <Block marginTop={10}>
+                <Text fontSize={15} semiBold color={COLORS.red4} center>
+                  Huỷ đơn hàng
+                </Text>
+              </Block>
+              <Block marginTop={15} gap={10} marginHorizontal={12}>
+                <Text fontSize={13} regular color={COLORS.black2}>
+                  Lý do huỷ <Text color={COLORS.red4}>*</Text>
+                </Text>
+                <TextInput
+                  paddingLeft={16}
+                  placeholder={'Nhập lý do huỷ '}
+                  borderWidth={0.5}
+                  borderColor={COLORS.lightGray1}
+                  height={41}
+                  radius={8}
+                  fontSize={13}
+                  regular
+                  color={COLORS.black2}
+                  value={reason}
+                  onChangeText={setReason}
+                />
+              </Block>
+              <Block marginTop={20} marginHorizontal={12} row gap={10}>
+                <Pressable
+                  onPress={handleCancel}
+                  width={(width - 58) / 2}
+                  height={41}
+                  borderWidth={1}
+                  borderColor={COLORS.red4}
+                  radius={8}
+                  justifyCenter
+                  alignCenter>
+                  <Text fontSize={15} regular color={COLORS.red4}>
+                    Đồng ý
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => setShowCancel(!showCancel)}
+                  width={(width - 58) / 2}
+                  height={41}
+                  backgroundColor={COLORS.red4}
+                  radius={8}
+                  justifyCenter
+                  alignCenter>
+                  <Text fontSize={15} regular color={COLORS.white}>
+                    Bỏ qua
+                  </Text>
+                </Pressable>
+              </Block>
+            </Block>
+          </TouchableOpacity>
+        </SafeAreaView>
+      </Modal>
     </Block>
   );
 }

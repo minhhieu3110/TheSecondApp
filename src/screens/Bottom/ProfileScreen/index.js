@@ -75,22 +75,21 @@ export default function ProfileScreen() {
             }}
             colors={COLORS.gradient5}>
             <Block
-              width={width - 334}
+              width={94}
               height={88}
               marginTop={20}
               marginLeft={12}
-              overflow={'hidden'}>
+              overflow={'hidden'}
+              borderTopRadius={40}
+              borderBottomLeftRadius={40}>
               <Image
                 source={
                   userInfo?.picture === ''
                     ? icon.icon_user_activity
                     : {uri: `${URL_API.uploads}/${userInfo?.picture}`}
                 }
-                width={width - 334}
+                width={94}
                 height={88}
-                resizeMode="cover"
-                borderTopRadius={35}
-                borderBottomLeftRadius={35}
               />
               <Pressable
                 onPress={() => setShow(!show)}

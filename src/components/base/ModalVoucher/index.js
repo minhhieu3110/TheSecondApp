@@ -7,12 +7,20 @@ import {
   Image,
   TextInput,
   TicketVoucherShape,
+  ScrollView,
 } from '@components';
 import {COLORS} from '@theme';
 import {image} from '@assets';
 import {width} from '@responsive';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-const ModalVoucher = ({visible, close}) => {
+import {URL_API} from 'redux/sagas/common';
+import {ConvertTimeStamp} from '@utils';
+import {useState} from 'react';
+const ModalVoucher = ({visible, close, data = []}) => {
+  const [promotionSelected, setPromotionSelected] = useState();
+  const onPress = promotion_id => {
+    setPromotionSelected(promotion_id);
+  };
   return (
     <Modal
       visible={visible}
@@ -102,80 +110,92 @@ const ModalVoucher = ({visible, close}) => {
             marginTop={20}>
             Tất cả ưu đãi
           </Text>
-          <Block marginTop={13} marginHorizontal={18}>
-            <Block
-              radius={15}
-              backgroundColor={COLORS.white}
-              height={136.77}
-              alignCenter
-              row
-              overflow={'hidden'}
-              marginBottom={10}>
-              <Block
-                width={83.94}
-                height={107.68}
-                radius={11}
-                justifyCenter
-                alignCenter
-                overflow={'hidden'}
-                marginLeft={12.6}>
-                <Image
-                  source={image.image_voucher_san}
-                  resizeMode
-                  width={83.94}
-                  height={107.68}
-                />
-              </Block>
-              <Block marginLeft={7}>
-                <TicketVoucherShape />
-              </Block>
-              <Block
-                width={width - 197}
-                height={107}
-                marginLeft={7}
-                marginTop={18.2}>
-                <Text fontSize={12} regular color={COLORS.placeholder}>
-                  HSD: {'20/12/2025'}
-                </Text>
-                <Text
-                  fontSize={16}
-                  semiBold
-                  color={COLORS.black1}
-                  uppercase
-                  marginTop={11.9}>
-                  Giảm 20%, tối đa 100K
-                </Text>
-                <Text
-                  fontSize={12}
-                  regular
-                  color={COLORS.black1}
-                  marginTop={9.3}>
-                  Áp dụng cho tất cả dịch vụ tại SAN
-                </Text>
-                <Text fontSize={12} regular color={COLORS.red4}>
-                  Xem chi tiết
-                </Text>
-              </Block>
-              <Block
-                width={23}
-                height={23}
-                borderWidth={1}
-                borderColor={COLORS.lightGray1}
-                radius={50}
-                absolute
-                top={12.3}
-                right={12.9}
-                justifyCenter
-                alignCenter
-                backgroundColor={COLORS.red4}>
-                <Block
-                  width={11}
-                  height={11}
+          <Block marginTop={13} marginHorizontal={18} height={500}>
+            <ScrollView
+              contentContainerStyle={{paddingBottom: 20}}
+              showsVerticalScrollIndicator={true}>
+              {data?.map(item => (
+                <Pressable
+                  onPress={() => onPress(item.promotion_id)}
+                  key={item.promotion_id}
+                  radius={15}
                   backgroundColor={COLORS.white}
-                  radius={50}
-                />
-              </Block>
-            </Block>
+                  height={136.77}
+                  alignCenter
+                  row
+                  overflow={'hidden'}
+                  marginBottom={10}>
+                  <Block
+                    width={83.94}
+                    height={107.68}
+                    radius={11}
+                    justifyCenter
+                    alignCenter
+                    overflow={'hidden'}
+                    marginLeft={12.6}>
+                    <Image
+                      source={{uri: `${URL_API.uploads}/${item.picture}`}}
+                      resizeMode
+                      width={83.94}
+                      height={107.68}
+                    />
+                  </Block>
+                  <Block marginLeft={7}>
+                    <TicketVoucherShape />
+                  </Block>
+                  <Block
+                    width={width - 197}
+                    height={107}
+                    marginLeft={7}
+                    marginTop={18.2}>
+                    <Text fontSize={12} regular color={COLORS.placeholder}>
+                      HSD: {ConvertTimeStamp(item?.date_end)}
+                    </Text>
+                    <Text
+                      fontSize={16}
+                      semiBold
+                      color={COLORS.black1}
+                      uppercase
+                      marginTop={11.9}>
+                      {item?.title_detail}
+                    </Text>
+                    <Text
+                      fontSize={12}
+                      regular
+                      color={COLORS.black1}
+                      marginTop={9.3}>
+                      {item?.apply_for}
+                    </Text>
+                    <Text fontSize={12} regular color={COLORS.red4}>
+                      Xem chi tiết
+                    </Text>
+                  </Block>
+                  <Block
+                    width={23}
+                    height={23}
+                    borderWidth={1}
+                    borderColor={COLORS.lightGray1}
+                    radius={50}
+                    absolute
+                    top={12.3}
+                    right={12.9}
+                    justifyCenter
+                    alignCenter
+                    backgroundColor={
+                      promotionSelected === item.promotion_id
+                        ? COLORS.red4
+                        : COLORS.white
+                    }>
+                    <Block
+                      width={11}
+                      height={11}
+                      backgroundColor={COLORS.white}
+                      radius={50}
+                    />
+                  </Block>
+                </Pressable>
+              ))}
+            </ScrollView>
           </Block>
         </Block>
       </TouchableOpacity>

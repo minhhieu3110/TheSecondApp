@@ -5,16 +5,13 @@ import {commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import NewOrder from './common/NewOrder';
+import ConfirmOrder from './common/ConfirmOrder';
+import Shipping from './common/Shipping';
+import CompleteShipOrder from './common/CompleteShipOder';
+import CancelOrder from './common/CancelOrder';
 export default function OrderOfYou({route}) {
   // const TopOrderStack = createNativeStackNavigator();
   const Tab = createMaterialTopTabNavigator();
-  const tabs = [
-    {name: router.NEW_ORDER, lable: 'Mới'},
-    {name: router.CONFIRM_ORDER, lable: 'Xác nhận'},
-    {name: router.SHIPPING, lable: 'Đang giao'},
-    {name: router.COMPLETE_SHIP_ORDER, lable: 'Đã giao'},
-    {name: router.CANCEL_ORDER, lable: 'Đã huỷ'},
-  ];
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle
@@ -56,22 +53,22 @@ export default function OrderOfYou({route}) {
         />
         <Tab.Screen
           name="CONFIRM_ORDER"
-          component={NewOrder}
+          component={ConfirmOrder}
           options={{tabBarLabel: 'Xác nhận'}}
         />
         <Tab.Screen
           name="SHIPPING"
-          component={NewOrder}
+          component={Shipping}
           options={{tabBarLabel: 'Đang giao'}}
         />
         <Tab.Screen
           name="COMPLETE_SHIP_ORDER"
-          component={NewOrder}
+          component={CompleteShipOrder}
           options={{tabBarLabel: 'Đã giao'}}
         />
         <Tab.Screen
           name="CANCEL_ORDER"
-          component={NewOrder}
+          component={CancelOrder}
           options={{tabBarLabel: 'Đã huỷ'}}
         />
       </Tab.Navigator>

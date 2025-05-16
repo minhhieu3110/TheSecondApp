@@ -70,11 +70,8 @@ const commonStack = [
   {name: router.ORDER_OF_YOU},
   {name: router.DETAIL_PRODUCT},
   {name: router.EVALUATE_PRODUCT},
-  {name: router.DETAIL_NEW_ORDER},
-  {name: router.DETAIL_CONFIRM_ORDER},
-  {name: router.DETAIL_SHIPPING},
-  {name: router.DETAIL_COMPLETE_ORDER},
-  {name: router.DETAIL_CANCEL_ORDER},
+  {name: router.DETAIL_ORDER},
+
   {name: router.EVALUATE_ORDER},
   {name: router.DETAIL_NOTIFICATION},
   {name: router.EXCHANGE_POINT},

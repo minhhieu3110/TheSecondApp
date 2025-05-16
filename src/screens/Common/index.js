@@ -45,11 +45,6 @@ import Shopping_Pay from './ShoppingPay';
 import OrderOfYou from './OrderOfYou';
 import DetailProduct from './DetailProduct';
 import Evaluate from './Evaluate';
-import Detail_New_Order from './DetailOrder/Detail_New_Order';
-import Detail_Confirm_Order from './DetailOrder/Detail_Confirm_Order';
-import Detail_Shipping from './DetailOrder/Detail_Shipping';
-import Detail_Complete_Order from './DetailOrder/Detail_Complete_Order';
-import Detail_Cancel_Order from './DetailOrder/Detail_Cancel_Order';
 import EvaluateOrder from './EvaluateOrder';
 import ChooseService from './ChooseService';
 import ChooseTimeForService from './ChooseTimeForService';
@@ -68,6 +63,7 @@ import DetailPromo from './Promo/common';
 import AllNews from './AllNews';
 import DetailNew from './AllNews/common';
 import UpdateAddress from './UpdateAddress';
+import DetailOrder from './DetailOrder';
 
 export const common = {
   [router.VOUCHER]: Voucher,
@@ -121,11 +117,11 @@ export const common = {
   [router.ORDER_OF_YOU]: OrderOfYou,
   [router.DETAIL_PRODUCT]: DetailProduct,
   [router.EVALUATE_PRODUCT]: Evaluate,
-  [router.DETAIL_NEW_ORDER]: Detail_New_Order,
-  [router.DETAIL_CONFIRM_ORDER]: Detail_Confirm_Order,
-  [router.DETAIL_SHIPPING]: Detail_Shipping,
-  [router.DETAIL_COMPLETE_ORDER]: Detail_Complete_Order,
-  [router.DETAIL_CANCEL_ORDER]: Detail_Cancel_Order,
+  //
+  [router.DETAIL_ORDER]: DetailOrder,
+  //
+
+  //
   [router.EVALUATE_ORDER]: EvaluateOrder,
   [router.CHOOSE_SERVICE]: ChooseService,
   [router.CHOOSE_TIME_FOR_SERVICE]: ChooseTimeForService,
