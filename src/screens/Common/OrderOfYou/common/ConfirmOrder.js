@@ -75,7 +75,7 @@ export default function ConfirmOrder() {
                     borderWidth={0.2}
                     radius={8}
                     borderColor={listOrder?.status?.color_border}
-                    key={item.order_id}>
+                    key={item.product_item_id}>
                     <Image
                       source={{uri: detail?.product?.picture}}
                       width={73}

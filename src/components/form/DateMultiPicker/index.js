@@ -37,6 +37,7 @@ const DateMultiPicker = () => {
       setSelectedDates(prev => [...prev, date]);
     }
   }
+  console.log(selectedDates);
 
   return (
     <Modal animationType="fade">

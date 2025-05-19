@@ -47,3 +47,6 @@ export const detailOrder = (...props) => {
 export const cancelOrder = (...props) => {
   return reducerDefault(...props, actions.CANCEL_ORDER);
 };
+export const rating = (...props) => {
+  return reducerDefault(...props, actions.EVALUATE_ORDER);
+};

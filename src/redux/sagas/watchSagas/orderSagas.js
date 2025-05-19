@@ -207,7 +207,20 @@ function* cancelOrder(action) {
     action.onFail?.(error);
   }
 }
-
+function* rating(action) {
+  const body = yield action.body;
+  try {
+    const res = yield api.post(URL_API.order.rating, body);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 export default function* watchOrderSagas() {
   yield takeLatest(actions.LIST_STATUS, getListStatus);
   yield takeLatest(actions.ADD_CART, addCart);
@@ -224,4 +237,5 @@ export default function* watchOrderSagas() {
   yield takeLatest(actions.CANCEL_ORDER_PRO, cancelOrderPro);
   yield takeLatest(actions.DETAIL_ORDER, detailOrder);
   yield takeLatest(actions.CANCEL_ORDER, cancelOrder);
+  yield takeLatest(actions.EVALUATE_ORDER, rating);
 }

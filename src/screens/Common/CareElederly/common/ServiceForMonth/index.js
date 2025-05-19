@@ -275,8 +275,6 @@ export default function Elederly_Servicedurationmonth({route}) {
         titleBottom={detailSub?.service?.title}
         onPress={priceCalculation}
       />
-      {/* <ModalCalendar visible={calendar} close={() => setCalendar(!calendar)} /> */}
-      {/* {calendar && <DatePicker value={listDay} onChange={setListDay} />} */}
       {calendar && <DateMultiPicker />}
     </Block>
   );

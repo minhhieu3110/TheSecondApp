@@ -134,6 +134,7 @@ export const URL_API = {
     checkout: 'order/checkout',
     list: 'order/list',
     cancel_order: 'order/cancel-order',
+    rating: 'order/rating',
   },
   product: {
     list_category: 'product/list-category',
