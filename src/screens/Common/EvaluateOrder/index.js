@@ -4,6 +4,7 @@ import {
   Block,
   HeaderTitle,
   Image,
+  MultiImageInput,
   Pressable,
   RankStar,
   ScrollView,
@@ -19,7 +20,9 @@ import StarRating from 'react-native-star-rating-widget';
 import Toast from 'react-native-toast-message';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
+import {useForm} from 'react-hook-form';
 export default function EvaluateOrder({route}) {
+  const {control} = useForm();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
@@ -28,8 +31,10 @@ export default function EvaluateOrder({route}) {
     });
   }, [dispatch, route?.params?.id]);
   const detailOrder = useSelector(state => state.detailOrder?.data || []);
+  const [visible, setVisible] = useState(false);
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState('');
+  const [pictures, setPictures] = useState([]);
   const evaluate = (order_id, product_id) => {
     if (rating > 0) {
       const body = {
@@ -46,7 +51,7 @@ export default function EvaluateOrder({route}) {
             type: 'success',
             text1: res?.message,
           });
-          commonRoot.navigate(router.SHOPPING);
+          // commonRoot.navigate(router.SHOPPING);
         },
       });
     }
@@ -138,7 +143,8 @@ export default function EvaluateOrder({route}) {
             <Text marginTop={20} fontSize={15} semiBold color={COLORS.black2}>
               Hình ảnh
             </Text>
-            <Block
+            <Pressable
+              onPress={() => setVisible(!visible)}
               marginTop={13}
               width={177}
               height={177}
@@ -162,7 +168,7 @@ export default function EvaluateOrder({route}) {
                 marginLeft={37}>
                 Ảnh đính kèm
               </Text>
-            </Block>
+            </Pressable>
             <Pressable
               onPress={() => evaluate(item.order_id, item.product_item_id)}
               marginTop={30}
@@ -178,6 +184,9 @@ export default function EvaluateOrder({route}) {
           </Block>
         ))}
       </ScrollView>
+      {/* {visible && (
+        <MultiImageInput control={control} name={pictures} maxImage={5} />
+      )} */}
     </Block>
   );
 }

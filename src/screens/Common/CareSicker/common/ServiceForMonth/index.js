@@ -8,6 +8,7 @@ import {
   ButtonSubmitService,
   SANStaffDuties,
   ChooseStartTime,
+  DateMultiPicker,
 } from '@components';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
@@ -43,6 +44,7 @@ export default function Sicker_Servicedurationmonth({route}) {
     });
   };
   const [calendar, setCalendar] = useState(0);
+  const [listDates, setListDates] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({type: actions.GET_ADDRESS_SAVE});
@@ -65,7 +67,7 @@ export default function Sicker_Servicedurationmonth({route}) {
     duration_id: choose,
     monthly_package_id: chooseOptionDuration,
     schedule_week: againWeek,
-    list_day: [],
+    list_day: listDates,
     start_time: start_time,
     note: content,
     promotion_id: '',
@@ -81,7 +83,7 @@ export default function Sicker_Servicedurationmonth({route}) {
         duration_id: choose,
         monthly_package_id: chooseOptionDuration,
         schedule_week: againWeek,
-        list_day: ['21/04/2025', '30/04/2025'],
+        list_day: listDates,
         start_time: start_time,
         note: content,
         promotion_id: '',
@@ -248,6 +250,11 @@ export default function Sicker_Servicedurationmonth({route}) {
         titleTop={durationSelected?.title}
         titleBottom={detailSub?.service?.title}
         onPress={priceCalculation}
+      />
+      <DateMultiPicker
+        visible={calendar}
+        close={() => setCalendar(!calendar)}
+        onPress={dates => setListDates(dates)}
       />
     </Block>
   );

@@ -17,8 +17,9 @@ import {useEffect, useState} from 'react';
 import actions from '@actions';
 import {Modal, SafeAreaView, TouchableOpacity} from 'react-native';
 import Toast from 'react-native-toast-message';
-import {root} from 'navigation/navigationRef';
+import {commonRoot, root} from 'navigation/navigationRef';
 import {URL_API} from 'redux/sagas/common';
+import router from '@router';
 export default function DetailOrder({route}) {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -45,6 +46,16 @@ export default function DetailOrder({route}) {
         root.goBack();
       },
     });
+  };
+  const handleLeft = status => {
+    (status === 19 || status === 41) && setShowCancel(!showCancel);
+    (status === 25 || status === 17) && commonRoot.navigate(router.HELP);
+  };
+  const handleRight = status => {
+    (status === 19 || status === 41) && commonRoot.navigate(router.HELP);
+    status === 25 &&
+      commonRoot.navigate(router.EVALUATE_ORDER, {id: detailOrder?.id});
+    status === 17 && console.log('Again');
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -248,30 +259,58 @@ export default function DetailOrder({route}) {
             </Block>
           </Block>
           <Block marginTop={28} row gap={12}>
-            <Pressable
-              onPress={() => setShowCancel(!showCancel)}
-              width={(width - 36) / 2}
-              height={48}
-              radius={8}
-              borderColor={COLORS.red4}
-              borderWidth={1}
-              justifyCenter
-              alignCenter>
-              <Text fontSize={15} regular color={COLORS.red4}>
-                {detailOrder?.is_status === 17 ? 'Hỗ trợ' : 'Huỷ'}
-              </Text>
-            </Pressable>
-            <Block
-              width={(width - 36) / 2}
-              height={48}
-              radius={8}
-              backgroundColor={COLORS.red4}
-              justifyCenter
-              alignCenter>
-              <Text fontSize={15} regular color={COLORS.white}>
-                {detailOrder?.is_status === 17 ? 'Đặt lại' : 'Hỗ trợ'}
-              </Text>
-            </Block>
+            {detailOrder?.is_status === 23 ? (
+              <Pressable
+                onPress={() => commonRoot.navigate(router.HELP)}
+                marginHorizontal={12}
+                width={width - 48}
+                height={48}
+                radius={8}
+                backgroundColor={COLORS.red4}
+                justifyCenter
+                alignCenter>
+                <Text fontSize={15} regular color={COLORS.white}>
+                  Hỗ trợ
+                </Text>
+              </Pressable>
+            ) : (
+              <>
+                <Pressable
+                  onPress={() => handleLeft(detailOrder?.is_status)}
+                  width={(width - 36) / 2}
+                  height={48}
+                  radius={8}
+                  borderColor={COLORS.red4}
+                  borderWidth={1}
+                  justifyCenter
+                  alignCenter>
+                  <Text fontSize={15} regular color={COLORS.red4}>
+                    {(detailOrder?.is_status === 19 ||
+                      detailOrder?.is_status === 41) &&
+                      'Huỷ'}
+                    {(detailOrder?.is_status === 25 ||
+                      detailOrder?.is_status === 17) &&
+                      'Hỗ trợ'}
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={() => handleRight(detailOrder?.is_status)}
+                  width={(width - 36) / 2}
+                  height={48}
+                  radius={8}
+                  backgroundColor={COLORS.red4}
+                  justifyCenter
+                  alignCenter>
+                  <Text fontSize={15} regular color={COLORS.white}>
+                    {(detailOrder?.is_status === 19 ||
+                      detailOrder?.is_status === 41) &&
+                      'Hỗ trợ'}
+                    {detailOrder?.is_status === 25 && 'Đánh giá'}
+                    {detailOrder?.is_status === 17 && 'Đặt lại'}
+                  </Text>
+                </Pressable>
+              </>
+            )}
           </Block>
         </Block>
       </ScrollView>

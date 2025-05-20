@@ -1,13 +1,5 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-  Modal,
-  SafeAreaView,
-} from 'react-native';
+import {TouchableOpacity, Modal, SafeAreaView} from 'react-native';
 import {
   format,
   startOfMonth,
@@ -18,17 +10,18 @@ import {
   isSameMonth,
   isSameDay,
   addMonths,
-  subMonths,
 } from 'date-fns';
 import {COLORS} from '@theme';
 import {width} from '@responsive';
-
-const DateMultiPicker = () => {
+import {Block, Icon, Pressable, Text} from '@components';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import RadialGradient from 'react-native-radial-gradient';
+const DateMultiPicker = ({visible, close, onPress}) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState([]);
 
   const days = getCalendarDays(currentMonth);
-
+  const days2 = getCalendarDays(addMonths(currentMonth, 1));
   function toggleDate(date) {
     const isSelected = selectedDates.some(d => isSameDay(d, date));
     if (isSelected) {
@@ -37,10 +30,17 @@ const DateMultiPicker = () => {
       setSelectedDates(prev => [...prev, date]);
     }
   }
-  console.log(selectedDates);
+  const handleSelect = dates => {
+    const datesFormated = dates.map(date =>
+      format(new Date(date), 'dd/MM/yyyy'),
+    );
+
+    onPress(datesFormated);
+    close();
+  };
 
   return (
-    <Modal animationType="fade">
+    <Modal animationType="fade" visible={visible} onRequestClose={close}>
       <SafeAreaView style={{flex: 1}}>
         <TouchableOpacity
           activeOpacity={1}
@@ -50,57 +50,189 @@ const DateMultiPicker = () => {
             alignItems: 'center',
             backgroundColor: COLORS.transparentColor4,
           }}>
-          <View style={styles.container}>
-            <View style={styles.header}>
-              <TouchableOpacity
-                onPress={() => setCurrentMonth(subMonths(currentMonth, 1))}>
-                <Text style={styles.arrow}>←</Text>
-              </TouchableOpacity>
-              <Text style={styles.monthLabel}>
-                {format(currentMonth, 'MMMM yyyy')}
+          <Block
+            width={width - 24}
+            backgroundColor={COLORS.gray10}
+            paddingBottom={15}
+            radius={10}>
+            <Block marginTop={17}>
+              <Text fontSize={15} semiBold color={COLORS.black2} center>
+                Chọn lịch
               </Text>
-              <TouchableOpacity
-                onPress={() => setCurrentMonth(addMonths(currentMonth, 1))}>
-                <Text style={styles.arrow}>→</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.weekRow}>
-              {['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'].map(day => (
-                <Text key={day} style={styles.dayLabel}>
-                  {day}
+              <Pressable onPress={close} absolute right={6}>
+                <Icon
+                  IconType={FontAwesome5}
+                  iconColor={COLORS.black}
+                  iconName={'times'}
+                  iconSize={20}
+                />
+              </Pressable>
+            </Block>
+            <Block marginTop={15} gap={10} marginHorizontal={12}>
+              <Block
+                width={width - 48}
+                backgroundColor={COLORS.white}
+                radius={8}
+                paddingBottom={12}>
+                <Text
+                  marginLeft={12}
+                  marginTop={18}
+                  fontSize={14}
+                  semiBold
+                  color={COLORS.black2}>
+                  Tháng {format(currentMonth, 'L/yyyy')}
                 </Text>
-              ))}
-            </View>
-
-            <FlatList
-              data={days}
-              keyExtractor={item => item.toString()}
-              numColumns={7}
-              renderItem={({item}) => {
-                const isSelected = selectedDates.some(d => isSameDay(d, item));
-                const isInMonth = isSameMonth(item, currentMonth);
-
-                return (
-                  <TouchableOpacity
-                    onPress={() => toggleDate(item)}
-                    style={[
-                      styles.dateCell,
-                      isSelected && styles.selected,
-                      !isInMonth && styles.outsideMonth,
-                    ]}>
-                    <Text
-                      style={[
-                        styles.dateText,
-                        isSelected && styles.selectedText,
-                      ]}>
-                      {format(item, 'd')}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              }}
-            />
-          </View>
+                <Block marginTop={17} marginHorizontal={12}>
+                  <Block row spaceBetween>
+                    {['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'].map(day => (
+                      <Text
+                        key={day}
+                        fontSize={13}
+                        semiBold
+                        color={COLORS.black2}>
+                        {day}
+                      </Text>
+                    ))}
+                  </Block>
+                  <Block marginTop={22} rowGap={18} row wrap columnGap={32}>
+                    {days?.map(day => {
+                      const isInMonth = isSameMonth(day, currentMonth);
+                      const isSelected = selectedDates.some(d =>
+                        isSameDay(d, day),
+                      );
+                      const isInDay = isSameDay(day, new Date());
+                      return (
+                        <Pressable
+                          key={day}
+                          onPress={() => toggleDate(day)}
+                          width={25}
+                          height={25}
+                          radius={25}
+                          justifyCenter
+                          alignCenter
+                          overflow={'hidden'}
+                          opacity={isInMonth && 1}>
+                          {isSelected ? (
+                            <RadialGradient
+                              colors={COLORS.gradient5}
+                              style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                width: 25,
+                                height: 25,
+                              }}>
+                              <Text
+                                fontSize={13}
+                                regular
+                                color={
+                                  isSelected ? COLORS.white : COLORS.black2
+                                }>
+                                {format(day, 'd')}
+                              </Text>
+                            </RadialGradient>
+                          ) : (
+                            <Text
+                              fontSize={13}
+                              regular
+                              color={isInDay ? COLORS.yellow3 : COLORS.black2}>
+                              {format(day, 'd')}
+                            </Text>
+                          )}
+                        </Pressable>
+                      );
+                    })}
+                  </Block>
+                </Block>
+              </Block>
+              <Block
+                width={width - 48}
+                backgroundColor={COLORS.white}
+                radius={8}
+                paddingBottom={12}>
+                <Text
+                  marginLeft={12}
+                  marginTop={18}
+                  fontSize={14}
+                  semiBold
+                  color={COLORS.black2}>
+                  Tháng {format(addMonths(currentMonth, 1), 'L/yyyy')}
+                </Text>
+                <Block marginTop={17} marginHorizontal={12}>
+                  <Block row spaceBetween>
+                    {['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'].map(day => (
+                      <Text
+                        key={day}
+                        fontSize={13}
+                        semiBold
+                        color={COLORS.black2}>
+                        {day}
+                      </Text>
+                    ))}
+                  </Block>
+                  <Block marginTop={22} rowGap={18} row wrap columnGap={32}>
+                    {days2?.map(day => {
+                      const isInMonth = isSameMonth(
+                        day,
+                        addMonths(currentMonth, 1),
+                      );
+                      const isSelected = selectedDates.some(d =>
+                        isSameDay(d, day),
+                      );
+                      return (
+                        <Pressable
+                          key={day}
+                          onPress={() => toggleDate(day)}
+                          width={25}
+                          height={25}
+                          radius={25}
+                          justifyCenter
+                          alignCenter
+                          overflow={'hidden'}
+                          opacity={isInMonth && 1}>
+                          {isSelected ? (
+                            <RadialGradient
+                              colors={COLORS.gradient5}
+                              style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                width: 25,
+                                height: 25,
+                              }}>
+                              <Text
+                                fontSize={13}
+                                regular
+                                color={
+                                  isSelected ? COLORS.white : COLORS.black2
+                                }>
+                                {format(day, 'd')}
+                              </Text>
+                            </RadialGradient>
+                          ) : (
+                            <Text fontSize={13} regular color={COLORS.black2}>
+                              {format(day, 'd')}
+                            </Text>
+                          )}
+                        </Pressable>
+                      );
+                    })}
+                  </Block>
+                </Block>
+              </Block>
+            </Block>
+            <Pressable
+              onPress={() => handleSelect(selectedDates)}
+              marginHorizontal={12}
+              height={48}
+              radius={8}
+              marginTop={20}
+              backgroundColor={COLORS.red4}
+              justifyCenter
+              alignCenter>
+              <Text fontSize={15} regular color={COLORS.white}>
+                Đồng ý
+              </Text>
+            </Pressable>
+          </Block>
         </TouchableOpacity>
       </SafeAreaView>
     </Modal>
@@ -113,48 +245,5 @@ function getCalendarDays(month) {
   const end = endOfWeek(endOfMonth(month), {weekStartsOn: 0});
   return eachDayOfInterval({start, end});
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: width - 24,
-    backgroundColor: COLORS.white,
-    borderRadius: 8,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-    borderWidth: 1,
-  },
-  monthLabel: {fontSize: 20, fontWeight: 'bold'},
-  arrow: {fontSize: 20},
-  weekRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 5,
-  },
-  dayLabel: {
-    flex: 1,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    width: 25,
-    height: 25,
-  },
-  dateCell: {
-    width: 25,
-    height: 25,
-    margin: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 40,
-    flex: 1,
-    textAlign: 'center',
-  },
-  selected: {backgroundColor: COLORS.darkRed1},
-  selectedText: {color: 'white'},
-  dateText: {color: 'black'},
-  outsideMonth: {opacity: 0.4},
-});
 
 export default DateMultiPicker;

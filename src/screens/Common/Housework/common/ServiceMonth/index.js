@@ -8,6 +8,7 @@ import {
   ButtonSubmitService,
   SANStaffDuties,
   ChooseStartTime,
+  DateMultiPicker,
 } from '@components';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
@@ -43,6 +44,7 @@ export default function Housework_ServiceMonth({route}) {
     });
   };
   const [calendar, setCalendar] = useState(0);
+  const [listDates, setListDates] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({type: actions.GET_ADDRESS_SAVE});
@@ -68,7 +70,7 @@ export default function Housework_ServiceMonth({route}) {
     duration_id: chooseDuration,
     monthly_package_id: chooseOptionDuration,
     schedule_week: againWeek,
-    list_day: [],
+    list_day: listDates,
     start_time: start_time,
     note: content,
     promotion_id: '',
@@ -84,7 +86,7 @@ export default function Housework_ServiceMonth({route}) {
         duration_id: chooseDuration,
         monthly_package_id: chooseOptionDuration,
         schedule_week: againWeek,
-        list_day: [],
+        list_day: listDates,
         start_time: start_time,
         note: content,
         promotion_id: '',
@@ -234,6 +236,11 @@ export default function Housework_ServiceMonth({route}) {
         titleTop={durationSelected?.title}
         titleBottom={detailSub?.service?.title}
         onPress={priceCalculation}
+      />
+      <DateMultiPicker
+        visible={calendar}
+        close={() => setCalendar(!calendar)}
+        onPress={dates => setListDates(dates)}
       />
     </Block>
   );

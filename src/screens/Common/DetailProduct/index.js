@@ -469,8 +469,8 @@ export default function DetailProduct({route}) {
                 </Text>
               </Block>
               <Block marginTop={12} paddingVertical={12} gap={12}>
-                {listRating?.map(rate => (
-                  <Block key={rate.user_id}>
+                {listRating?.slice(0, 4)?.map(rate => (
+                  <Block key={rate.created_at}>
                     <Block row paddingBottom={5}>
                       <Block
                         width={25}
@@ -493,19 +493,23 @@ export default function DetailProduct({route}) {
                         <Block width={width - 343} marginTop={11}>
                           <RankStar size={12} value={rate?.star} />
                         </Block>
-                        <Text
-                          fontSize={14}
-                          regular
-                          color={COLORS.black2}
-                          marginTop={8}
-                          numberOfLines={2}>
-                          {rate?.content}
-                        </Text>
+                        {rate?.content === '' ? (
+                          ''
+                        ) : (
+                          <Text
+                            fontSize={14}
+                            regular
+                            color={COLORS.black2}
+                            marginTop={8}
+                            numberOfLines={2}>
+                            {rate?.content}
+                          </Text>
+                        )}
                         <Text
                           fontSize={14}
                           regular
                           color={COLORS.lightGray1}
-                          marginTop={19}>
+                          marginTop={10}>
                           {ConvertDateTimeStamp(rate?.created_at)}
                         </Text>
                       </Block>

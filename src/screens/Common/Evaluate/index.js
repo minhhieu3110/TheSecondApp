@@ -7,13 +7,13 @@ import {
   ProgressBar,
   RankStar,
   Text,
+  ScrollView,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {ConvertDateTimeStamp} from '@utils';
 import {formatCurrency} from '@utils/helper';
 import {useEffect} from 'react';
-import {ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
 export default function Evaluate({route}) {
@@ -40,18 +40,24 @@ export default function Evaluate({route}) {
   const starStats = useSelector(state => state.listRating?.star_stats || []);
   const average = useSelector(state => state?.listRating?.average || 0);
   const total = useSelector(state => state?.listRating?.total || 0);
+  const onRefesh = () => {
+    dispatch({
+      type: actions.RATING,
+      params: {item_id: route?.params?.item_id},
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle canGoBack title={'Đánh giá sản phẩm'} />
-      <ScrollView>
+      <ScrollView onRefresh={onRefesh}>
         <Block marginTop={15} marginHorizontal={12}>
           <Block paddingBottom={14} radius={8} backgroundColor={COLORS.white}>
             <Block row marginTop={12} marginLeft={12} marginRight={17}>
               <Block width={73} height={73} radius={5} overflow={'hidden'}>
                 <Image
                   source={{uri: detailProduct?.picture}}
-                  width={'100%'}
-                  height={'100%'}
+                  width={73}
+                  height={73}
                   resizeMode="cover"
                 />
               </Block>
@@ -122,7 +128,10 @@ export default function Evaluate({route}) {
               borderColor={COLORS.gray15}
               paddingBottom={24}>
               {listRating?.map(item => (
-                <Block key={item.user_id} marginTop={12} marginHorizontal={12}>
+                <Block
+                  key={item.created_at}
+                  marginTop={12}
+                  marginHorizontal={12}>
                   <Block row paddingBottom={5}>
                     <Block
                       width={25}
@@ -145,19 +154,23 @@ export default function Evaluate({route}) {
                       <Block width={width - 343} marginTop={11}>
                         <RankStar size={12} value={item?.star} />
                       </Block>
-                      <Text
-                        fontSize={14}
-                        regular
-                        color={COLORS.black2}
-                        marginTop={8}
-                        numberOfLines={2}>
-                        {item?.content}
-                      </Text>
+                      {item?.content === '' ? (
+                        ''
+                      ) : (
+                        <Text
+                          fontSize={14}
+                          regular
+                          color={COLORS.black2}
+                          marginTop={8}
+                          numberOfLines={2}>
+                          {item?.content}
+                        </Text>
+                      )}
                       <Text
                         fontSize={14}
                         regular
                         color={COLORS.lightGray1}
-                        marginTop={37}>
+                        marginTop={10}>
                         {ConvertDateTimeStamp(item?.created_at)}
                       </Text>
                     </Block>

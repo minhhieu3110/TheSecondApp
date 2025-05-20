@@ -8,18 +8,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useEffect, useState} from 'react';
 import actions from '@actions';
 import {URL_API} from 'redux/sagas/common';
-const ModalMethodPay = ({visible, close, data = []}) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch({
-      type: actions.GET_PAYMENT_METHOD,
-    });
-  }, [dispatch]);
-  const paymentMethod = useSelector(
-    state => state.getPaymentMethod?.data || [],
-  );
-  const [methodSelected, setMethodSelected] = useState(1);
-
+const ModalMethodPay = ({visible, close, data = [], onPress}) => {
+  const [methodSelected, setMethodSelected] = useState();
+  const selectPay = id => {
+    setMethodSelected(id);
+    onPress(id);
+  };
   return (
     <Modal
       visible={visible}
@@ -72,10 +66,10 @@ const ModalMethodPay = ({visible, close, data = []}) => {
             borderTopWidth={1}
             borderColor={COLORS.grayBreak}>
             <Block marginTop={15} marginLeft={24} marginRight={21.2} gap={15}>
-              {paymentMethod.map(item => (
+              {data.map(item => (
                 <Block key={item.method_id}>
                   <Pressable
-                    onPress={() => setMethodSelected(item.method_id)}
+                    onPress={() => selectPay(item.method_id)}
                     alignCenter
                     row>
                     <Image

@@ -340,3 +340,11 @@ export const convertOption = (arr_option_tmp, option1, option2, option3) => {
     return checkOption1 && checkOption2 && checkOption3;
   });
 };
+export const convertDate = dates => {
+  const date = new Date();
+  return date.toLocaleString('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+};

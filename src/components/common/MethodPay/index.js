@@ -11,7 +11,14 @@ import {COLORS} from '@theme';
 import {width} from '@responsive';
 import {useState} from 'react';
 
-export default function MethodPay({top, payData = [], voucherData = []}) {
+export default function MethodPay({
+  top,
+  payData = [],
+  titlePay,
+  voucherData = [],
+  onPressPay,
+  onPressVoucher,
+}) {
   const [methodPay, setMethodPay] = useState(0);
   const [voucher, setVoucher] = useState(0);
   return (
@@ -32,7 +39,7 @@ export default function MethodPay({top, payData = [], voucherData = []}) {
             </Text>
             <Block marginTop={9}>
               <Text fontSize={15} medium color={COLORS.red4}>
-                Tiền mặt
+                {titlePay ? titlePay : 'Chọn phương thức'}
               </Text>
               <Block absolute right={0}>
                 <Icon
@@ -75,8 +82,10 @@ export default function MethodPay({top, payData = [], voucherData = []}) {
         visible={methodPay}
         close={() => setMethodPay(false)}
         data={payData}
+        onPress={onPressPay}
       />
       <ModalVoucher
+        onPress={onPressVoucher}
         visible={voucher}
         close={() => setVoucher(false)}
         data={voucherData}

@@ -16,10 +16,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {URL_API} from 'redux/sagas/common';
 import {ConvertTimeStamp} from '@utils';
 import {useState} from 'react';
-const ModalVoucher = ({visible, close, data = []}) => {
+const ModalVoucher = ({visible, close, data = [], onPress}) => {
   const [promotionSelected, setPromotionSelected] = useState();
-  const onPress = promotion_id => {
+  const selectVoucher = promotion_id => {
     setPromotionSelected(promotion_id);
+    onPress(promotion_id);
   };
   return (
     <Modal
@@ -116,7 +117,7 @@ const ModalVoucher = ({visible, close, data = []}) => {
               showsVerticalScrollIndicator={true}>
               {data?.map(item => (
                 <Pressable
-                  onPress={() => onPress(item.promotion_id)}
+                  onPress={() => selectVoucher(item.promotion_id)}
                   key={item.promotion_id}
                   radius={15}
                   backgroundColor={COLORS.white}

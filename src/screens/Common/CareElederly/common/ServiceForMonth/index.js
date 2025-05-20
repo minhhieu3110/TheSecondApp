@@ -3,17 +3,14 @@ import {
   HeaderChooseTime,
   Pressable,
   Text,
-  Image,
   TextInput,
   ButtonSubmitService,
   SANStaffDuties,
   ChooseStartTime,
-  ModalCalendar,
   DateMultiPicker,
 } from '@components';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
-import {icon} from '@assets';
 import {width} from '@responsive';
 import {ScrollView} from 'react-native';
 import {commonRoot} from 'navigation/navigationRef';
@@ -21,7 +18,7 @@ import router from '@router';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import {formatTime} from '@utils';
-// import DatePicker from 'react-multi-date-picker';
+import {format} from 'date-fns';
 export default function Elederly_Servicedurationmonth({route}) {
   const dayWeek = [
     {id: 1, title: 'T2'},
@@ -44,6 +41,7 @@ export default function Elederly_Servicedurationmonth({route}) {
       return [...prevState, title];
     });
   };
+  const [listDates, setListDates] = useState([]);
   const [calendar, setCalendar] = useState(0);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -61,25 +59,13 @@ export default function Elederly_Servicedurationmonth({route}) {
   const durationSelected = detailSub?.durations?.find(
     item => item.item_id === choose,
   );
-  const [listDay, setListDay] = useState(new Date());
   const infoOrder = {
     service_id: route?.params?.service_id,
     service_sub_id: route?.params?.service_sub_id,
     duration_id: choose,
     monthly_package_id: chooseOptionDuration,
     schedule_week: againWeek,
-    list_day: [
-      '24/05/2025',
-      '25/05/2025',
-      '31/05/2025',
-      '01/06/2025',
-      '07/06/2025',
-      '08/06/2025',
-      '14/06/2025',
-      '15/06/2025',
-      '21/06/2025',
-      '22/06/2025',
-    ],
+    list_day: listDates,
     start_time: start_time,
     note: content,
     promotion_id: '',
@@ -95,18 +81,7 @@ export default function Elederly_Servicedurationmonth({route}) {
         duration_id: choose,
         monthly_package_id: chooseOptionDuration,
         schedule_week: againWeek,
-        list_day: [
-          '24/05/2025',
-          '25/05/2025',
-          '31/05/2025',
-          '01/06/2025',
-          '07/06/2025',
-          '08/06/2025',
-          '14/06/2025',
-          '15/06/2025',
-          '21/06/2025',
-          '22/06/2025',
-        ],
+        list_day: listDates,
         start_time: start_time,
         note: content,
         promotion_id: '',
@@ -275,7 +250,13 @@ export default function Elederly_Servicedurationmonth({route}) {
         titleBottom={detailSub?.service?.title}
         onPress={priceCalculation}
       />
-      {calendar && <DateMultiPicker />}
+      <DateMultiPicker
+        visible={calendar}
+        close={() => setCalendar(!calendar)}
+        onPress={dates => {
+          setListDates(dates);
+        }}
+      />
     </Block>
   );
 }
