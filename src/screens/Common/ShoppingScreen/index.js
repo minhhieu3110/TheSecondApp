@@ -172,7 +172,7 @@ export default function ShoppingScreen() {
                     width={(width - 48) / 5 - 8.5}
                     alignCenter>
                     <Image
-                      source={{uri: `${URL_API.uploads}/${status?.picture}`}}
+                      source={{uri: status?.picture}}
                       width={62}
                       height={62}
                     />

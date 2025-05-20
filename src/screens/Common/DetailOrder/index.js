@@ -71,7 +71,7 @@ export default function DetailOrder({route}) {
             <Block rowCenter>
               <Image
                 source={{
-                  uri: `${URL_API.uploads}/${detailOrder?.status?.picture}`,
+                  uri: detailOrder?.status?.picture,
                 }}
                 width={53}
                 height={53}
