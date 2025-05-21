@@ -71,7 +71,7 @@ export default function ShoppingScreen() {
       <Block>
         <Image
           radius={10}
-          source={{uri: item.content}}
+          source={{uri: `${URL_API.uploads}/${item.content}`}}
           width={width - 68}
           height={164}
           resizeMode="cover"

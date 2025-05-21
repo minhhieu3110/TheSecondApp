@@ -22,6 +22,24 @@ export default function CancelOrder() {
       type: actions.CANCEL_ORDER_PRO,
     });
   };
+  const orderAgain = (info = []) => {
+    info?.forEach(item =>
+      dispatch({
+        type: actions.ADD_CART,
+        body: {
+          product_id: item.product_item_id,
+          quantity: item.quantity,
+        },
+      }),
+    );
+    dispatch({
+      type: actions.GET_CART,
+    });
+  };
+
+  const carts = useSelector(state => state.getCart?.data || []);
+  console.log('carts', carts);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView
@@ -75,7 +93,7 @@ export default function CancelOrder() {
                     borderWidth={0.2}
                     radius={8}
                     borderColor={listOrder?.status?.color_border}
-                    key={item.product_item_id}>
+                    key={detail?.product_item_id}>
                     <Image
                       source={{uri: detail?.product?.picture}}
                       width={73}
@@ -137,7 +155,15 @@ export default function CancelOrder() {
                     Bạn có thể đặt lại đơn hàng
                   </Text>
                 </Block>
-                <Block
+                <Pressable
+                  onPress={() =>
+                    orderAgain(
+                      item?.details?.map(detail => ({
+                        product_item_id: detail?.product_item_id,
+                        quantity: detail?.quantity,
+                      })),
+                    )
+                  }
                   width={width - 296}
                   height={42}
                   radius={8}
@@ -147,7 +173,7 @@ export default function CancelOrder() {
                   <Text fontSize={15} regular color={COLORS.white}>
                     Đặt lại
                   </Text>
-                </Block>
+                </Pressable>
               </Block>
             </Pressable>
           ))}

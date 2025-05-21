@@ -68,7 +68,11 @@ const DateMultiPicker = ({visible, close, onPress}) => {
                 />
               </Pressable>
             </Block>
-            <Block marginTop={15} gap={10} marginHorizontal={12}>
+            <Block
+              marginTop={15}
+              gap={10}
+              marginHorizontal={12}
+              width={width - 48}>
               <Block
                 width={width - 48}
                 backgroundColor={COLORS.white}
@@ -89,12 +93,14 @@ const DateMultiPicker = ({visible, close, onPress}) => {
                         key={day}
                         fontSize={13}
                         semiBold
+                        width={(width - 72) / 7}
+                        center
                         color={COLORS.black2}>
                         {day}
                       </Text>
                     ))}
                   </Block>
-                  <Block marginTop={22} rowGap={18} row wrap columnGap={32}>
+                  <Block marginTop={22} rowGap={18} row wrap>
                     {days?.map(day => {
                       const isInMonth = isSameMonth(day, currentMonth);
                       const isSelected = selectedDates.some(d =>
@@ -102,43 +108,50 @@ const DateMultiPicker = ({visible, close, onPress}) => {
                       );
                       const isInDay = isSameDay(day, new Date());
                       return (
-                        <Pressable
+                        <Block
+                          width={(width - 76) / 7}
                           key={day}
-                          onPress={() => toggleDate(day)}
-                          width={25}
-                          height={25}
-                          radius={25}
                           justifyCenter
-                          alignCenter
-                          overflow={'hidden'}
-                          opacity={isInMonth && 1}>
-                          {isSelected ? (
-                            <RadialGradient
-                              colors={COLORS.gradient5}
-                              style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: 25,
-                                height: 25,
-                              }}>
+                          alignCenter>
+                          <Pressable
+                            onPress={() => toggleDate(day)}
+                            width={25}
+                            height={25}
+                            radius={25}
+                            justifyCenter
+                            alignCenter
+                            overflow={'hidden'}
+                            opacity={isInMonth ? 1 : 0.5}>
+                            {isSelected ? (
+                              <RadialGradient
+                                colors={COLORS.gradient5}
+                                style={{
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  width: 25,
+                                  height: 25,
+                                }}>
+                                <Text
+                                  fontSize={13}
+                                  regular
+                                  color={
+                                    isSelected ? COLORS.white : COLORS.black2
+                                  }>
+                                  {format(day, 'd')}
+                                </Text>
+                              </RadialGradient>
+                            ) : (
                               <Text
                                 fontSize={13}
                                 regular
                                 color={
-                                  isSelected ? COLORS.white : COLORS.black2
+                                  isInDay ? COLORS.yellow3 : COLORS.black2
                                 }>
                                 {format(day, 'd')}
                               </Text>
-                            </RadialGradient>
-                          ) : (
-                            <Text
-                              fontSize={13}
-                              regular
-                              color={isInDay ? COLORS.yellow3 : COLORS.black2}>
-                              {format(day, 'd')}
-                            </Text>
-                          )}
-                        </Pressable>
+                            )}
+                          </Pressable>
+                        </Block>
                       );
                     })}
                   </Block>
@@ -164,12 +177,14 @@ const DateMultiPicker = ({visible, close, onPress}) => {
                         key={day}
                         fontSize={13}
                         semiBold
+                        width={(width - 72) / 7}
+                        center
                         color={COLORS.black2}>
                         {day}
                       </Text>
                     ))}
                   </Block>
-                  <Block marginTop={22} rowGap={18} row wrap columnGap={32}>
+                  <Block marginTop={22} rowGap={18} row wrap>
                     {days2?.map(day => {
                       const isInMonth = isSameMonth(
                         day,
@@ -179,40 +194,45 @@ const DateMultiPicker = ({visible, close, onPress}) => {
                         isSameDay(d, day),
                       );
                       return (
-                        <Pressable
+                        <Block
+                          width={(width - 76) / 7}
                           key={day}
-                          onPress={() => toggleDate(day)}
-                          width={25}
-                          height={25}
-                          radius={25}
                           justifyCenter
-                          alignCenter
-                          overflow={'hidden'}
-                          opacity={isInMonth && 1}>
-                          {isSelected ? (
-                            <RadialGradient
-                              colors={COLORS.gradient5}
-                              style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: 25,
-                                height: 25,
-                              }}>
-                              <Text
-                                fontSize={13}
-                                regular
-                                color={
-                                  isSelected ? COLORS.white : COLORS.black2
-                                }>
+                          alignCenter>
+                          <Pressable
+                            onPress={() => toggleDate(day)}
+                            width={25}
+                            height={25}
+                            radius={25}
+                            justifyCenter
+                            alignCenter
+                            overflow={'hidden'}
+                            opacity={isInMonth ? 1 : 0.5}>
+                            {isSelected ? (
+                              <RadialGradient
+                                colors={COLORS.gradient5}
+                                style={{
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  width: 25,
+                                  height: 25,
+                                }}>
+                                <Text
+                                  fontSize={13}
+                                  regular
+                                  color={
+                                    isSelected ? COLORS.white : COLORS.black2
+                                  }>
+                                  {format(day, 'd')}
+                                </Text>
+                              </RadialGradient>
+                            ) : (
+                              <Text fontSize={13} regular color={COLORS.black2}>
                                 {format(day, 'd')}
                               </Text>
-                            </RadialGradient>
-                          ) : (
-                            <Text fontSize={13} regular color={COLORS.black2}>
-                              {format(day, 'd')}
-                            </Text>
-                          )}
-                        </Pressable>
+                            )}
+                          </Pressable>
+                        </Block>
                       );
                     })}
                   </Block>

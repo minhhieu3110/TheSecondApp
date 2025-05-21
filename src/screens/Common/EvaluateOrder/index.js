@@ -18,8 +18,6 @@ import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import StarRating from 'react-native-star-rating-widget';
 import Toast from 'react-native-toast-message';
-import {commonRoot} from 'navigation/navigationRef';
-import router from '@router';
 import {useForm} from 'react-hook-form';
 export default function EvaluateOrder({route}) {
   const {control} = useForm();
