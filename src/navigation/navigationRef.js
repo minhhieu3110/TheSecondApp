@@ -9,7 +9,7 @@ const rootNavigation = (rootName, screeName, screenParams) => {
   });
 };
 export const root = {
-  goBack: () => navigationRef.goBack(),
+  goBack: screenParams => navigationRef.goBack(screenParams),
   navigate: (screeName, screenParams) => {
     navigationRef.navigate(screeName, screenParams);
   },

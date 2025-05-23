@@ -50,7 +50,7 @@ export function* generalGetPaging(config, action) {
 }
 
 export const URL_API = {
-  uploads: 'http://san.baoan.app24h.net:81/uploads',
+  uploads: 'https:san.thietkewebsite.info.vn/uploads',
   user: {
     send_otp: 'user/send-otp',
     verify_otp: 'user/verify-otp',
@@ -75,6 +75,7 @@ export const URL_API = {
     list_bank: 'user/list-bank',
     get_bankcard: 'user/get-bankcard',
     add_bankcard: 'user/add-bankcard',
+    delete_bankcard: 'user/delete-bankcard',
     update_avatar: 'user/update-avatar',
     delete: 'user/delete',
     delete_address: 'user/delete-addressbook',

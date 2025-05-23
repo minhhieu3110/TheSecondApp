@@ -74,13 +74,14 @@ export default function BottomTabContainer() {
           tabBarLabel: '',
           tabBarIcon: ({color}) => (
             <Block
-              width={53.93}
-              height={53.93}
+              width={70}
+              height={70}
               radius={50}
               absolute
-              bottom={0}
+              bottom={10}
               alignCenter
-              justifyCenter>
+              justifyCenter
+              backgroundColor={COLORS.white}>
               <Image source={icon.icon_message} width={53.93} height={53.93} />
             </Block>
           ),

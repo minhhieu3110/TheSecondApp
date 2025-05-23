@@ -259,7 +259,6 @@ const DateMultiPicker = ({visible, close, onPress}) => {
   );
 };
 
-// Get all days to show in calendar grid for the given month
 function getCalendarDays(month) {
   const start = startOfWeek(startOfMonth(month), {weekStartsOn: 0});
   const end = endOfWeek(endOfMonth(month), {weekStartsOn: 0});

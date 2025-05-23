@@ -4,9 +4,8 @@ import {
   Block,
   HeaderTitle,
   Image,
-  MultiImageInput,
+  ImagePicker,
   Pressable,
-  RankStar,
   ScrollView,
   Text,
   TextInput,
@@ -20,7 +19,6 @@ import StarRating from 'react-native-star-rating-widget';
 import Toast from 'react-native-toast-message';
 import {useForm} from 'react-hook-form';
 export default function EvaluateOrder({route}) {
-  const {control} = useForm();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
@@ -32,14 +30,21 @@ export default function EvaluateOrder({route}) {
   const [visible, setVisible] = useState(false);
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState('');
-  const [pictures, setPictures] = useState([]);
+  const [pictures, setPictures] = useState();
   const evaluate = (order_id, product_id) => {
     if (rating > 0) {
+      const file_attach = new FormData();
+      file_attach.append('file_attach', {
+        uri: pictures?.path,
+        name: pictures?.filename,
+        type: pictures?.mime,
+      });
       const body = {
         order_id: order_id,
         product_id: product_id,
         star: rating,
         content: content,
+        file_attach: file_attach,
       };
       dispatch({
         type: actions.EVALUATE_ORDER,
@@ -49,11 +54,11 @@ export default function EvaluateOrder({route}) {
             type: 'success',
             text1: res?.message,
           });
-          // commonRoot.navigate(router.SHOPPING);
         },
       });
     }
   };
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle canGoBack title={'Đánh giá'} />
@@ -150,22 +155,33 @@ export default function EvaluateOrder({route}) {
               borderDashed={5}
               radius={10}
               borderWidth={1}
-              borderColor={COLORS.red4}>
-              <Image
-                source={icon.icon_upload_image}
-                width={47}
-                height={46.95}
-                marginHorizontal={65}
-                marginTop={65}
-              />
-              <Text
-                fontSize={16}
-                regular
-                color={COLORS.black2}
-                marginTop={16}
-                marginLeft={37}>
-                Ảnh đính kèm
-              </Text>
+              borderColor={COLORS.red4}
+              overflow={'hidden'}>
+              {pictures ? (
+                <Image
+                  source={{uri: pictures?.path}}
+                  width={177}
+                  height={177}
+                />
+              ) : (
+                <Block>
+                  <Image
+                    source={icon.icon_upload_image}
+                    width={47}
+                    height={46.95}
+                    marginHorizontal={65}
+                    marginTop={65}
+                  />
+                  <Text
+                    fontSize={16}
+                    regular
+                    color={COLORS.black2}
+                    marginTop={16}
+                    marginLeft={37}>
+                    Ảnh đính kèm
+                  </Text>
+                </Block>
+              )}
             </Pressable>
             <Pressable
               onPress={() => evaluate(item.order_id, item.product_item_id)}
@@ -182,9 +198,14 @@ export default function EvaluateOrder({route}) {
           </Block>
         ))}
       </ScrollView>
-      {/* {visible && (
-        <MultiImageInput control={control} name={pictures} maxImage={5} />
-      )} */}
+      {visible && (
+        <ImagePicker
+          hidePicker={() => setVisible(!visible)}
+          onImagePick={e => {
+            setPictures(e);
+          }}
+        />
+      )}
     </Block>
   );
 }

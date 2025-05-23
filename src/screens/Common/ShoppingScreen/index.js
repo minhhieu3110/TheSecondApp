@@ -71,7 +71,7 @@ export default function ShoppingScreen() {
       <Block>
         <Image
           radius={10}
-          source={{uri: `${URL_API.uploads}/${item.content}`}}
+          source={{uri: item.content}}
           width={width - 68}
           height={164}
           resizeMode="cover"
@@ -226,6 +226,7 @@ export default function ShoppingScreen() {
                   source={{uri: item.picture}}
                   width={(width - 36) / 3}
                   height={152}
+                  resizeMode="contain"
                 />
                 <Block absolute bottom={11} left={11} right={11} zIndex={10}>
                   <Text fontSize={15} semiBold color={COLORS.white}>

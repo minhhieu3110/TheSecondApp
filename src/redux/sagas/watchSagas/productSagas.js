@@ -66,7 +66,6 @@ function* listRating(action) {
   const {item_id} = yield action.params;
   try {
     const res = yield api.get(`${URL_API.product.list_rating}/${item_id}`);
-    console.log('stats', res.data.star_stats);
 
     yield put({
       type: _onSuccess(action.type),

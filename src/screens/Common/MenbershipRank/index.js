@@ -10,36 +10,13 @@ import {Modal, SafeAreaView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
+import {Table, Row, Rows} from 'react-native-table-component';
 export default function MenbershipRank() {
-  const [bronze, setBronze] = useState(true);
-  const [silver, setSilver] = useState(false);
-  const [gold, setGold] = useState(false);
-  const [diamon, setDiamon] = useState(false);
-
-  const benefit = [
-    {
-      title: 'Đồng',
-      titleBenefit: 'Hạng đồng',
-      icon: `${icon.rank_bronze}`,
-    },
-    {
-      title: 'Bạc',
-      titleBenefit: 'Hạng bạc',
-      icon: `${icon.rank_silver}`,
-    },
-    {
-      title: 'Vàng',
-      titleBenefit: 'Hạng vàng',
-      icon: `${icon.rank_gold}`,
-    },
-    {
-      title: 'Kim cương',
-      titleBenefit: 'Hạng kim cương',
-      icon: `${icon.rank_diamon}`,
-    },
-  ];
-
   const dispatch = useDispatch();
+  const data = {
+    tableHead: ['Tiêu chí', 'Đã đạt', 'Lên hạng'],
+    tableData: ['Điểm tích luỹ'],
+  };
   useEffect(() => {
     dispatch({
       type: actions.INFO_RANK,
@@ -95,20 +72,33 @@ export default function MenbershipRank() {
           marginTop={15}
           backgroundColor={COLORS.gray11}
         />
-        <Block width={width - 44.5} marginTop={14} marginLeft={10}>
+        <Block
+          width={width - 44.5}
+          marginTop={14}
+          marginLeft={10}
+          overflow={'hidden'}>
           <Block row>
-            <Text fontSize={15} semiBold color={COLORS.black5}>
+            <Text
+              width={width - 260}
+              fontSize={15}
+              semiBold
+              color={COLORS.black5}>
               Tiêu chí
             </Text>
             <Text
+              width={width - 333}
               fontSize={15}
               semiBold
               color={COLORS.black5}
-              marginLeft={160}
-              marginRight={64}>
+              center>
               Đã đạt
             </Text>
-            <Text fontSize={15} semiBold color={COLORS.black5}>
+            <Text
+              width={width - 333}
+              fontSize={15}
+              semiBold
+              center
+              color={COLORS.black5}>
               Lên hạng
             </Text>
           </Block>
@@ -118,18 +108,27 @@ export default function MenbershipRank() {
             marginTop={15}
           />
           <Block row marginTop={17}>
-            <Text fontSize={15} regular color={COLORS.black5}>
+            <Text
+              width={width - 260}
+              fontSize={15}
+              regular
+              color={COLORS.black5}>
               Điểm tích luỹ
             </Text>
             <Text
+              width={width - 333}
               fontSize={15}
               semiBold
               color={COLORS.red4}
-              marginLeft={129}
-              marginRight={92}>
+              center>
               {infoRank?.point}
             </Text>
-            <Text fontSize={15} regular color={COLORS.black5}>
+            <Text
+              width={width - 333}
+              fontSize={15}
+              regular
+              color={COLORS.black5}
+              center>
               {infoRank?.next_rank?.point_min}
             </Text>
           </Block>

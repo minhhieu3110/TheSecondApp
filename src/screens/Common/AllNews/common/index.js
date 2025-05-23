@@ -25,7 +25,7 @@ export default function DetailNew({route}) {
       <ScrollView>
         <Block width={width} height={199.6}>
           <Image
-            source={{uri: `${URL_API.uploads}/${detailNew?.picture}`}}
+            source={{uri: detailNew?.picture}}
             width={width}
             height={199.6}
             resizeMode="cover"

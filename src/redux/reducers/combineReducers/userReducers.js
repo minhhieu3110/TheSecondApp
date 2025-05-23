@@ -83,6 +83,9 @@ export const getRef = (...props) => {
 export const recharge = (...props) => {
   return reducerDefault(...props, actions.RECHARGE);
 };
+export const updateBill = (...props) => {
+  return reducerDefault(...props, actions.UPDATE_BILL);
+};
 export const getListBank = (...props) => {
   return reducerDefault(...props, actions.GET_LIST_BANK);
 };
@@ -91,6 +94,9 @@ export const getBankCard = (...props) => {
 };
 export const addBank = (...props) => {
   return reducerDefault(...props, actions.ADD_BANK);
+};
+export const deleteBank = (...props) => {
+  return reducerDefault(...props, actions.DELETE_BANK);
 };
 export const updateAvatar = (...props) => {
   return reducerDefault(...props, actions.UPDATE_AVATAR);

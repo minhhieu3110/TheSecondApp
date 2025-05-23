@@ -64,6 +64,7 @@ import AllNews from './AllNews';
 import DetailNew from './AllNews/common';
 import UpdateAddress from './UpdateAddress';
 import DetailOrder from './DetailOrder';
+import AddBankAccount from './AddBankAccount';
 
 export const common = {
   [router.VOUCHER]: Voucher,
@@ -135,4 +136,5 @@ export const common = {
   [router.DETAIL_PROMO]: DetailPromo,
   [router.ALL_NEWS]: AllNews,
   [router.DETAIL_NEW]: DetailNew,
+  [router.ADD_BANK_ACCOUNT]: AddBankAccount,
 };

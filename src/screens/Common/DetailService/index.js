@@ -51,11 +51,6 @@ export default function DetailService({route}) {
   const reasonCancel = reasons.find(
     item => item.item_id === detailOrder?.reason_id,
   );
-  const handle = () => {
-    detailOrder?.order?.repeat_weekly.length === 0
-      ? setShow(!show)
-      : setVisible(!visible);
-  };
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -440,7 +435,7 @@ export default function DetailService({route}) {
           ) : (
             <Block marginTop={23} row height={48}>
               <Pressable
-                onPress={handle}
+                onPress={() => setShow(!show)}
                 width={(width - 24) / 2 - 6}
                 justifyCenter
                 alignCenter

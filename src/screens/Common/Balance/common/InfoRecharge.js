@@ -8,6 +8,7 @@ import {
   Icon,
   Pressable,
   Button,
+  ImagePicker,
 } from '@components';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {width} from '@responsive';
@@ -27,6 +28,25 @@ export default function InfoRecharge({route}) {
   }, [rechargeInfo, dispatch]);
   const userInfo = useSelector(state => state.getUserInfo?.data || []);
   const rechargeInfo = useSelector(state => state.recharge?.data || []);
+  const [show, setShow] = useState(false);
+  const [imageBill, setImageBill] = useState();
+  const updateBill = () => {
+    if (!imageBill) {
+      console.error('No image selected for the bill.');
+      return;
+    }
+    const file_attach = new FormData();
+    file_attach.append('file_attach', {
+      uri: imageBill.path,
+      name: imageBill.filename,
+      type: imageBill.mime,
+    });
+    dispatch({
+      type: actions.UPDATE_BILL,
+      params: {id: rechargeInfo?.id},
+      body: {file_attach: file_attach},
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Thông tin chuyển khoản'} canGoBack />
@@ -143,7 +163,8 @@ export default function InfoRecharge({route}) {
           <Text fontSize={15} semiBold color={COLORS.black1}>
             Hình ảnh biên lai
           </Text>
-          <Block
+          <Pressable
+            onPress={() => setShow(!show)}
             width={width - 251}
             height={width - 251}
             backgroundColor={COLORS.pinkWhite2}
@@ -165,10 +186,18 @@ export default function InfoRecharge({route}) {
             <Text fontSize={16} regular color={COLORS.black1} marginTop={16}>
               Ảnh chuyển tiền
             </Text>
-          </Block>
+          </Pressable>
         </Block>
       </Block>
-      <Button title="Gửi lệnh" />
+      <Button title="Gửi lệnh" onPress={updateBill} />
+      {show && (
+        <ImagePicker
+          hidePicker={() => setShow(!show)}
+          onImagePick={e => {
+            setImageBill(e);
+          }}
+        />
+      )}
     </Block>
   );
 }

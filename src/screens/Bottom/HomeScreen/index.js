@@ -43,7 +43,7 @@ export default function HomeScreen() {
       <Block>
         <Image
           radius={10}
-          source={{uri: `${URL_API.uploads}/${item.content}`}}
+          source={{uri: item.content}}
           width={width - 68}
           height={164}
           resizeMode="cover"
@@ -52,18 +52,22 @@ export default function HomeScreen() {
       </Block>
     );
   }, []);
-  console.log(service);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView
-        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           backgroundColor: COLORS.gray10,
-          paddingBottom: 171,
+          paddingBottom: 100,
         }}>
         <Block width={width} height={337} backgroundColor={COLORS.white}>
-          <Block width={width - 24} height={46} row left={12} spaceBetween>
+          <Block
+            width={width - 24}
+            height={46}
+            row
+            left={12}
+            spaceBetween
+            marginTop={10}>
             <Block marginTop={3} height={43}>
               <Text
                 color={COLORS.red4}
@@ -219,7 +223,7 @@ export default function HomeScreen() {
                   justifyCenter
                   alignCenter>
                   <Image
-                    source={{uri: `${URL_API.uploads}/${item.picture}`}}
+                    source={{uri: item.picture}}
                     width={72}
                     height={83.46}
                   />
@@ -358,7 +362,7 @@ export default function HomeScreen() {
               marginHorizontal={12}
               marginBottom={15}
               gap={12}>
-              {news?.slice(0, 4)?.map(item => (
+              {news?.slice(0, 3)?.map(item => (
                 <Pressable
                   onPress={() =>
                     commonRoot.navigate(router.DETAIL_NEW, {
@@ -375,7 +379,7 @@ export default function HomeScreen() {
                     radius={10}
                     overflow={'hidden'}>
                     <Image
-                      source={{uri: `${URL_API.uploads}/${item?.picture}`}}
+                      source={{uri: item.picture}}
                       width={width - 278}
                       height={113}
                     />

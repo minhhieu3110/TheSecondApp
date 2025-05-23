@@ -1,14 +1,12 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Image, Text, Icon, Pressable} from '@components';
+import {Block, Image, Text, ScrollView, Pressable} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {formatCurrency} from '@utils';
 import {commonRoot} from 'navigation/navigationRef';
 import {useEffect} from 'react';
-import {ScrollView} from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 
 export default function Cancel() {
@@ -22,10 +20,17 @@ export default function Cancel() {
   const cancelOrder = useSelector(
     state => state.getListOrderCancel?.data || [],
   );
-
+  const onRefresh = () => {
+    dispatch({
+      type: actions.GET_LIST_ORDER_CANCEL,
+      params: {is_status: -1},
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <ScrollView contentContainerStyle={{paddingBottom: 171}}>
+      <ScrollView
+        contentContainerStyle={{paddingBottom: 171}}
+        onRefresh={onRefresh}>
         <Block width={width - 24} marginTop={15} marginHorizontal={12}>
           {cancelOrder?.map(item => (
             <Pressable

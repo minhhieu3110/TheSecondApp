@@ -41,7 +41,7 @@ export default function AllNews() {
               radius={10}
               overflow={'hidden'}>
               <Image
-                source={{uri: `${URL_API.uploads}/${item?.picture}`}}
+                source={{uri: item?.picture}}
                 width={width - 278}
                 height={113}
               />

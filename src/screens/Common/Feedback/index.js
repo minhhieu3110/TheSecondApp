@@ -49,22 +49,23 @@ export default function Feedback() {
       name: image?.filename,
       type: image?.mime,
     });
-
+    const body = {
+      service_id: serviceId,
+      full_name: userInfo?.full_name,
+      phone: userInfo?.phone,
+      content: content,
+      file_attach: file_attach,
+    };
     dispatch({
       type: actions.FEEDBACK,
-      body: {
-        service_id: serviceId,
-        full_name: userInfo?.full_name,
-        phone: userInfo?.phone,
-        content: content,
-        file_attach: file_attach,
-      },
+      body: body,
       onSuccess: () => {
         setFeedbackSent(!feedbackSent);
       },
     });
   };
   const feedback = useSelector(state => state.getFeedback?.data || []);
+  console.log(image?.path);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -146,13 +147,22 @@ export default function Feedback() {
           borderDashed
           borderWidth={1}
           borderColor={COLORS.red4}
-          marginTop={15}>
-          <Block marginTop={65} justifyCenter alignCenter>
-            <Image source={icon.icon_upload_image} width={47} height={46.95} />
-            <Text fontSize={16} regular color={COLORS.black1} marginTop={16}>
-              Ảnh đính kèm
-            </Text>
-          </Block>
+          marginTop={15}
+          overflow={'hidden'}>
+          {image ? (
+            <Image source={{uri: image?.path}} width={177} height={177} />
+          ) : (
+            <Block marginTop={65} justifyCenter alignCenter>
+              <Image
+                source={icon.icon_upload_image}
+                width={47}
+                height={46.95}
+              />
+              <Text fontSize={16} regular color={COLORS.black1} marginTop={16}>
+                Ảnh đính kèm
+              </Text>
+            </Block>
+          )}
         </Pressable>
       </Block>
       <Button title="Gửi" onPress={sendFeedback} />

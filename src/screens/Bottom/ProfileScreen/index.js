@@ -251,7 +251,7 @@ export default function ProfileScreen() {
               </Text>
             </Block>
             <Block
-              marginLeft={13}
+              marginHorizontal={13}
               marginTop={23}
               width={width - 50}
               height={74}

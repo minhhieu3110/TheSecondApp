@@ -2,7 +2,8 @@ import store from '@redux/store';
 import axios from 'axios';
 import {handleExpiredToken, throttle} from './helper';
 
-axios.defaults.baseURL = 'http://san.baoan.app24h.net:81/api/';
+// axios.defaults.baseURL = 'http://san.baoan.app24h.net:81/api/';
+axios.defaults.baseURL = 'https:san.thietkewebsite.info.vn/api/';
 const getDataBody = config => {
   let data = '';
   if (

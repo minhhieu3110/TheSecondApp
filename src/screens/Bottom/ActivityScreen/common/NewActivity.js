@@ -29,11 +29,7 @@ export default function NewActivity() {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <ScrollView
-        contentContainerStyle={{paddingBottom: 100}}
-        refreshControl={
-          <RefreshControl refreshing={false} onRefresh={onRefresh} />
-        }>
+      <ScrollView onRefresh={onRefresh}>
         <Block width={width - 24} marginTop={15} marginHorizontal={12}>
           {newOrder.length === 0 ? (
             <Block marginTop={42.7} alignCenter>
@@ -52,12 +48,12 @@ export default function NewActivity() {
               <Pressable
                 onPress={() => bottomRoot.navigate(router.HOME_SCREEN)}
                 marginTop={20}
-                width={width - 296}
+                marginHorizontal={94}
+                paddingHorizontal={44}
                 height={48}
                 radius={8}
                 backgroundColor={COLORS.red4}
-                justifyCenter
-                alignCenter>
+                justifyCenter>
                 <Text fontSize={15} regular color={COLORS.white}>
                   Đăng việc ngay
                 </Text>

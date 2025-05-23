@@ -119,6 +119,7 @@ const TextInput = ({
   onEndEditing,
   includeFontPadding = false,
   textAlignVertical,
+  onPress,
   ...rest
 }) => {
   const insets = useSafeAreaInsets();
@@ -258,6 +259,7 @@ const TextInput = ({
       onEndEditing={onEndEditing}
       multiline={true}
       scrollEnabled={true}
+      onPress={onPress}
     />
   );
 };

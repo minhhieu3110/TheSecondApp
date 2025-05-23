@@ -66,7 +66,6 @@ export default function LoginScreen() {
             paddingLeft={14}
             fontSize={14}
             regular
-            keyboardType={'phone-pad'}
             color={COLORS.black2}
             value={phone}
             onChangeText={setPhone}
@@ -131,7 +130,7 @@ export default function LoginScreen() {
           </Block>
         </Block>
       </Block>
-      <Block absolute bottom={35} alignCenter paddingHorizontal={48}>
+      <Block alignCenter paddingHorizontal={48} absolute bottom={35}>
         <Text fontSize={14} regular color={COLORS.placeholder} center>
           Bằng việc nhấn vào nút{' '}
           <Text semiBold color={COLORS.placeholder}>

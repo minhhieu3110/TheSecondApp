@@ -1,16 +1,13 @@
-import {Block, HeaderTitle, Image, Text} from '@components';
+import {Block, HeaderTitle, Image, Text, ScrollView} from '@components';
 import {COLORS, FONTS} from '@theme';
 import {width} from '@responsive';
-import {ScrollView} from 'react-native';
 import {icon} from '@assets';
 export default function HistoryPoint() {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle canGoBack title={'Xem lịch sử điểm thưởng'} />
       <Block width={width - 24} marginLeft={12} marginTop={15}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: 1000}}>
+        <ScrollView contentContainerStyle={{paddingBottom: 171}}>
           {Array.from({length: 8}).map((_, index) => (
             <Block
               key={index}

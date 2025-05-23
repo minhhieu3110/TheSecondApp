@@ -82,6 +82,7 @@ const commonStack = [
   {name: router.DETAIL_PROMO},
   {name: router.ALL_NEWS},
   {name: router.DETAIL_NEW},
+  {name: router.ADD_BANK_ACCOUNT},
 ];
 
 export default function CommonContainer() {

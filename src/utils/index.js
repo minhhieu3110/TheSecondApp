@@ -41,6 +41,10 @@ export const formatPhone = phone => {
   if (!phone) return '';
   return phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1 $2 $3');
 };
+export const formatBankNumber = bankNumber => {
+  if (!bankNumber) return '';
+  return bankNumber.replace(/(\d{4})(\d{4})(\d{3})/, '$1 $2 $3');
+};
 export const formatTime = time => {
   const hours = String(time.getHours()).padStart(2, '0');
   const minutes = String(time.getMinutes()).padStart(2, '0');
