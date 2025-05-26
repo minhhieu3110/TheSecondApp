@@ -1,12 +1,17 @@
 import Block from '@components/base/Block';
 import {COLORS} from '@theme';
-import {width} from '@responsive';
-const TicketVoucherShape = () => {
+const TicketVoucherShape = ({height = 150}) => {
   return (
-    <Block height={150} width={width - 395} marginLeft={8.1} alignCenter>
+    <Block
+      height={height}
+      width={37}
+      marginLeft={8.1}
+      alignCenter
+      overflow={'hidden'}
+      gap={6}>
       <Block
-        height={width - 395}
-        width={width - 395}
+        height={37}
+        width={37}
         radius={50}
         marginTop={'-50%'}
         backgroundColor={COLORS.gray10}
@@ -15,48 +20,41 @@ const TicketVoucherShape = () => {
         width={12}
         height={12}
         radius={50}
-        marginTop={3}
         backgroundColor={COLORS.gray10}
       />
       <Block
         width={12}
         height={12}
         radius={50}
-        marginTop={6}
         backgroundColor={COLORS.gray10}
       />
       <Block
         width={12}
         height={12}
         radius={50}
-        marginTop={6}
         backgroundColor={COLORS.gray10}
       />
       <Block
         width={12}
         height={12}
         radius={50}
-        marginTop={3}
         backgroundColor={COLORS.gray10}
       />
       <Block
         width={12}
         height={12}
         radius={50}
-        marginTop={6}
         backgroundColor={COLORS.gray10}
       />
       <Block
         width={12}
         height={12}
         radius={50}
-        marginTop={6}
-        marginBottom={3}
         backgroundColor={COLORS.gray10}
       />
       <Block
-        height={width - 395}
-        width={width - 395}
+        height={37}
+        width={37}
         radius={50}
         marginBottom={'-50%'}
         backgroundColor={COLORS.gray10}

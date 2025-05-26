@@ -1,27 +1,18 @@
 import {Block, Carousel, Icon, Image, Pressable, Text} from '@components';
 import {COLORS} from '@theme';
 import {ScrollView} from 'react-native';
-import {icon, image} from '@assets';
+import {icon} from '@assets';
 import {width} from '@responsive';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
-import LinearGradient from 'react-native-linear-gradient';
 import {bottomRoot, commonRoot} from 'navigation/navigationRef';
 import router from '@router';
 import RadialGradient from 'react-native-radial-gradient';
 import {useDispatch, useSelector} from 'react-redux';
 import {useCallback, useEffect} from 'react';
 import actions from '@actions';
-import {URL_API} from 'redux/sagas/common';
 import {formatCurrency} from 'utils/helper';
 export default function ShoppingScreen() {
-  const imageTopHome = [
-    {
-      id: 1,
-      image: `${image.image_top_home_1}`,
-    },
-    {id: 2, image: `${image.image_top_home_2}`},
-  ];
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({

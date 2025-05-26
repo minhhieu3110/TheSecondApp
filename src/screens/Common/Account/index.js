@@ -9,7 +9,6 @@ import {
   Pressable,
   Text,
   TextInput,
-  UpdateAvatar,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';

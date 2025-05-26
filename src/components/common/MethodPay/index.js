@@ -26,22 +26,22 @@ export default function MethodPay({
       <Text fontSize={15} semiBold color={COLORS.black2}>
         Phương thức thanh toán
       </Text>
-      <Block marginTop={15} row columnGap={12} height={73}>
+      <Block marginTop={15} row spaceBetween>
         <Pressable
           onPress={() => setMethodPay(!methodPay)}
           width={(width - 24) / 2 - 6}
+          paddingBottom={12}
           backgroundColor={COLORS.white}
-          radius={8}
-          paddingBottom={12}>
-          <Block marginTop={16} marginLeft={12} marginRight={9}>
-            <Text fontSize={14} regular color={COLORS.black1}>
+          radius={8}>
+          <Block marginLeft={4} marginTop={16} marginRight={17}>
+            <Text fontSize={14} regular color={COLORS.black2} numberOfLines={1}>
               Phương thức thanh toán
             </Text>
-            <Block marginTop={9}>
+            <Block marginTop={9} rowCenter spaceBetween>
               <Text fontSize={15} medium color={COLORS.red4}>
                 {titlePay ? titlePay : 'Chọn phương thức'}
               </Text>
-              <Block absolute right={0}>
+              <Block>
                 <Icon
                   IconType={MaterialIcons}
                   iconName={'keyboard-arrow-right'}
@@ -55,18 +55,18 @@ export default function MethodPay({
         <Pressable
           onPress={() => setVoucher(!voucher)}
           width={(width - 24) / 2 - 6}
+          paddingBottom={12}
           backgroundColor={COLORS.white}
-          radius={8}
-          paddingBottom={12}>
-          <Block marginTop={16} marginLeft={12} marginRight={9}>
-            <Text fontSize={14} regular color={COLORS.black1}>
+          radius={8}>
+          <Block marginLeft={4} marginTop={16} marginRight={17}>
+            <Text fontSize={14} regular color={COLORS.black2}>
               Chọn mã khuyến mãi
             </Text>
-            <Block marginTop={9}>
+            <Block marginTop={9} rowCenter spaceBetween>
               <Text fontSize={15} medium color={COLORS.red4}>
-                Chọn Voucher
+                Chọn voucher
               </Text>
-              <Block absolute right={0}>
+              <Block>
                 <Icon
                   IconType={MaterialIcons}
                   iconName={'keyboard-arrow-right'}

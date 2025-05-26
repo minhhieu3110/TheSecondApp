@@ -124,11 +124,26 @@ function* deleteAccount(action) {
     yield put({type: _onFail(actions.type)});
   }
 }
+// function* updateUserInfo(action) {
+//   const body = yield action.body;
+//   try {
+//     const res = yield api.patch(URL_API.user.update, body);
+//     yield put({
+//       type: _onSuccess(action.type),
+//       data: res.data,
+//     });
+//     action.onSuccess?.(res);
+//   } catch (error) {
+//     yield put({type: _onFail(action.type)});
+//     action.onFail?.(error);
+//   }
+// }
 function* updateUserInfo(action) {
   const body = yield action.body;
   try {
     const res = yield api.patch(URL_API.user.update, body);
-    yield put({
+    yield;
+    put({
       type: _onSuccess(action.type),
       data: res.data,
     });

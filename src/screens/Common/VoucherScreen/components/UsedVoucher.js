@@ -37,16 +37,15 @@ export default function UsedVoucher() {
                 row>
                 <Block
                   opacity={0.62}
-                  width={width - 335.94}
+                  width={92.06}
                   height={117.98}
                   marginTop={16}
                   marginLeft={13.8}
                   radius={11}>
                   <Image
                     source={{uri: `${URL_API.uploads}/${item.picture}`}}
-                    // resizeMode="contain"
-                    width={'100%'}
-                    height={'100%'}
+                    width={92.06}
+                    height={117.98}
                   />
                 </Block>
                 <TicketVoucherShape />

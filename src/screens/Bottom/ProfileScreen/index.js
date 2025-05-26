@@ -126,38 +126,38 @@ export default function ProfileScreen() {
                     borderRadius: 15,
                     width: width - 284.28,
                     height: 29,
-                    flexDirection: 'row',
-                    alignItems: 'center',
                     justifyContent: 'center',
                   }}>
-                  <Block width={19} height={19}>
-                    <Image
-                      source={{
-                        uri: `${URL_API.uploads}/${userInfo?.rankinfo?.picture}`,
-                      }}
-                      height={19}
-                      width={19}
+                  <Block
+                    width={width - 307.28}
+                    rowCenter
+                    spaceBetween
+                    marginLeft={8}
+                    gap={10}>
+                    <Block rowCenter gap={8.5}>
+                      <Image
+                        source={{
+                          uri: `${URL_API.uploads}/${userInfo?.rankinfo?.picture}`,
+                        }}
+                        height={19}
+                        width={19}
+                        resizeMode="contain"
+                      />
+                      <Block
+                        borderWidth={1}
+                        height={15}
+                        borderColor={COLORS.white}
+                      />
+                      <Text medium fontSize={13} color={COLORS.yellow3}>
+                        {userInfo?.rankinfo?.title}
+                      </Text>
+                    </Block>
+                    <Icon
+                      IconType={MaterialIcons}
+                      iconName={'keyboard-arrow-right'}
+                      iconColor={COLORS.yellow3}
                     />
                   </Block>
-                  <Block
-                    borderWidth={1}
-                    height={15}
-                    marginLeft={8.5}
-                    borderColor={COLORS.white}
-                  />
-                  <Text
-                    medium
-                    fontSize={13}
-                    color={COLORS.yellow3}
-                    marginLeft={8.5}>
-                    {userInfo?.rankinfo?.title}
-                  </Text>
-                  <Icon
-                    IconType={MaterialIcons}
-                    iconName={'keyboard-arrow-right'}
-                    iconColor={COLORS.yellow3}
-                    marginLeft={17}
-                  />
                   {/* </Block> */}
                 </RadialGradient>
               </Pressable>
@@ -228,8 +228,8 @@ export default function ProfileScreen() {
               </Block>
             </Pressable>
           </Block>
-          <Block
-            height={148}
+          {/* <Block
+            borderWidth={1}
             width={width - 24}
             marginLeft={12}
             marginTop={15}
@@ -253,7 +253,7 @@ export default function ProfileScreen() {
             <Block
               marginHorizontal={13}
               marginTop={23}
-              width={width - 50}
+              // width={width - 50}
               height={74}
               row
               spaceBetween>
@@ -293,6 +293,65 @@ export default function ProfileScreen() {
                       right={0}>
                       <Text fontSize={12} regular color={COLORS.white}>
                         {item?.count}
+                      </Text>
+                    </Block>
+                  )}
+                </Pressable>
+              ))}
+            </Block>
+          </Block> */}
+          <Block
+            marginTop={15}
+            paddingBottom={19}
+            backgroundColor={COLORS.white}
+            radius={8}
+            width={width - 24}
+            marginHorizontal={12}>
+            <Block rowCenter spaceBetween marginHorizontal={13} marginTop={17}>
+              <Text fontSize={15} semiBold color={COLORS.black2}>
+                Đơn hàng của bạn
+              </Text>
+              <Text fontSize={14} regular color={COLORS.red4}>
+                Lịch sử
+              </Text>
+            </Block>
+            <Block marginHorizontal={13} marginTop={23} rowCenter spaceBetween>
+              {statistical?.map(sta => (
+                <Pressable
+                  onPress={() =>
+                    bottomRoot.navigate(router.ACTIVITY_SCREEN, {
+                      title: sta.title,
+                    })
+                  }
+                  key={sta.title}
+                  width={(width - 75) / 4}
+                  height={74}
+                  alignCenter>
+                  <Image
+                    source={{uri: `${URL_API.uploads}/${sta?.picture}`}}
+                    width={42.17}
+                    height={43.55}
+                  />
+                  <Text
+                    marginTop={11.4}
+                    fontSize={13}
+                    regular
+                    color={COLORS.black2}>
+                    {sta.title}
+                  </Text>
+                  {sta?.count !== 0 && (
+                    <Block
+                      absolute
+                      top={-9}
+                      right={-9}
+                      width={18}
+                      height={18}
+                      radius={18}
+                      backgroundColor={COLORS.yellow3}
+                      justifyCenter
+                      alignCenter>
+                      <Text fontSize={12} regular color={COLORS.white}>
+                        {sta.count}
                       </Text>
                     </Block>
                   )}

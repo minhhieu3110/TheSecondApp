@@ -19,6 +19,7 @@ export default function ActivityScreen({route}) {
     {name: router.CANCEL, lable: 'Huỷ'},
   ];
   const Tab = createMaterialTopTabNavigator();
+  console.log(route?.params?.title);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -47,6 +48,7 @@ export default function ActivityScreen({route}) {
         </Text>
       </Pressable>
       <Tab.Navigator
+        jumpTo={route?.params?.title}
         screenOptions={{
           tabBarLabelStyle: {
             fontSize: 15,

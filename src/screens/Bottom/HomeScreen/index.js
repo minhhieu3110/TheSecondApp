@@ -48,6 +48,7 @@ export default function HomeScreen() {
           height={164}
           resizeMode="cover"
           marginRight={10}
+          // marginHorizontal={12}
         />
       </Block>
     );
@@ -254,15 +255,15 @@ export default function HomeScreen() {
             borderBottomLeftRadius={15}
             borderBottomRightRadius={15}
             paddingBottom={14.1}>
-            <Block row marginTop={6.7} marginHorizontal={14} columnGap={12}>
-              <Block width={119} height={91.26} alignCenter>
-                <Image
-                  source={icon.icon_shop_home}
-                  width={119}
-                  height={91.26}
-                />
-              </Block>
-              <Block marginTop={24.8} width={width - 183}>
+            <Block
+              rowCenter
+              gap={12}
+              marginHorizontal={14}
+              marginTop={6.7}
+              width={width - 50}>
+              <Image source={icon.icon_shop_home} />
+
+              <Block marginTop={24.8} width={245}>
                 <Text fontSize={16} semiBold color={COLORS.red4} uppercase>
                   e-shop
                 </Text>

@@ -1,4 +1,3 @@
-import {icon, image} from '@assets';
 import {
   Block,
   HeaderTitle,
@@ -11,9 +10,8 @@ import {
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
-import {Linking, Modal, SafeAreaView, ScrollView} from 'react-native';
+import {Linking, Modal, SafeAreaView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
 import {useDispatch, useSelector} from 'react-redux';
@@ -26,9 +24,12 @@ export default function About() {
     dispatch({
       type: actions.SOCIAL,
     });
+    dispatch({
+      type: actions.SYSOPTIONS,
+    });
   }, [dispatch]);
   const socials = useSelector(state => state.getSocial?.data || []);
-  console.log(socials);
+  const sysoptions = useSelector(state => state.sysoptions?.data || []);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -134,7 +135,7 @@ export default function About() {
                 color={COLORS.red4}
                 marginTop={20}
                 marginLeft={12}>
-                Ver 1.2.2
+                Ver {sysoptions?.app_version}
               </Text>
             </Block>
           </Block>

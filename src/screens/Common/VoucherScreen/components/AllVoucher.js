@@ -37,8 +37,8 @@ export default function AllVoucher() {
                 radius={15}
                 row>
                 <Block
-                  width={width - 335.94}
-                  height={117.98}
+                  width={92.06}
+                  height={117.48}
                   marginTop={16}
                   marginLeft={13.8}
                   radius={11}
@@ -46,11 +46,11 @@ export default function AllVoucher() {
                   <Image
                     source={{uri: `${URL_API.uploads}/${item.picture}`}}
                     resizeMode="contain"
-                    width={width - 335.94}
-                    height={117.98}
+                    width={92.06}
+                    height={117.48}
                   />
                 </Block>
-                <TicketVoucherShape />
+                <TicketVoucherShape height={150} />
                 <Block
                   width={width - 197}
                   height={107}
