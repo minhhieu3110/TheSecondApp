@@ -31,7 +31,7 @@ export default function Complete() {
               </Text>
             </Block>
             <Block
-              width={width - 327}
+              width={95}
               height={29}
               backgroundColor={COLORS.pinkWhite2}
               justifyCenter

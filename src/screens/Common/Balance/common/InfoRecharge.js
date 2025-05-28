@@ -13,7 +13,7 @@ import {
 import Clipboard from '@react-native-clipboard/clipboard';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
-import {formatCurrency} from '@utils';
+import {formatCurrency} from '@utils/helper';
 import {useEffect, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
@@ -47,6 +47,7 @@ export default function InfoRecharge({route}) {
       body: {file_attach: file_attach},
     });
   };
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Thông tin chuyển khoản'} canGoBack />
@@ -133,11 +134,14 @@ export default function InfoRecharge({route}) {
       <Block
         width={width - 24}
         marginTop={15}
-        marginLeft={12}
+        marginHorizontal={12}
+        paddingHorizontal={12}
         paddingBottom={12}
         backgroundColor={COLORS.white}
-        row>
-        <Block marginTop={20} marginLeft={13.1}>
+        row
+        spaceBetween
+        paddingTop={20}>
+        <Block>
           <Text fontSize={15} semiBold color={COLORS.black1}>
             QR code chuyển tiền
           </Text>
@@ -159,7 +163,7 @@ export default function InfoRecharge({route}) {
             </Block>
           </Block>
         </Block>
-        <Block marginTop={20} marginLeft={13.1}>
+        <Block>
           <Text fontSize={15} semiBold color={COLORS.black1}>
             Hình ảnh biên lai
           </Text>
@@ -174,18 +178,32 @@ export default function InfoRecharge({route}) {
             borderColor={COLORS.red4}
             borderWidth={1}
             justifyCenter
-            alignCenter>
-            <Block width={47} height={47}>
+            overflow={'hidden'}>
+            {imageBill ? (
               <Image
-                source={icon.icon_upload_image}
-                width={'100%'}
-                height={'100%'}
-                resizeMode="contain"
+                source={{uri: imageBill?.path}}
+                width={width - 251}
+                height={width - 251}
               />
-            </Block>
-            <Text fontSize={16} regular color={COLORS.black1} marginTop={16}>
-              Ảnh chuyển tiền
-            </Text>
+            ) : (
+              <Block alignCenter>
+                <Block width={47} height={47}>
+                  <Image
+                    source={icon.icon_upload_image}
+                    width={'100%'}
+                    height={'100%'}
+                    resizeMode="contain"
+                  />
+                </Block>
+                <Text
+                  fontSize={16}
+                  regular
+                  color={COLORS.black1}
+                  marginTop={16}>
+                  Ảnh chuyển tiền
+                </Text>
+              </Block>
+            )}
           </Pressable>
         </Block>
       </Block>

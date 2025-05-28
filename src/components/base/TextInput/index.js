@@ -116,6 +116,7 @@ const TextInput = ({
   style,
   blurOnSubmit,
   onSubmitEditing,
+  multiline = true,
   onEndEditing,
   includeFontPadding = false,
   textAlignVertical,
@@ -257,7 +258,7 @@ const TextInput = ({
       blurOnSubmit={blurOnSubmit}
       onSubmitEditing={onSubmitEditing}
       onEndEditing={onEndEditing}
-      multiline={true}
+      multiline={multiline}
       scrollEnabled={true}
       onPress={onPress}
     />

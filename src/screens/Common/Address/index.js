@@ -70,7 +70,6 @@ export default function Address({route}) {
       },
     });
   };
-  const [visible, setVisible] = useState(false);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Chọn địa điểm'} canGoBack />
@@ -131,7 +130,7 @@ export default function Address({route}) {
                 justifyCenter
                 alignCenter
                 backgroundColor={COLORS.red4}
-                width={width - 350}
+                width={78}
                 marginBottom={12}>
                 <Icon
                   IconType={AntDesign}
@@ -149,7 +148,7 @@ export default function Address({route}) {
                 justifyCenter
                 alignCenter
                 backgroundColor={COLORS.green}
-                width={width - 350}
+                width={78}
                 marginBottom={12}
                 borderRightRadius={8}>
                 <Icon

@@ -105,26 +105,26 @@ export default function Sicker_Servicedurationmonth({route}) {
           address={address?.address_full}
         />
         <Block marginTop={20} marginHorizontal={12}>
-          <Block row alignCenter>
+          <Block rowCenter spaceBetween>
             <Text fontSize={15} semiBold color={COLORS.black2}>
               Chọn lịch làm việc
             </Text>
-            <Pressable
-              absolute
-              right={0}
-              onPress={() => setCalendar(!calendar)}>
-              <Text fontSize={15} regular color={COLORS.red4}>
-                Tuỳ chọn lịch
-              </Text>
-            </Pressable>
+
+            <Text
+              onPress={() => setCalendar(!calendar)}
+              fontSize={15}
+              regular
+              color={COLORS.red4}>
+              Tuỳ chọn lịch
+            </Text>
           </Block>
-          <Block marginTop={15} row columnGap={9.9} justifyCenter>
+          <Block marginTop={15} row gap={9.9}>
             {dayWeek.map(item => (
               <Pressable
                 onPress={() => handleWeekDayPress(item.title)}
                 key={item.title}
-                width={49.14}
-                height={49.14}
+                width={(width - 83.4) / 7}
+                height={(width - 83.4) / 7}
                 radius={5}
                 borderWidth={againWeek.includes(item.title) ? 1 : ''}
                 borderColor={againWeek.includes(item.title) && COLORS.red4}

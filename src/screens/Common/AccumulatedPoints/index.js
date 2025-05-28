@@ -8,6 +8,7 @@ import {useState} from 'react';
 import {ScrollView} from 'react-native';
 import ReceivePoint from './ReceivePoint';
 import UsedPoint from './UsedPoint';
+import {useSelector} from 'react-redux';
 export default function AccumulatedPoint() {
   const [visibleReceivePoint, setVisibleReceivePoint] = useState(true);
   const [visibleUsedPoint, setVisibleUsedPoint] = useState(false);
@@ -19,6 +20,7 @@ export default function AccumulatedPoint() {
     setVisibleReceivePoint(false);
     setVisibleUsedPoint(true);
   };
+  const userInfo = useSelector(state => state.getUserInfo?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <Block
@@ -30,7 +32,7 @@ export default function AccumulatedPoint() {
           background
           screenName={router.PROFILE_SCREEN}
           root={bottomRoot}
-          title={'Diểm tích luỹ'}
+          title={'Điểm tích luỹ'}
           colorIcon={COLORS.white}
           colorText={COLORS.white}
         />
@@ -42,7 +44,7 @@ export default function AccumulatedPoint() {
         />
         <Block absolute zIndex={10} top={74} alignCenter>
           <Text fontSize={40} bold color={COLORS.white}>
-            3600 điểm
+            {userInfo?.point} điểm
           </Text>
           <Text fontSize={14} regular color={COLORS.gray11}>
             Điểm tích luỹ

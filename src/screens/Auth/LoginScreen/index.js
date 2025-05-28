@@ -6,7 +6,7 @@ import router from '@router';
 import {COLORS} from '@theme';
 import axios from 'axios';
 import {authRoot, commonRoot} from 'navigation/navigationRef';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Toast from 'react-native-toast-message';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
@@ -69,11 +69,15 @@ export default function LoginScreen() {
             color={COLORS.black2}
             value={phone}
             onChangeText={setPhone}
+            keyboardType="phone-pad"
+            multiline={false}
           />
-          <Block row gap={10} height={48} marginTop={40}>
+          <Block row height={48} marginTop={40}>
             <Pressable
               onPress={sendOTP}
-              width={width - 108}
+              // width={width - 108}
+              // marginHorizontal={12}
+              width={width - 48}
               backgroundColor={COLORS.red4}
               radius={8}
               justifyCenter
@@ -82,62 +86,23 @@ export default function LoginScreen() {
                 Tiếp tục
               </Text>
             </Pressable>
-            <Block
-              width={48}
-              height={48}
-              radius={8}
-              backgroundColor={COLORS.red4}
-              justifyCenter
-              alignCenter>
-              <Image source={icon.icon_fingerprint} width={30} height={30} />
-            </Block>
-          </Block>
-          <Block marginTop={71} alignCenter>
-            <Text fontSize={16} regular color={COLORS.gray6} center>
-              HOẶC
-            </Text>
-            <Block row marginTop={15} gap={18}>
-              <Icon
-                IconType={MaterialIcons}
-                iconName={'facebook'}
-                iconSize={40}
-                iconColor={COLORS.blueFacebook}
-              />
-              <Block
-                width={40}
-                height={40}
-                backgroundColor={COLORS.whiteGray}
-                radius={50}
-                justifyCenter
-                alignCenter>
-                <Image source={icon.icon_email} width={36} height={21} />
-              </Block>
-              <Pressable
-                onPress={() => commonRoot.navigate(router.HOME_SCREEN)}
-                width={40}
-                height={40}
-                backgroundColor={COLORS.whiteGray}
-                radius={50}
-                justifyCenter
-                alignCenter>
-                <Icon
-                  IconType={MaterialIcons}
-                  iconName={'apple'}
-                  iconSize={28}
-                />
-              </Pressable>
-            </Block>
           </Block>
         </Block>
       </Block>
-      <Block alignCenter paddingHorizontal={48} absolute bottom={35}>
-        <Text fontSize={14} regular color={COLORS.placeholder} center>
+      <Block alignCenter paddingHorizontal={48} flex={1} justifyEnd>
+        <Text
+          fontSize={14}
+          regular
+          color={COLORS.placeholder}
+          center
+          marginBottom={35}
+          width={width}>
           Bằng việc nhấn vào nút{' '}
           <Text semiBold color={COLORS.placeholder}>
             Tiếp tục
           </Text>
-          , bạn đã đồng ý với <Text color={COLORS.red4}>Quy chế</Text> và{' '}
-          <Text color={COLORS.red4}>Điều khoản</Text> của chúng tôi
+          , bạn đã đồng ý với <Text color={COLORS.red4}>Quy chế</Text> và {''}
+          <Text color={COLORS.red4}>Điều khoản </Text>của chúng tôi
         </Text>
       </Block>
     </Block>

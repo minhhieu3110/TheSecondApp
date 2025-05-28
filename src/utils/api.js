@@ -67,6 +67,7 @@ axios.interceptors.response.use(
         {dataHeader: error.config.data},
         {paramsHeader: error.config.params},
         JSON.stringify(error.response.data, null, 2),
+        error,
       );
     }
     _handleExpiredToken(error);
@@ -134,9 +135,10 @@ export default class HttpService {
           params: {...params},
         })
 
-        .then(response => response.data);
+        .then(response => response.data)
+        .catch(error => error.message);
     } catch (error) {
-      throw error.response;
+      throw error.message;
     }
   }
   //TODO: FORM_DATA

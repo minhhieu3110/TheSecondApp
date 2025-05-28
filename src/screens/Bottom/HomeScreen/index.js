@@ -1,17 +1,16 @@
-import {height, width} from '@responsive';
-import {COLORS, FONTS} from '@theme';
+import {getSize, width} from '@responsive';
+import {COLORS} from '@theme';
 import RadialGradient from 'react-native-radial-gradient';
-import {icon, image} from '@assets';
+import {icon} from '@assets';
 import {Block, Text, Carousel, Image, ScrollView, Icon} from '@components';
 import Pressable from 'components/base/Pressable';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
-import {use, useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import {ConvertTimeStamp} from '@utils';
 import {formatCurrency} from 'utils/helper';
-import {URL_API} from 'redux/sagas/common';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -53,6 +52,7 @@ export default function HomeScreen() {
       </Block>
     );
   }, []);
+  // console.log(getSize.hs(150));
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -260,7 +260,7 @@ export default function HomeScreen() {
               gap={12}
               marginHorizontal={14}
               marginTop={6.7}
-              width={width - 50}>
+              width={376}>
               <Image source={icon.icon_shop_home} />
 
               <Block marginTop={24.8} width={245}>
@@ -309,17 +309,17 @@ export default function HomeScreen() {
                       item_id: item.item_id,
                     })
                   }
-                  width={width - 232}
+                  width={196}
                   rowGap={11}
                   key={item.item_id}>
                   <Block
-                    width={width - 232}
+                    width={196}
                     height={196}
                     radius={12}
                     overflow={'hidden'}>
                     <Image
                       source={{uri: item.picture}}
-                      width={width - 232}
+                      width={196}
                       height={196}
                     />
                   </Block>
@@ -375,17 +375,17 @@ export default function HomeScreen() {
                   height={113}
                   key={item.item_id}>
                   <Block
-                    width={width - 278}
+                    width={150}
                     height={113}
                     radius={10}
                     overflow={'hidden'}>
                     <Image
                       source={{uri: item.picture}}
-                      width={width - 278}
+                      width={150}
                       height={113}
                     />
                   </Block>
-                  <Block marginLeft={10} marginTop={17.9} width={width - 190}>
+                  <Block marginLeft={10} marginTop={17.9} width={224}>
                     <Block row alignCenter>
                       <Image
                         source={icon.icon_calendar}

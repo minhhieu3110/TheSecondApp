@@ -11,6 +11,7 @@ import {
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
+import {formatPhone} from '@utils';
 import {authRoot, bottomRoot, commonRoot} from 'navigation/navigationRef';
 import {useState} from 'react';
 import {ScrollView} from 'react-native';
@@ -21,7 +22,7 @@ import {useDispatch} from 'react-redux';
 export default function InputInformation({route}) {
   const [visible, setVisible] = useState(false);
   const [fullname, setFullName] = useState('');
-  const [username, setUsername] = useState('');
+  // const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [referralCode, setReferralCode] = useState('');
@@ -44,12 +45,10 @@ export default function InputInformation({route}) {
       onSuccess: () => {
         authRoot.navigate(router.LOGIN_SCREEN);
       },
-      onFail: e => {
-        console.log(e?.message);
-
+      onFail: error => {
         Toast.show({
           type: 'error',
-          text1: e?.message,
+          text1: 'Các trương không được để trống',
         });
       },
     });
@@ -94,6 +93,7 @@ export default function InputInformation({route}) {
                   placeholderTextColor={COLORS.placeholder}
                   value={fullname}
                   onChangeText={setFullName}
+                  multiline={false}
                 />
               </Block>
               <Block marginBottom={17}>
@@ -114,25 +114,28 @@ export default function InputInformation({route}) {
                   placeholder={'Nhập email'}
                   value={email}
                   onChangeText={setEmail}
+                  multiline={false}
                 />
               </Block>
               <Block marginBottom={17}>
                 <Text fontSize={15} semiBold color={COLORS.black3}>
                   Số điện thoại
                 </Text>
-                <TextInput
+                <Text
                   height={41}
                   radius={5}
                   borderWidth={0.5}
                   borderColor={COLORS.gray11}
                   backgroundColor={COLORS.gray10}
                   paddingLeft={12}
+                  paddingTop={13}
                   color={COLORS.placeholder}
+                  alignCenter
                   fontSize={14}
                   regular
                   marginTop={15}>
-                  {data?.phone}
-                </TextInput>
+                  {formatPhone(data?.phone)}
+                </Text>
               </Block>
               <Block marginBottom={17}>
                 <Text fontSize={15} semiBold color={COLORS.black3}>
@@ -152,6 +155,7 @@ export default function InputInformation({route}) {
                     value={dateOfBirth}
                     onChangeText={setDateOfBirth}
                     placeholder={'Nhập ngày sinh'}
+                    multiline={false}
                   />
                   <Pressable
                     onPress={() => setVisible(true)}
@@ -185,6 +189,7 @@ export default function InputInformation({route}) {
                   placeholder={'Nhập mã giới thiệu'}
                   value={referralCode}
                   onChangeText={setReferralCode}
+                  multiline={false}
                 />
               </Block>
             </Block>

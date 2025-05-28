@@ -5,17 +5,31 @@ import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {useDispatch, useSelector} from 'react-redux';
 import {OtpInput} from 'react-native-otp-entry';
-import {useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Toast from 'react-native-toast-message';
 import {getDeviceId, getDeviceName} from 'react-native-device-info';
 import {authRoot, bottomRoot} from 'navigation/navigationRef';
 import router from '@router';
-import OTPInputView from '@twotalltotems/react-native-otp-input';
 export default function InputOTP({route}) {
   let clearOTP = useRef();
   const dispatch = useDispatch();
   const {phone, type} = route?.params;
+  const [timer, setTimer] = useState(0);
+  const [disableResend, setDisableResend] = useState(false);
+
+  useEffect(() => {
+    if (timer > 0) {
+      const intervalId = setInterval(() => {
+        setTimer(timer - 1);
+      }, 1000);
+      return () => clearInterval(intervalId);
+    } else {
+      setDisableResend(false);
+    }
+  }, [timer]);
   const resend = () => {
+    setTimer(30);
+    setDisableResend(true);
     dispatch({
       type: actions.SEND_OTP,
       body: {phone: phone, type: type},
@@ -63,20 +77,15 @@ export default function InputOTP({route}) {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <Block width={width} height={328}>
-        <Image
-          source={image.image_san}
-          width={'100%'}
-          height={'100%'}
-          resizeMode="cover"
-        />
+        <Image source={image.image_san} width={width} height={328} />
       </Block>
       <Block
         marginTop={-39}
         marginHorizontal={12}
-        paddingBottom={148}
         backgroundColor={COLORS.white}
-        radius={8}>
-        <Block marginTop={18} marginLeft={12}>
+        radius={8}
+        paddingBottom={30}>
+        <Block marginTop={18} marginHorizontal={12}>
           <Text fontSize={18} semiBold color={COLORS.red4}>
             Xác nhận mã OTP {otp}
           </Text>
@@ -95,6 +104,7 @@ export default function InputOTP({route}) {
             <OtpInput
               onFilled={otp => verifyOTP(otp)}
               ref={ref => (clearOTP = ref)}
+              placeholder="*"
               theme={{
                 pinCodeContainerStyle: {
                   width: (width - 128) / 6,
@@ -116,7 +126,7 @@ export default function InputOTP({route}) {
             <Text onPress={resend} color={COLORS.red4} underlineLineThrough>
               Gửi lại
             </Text>{' '}
-            (175s)
+            {disableResend && `(${timer}s)`}
           </Text>
         </Block>
       </Block>

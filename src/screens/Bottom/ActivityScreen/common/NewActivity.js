@@ -49,10 +49,11 @@ export default function NewActivity() {
                 onPress={() => bottomRoot.navigate(router.HOME_SCREEN)}
                 marginTop={20}
                 marginHorizontal={94}
-                paddingHorizontal={44}
+                width={192}
                 height={48}
                 radius={8}
                 backgroundColor={COLORS.red4}
+                alignCenter
                 justifyCenter>
                 <Text fontSize={15} regular color={COLORS.white}>
                   Đăng việc ngay
@@ -86,7 +87,7 @@ export default function NewActivity() {
                     </Text>
                   </Block>
                   <Block
-                    width={width - 327}
+                    width={95}
                     height={29}
                     backgroundColor={`${item?.status?.background}`}
                     justifyCenter

@@ -62,6 +62,7 @@ function* updateCart(action) {
   const body = yield action.body;
   try {
     const res = yield api.put(`${URL_API.order.cart}/${id}`, body);
+
     yield put({
       type: _onSuccess(action.type),
       data: res.data,
@@ -69,6 +70,8 @@ function* updateCart(action) {
     action.onSuccess?.(res);
   } catch (error) {
     yield put({type: _onFail(action.type)});
+    // console.log(error.response.data);
+
     action.onFail?.(error);
   }
 }

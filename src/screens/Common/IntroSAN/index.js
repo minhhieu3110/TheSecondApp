@@ -5,6 +5,7 @@ import router from '@router';
 import {COLORS} from '@theme';
 import {authRoot} from 'navigation/navigationRef';
 import AppIntro from 'react-native-app-intro-slider';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 export default function IntroSAN() {
   const contentIntro = [
     {
@@ -26,7 +27,7 @@ export default function IntroSAN() {
   ];
   const renderItem = ({item}) => {
     return (
-      <Block width={width - 24} height={106}>
+      <Block gap={10}>
         <Text fontSize={18} semiBold color={COLORS.yellow3} uppercase center>
           {item.title}
         </Text>
@@ -36,58 +37,60 @@ export default function IntroSAN() {
           color={COLORS.white}
           numberOfLines={2}
           center
-          marginTop={10}
           marginHorizontal={29}>
           {item.subTitle}
         </Text>
       </Block>
     );
   };
+  const {top} = useSafeAreaInsets();
   return (
-    <Block flex alignCenter>
-      <Block width={width} height={height}>
-        <Image
-          source={image.image_intro_1}
-          width={'100%'}
-          height={'100%'}
-          resizeMode
-        />
-      </Block>
-      <Block absolute bottom={121} left={12} width={width - 24} height={106}>
-        <AppIntro
-          data={contentIntro}
-          renderItem={renderItem}
-          onDone={false}
-          dotStyle={{
-            width: 8,
-            height: 8,
-            backgroundColor: COLORS.Yellow3_40,
-            marginTop: 59,
-          }}
-          activeDotStyle={{
-            width: 8,
-            height: 8,
-            backgroundColor: COLORS.yellow3,
-            marginTop: 59,
-          }}
-          nextLabel={false}
-          doneLabel={false}
-        />
-      </Block>
-      <Pressable
-        onPress={() => authRoot.navigate(router.ONBOARDING_SCREEN)}
-        backgroundColor={COLORS.black2}
-        absolute
-        bottom={62}
-        radius={15}
-        justifyCenter
-        alignCenter
-        width={88}
-        height={29}>
-        <Text fontSize={14} light color={COLORS.yellow3}>
-          Bỏ qua
-        </Text>
-      </Pressable>
+    <Block flex backgroundColor={COLORS.gray10}>
+      <Image
+        source={image.image_intro_1}
+        width={width}
+        height={height}
+        flex={1}
+        justifyEnd>
+        <Block marginHorizontal={12} height={165} marginBottom={62 - top}>
+          <AppIntro
+            data={contentIntro}
+            renderItem={renderItem}
+            style={{
+              flex: 1,
+              height: 106,
+            }}
+            onDone={false}
+            dotStyle={{
+              width: 8,
+              height: 8,
+              backgroundColor: COLORS.Yellow3_40,
+              marginTop: 59,
+            }}
+            activeDotStyle={{
+              width: 8,
+              height: 8,
+              backgroundColor: COLORS.yellow3,
+              marginTop: 59,
+            }}
+            nextLabel={false}
+            doneLabel={false}
+          />
+          <Pressable
+            onPress={() => authRoot.navigate(router.ONBOARDING_SCREEN)}
+            marginHorizontal={146}
+            height={29}
+            radius={15}
+            backgroundColor={COLORS.black2}
+            marginTop={15}
+            justifyCenter
+            alignCenter>
+            <Text fontSize={14} light color={COLORS.yellow3}>
+              Bỏ qua
+            </Text>
+          </Pressable>
+        </Block>
+      </Image>
     </Block>
   );
 }

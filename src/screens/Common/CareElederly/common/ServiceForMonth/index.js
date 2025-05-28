@@ -8,11 +8,11 @@ import {
   SANStaffDuties,
   ChooseStartTime,
   DateMultiPicker,
+  ScrollView,
 } from '@components';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
 import {width} from '@responsive';
-import {ScrollView} from 'react-native';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
 import {useDispatch, useSelector} from 'react-redux';
@@ -117,13 +117,13 @@ export default function Elederly_Servicedurationmonth({route}) {
               Tuỳ chọn lịch
             </Text>
           </Block>
-          <Block marginTop={15} row columnGap={9.9} justifyCenter>
+          <Block marginTop={15} row gap={9.9}>
             {dayWeek.map(item => (
               <Pressable
                 onPress={() => handleWeekDayPress(item.title)}
                 key={item.title}
-                width={49.14}
-                height={49.14}
+                width={(width - 83.4) / 7}
+                height={(width - 83.4) / 7}
                 radius={5}
                 borderWidth={againWeek.includes(item.title) ? 1 : ''}
                 borderColor={againWeek.includes(item.title) && COLORS.red4}

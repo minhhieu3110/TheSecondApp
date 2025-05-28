@@ -20,6 +20,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import {URL_API} from 'redux/sagas/common';
 import RenderHTML from 'react-native-render-html';
+import {formatPhone} from '@utils';
 export default function Help() {
   const [visibleModalHelp, setVisibleModalHelp] = useState(0);
   const dispatch = useDispatch();
@@ -163,7 +164,7 @@ export default function Help() {
             </Text>
             <Block absolute right={0} row alignCenter>
               <Text fontSize={15} regular color={COLORS.red4} marginRight={10}>
-                {sysoptions?.hotline}
+                {formatPhone(sysoptions?.hotline)}
               </Text>
               <Icon
                 iconName={'keyboard-arrow-right'}

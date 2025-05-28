@@ -38,7 +38,7 @@ export default function ActivityScreen({route}) {
         absolute
         top={17.9}
         right={12}
-        width={width - 360.8}
+        width={67.2}
         height={18}
         rowCenter
         spaceBetween>

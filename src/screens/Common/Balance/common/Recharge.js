@@ -12,7 +12,7 @@ import {
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
-import {formatCurrency} from '@utils';
+import {formatCurrency} from '@utils/helper';
 import {commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
 import Toast from 'react-native-toast-message';
@@ -26,10 +26,10 @@ export default function Recharge() {
     {id: 3, title: '300.000', value: 300000},
     {id: 4, title: '400.000', value: 400000},
     {id: 5, title: '500.000', value: 500000},
-    {id: 6, title: '600.000', value: 600000},
+    {id: 6, title: '6.000.000', value: 6000000},
   ];
   const [chooseMoney, setChooseMoney] = useState();
-  const [value, setValue] = useState();
+  const [value, setValue] = useState(0);
   const handleChooseMoney = (id, value) => {
     setChooseMoney(id);
     setValue(value);
@@ -60,12 +60,11 @@ export default function Recharge() {
           onSuccess: () => {
             commonRoot.navigate(router.INFO_RECHARGE, {
               value: value,
-              // rechargeInfo: rechargeInfo,
             });
           },
         });
   };
-  // const rechargeInfo = useSelector(state => state.recharge?.data || []);
+
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Nạp tiền'} canGoBack />
@@ -89,7 +88,7 @@ export default function Recharge() {
             <Pressable
               onPress={() => handleChooseMoney(item.id, item.value)}
               key={item.id}
-              width={118.67}
+              width={(width - 80) / 3}
               radius={5}
               height={45}
               backgroundColor={
@@ -131,8 +130,9 @@ export default function Recharge() {
             borderColor={'#f1f1f1'}
             paddingLeft={10}
             color={COLORS.red4}
-            value={value}
+            value={typeof value === 'number' && formatCurrency(value)}
             onChangeText={setValue}
+            multiline={false}
           />
           <Block absolute right={12}>
             <Text fontSize={22} regular color={COLORS.black}>

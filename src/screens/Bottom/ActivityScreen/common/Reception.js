@@ -32,7 +32,7 @@ export default function Reception() {
               </Text>
             </Block>
             <Block
-              width={width - 327}
+              width={95}
               height={29}
               backgroundColor={COLORS.yellowwhite}
               justifyCenter

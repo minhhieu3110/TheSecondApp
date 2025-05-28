@@ -1,10 +1,11 @@
 import Block from '@components/base/Block';
+import {hs} from '@responsive';
 import {COLORS} from '@theme';
 const TicketVoucherShape = ({height = 150}) => {
   return (
     <Block
       height={height}
-      width={37}
+      width={hs(37)}
       marginLeft={8.1}
       alignCenter
       overflow={'hidden'}

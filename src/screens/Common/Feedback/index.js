@@ -65,106 +65,111 @@ export default function Feedback() {
     });
   };
   const feedback = useSelector(state => state.getFeedback?.data || []);
-  console.log(image?.path);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Phản hồi'} canGoBack />
-      <Pressable
-        onPress={() => setFeedbackSent(!feedbackSent)}
-        absolute
-        top={20}
-        right={12}>
-        <Text fontSize={15} regular color={COLORS.red4}>
-          Lịch sử
-        </Text>
-      </Pressable>
-      <Block width={width - 24} marginLeft={12} marginTop={20}>
-        <Block gap={15}>
-          <Text fontSize={15} semiBold color={COLORS.black3}>
-            Chọn dịch vụ
-          </Text>
-          <SelectDropdown
-            data={service}
-            placeholder={'Chọn dịch vụ'}
-            onSelect={selectService => setServiceId(selectService.item_id)}
-          />
-        </Block>
-        <Text fontSize={15} semiBold color={COLORS.black3} marginTop={20}>
-          Thông tin cá nhân
-        </Text>
-        <TextInput
-          height={41}
-          radius={5}
-          backgroundColor={COLORS.white}
-          borderWidth={0.5}
-          marginTop={15}
-          borderColor={COLORS.gray11}
-          paddingLeft={12}
-          fontSize={14}
-          regular
-          color={COLORS.black1}
-          value={userInfo?.full_name}
-        />
-        <TextInput
-          height={41}
-          radius={5}
-          backgroundColor={COLORS.white}
-          borderWidth={0.5}
-          marginTop={12}
-          borderColor={COLORS.gray11}
-          paddingLeft={12}
-          fontSize={14}
-          regular
-          color={COLORS.black1}
-          value={formatPhone(userInfo?.phone)}
-        />
-        <Block marginTop={20}>
-          <Text fontSize={15} semiBold color={COLORS.black3}>
-            Nội dung
-          </Text>
-          <TextInput
-            placeholder={'Nhập nội dung'}
-            paddingLeft={12}
-            placeholderTextColor={COLORS.placeholder}
-            radius={8}
-            height={110.67}
-            backgroundColor={COLORS.white}
-            marginTop={15}
-            value={content}
-            onChangeText={setContent}
-          />
-        </Block>
-        <Text fontSize={15} semiBold color={COLORS.black1} marginTop={20.3}>
-          Hình ảnh
-        </Text>
-        <Pressable
-          onPress={() => setVisible(!visible)}
-          width={177}
-          height={177}
-          backgroundColor={COLORS.pinkWhite}
-          radius={8}
-          borderDashed
-          borderWidth={1}
-          borderColor={COLORS.red4}
-          marginTop={15}
-          overflow={'hidden'}>
-          {image ? (
-            <Image source={{uri: image?.path}} width={177} height={177} />
-          ) : (
-            <Block marginTop={65} justifyCenter alignCenter>
-              <Image
-                source={icon.icon_upload_image}
-                width={47}
-                height={46.95}
-              />
-              <Text fontSize={16} regular color={COLORS.black1} marginTop={16}>
-                Ảnh đính kèm
+      <ScrollView contentContainerStyle={{paddingBottom: 171}}>
+        <Block width={width - 24} marginLeft={12} marginTop={20}>
+          <Block gap={15}>
+            <Block rowCenter spaceBetween>
+              <Text fontSize={15} semiBold color={COLORS.black3}>
+                Chọn dịch vụ
+              </Text>
+              <Text
+                onPress={() => setFeedbackSent(!feedbackSent)}
+                fontSize={15}
+                regular
+                color={COLORS.red4}>
+                Lịch sử
               </Text>
             </Block>
-          )}
-        </Pressable>
-      </Block>
+            <SelectDropdown
+              data={service}
+              placeholder={'Chọn dịch vụ'}
+              onSelect={selectService => setServiceId(selectService.item_id)}
+            />
+          </Block>
+          <Text fontSize={15} semiBold color={COLORS.black3} marginTop={20}>
+            Thông tin cá nhân
+          </Text>
+          <TextInput
+            height={41}
+            radius={5}
+            backgroundColor={COLORS.white}
+            borderWidth={0.5}
+            marginTop={15}
+            borderColor={COLORS.gray11}
+            paddingLeft={12}
+            fontSize={14}
+            regular
+            color={COLORS.black1}
+            value={userInfo?.full_name}
+          />
+          <TextInput
+            height={41}
+            radius={5}
+            backgroundColor={COLORS.white}
+            borderWidth={0.5}
+            marginTop={12}
+            borderColor={COLORS.gray11}
+            paddingLeft={12}
+            fontSize={14}
+            regular
+            color={COLORS.black1}
+            value={formatPhone(userInfo?.phone)}
+          />
+          <Block marginTop={20}>
+            <Text fontSize={15} semiBold color={COLORS.black3}>
+              Nội dung
+            </Text>
+            <TextInput
+              placeholder={'Nhập nội dung'}
+              paddingLeft={12}
+              placeholderTextColor={COLORS.placeholder}
+              radius={8}
+              height={110.67}
+              backgroundColor={COLORS.white}
+              marginTop={15}
+              value={content}
+              onChangeText={setContent}
+            />
+          </Block>
+          <Text fontSize={15} semiBold color={COLORS.black1} marginTop={20.3}>
+            Hình ảnh
+          </Text>
+          <Pressable
+            onPress={() => setVisible(!visible)}
+            width={177}
+            height={177}
+            backgroundColor={COLORS.pinkWhite}
+            radius={8}
+            borderDashed
+            borderWidth={1}
+            borderColor={COLORS.red4}
+            marginTop={15}
+            overflow={'hidden'}>
+            {image ? (
+              <Image source={{uri: image?.path}} width={177} height={177} />
+            ) : (
+              <Block marginTop={65} justifyCenter alignCenter>
+                <Image
+                  source={icon.icon_upload_image}
+                  width={47}
+                  height={46.95}
+                />
+                <Text
+                  fontSize={16}
+                  regular
+                  color={COLORS.black1}
+                  marginTop={16}>
+                  Ảnh đính kèm
+                </Text>
+              </Block>
+            )}
+          </Pressable>
+        </Block>
+      </ScrollView>
       <Button title="Gửi" onPress={sendFeedback} />
       <Modal visible={feedbackSent} transparent="fade">
         <SafeAreaView style={{flex: 1}}>

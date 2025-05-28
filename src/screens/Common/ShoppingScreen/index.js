@@ -200,7 +200,7 @@ export default function ShoppingScreen() {
             rowGap={7}
             row
             wrap>
-            {listCategory?.map(item => (
+            {listCategory?.map((item, index) => (
               <Pressable
                 onPress={() =>
                   commonRoot.navigate(router.PRODUCT_OF_CATEGORY, {
@@ -210,12 +210,15 @@ export default function ShoppingScreen() {
                 }
                 key={item.group_id}
                 width={(width - 36) / 3}
+                // height={index % 2 === 0 ? 164 : 127}
                 height={152}
                 radius={5}
-                overflow={'hidden'}>
+                overflow={'hidden'}
+                alignSelfStart>
                 <Image
                   source={{uri: item.picture}}
                   width={(width - 36) / 3}
+                  // height={index % 2 === 0 ? 164 : 127}
                   height={152}
                   resizeMode="contain"
                 />
