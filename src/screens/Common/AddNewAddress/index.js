@@ -77,6 +77,14 @@ export default function AddNewAddress() {
         root.goBack();
         dispatch({type: actions.GET_ADDRESS_SAVE});
       },
+      onFail: error => {
+        console.log(error);
+
+        Toast.show({
+          type: 'error',
+          text1: error,
+        });
+      },
     });
   };
 

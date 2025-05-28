@@ -19,6 +19,7 @@ import {ConvertDateTimeStamp, formatPhone} from '@utils';
 import {use, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Modal, SafeAreaView} from 'react-native';
+import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
 export default function Feedback() {
@@ -61,6 +62,12 @@ export default function Feedback() {
       body: body,
       onSuccess: () => {
         setFeedbackSent(!feedbackSent);
+      },
+      onFail: e => {
+        Toast.show({
+          type: 'error',
+          text1: e,
+        });
       },
     });
   };

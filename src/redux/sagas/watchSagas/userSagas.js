@@ -7,7 +7,6 @@ function* sendOTP(action) {
   const body = yield action.body;
   try {
     const res = yield api.post(URL_API.user.send_otp, body);
-    console.log(res.data.otp_code);
 
     yield put({
       type: _onSuccess(action.type),

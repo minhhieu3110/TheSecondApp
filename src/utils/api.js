@@ -70,8 +70,8 @@ axios.interceptors.response.use(
         error,
       );
     }
-    _handleExpiredToken(error);
-    return Promise.reject(error);
+    handleExpiredToken(error);
+    return Promise.reject(error.response.data);
   },
 );
 axios.interceptors.request.use(
@@ -135,8 +135,7 @@ export default class HttpService {
           params: {...params},
         })
 
-        .then(response => response.data)
-        .catch(error => error.message);
+        .then(response => response.data);
     } catch (error) {
       throw error.message;
     }

@@ -19,6 +19,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {formatCurrency} from 'utils/helper';
 import {bottomRoot} from 'navigation/navigationRef';
 import router from '@router';
+import Toast from 'react-native-toast-message';
 
 export default function ConfirmAndPayService({route}) {
   const dispatch = useDispatch();
@@ -71,7 +72,11 @@ export default function ConfirmAndPayService({route}) {
         setShow(!show);
       },
       onFail(e) {
-        console.log(e?.data?.message);
+        console.log(e);
+        Toast.show({
+          type: 'error',
+          text1: e,
+        });
       },
     });
   };

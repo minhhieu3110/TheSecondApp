@@ -77,8 +77,8 @@ function* addAddressBook(action) {
     });
     action.onSuccess?.(res);
   } catch (error) {
-    yield put({type: _onFail(action.type)});
     action.onFail?.(error);
+    yield put({type: _onFail(action.type)});
   }
 }
 function* deleteAddress(action) {

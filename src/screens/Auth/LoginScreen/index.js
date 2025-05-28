@@ -27,7 +27,7 @@ export default function LoginScreen() {
         console.log(e);
         Toast.show({
           type: 'error',
-          text1: 'e?.message',
+          text1: e,
         });
       },
     });

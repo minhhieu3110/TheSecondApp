@@ -70,8 +70,6 @@ function* updateCart(action) {
     action.onSuccess?.(res);
   } catch (error) {
     yield put({type: _onFail(action.type)});
-    // console.log(error.response.data);
-
     action.onFail?.(error);
   }
 }

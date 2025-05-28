@@ -227,6 +227,12 @@ export default function Cart() {
                                         type: actions.GET_CART,
                                       });
                                     },
+                                    onFail: e => {
+                                      Toast.show({
+                                        type: 'error',
+                                        text1Style: e,
+                                      });
+                                    },
                                   });
                                 }
                               }}>
@@ -242,22 +248,28 @@ export default function Cart() {
                             </Text>
                             <Pressable
                               onPress={() => {
-                                // if (item?.quantity > 1) {
-                                dispatch({
-                                  type: actions.UPDATE_CART,
-                                  params: {id: item.id},
-                                  body: {quantity: item?.quantity + 1},
-                                  onSuccess: res => {
-                                    Toast.show({
-                                      type: 'success',
-                                      text1: res?.message,
-                                    });
-                                    dispatch({
-                                      type: actions.GET_CART,
-                                    });
-                                  },
-                                });
-                                // }
+                                if (item?.quantity > 1) {
+                                  dispatch({
+                                    type: actions.UPDATE_CART,
+                                    params: {id: item.id},
+                                    body: {quantity: item?.quantity - 1},
+                                    onSuccess: res => {
+                                      Toast.show({
+                                        type: 'success',
+                                        text1: res?.message,
+                                      });
+                                      dispatch({
+                                        type: actions.GET_CART,
+                                      });
+                                    },
+                                    onFail: e => {
+                                      Toast.show({
+                                        type: 'error',
+                                        text1Style: e,
+                                      });
+                                    },
+                                  });
+                                }
                               }}>
                               <Icon
                                 IconType={Ionicons}
