@@ -47,12 +47,10 @@ export default function HomeScreen() {
           height={164}
           resizeMode="cover"
           marginRight={10}
-          // marginHorizontal={12}
         />
       </Block>
     );
   }, []);
-  // console.log(getSize.hs(150));
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>

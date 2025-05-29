@@ -155,12 +155,16 @@ export default function ShoppingScreen() {
               backgroundColor={COLORS.white}
               paddingBottom={18.4}
               radius={15}>
-              <Block marginHorizontal={12} marginTop={12} row columnGap={10}>
+              <Block
+                marginTop={12}
+                rowCenter
+                spaceBetween
+                marginHorizontal={12}>
                 {listStatus?.map((status, index) => (
                   <Pressable
                     key={index}
                     onPress={() => commonRoot.navigate(router.ORDER_OF_YOU)}
-                    width={(width - 48) / 5 - 8.5}
+                    maxWidth={68}
                     alignCenter>
                     <Image
                       source={{uri: status?.picture}}

@@ -55,7 +55,6 @@ export const endMonth = moment().endOf('month');
 let alertPending = false;
 export const handleExpiredToken = error => {
   const {code} = error?.response?.data || {};
-
   if (code === 401) {
     if (!alertPending) {
       alertPending = true;

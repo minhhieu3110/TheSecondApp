@@ -49,10 +49,9 @@ export default function IntroSAN() {
       <Image
         source={image.image_intro_1}
         width={width}
-        height={height}
-        flex={1}
+        height={height - top}
         justifyEnd>
-        <Block marginHorizontal={12} height={165} marginBottom={62 - top}>
+        <Block marginHorizontal={12} height={165} marginBottom={62}>
           <AppIntro
             data={contentIntro}
             renderItem={renderItem}
@@ -65,13 +64,13 @@ export default function IntroSAN() {
               width: 8,
               height: 8,
               backgroundColor: COLORS.Yellow3_40,
-              marginTop: 59,
+              marginTop: 29,
             }}
             activeDotStyle={{
               width: 8,
               height: 8,
               backgroundColor: COLORS.yellow3,
-              marginTop: 59,
+              marginTop: 29,
             }}
             nextLabel={false}
             doneLabel={false}

@@ -44,6 +44,9 @@ export default function DetailOrder({route}) {
           text1: res?.message,
         });
         root.goBack();
+        dispatch({
+          type: actions.NEW_ORDER,
+        });
       },
     });
   };
@@ -51,11 +54,30 @@ export default function DetailOrder({route}) {
     (status === 19 || status === 41) && setShowCancel(!showCancel);
     (status === 25 || status === 17) && commonRoot.navigate(router.HELP);
   };
-  const handleRight = status => {
+  const handleRight = (status, info = []) => {
     (status === 19 || status === 41) && commonRoot.navigate(router.HELP);
     status === 25 &&
       commonRoot.navigate(router.EVALUATE_ORDER, {id: detailOrder?.id});
-    status === 17 && console.log('Again');
+    status === 17 &&
+      info?.forEach(item =>
+        dispatch({
+          type: actions.ADD_CART,
+          body: {
+            product_id: item.product_item_id,
+            quantity: item.quantity,
+          },
+          onSuccess: res => {
+            Toast.show({
+              type: 'success',
+              text1: res?.message,
+            });
+            commonRoot.navigate(router.CART);
+            dispatch({
+              type: actions.GET_CART,
+            });
+          },
+        }),
+      );
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -294,7 +316,15 @@ export default function DetailOrder({route}) {
                   </Text>
                 </Pressable>
                 <Pressable
-                  onPress={() => handleRight(detailOrder?.is_status)}
+                  onPress={() =>
+                    handleRight(
+                      detailOrder?.is_status,
+                      detailOrder?.details?.map(item => ({
+                        product_item_id: item?.product_item_id,
+                        quantity: item?.quantity,
+                      })),
+                    )
+                  }
                   width={(width - 36) / 2}
                   height={48}
                   radius={8}

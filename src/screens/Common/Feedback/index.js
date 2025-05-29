@@ -135,7 +135,6 @@ export default function Feedback() {
               paddingLeft={12}
               placeholderTextColor={COLORS.placeholder}
               radius={8}
-              height={110.67}
               backgroundColor={COLORS.white}
               marginTop={15}
               value={content}

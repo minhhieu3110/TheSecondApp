@@ -22,7 +22,6 @@ import {useDispatch} from 'react-redux';
 export default function InputInformation({route}) {
   const [visible, setVisible] = useState(false);
   const [fullname, setFullName] = useState('');
-  // const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [referralCode, setReferralCode] = useState('');
@@ -48,7 +47,7 @@ export default function InputInformation({route}) {
       onFail: error => {
         Toast.show({
           type: 'error',
-          text1: 'Các trương không được để trống',
+          text1: error,
         });
       },
     });

@@ -190,8 +190,10 @@ export default function NewActivity() {
                   <Block
                     marginLeft={11.7}
                     marginTop={14.1}
-                    row
-                    width={width - 101.74}
+                    width={345.26}
+                    rowCenter
+                    spaceBetween
+                    gap={13.3}
                     height={42}
                     alignCenter>
                     <Block width={42} height={42} radius={50}>
@@ -203,11 +205,15 @@ export default function NewActivity() {
                         radius={50}
                       />
                     </Block>
-                    <Block marginLeft={13.3} height={40}>
+                    <Block height={40} width={290}>
                       <Text fontSize={14} regular color={COLORS.red4}>
                         {item?.status?.note_title}
                       </Text>
-                      <Text fontSize={14} regular color={COLORS.placeholder}>
+                      <Text
+                        fontSize={14}
+                        regular
+                        color={COLORS.placeholder}
+                        numberOfLines={1}>
                         {item?.status?.note_content}
                       </Text>
                     </Block>

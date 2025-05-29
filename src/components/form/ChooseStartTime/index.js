@@ -23,7 +23,7 @@ export default function ChooseStartTime({date, onDateChange}) {
           date={date}
           onDateChange={onDateChange}
           style={{
-            width: width - 277,
+            width: 151,
             height: 42,
             borderRadius: 5,
             backgroundColor: COLORS.pinkWhite2,

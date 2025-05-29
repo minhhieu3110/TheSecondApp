@@ -222,7 +222,6 @@ const SelectDayWorking = ({route}) => {
           </Text>
           <TextInput
             placeholder={'Nhập nội dung'}
-            height={154.67}
             radius={8}
             backgroundColor={COLORS.white}
             paddingLeft={12}

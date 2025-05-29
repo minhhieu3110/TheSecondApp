@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import actions from '@actions';
 import {formatCurrency} from 'utils/helper';
+import Toast from 'react-native-toast-message';
 export default function CancelOrder() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -29,6 +30,16 @@ export default function CancelOrder() {
         body: {
           product_id: item.product_item_id,
           quantity: item.quantity,
+        },
+        onSuccess: res => {
+          Toast.show({
+            type: 'success',
+            text1: res?.message,
+          });
+          commonRoot.navigate(router.CART);
+          dispatch({
+            type: actions.GET_CART,
+          });
         },
       }),
     );

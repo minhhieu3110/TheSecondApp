@@ -82,7 +82,7 @@ export default function Cancel() {
                     fontSize={14}
                     regular
                     color={COLORS.black1}>
-                    Thứ 7, 25/02/2025
+                    {item?.order?.start_date}
                   </Text>
                 </Block>
                 <Block marginLeft={23} row marginBottom={12}>
@@ -114,7 +114,7 @@ export default function Cancel() {
                     {formatCurrency(item?.amount_final)}
                   </Text>
                 </Block>
-                <Block marginLeft={23} row>
+                <Block marginLeft={23} row width={width - 48}>
                   <Image
                     source={icon.icon_address_cancel}
                     width={22}

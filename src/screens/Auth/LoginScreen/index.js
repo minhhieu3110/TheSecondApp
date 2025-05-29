@@ -37,8 +37,8 @@ export default function LoginScreen() {
       <Block width={width} height={328}>
         <Image
           source={image.image_san}
-          width={'100%'}
-          height={'100%'}
+          width={width}
+          height={328}
           resizeMode="cover"
         />
       </Block>
