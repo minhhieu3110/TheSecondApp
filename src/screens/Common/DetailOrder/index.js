@@ -9,7 +9,6 @@ import {
   TextInput,
 } from '@components';
 import {COLORS} from '@theme';
-import {image} from '@assets';
 import {width} from '@responsive';
 import {formatCurrency, formatPhone} from '@utils';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,7 +17,6 @@ import actions from '@actions';
 import {Modal, SafeAreaView, TouchableOpacity} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {commonRoot, root} from 'navigation/navigationRef';
-import {URL_API} from 'redux/sagas/common';
 import router from '@router';
 export default function DetailOrder({route}) {
   const dispatch = useDispatch();
@@ -167,8 +165,8 @@ export default function DetailOrder({route}) {
                   <Block width={73} height={73} radius={5} overflow={'hidden'}>
                     <Image
                       source={{uri: item?.product?.picture}}
-                      height={'100%'}
-                      width={'100%'}
+                      height={73}
+                      width={73}
                       resizeMode="cover"
                     />
                   </Block>
