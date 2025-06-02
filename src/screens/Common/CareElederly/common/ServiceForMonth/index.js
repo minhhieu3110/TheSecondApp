@@ -20,6 +20,7 @@ import actions from '@actions';
 import {formatTime} from '@utils';
 import {format} from 'date-fns';
 import Toast from 'react-native-toast-message';
+import {formatCurrency} from 'utils/helper';
 export default function Elederly_Servicedurationmonth({route}) {
   const dayWeek = [
     {id: 1, title: 'T2'},
@@ -32,7 +33,7 @@ export default function Elederly_Servicedurationmonth({route}) {
   ];
 
   const [choose, setChoose] = useState(1);
-  const [chooseOptionDuration, setChooseOptionDuration] = useState(1);
+  const [chooseOptionDuration, setChooseOptionDuration] = useState(0);
   const [againWeek, setAgainWeek] = useState([]);
   const handleWeekDayPress = title => {
     setAgainWeek(prevState => {
@@ -102,6 +103,7 @@ export default function Elederly_Servicedurationmonth({route}) {
       },
     });
   };
+  const infoService = useSelector(state => state.priceCalculation?.data || []);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -197,15 +199,13 @@ export default function Elederly_Servicedurationmonth({route}) {
           <Block row wrap gap={12} marginTop={15}>
             {detailSub?.months?.map(item => (
               <Pressable
-                onPress={() => setChooseOptionDuration(item.item_id)}
+                onPress={() => setChooseOptionDuration(item.month)}
                 key={item.item_id}
-                borderWidth={chooseOptionDuration === item.item_id ? 1 : ''}
-                borderColor={
-                  chooseOptionDuration === item.item_id && COLORS.red4
-                }
+                borderWidth={chooseOptionDuration === item.month ? 1 : ''}
+                borderColor={chooseOptionDuration === item.month && COLORS.red4}
                 radius={5}
                 backgroundColor={
-                  chooseOptionDuration === item.item_id
+                  chooseOptionDuration === item.month
                     ? COLORS.pinkWhite2
                     : COLORS.white
                 }
@@ -217,7 +217,7 @@ export default function Elederly_Servicedurationmonth({route}) {
                   fontSize={15}
                   regular
                   color={
-                    chooseOptionDuration === item.item_id
+                    chooseOptionDuration === item.month
                       ? COLORS.red4
                       : COLORS.black2
                   }>
@@ -252,14 +252,51 @@ export default function Elederly_Servicedurationmonth({route}) {
         </Block>
       </ScrollView>
       <ButtonSubmitService
-        titleTop={durationSelected?.title}
+        titleTop={formatCurrency(infoService?.amount_final)}
         titleBottom={detailSub?.service?.title}
         onPress={priceCalculation}
       />
       <DateMultiPicker
         visible={calendar}
         close={() => setCalendar(!calendar)}
+        numMonth={chooseOptionDuration}
+        dayOfWeek={againWeek}
+        onChange={dates => {
+          dispatch({
+            type: actions.PRICE_CALCULATION,
+            body: {
+              service_id: route?.params?.service_id,
+              service_sub_id: route?.params?.service_sub_id,
+              duration_id: choose,
+              monthly_package_id: chooseOptionDuration,
+              // schedule_week: againWeek,
+              list_day: dates,
+              start_time: start_time,
+              note: content,
+              promotion_id: '',
+              method_id: '',
+              address_id: route?.params?.addressId,
+            },
+          });
+          setListDates(dates);
+        }}
         onPress={dates => {
+          dispatch({
+            type: actions.PRICE_CALCULATION,
+            body: {
+              service_id: route?.params?.service_id,
+              service_sub_id: route?.params?.service_sub_id,
+              duration_id: choose,
+              monthly_package_id: chooseOptionDuration,
+              // schedule_week: againWeek,
+              list_day: dates,
+              start_time: start_time,
+              note: content,
+              promotion_id: '',
+              method_id: '',
+              address_id: route?.params?.addressId,
+            },
+          });
           setListDates(dates);
         }}
       />

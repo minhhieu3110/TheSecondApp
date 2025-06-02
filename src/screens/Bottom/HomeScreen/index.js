@@ -296,10 +296,9 @@ export default function HomeScreen() {
                 columnGap: 12,
                 flexDirection: 'row',
                 marginTop: 15,
-                left: 12,
+                paddingHorizontal: 12,
               }}
-              horizontal
-              showsHorizontalScrollIndicator={false}>
+              horizontal>
               {promo?.slice(0, 3)?.map(item => (
                 <Pressable
                   onPress={() =>

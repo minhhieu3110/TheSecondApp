@@ -96,12 +96,13 @@ export default function LoginScreen() {
           color={COLORS.placeholder}
           center
           marginBottom={35}
-          width={width}>
+          width={width - 48}>
           Bằng việc nhấn vào nút{' '}
           <Text semiBold color={COLORS.placeholder}>
             Tiếp tục
           </Text>
-          , bạn đã đồng ý với <Text color={COLORS.red4}>Quy chế</Text> và {''}
+          , bạn đã đồng ý với <Text color={COLORS.red4}>{`\n`}Quy chế</Text> và{' '}
+          {''}
           <Text color={COLORS.red4}>Điều khoản </Text>của chúng tôi
         </Text>
       </Block>
