@@ -361,6 +361,18 @@ export default function ConfirmAndPayService({route}) {
             voucherData={vouchers}
             onPressVoucher={promotion_id => {
               setPromotionSelected(promotion_id);
+              dispatch({
+                type: actions.PRICE_CALCULATION,
+                body: {
+                  promotion_id: promotion_id,
+                },
+                onSuccess: res => {
+                  Toast.show({
+                    type: 'success',
+                    text1: res?.message,
+                  });
+                },
+              });
             }}
           />
         </Block>

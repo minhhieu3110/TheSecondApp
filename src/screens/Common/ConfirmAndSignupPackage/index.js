@@ -22,6 +22,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {formatCurrency} from 'utils/helper';
 import {bottomRoot} from 'navigation/navigationRef';
 import router from '@router';
+import Toast from 'react-native-toast-message';
 
 export default function ConfirmAndSignupPackage({route}) {
   const dispatch = useDispatch();
@@ -76,7 +77,10 @@ export default function ConfirmAndSignupPackage({route}) {
         setShow(!show);
       },
       onFail(e) {
-        console.log(e?.data?.message);
+        Toast.show({
+          type: 'success',
+          text1: e,
+        });
       },
     });
   };

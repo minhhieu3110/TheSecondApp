@@ -19,6 +19,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import {formatTime} from '@utils';
 import {format} from 'date-fns';
+import Toast from 'react-native-toast-message';
 export default function Elederly_Servicedurationmonth({route}) {
   const dayWeek = [
     {id: 1, title: 'T2'},
@@ -64,7 +65,7 @@ export default function Elederly_Servicedurationmonth({route}) {
     service_sub_id: route?.params?.service_sub_id,
     duration_id: choose,
     monthly_package_id: chooseOptionDuration,
-    schedule_week: againWeek,
+    // schedule_week: againWeek,
     list_day: listDates,
     start_time: start_time,
     note: content,
@@ -80,7 +81,7 @@ export default function Elederly_Servicedurationmonth({route}) {
         service_sub_id: route?.params?.service_sub_id,
         duration_id: choose,
         monthly_package_id: chooseOptionDuration,
-        schedule_week: againWeek,
+        // schedule_week: againWeek,
         list_day: listDates,
         start_time: start_time,
         note: content,
@@ -91,6 +92,12 @@ export default function Elederly_Servicedurationmonth({route}) {
       onSuccess: () => {
         commonRoot.navigate(router.CONFIRM_AND_SIGNUP_PACKAGE, {
           data: infoOrder,
+        });
+      },
+      onFail: e => {
+        Toast.show({
+          type: 'success',
+          text1: e,
         });
       },
     });

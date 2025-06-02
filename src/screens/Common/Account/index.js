@@ -232,7 +232,7 @@ export default function Account() {
       <DateOfBirthPicker
         visible={dateOfBirth}
         close={() => setDateOfBirth(false)}
-        onChange={day => {
+        onPress={day => {
           setUpdateDateOfBirth(day);
         }}
       />

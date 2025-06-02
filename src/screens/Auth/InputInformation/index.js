@@ -210,9 +210,7 @@ export default function InputInformation({route}) {
       <DateOfBirthPicker
         visible={visible}
         close={() => setVisible(false)}
-        onChange={day => {
-          setDateOfBirth(day);
-        }}
+        onPress={date => setDateOfBirth(date)}
       />
     </Block>
   );

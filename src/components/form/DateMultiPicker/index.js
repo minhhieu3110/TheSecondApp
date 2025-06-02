@@ -121,7 +121,7 @@ const DateMultiPicker = ({visible, close, onPress}) => {
                             justifyCenter
                             alignCenter
                             overflow={'hidden'}
-                            opacity={isInMonth ? 1 : 0.5}>
+                            opacity={isInMonth ? 1 : 0}>
                             {isSelected ? (
                               <RadialGradient
                                 colors={COLORS.gradient5}
@@ -207,7 +207,7 @@ const DateMultiPicker = ({visible, close, onPress}) => {
                             justifyCenter
                             alignCenter
                             overflow={'hidden'}
-                            opacity={isInMonth ? 1 : 0.5}>
+                            opacity={isInMonth ? 1 : 0}>
                             {isSelected ? (
                               <RadialGradient
                                 colors={COLORS.gradient5}

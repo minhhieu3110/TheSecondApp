@@ -30,8 +30,6 @@ export default function DetailVoucher({route}) {
   const detailVoucher = useSelector(
     state => state.getDetailVoucher?.data || [],
   );
-  console.log(detailVoucher);
-
   return (
     <Block backgroundColor={COLORS.gray10} flex>
       <ScrollView contentContainerStyle={{paddingBottom: 100}}>
