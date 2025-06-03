@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {TouchableOpacity, Modal, SafeAreaView} from 'react-native';
 import {
   format,
@@ -23,7 +23,7 @@ const DateMultiPicker = ({
   onPress,
   onChange,
   numMonth,
-  dayOfWeek = ['T2', 'T3'],
+  dayOfWeek = [],
 }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState([]);
@@ -34,9 +34,12 @@ const DateMultiPicker = ({
       setArrayMonth(Array.from({length: numMonth}, (_, index) => index));
   }, [numMonth]);
 
-  const dayArr = arrayMonth?.map(month =>
-    getCalendarDays(addMonths(currentMonth, month)),
-  );
+  const dayArr = useMemo(() => {
+    return arrayMonth.map(month =>
+      getDaysInMonth(addMonths(currentMonth, month)),
+    );
+  }, [arrayMonth, currentMonth]);
+
   useEffect(() => {
     if (dayOfWeek?.length > 0) {
       const filteredDates = dayArr
@@ -46,17 +49,20 @@ const DateMultiPicker = ({
             ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'][getDay(day)],
           ),
         );
-      const filteredDatesInMonth = filteredDates.filter(date =>
-        arrayMonth?.some(month =>
+      const dates = filteredDates.filter(date =>
+        arrayMonth.some(month =>
           isSameMonth(date, addMonths(currentMonth, month)),
         ),
       );
-      setSelectedDates(filteredDatesInMonth);
-      // onChange(
-      //   filteredDatesInMonth.map(date => format(new Date(date), 'dd/MM/yyyy')),
-      // );
+
+      setSelectedDates(dates);
+      const datesFormated = dates.map(date =>
+        format(new Date(date), 'dd/MM/yyyy'),
+      );
+      onChange(datesFormated);
     }
-  }, [dayOfWeek]);
+  }, [dayOfWeek, arrayMonth, currentMonth]);
+
   function toggleDate(date) {
     const isSelected = selectedDates.some(d => isSameDay(d, date));
     if (isSelected) {
@@ -64,7 +70,6 @@ const DateMultiPicker = ({
     } else {
       setSelectedDates(prev => [...prev, date]);
     }
-    onChange(date.map(date => format(new Date(date), 'dd/MM/yyyy')));
   }
   const handleSelect = dates => {
     const datesFormated = dates.map(date =>
@@ -73,7 +78,6 @@ const DateMultiPicker = ({
     onPress(datesFormated);
     close();
   };
-  console.log(selectedDates?.length);
 
   return (
     <Modal animationType="fade" visible={visible} onRequestClose={close}>
@@ -141,7 +145,7 @@ const DateMultiPicker = ({
                         ))}
                       </Block>
                       <Block marginTop={22} rowGap={18} row wrap>
-                        {getCalendarDays(addMonths(currentMonth, month))?.map(
+                        {getDaysInMonth(addMonths(currentMonth, month))?.map(
                           day => {
                             const isInMonth = isSameMonth(
                               day,
@@ -150,6 +154,7 @@ const DateMultiPicker = ({
                             const isSelected = selectedDates.some(d =>
                               isSameDay(d, day),
                             );
+
                             const isInDay = isSameDay(day, new Date());
                             return (
                               <Block
@@ -165,6 +170,7 @@ const DateMultiPicker = ({
                                   justifyCenter
                                   alignCenter
                                   overflow={'hidden'}
+                                  // disabled={!isInMonth}
                                   opacity={isInMonth ? 1 : 0}>
                                   {isSelected ? (
                                     <RadialGradient
@@ -206,87 +212,6 @@ const DateMultiPicker = ({
                   </Block>
                 ))}
               </ScrollView>
-              {/* <Block
-                width={width - 48}
-                backgroundColor={COLORS.white}
-                radius={8}
-                paddingBottom={12}>
-                <Text
-                  marginLeft={12}
-                  marginTop={18}
-                  fontSize={14}
-                  semiBold
-                  color={COLORS.black2}>
-                  Tháng {format(addMonths(currentMonth, 1), 'L/yyyy')}
-                </Text>
-                <Block marginTop={17} marginHorizontal={12}>
-                  <Block row spaceBetween>
-                    {['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'].map(day => (
-                      <Text
-                        key={day}
-                        fontSize={13}
-                        semiBold
-                        width={(width - 72) / 7}
-                        center
-                        color={COLORS.black2}>
-                        {day}
-                      </Text>
-                    ))}
-                  </Block>
-                  <Block marginTop={22} rowGap={18} row wrap>
-                    {days2?.map(day => {
-                      const isInMonth = isSameMonth(
-                        day,
-                        addMonths(currentMonth, 1),
-                      );
-                      const isSelected = selectedDates.some(d =>
-                        isSameDay(d, day),
-                      );
-                      return (
-                        <Block
-                          width={(width - 76) / 7}
-                          key={day}
-                          justifyCenter
-                          alignCenter>
-                          <Pressable
-                            onPress={() => toggleDate(day)}
-                            width={25}
-                            height={25}
-                            radius={25}
-                            justifyCenter
-                            alignCenter
-                            overflow={'hidden'}
-                            opacity={isInMonth ? 1 : 0.5}>
-                            {isSelected ? (
-                              <RadialGradient
-                                colors={COLORS.gradient5}
-                                style={{
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                  width: 25,
-                                  height: 25,
-                                }}>
-                                <Text
-                                  fontSize={13}
-                                  regular
-                                  color={
-                                    isSelected ? COLORS.white : COLORS.black2
-                                  }>
-                                  {format(day, 'd')}
-                                </Text>
-                              </RadialGradient>
-                            ) : (
-                              <Text fontSize={13} regular color={COLORS.black2}>
-                                {format(day, 'd')}
-                              </Text>
-                            )}
-                          </Pressable>
-                        </Block>
-                      );
-                    })}
-                  </Block>
-                </Block>
-              </Block> */}
             </Block>
 
             <Pressable
@@ -309,10 +234,9 @@ const DateMultiPicker = ({
   );
 };
 
-function getCalendarDays(month) {
+function getDaysInMonth(month) {
   const start = startOfWeek(startOfMonth(month), {weekStartsOn: 0});
   const end = endOfWeek(endOfMonth(month), {weekStartsOn: 0});
   return eachDayOfInterval({start, end});
 }
-
 export default DateMultiPicker;

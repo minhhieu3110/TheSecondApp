@@ -1,9 +1,19 @@
-import {Block, Text, Image} from '@components';
+import {Block, Text, Image, Pressable} from '@components';
 import {COLORS} from '@theme';
-import {width} from '@responsive';
 import {icon} from '@assets';
-import DatePicker from 'react-native-date-picker';
-export default function ChooseStartTime({date, onDateChange}) {
+import DTP from '@react-native-community/datetimepicker';
+import {useState} from 'react';
+
+export default function ChooseStartTime({onDateChange}) {
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
+  const handleChange = (event, selectedDate) => {
+    if (selectedDate) {
+      setDate(selectedDate);
+      onDateChange(selectedDate);
+      setShow(false);
+    }
+  };
   return (
     <Block
       marginTop={15}
@@ -18,18 +28,28 @@ export default function ChooseStartTime({date, onDateChange}) {
             Chọn giờ bắt đầu
           </Text>
         </Block>
-        <DatePicker
-          mode="time"
-          date={date}
-          onDateChange={onDateChange}
-          style={{
-            width: 151,
-            height: 42,
-            borderRadius: 5,
-            backgroundColor: COLORS.pinkWhite2,
-          }}
-          theme="auto"
-        />
+        <Pressable
+          onPress={() => setShow(true)}
+          width={151}
+          height={42}
+          backgroundColor={COLORS.pinkWhite2}
+          alignCenter
+          paddingHorizontal={29.5}
+          rowCenter
+          spaceBetween>
+          <Text>{String(date.getHours()).padStart(2, '0')}</Text>
+          <Block height={31.67} borderWidth={1} borderColor={COLORS.white} />
+          <Text>{String(date.getMinutes()).padStart(2, '0')}</Text>
+        </Pressable>
+        {show && (
+          <DTP
+            mode="time"
+            value={date}
+            onChange={handleChange}
+            is24Hour={true}
+            display="inline"
+          />
+        )}
       </Block>
     </Block>
   );

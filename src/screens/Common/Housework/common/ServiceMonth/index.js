@@ -12,7 +12,6 @@ import {
 } from '@components';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
-import {icon} from '@assets';
 import {width} from '@responsive';
 import {ScrollView} from 'react-native';
 import {commonRoot} from 'navigation/navigationRef';
@@ -20,7 +19,8 @@ import router from '@router';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import {formatTime} from '@utils';
-import {duration} from 'moment';
+import {formatCurrency} from 'utils/helper';
+import Toast from 'react-native-toast-message';
 export default function Housework_ServiceMonth({route}) {
   const dayWeek = [
     {id: 1, title: 'T2'},
@@ -32,9 +32,9 @@ export default function Housework_ServiceMonth({route}) {
     {id: 7, title: 'CN'},
   ];
 
-  const [chooseDuration, setChooseDuration] = useState(1);
-  const [chooseOptionDuration, setChooseOptionDuration] = useState(1);
-  const [againWeek, setAgainWeek] = useState([]);
+  const [chooseDuration, setChooseDuration] = useState();
+  const [chooseOptionDuration, setChooseOptionDuration] = useState();
+  const [againWeek, setAgainWeek] = useState([null]);
   const handleWeekDayPress = title => {
     setAgainWeek(prevState => {
       if (prevState.includes(title)) {
@@ -64,12 +64,15 @@ export default function Housework_ServiceMonth({route}) {
   const durationSelected = detailSub?.durations?.find(
     item => item.item_id === chooseDuration,
   );
+  const numMonth = detailSub?.months?.find(
+    month => month.item_id === chooseOptionDuration,
+  );
   const infoOrder = {
     service_id: route?.params?.service_id,
     service_sub_id: route?.params?.service_sub_id,
     duration_id: chooseDuration,
     monthly_package_id: chooseOptionDuration,
-    schedule_week: againWeek,
+    // schedule_week: againWeek,
     list_day: listDates,
     start_time: start_time,
     note: content,
@@ -77,7 +80,8 @@ export default function Housework_ServiceMonth({route}) {
     method_id: '',
     address_id: route?.params?.address_id,
   };
-  const priceCalculation = () => {
+
+  useEffect(() => {
     dispatch({
       type: actions.PRICE_CALCULATION,
       body: {
@@ -85,7 +89,7 @@ export default function Housework_ServiceMonth({route}) {
         service_sub_id: route?.params?.service_sub_id,
         duration_id: chooseDuration,
         monthly_package_id: chooseOptionDuration,
-        schedule_week: againWeek,
+        // schedule_week: againWeek,
         list_day: listDates,
         start_time: start_time,
         note: content,
@@ -93,13 +97,16 @@ export default function Housework_ServiceMonth({route}) {
         method_id: '',
         address_id: route?.params?.address_id,
       },
-      onSuccess: () => {
-        commonRoot.navigate(router.CONFIRM_AND_SIGNUP_PACKAGE, {
-          data: infoOrder,
+      onFail: e => {
+        Toast.show({
+          type: 'error',
+          text1: e,
         });
       },
     });
-  };
+  }, [listDates, chooseDuration, start_time]);
+  const infoService = useSelector(state => state.priceCalculation?.data || []);
+  console.log(numMonth);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -233,14 +240,34 @@ export default function Housework_ServiceMonth({route}) {
         </Block>
       </ScrollView>
       <ButtonSubmitService
-        titleTop={durationSelected?.title}
+        titleTop={
+          infoService?.amount_final == null || infoService?.amount_final === 0
+            ? '--//--'
+            : formatCurrency(infoService?.amount_final)
+        }
+        disable={
+          infoService?.amount_final == null || infoService?.amount_final === 0
+            ? true
+            : false
+        }
         titleBottom={detailSub?.service?.title}
-        onPress={priceCalculation}
+        onPress={() =>
+          commonRoot.navigate(router.CONFIRM_AND_SIGNUP_PACKAGE, {
+            data: infoOrder,
+          })
+        }
       />
       <DateMultiPicker
         visible={calendar}
         close={() => setCalendar(!calendar)}
-        onPress={dates => setListDates(dates)}
+        numMonth={numMonth?.month}
+        dayOfWeek={againWeek}
+        onChange={dates => {
+          setListDates(dates);
+        }}
+        onPress={dates => {
+          setListDates(dates);
+        }}
       />
     </Block>
   );

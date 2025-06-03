@@ -34,7 +34,7 @@ export default function Elederly_Servicedurationmonth({route}) {
 
   const [choose, setChoose] = useState(1);
   const [chooseOptionDuration, setChooseOptionDuration] = useState(0);
-  const [againWeek, setAgainWeek] = useState([]);
+  const [againWeek, setAgainWeek] = useState([null]);
   const handleWeekDayPress = title => {
     setAgainWeek(prevState => {
       if (prevState.includes(title)) {
@@ -66,7 +66,6 @@ export default function Elederly_Servicedurationmonth({route}) {
     service_sub_id: route?.params?.service_sub_id,
     duration_id: choose,
     monthly_package_id: chooseOptionDuration,
-    // schedule_week: againWeek,
     list_day: listDates,
     start_time: start_time,
     note: content,
@@ -74,7 +73,7 @@ export default function Elederly_Servicedurationmonth({route}) {
     method_id: '',
     address_id: route?.params?.addressId,
   };
-  const priceCalculation = () => {
+  useEffect(() => {
     dispatch({
       type: actions.PRICE_CALCULATION,
       body: {
@@ -82,7 +81,6 @@ export default function Elederly_Servicedurationmonth({route}) {
         service_sub_id: route?.params?.service_sub_id,
         duration_id: choose,
         monthly_package_id: chooseOptionDuration,
-        // schedule_week: againWeek,
         list_day: listDates,
         start_time: start_time,
         note: content,
@@ -90,20 +88,10 @@ export default function Elederly_Servicedurationmonth({route}) {
         method_id: '',
         address_id: route?.params?.addressId,
       },
-      onSuccess: () => {
-        commonRoot.navigate(router.CONFIRM_AND_SIGNUP_PACKAGE, {
-          data: infoOrder,
-        });
-      },
-      onFail: e => {
-        Toast.show({
-          type: 'success',
-          text1: e,
-        });
-      },
     });
-  };
+  }, [listDates, choose, start_time]);
   const infoService = useSelector(state => state.priceCalculation?.data || []);
+  console.log(start_time);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -154,7 +142,7 @@ export default function Elederly_Servicedurationmonth({route}) {
               </Pressable>
             ))}
           </Block>
-          <ChooseStartTime date={time} onDateChange={setTime} />
+          <ChooseStartTime onDateChange={setTime} />
           <Text fontSize={15} semiBold color={COLORS.black2} marginTop={20.2}>
             Thời lượng
           </Text>
@@ -252,9 +240,22 @@ export default function Elederly_Servicedurationmonth({route}) {
         </Block>
       </ScrollView>
       <ButtonSubmitService
-        titleTop={formatCurrency(infoService?.amount_final)}
+        titleTop={
+          infoService?.amount_final == null || infoService?.amount_final === 0
+            ? '--//--'
+            : formatCurrency(infoService?.amount_final)
+        }
+        disable={
+          infoService?.amount_final == null || infoService?.amount_final === 0
+            ? true
+            : false
+        }
         titleBottom={detailSub?.service?.title}
-        onPress={priceCalculation}
+        onPress={() =>
+          commonRoot.navigate(router.CONFIRM_AND_SIGNUP_PACKAGE, {
+            data: infoOrder,
+          })
+        }
       />
       <DateMultiPicker
         visible={calendar}
@@ -262,41 +263,9 @@ export default function Elederly_Servicedurationmonth({route}) {
         numMonth={chooseOptionDuration}
         dayOfWeek={againWeek}
         onChange={dates => {
-          dispatch({
-            type: actions.PRICE_CALCULATION,
-            body: {
-              service_id: route?.params?.service_id,
-              service_sub_id: route?.params?.service_sub_id,
-              duration_id: choose,
-              monthly_package_id: chooseOptionDuration,
-              // schedule_week: againWeek,
-              list_day: dates,
-              start_time: start_time,
-              note: content,
-              promotion_id: '',
-              method_id: '',
-              address_id: route?.params?.addressId,
-            },
-          });
           setListDates(dates);
         }}
         onPress={dates => {
-          dispatch({
-            type: actions.PRICE_CALCULATION,
-            body: {
-              service_id: route?.params?.service_id,
-              service_sub_id: route?.params?.service_sub_id,
-              duration_id: choose,
-              monthly_package_id: chooseOptionDuration,
-              // schedule_week: againWeek,
-              list_day: dates,
-              start_time: start_time,
-              note: content,
-              promotion_id: '',
-              method_id: '',
-              address_id: route?.params?.addressId,
-            },
-          });
           setListDates(dates);
         }}
       />
