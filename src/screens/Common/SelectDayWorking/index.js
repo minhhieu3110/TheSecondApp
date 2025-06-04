@@ -22,6 +22,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import DatePicker from 'react-native-date-picker';
 import {formatTime} from '@utils';
+import {formatCurrency} from 'utils/helper';
 const SelectDayWorking = ({route}) => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -103,7 +104,24 @@ const SelectDayWorking = ({route}) => {
       },
     });
   };
-
+  useEffect(() => {
+    dispatch({
+      type: actions.PRICE_CALCULATION,
+      body: {
+        service_id: route?.params?.service_id,
+        service_sub_id: route?.params?.service_sub_id,
+        duration_id: route?.params?.duration_id,
+        repeat_weekly: againWeek,
+        list_day: [`${chooseDay}/${year}`],
+        start_time: start_time,
+        note: note,
+        address_id: route?.params?.addressId,
+        extra_services: route?.params?.extra_services,
+        is_favorite_employee: route?.params?.is_favorite_employee,
+      },
+    });
+  }, [chooseDay, againWeek, route?.params?.extra_services]);
+  const infoService = useSelector(state => state.priceCalculation?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderChooseTime
@@ -233,7 +251,11 @@ const SelectDayWorking = ({route}) => {
         </Block>
       </Block>
       <ButtonSubmitService
-        titleTop={route?.params?.duration}
+        titleTop={
+          `${formatCurrency(infoService?.amount_final)}` +
+          '/' +
+          `${route?.params?.duration}`
+        }
         titleBottom={route?.params?.name_service}
         onPress={priceCalculation}
       />

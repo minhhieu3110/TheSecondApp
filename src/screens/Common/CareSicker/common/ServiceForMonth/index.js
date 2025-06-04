@@ -59,8 +59,8 @@ export default function Sicker_Servicedurationmonth({route}) {
   const start_time = formatTime(time);
   const detailSub = useSelector(state => state.getDetailServiceSub?.data || []);
   const [content, setContent] = useState('');
-  const durationSelected = detailSub?.durations?.find(
-    item => item.item_id === choose,
+  const numMonth = detailSub?.months?.find(
+    item => item.item_id === chooseOptionDuration,
   );
   const infoOrder = {
     service_id: route?.params?.service_id,
@@ -263,7 +263,7 @@ export default function Sicker_Servicedurationmonth({route}) {
       <DateMultiPicker
         visible={calendar}
         close={() => setCalendar(!calendar)}
-        numMonth={chooseOptionDuration}
+        numMonth={chooseOptionDuration?.month}
         dayOfWeek={againWeek}
         onChange={dates => {
           setListDates(dates);

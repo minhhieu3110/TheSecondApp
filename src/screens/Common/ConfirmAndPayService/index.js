@@ -152,29 +152,6 @@ export default function ConfirmAndPayService({route}) {
                   color={COLORS.placeholder}>
                   {formatPhone(userInfo?.phone)}
                 </Text>
-                <Block
-                  absolute
-                  right={0}
-                  top={0}
-                  width={76.83}
-                  height={30.33}
-                  radius={15}
-                  overflow={'hidden'}>
-                  <RadialGradient
-                    colors={COLORS.gradient5}
-                    style={{
-                      width: 76.83,
-                      height: 30.33,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                    center={[10, 10]}
-                    radius={100}>
-                    <Text fontSize={13} medium color={COLORS.white}>
-                      Thay đổi
-                    </Text>
-                  </RadialGradient>
-                </Block>
               </Block>
             </Block>
           </Block>
@@ -279,7 +256,7 @@ export default function ConfirmAndPayService({route}) {
                   borderColor={COLORS.borderColor1}
                 />
               </Block>
-              <Block marginTop={12}>
+              <Block marginTop={12} gap={10}>
                 <Block row alignCenter>
                   <Image
                     source={icon.icon_detail_activity}
@@ -294,22 +271,42 @@ export default function ConfirmAndPayService({route}) {
                     Chi tiết công việc
                   </Text>
                 </Block>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.black2}
-                  marginLeft={30}
-                  marginTop={9}>
-                  {infoService?.service?.title}
-                </Text>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.placeholder}
-                  marginLeft={30}
-                  marginTop={11}>
-                  {infoService?.note && `Ghi chú: ${infoService?.note}`}
-                </Text>
+                <Block marginLeft={30}>
+                  <Text fontSize={14} regular color={COLORS.black2} marg>
+                    {infoService?.service?.title}
+                  </Text>
+                  {/* <Block rowCenter spaceBetween>
+                    <Text fontSize={14} regular color={COLORS.placeholder}>
+                      Khối lượng công việc
+                    </Text>
+                    <Block row>
+                      {infoService?.extra_services?.map(extra => (
+                        <Text fontSize={14} regular color={COLORS.black2}>
+                          {extra?.text},{' '}
+                        </Text>
+                      ))}
+                    </Block>
+                  </Block> */}
+                  <Block row spaceBetween>
+                    <Text fontSize={14} regular color={COLORS.placeholder}>
+                      Dịch vụ thêm
+                    </Text>
+                    <Block>
+                      {infoService?.extra_services?.map(extra => (
+                        <Text fontSize={14} regular color={COLORS.black2}>
+                          {extra?.text}
+                        </Text>
+                      ))}
+                    </Block>
+                  </Block>
+                  <Text
+                    fontSize={14}
+                    regular
+                    color={COLORS.placeholder}
+                    marginLeft={30}>
+                    {infoService?.note && `Ghi chú: ${infoService?.note}`}
+                  </Text>
+                </Block>
               </Block>
             </Block>
           </Block>

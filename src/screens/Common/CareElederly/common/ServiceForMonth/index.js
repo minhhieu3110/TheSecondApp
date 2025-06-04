@@ -33,7 +33,7 @@ export default function Elederly_Servicedurationmonth({route}) {
   ];
 
   const [choose, setChoose] = useState(1);
-  const [chooseOptionDuration, setChooseOptionDuration] = useState(0);
+  const [chooseOptionDuration, setChooseOptionDuration] = useState(1);
   const [againWeek, setAgainWeek] = useState([null]);
   const handleWeekDayPress = title => {
     setAgainWeek(prevState => {
@@ -58,8 +58,8 @@ export default function Elederly_Servicedurationmonth({route}) {
   const start_time = formatTime(time);
   const detailSub = useSelector(state => state.getDetailServiceSub?.data || []);
   const [content, setContent] = useState('');
-  const durationSelected = detailSub?.durations?.find(
-    item => item.item_id === choose,
+  const numMouth = detailSub?.months?.find(
+    item => item.item_id === chooseOptionDuration,
   );
   const infoOrder = {
     service_id: route?.params?.service_id,
@@ -88,10 +88,16 @@ export default function Elederly_Servicedurationmonth({route}) {
         method_id: '',
         address_id: route?.params?.addressId,
       },
+      onFail: e => {
+        Toast.show({
+          type: 'error',
+          text1: e,
+        });
+      },
     });
   }, [listDates, choose, start_time]);
   const infoService = useSelector(state => state.priceCalculation?.data || []);
-  console.log(start_time);
+  console.log(numMouth);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -187,13 +193,15 @@ export default function Elederly_Servicedurationmonth({route}) {
           <Block row wrap gap={12} marginTop={15}>
             {detailSub?.months?.map(item => (
               <Pressable
-                onPress={() => setChooseOptionDuration(item.month)}
+                onPress={() => setChooseOptionDuration(item.item_id)}
                 key={item.item_id}
-                borderWidth={chooseOptionDuration === item.month ? 1 : ''}
-                borderColor={chooseOptionDuration === item.month && COLORS.red4}
+                borderWidth={chooseOptionDuration === item.item_id ? 1 : ''}
+                borderColor={
+                  chooseOptionDuration === item.item_id && COLORS.red4
+                }
                 radius={5}
                 backgroundColor={
-                  chooseOptionDuration === item.month
+                  chooseOptionDuration === item.item_id
                     ? COLORS.pinkWhite2
                     : COLORS.white
                 }
@@ -205,7 +213,7 @@ export default function Elederly_Servicedurationmonth({route}) {
                   fontSize={15}
                   regular
                   color={
-                    chooseOptionDuration === item.month
+                    chooseOptionDuration === item.item_id
                       ? COLORS.red4
                       : COLORS.black2
                   }>
@@ -260,7 +268,7 @@ export default function Elederly_Servicedurationmonth({route}) {
       <DateMultiPicker
         visible={calendar}
         close={() => setCalendar(!calendar)}
-        numMonth={chooseOptionDuration}
+        numMonth={numMouth?.month}
         dayOfWeek={againWeek}
         onChange={dates => {
           setListDates(dates);

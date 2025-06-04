@@ -154,29 +154,6 @@ export default function ConfirmAndSignupPackage({route}) {
                   color={COLORS.placeholder}>
                   {formatPhone(userInfo?.phone)}
                 </Text>
-                <Block
-                  absolute
-                  right={0}
-                  top={0}
-                  width={76.83}
-                  height={30.33}
-                  radius={15}
-                  overflow={'hidden'}>
-                  <RadialGradient
-                    colors={COLORS.gradient5}
-                    style={{
-                      width: 76.83,
-                      height: 30.33,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                    center={[10, 10]}
-                    radius={100}>
-                    <Text fontSize={13} medium color={COLORS.white}>
-                      Thay đổi
-                    </Text>
-                  </RadialGradient>
-                </Block>
               </Block>
             </Block>
           </Block>
