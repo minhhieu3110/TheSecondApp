@@ -123,7 +123,7 @@ export default function InputOTP({route}) {
             color={COLORS.black2}
             center>
             Bạn không nhận được mã?{' '}
-            <Text onPress={resend} color={COLORS.red4} underlineLineThrough>
+            <Text onPress={resend} color={COLORS.red4} underline>
               Gửi lại
             </Text>{' '}
             {disableResend && `(${timer}s)`}

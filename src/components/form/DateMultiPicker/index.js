@@ -42,21 +42,18 @@ const DateMultiPicker = ({
 
   useEffect(() => {
     if (dayOfWeek?.length > 0) {
-      const filteredDates = dayArr
-        .flat()
-        .filter(day =>
-          dayOfWeek.includes(
-            ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'][getDay(day)],
-          ),
-        );
-      const dates = filteredDates.filter(date =>
-        arrayMonth.some(month =>
-          isSameMonth(date, addMonths(currentMonth, month)),
-        ),
+      const filteredDate = arrayMonth.flatMap(month =>
+        dayArr[month]
+          .filter(day =>
+            dayOfWeek.includes(
+              ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'][getDay(day)],
+            ),
+          )
+          .filter(day => isSameMonth(day, addMonths(currentMonth, month))),
       );
 
-      setSelectedDates(dates);
-      const datesFormated = dates.map(date =>
+      setSelectedDates(filteredDate);
+      const datesFormated = filteredDate.map(date =>
         format(new Date(date), 'dd/MM/yyyy'),
       );
       onChange(datesFormated);
@@ -78,6 +75,7 @@ const DateMultiPicker = ({
     onPress(datesFormated);
     close();
   };
+  console.log(selectedDates.length);
 
   return (
     <Modal animationType="fade" visible={visible} onRequestClose={close}>

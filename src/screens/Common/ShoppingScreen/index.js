@@ -212,18 +212,17 @@ export default function ShoppingScreen() {
                     title: item.title,
                   })
                 }
-                key={item.group_id}
+                key={index}
                 width={(width - 36) / 3}
-                // height={index % 2 === 0 ? 164 : 127}
-                height={152}
+                height={index % 2 === 0 ? 164 : 127}
+                // height={152}
                 radius={5}
-                overflow={'hidden'}
-                alignSelfStart>
+                overflow={'hidden'}>
                 <Image
                   source={{uri: item.picture}}
                   width={(width - 36) / 3}
-                  // height={index % 2 === 0 ? 164 : 127}
-                  height={152}
+                  height={index % 2 === 0 ? 164 : 127}
+                  // height={152}
                   resizeMode="contain"
                 />
                 <Block absolute bottom={11} left={11} right={11} zIndex={10}>

@@ -2,7 +2,15 @@ import {getSize, width} from '@responsive';
 import {COLORS} from '@theme';
 import RadialGradient from 'react-native-radial-gradient';
 import {icon} from '@assets';
-import {Block, Text, Carousel, Image, ScrollView, Icon} from '@components';
+import {
+  Block,
+  Text,
+  Carousel,
+  Image,
+  ScrollView,
+  Icon,
+  StatusBar,
+} from '@components';
 import Pressable from 'components/base/Pressable';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
@@ -53,20 +61,15 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <Block flex backgroundColor={COLORS.gray10}>
+    <Block flex backgroundColor={COLORS.black}>
+      <StatusBar />
       <ScrollView
         contentContainerStyle={{
           backgroundColor: COLORS.gray10,
           paddingBottom: 100,
         }}>
         <Block width={width} height={337} backgroundColor={COLORS.white}>
-          <Block
-            width={width - 24}
-            height={46}
-            row
-            left={12}
-            spaceBetween
-            marginTop={10}>
+          <Block width={width - 24} height={46} row left={12} spaceBetween>
             <Block marginTop={3} height={43}>
               <Text
                 color={COLORS.red4}
@@ -261,7 +264,7 @@ export default function HomeScreen() {
               width={376}>
               <Image source={icon.icon_shop_home} />
 
-              <Block marginTop={24.8} width={245}>
+              <Block width={'65%'}>
                 <Text fontSize={16} semiBold color={COLORS.red4} uppercase>
                   e-shop
                 </Text>
@@ -367,8 +370,7 @@ export default function HomeScreen() {
                       item_id: item.item_id,
                     })
                   }
-                  row
-                  spaceBetween
+                  rowCenter
                   height={113}
                   key={item.item_id}>
                   <Block
@@ -382,7 +384,7 @@ export default function HomeScreen() {
                       height={113}
                     />
                   </Block>
-                  <Block marginLeft={10} marginTop={17.9} width={224}>
+                  <Block marginLeft={10} width={'58%'}>
                     <Block row alignCenter>
                       <Image
                         source={icon.icon_calendar}

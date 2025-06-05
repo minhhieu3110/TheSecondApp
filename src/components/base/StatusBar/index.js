@@ -6,8 +6,9 @@ import {StatusBar as RNStatusBar} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const StatusBar = ({
+  translucent = true,
+  backgroundColor = 'transparent',
   barStyle = 'light-content',
-  backgroundColor = COLORS.gradient,
   ...props
 }) => {
   const {top} = useSafeAreaInsets();
@@ -16,14 +17,9 @@ const StatusBar = ({
     <Block>
       <RNStatusBar
         barStyle={barStyle}
+        translucent={translucent}
+        backgroundColor={backgroundColor}
         {...props}
-        // backgroundColor={COLORS[backgroundColor] || backgroundColor}
-      />
-      <LinearGradient
-        style={{height: top}}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}
-        colors={COLORS.gradient}
       />
     </Block>
   );

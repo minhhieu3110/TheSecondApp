@@ -1,22 +1,20 @@
 import {image} from '@assets';
-import {Block, Image, Pressable, Text} from '@components';
+import {Block, Image, Pressable, StatusBar, Text} from '@components';
 import {height, hs, hScale, width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {authRoot, commonRoot} from 'navigation/navigationRef';
+import {ImageBackground} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 export default function OnboardingScreen() {
-  const {top} = useSafeAreaInsets();
-  console.log(height - top);
+  const {bottom} = useSafeAreaInsets();
 
   return (
-    <Block flex backgroundColor={COLORS.gray10}>
-      <Image
-        source={image.image_intro}
-        width={width}
-        height={height}
-        flex={1}
-        justifyEnd>
+    <ImageBackground
+      style={{width: width, height: '100%', alignItems: 'center'}}
+      source={image.image_intro}>
+      <StatusBar />
+      <Block flex justifyEnd paddingBottom={bottom + 84} width={width}>
         <Pressable
           onPress={() => authRoot.navigate(router.LOGIN_SCREEN)}
           height={48}
@@ -24,13 +22,12 @@ export default function OnboardingScreen() {
           backgroundColor={COLORS.yellow3}
           radius={8}
           justifyCenter
-          alignCenter
-          marginBottom={172 - top}>
+          alignCenter>
           <Text fontSize={15} regular color={COLORS.black2}>
             Đăng nhập
           </Text>
         </Pressable>
-      </Image>
-    </Block>
+      </Block>
+    </ImageBackground>
   );
 }

@@ -9,23 +9,41 @@ import {
   eachDayOfInterval,
   isSameMonth,
   isSameDay,
-  addMonths,
-  subMonths,
 } from 'date-fns';
 import {COLORS} from '@theme';
 import {width} from '@responsive';
 import {Block, Icon, Pressable, Text} from '@components';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import RadialGradient from 'react-native-radial-gradient';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import {Dropdown} from 'react-native-element-dropdown';
+
 const DateOfBirthPicker = ({visible, close, onPress}) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDates, setSelectedDates] = useState();
 
-  const days = getCalendarDays(currentMonth);
+  const months = Array.from({length: 12}, (_, i) => ({
+    label: `Tháng ${i + 1}`,
+    value: i,
+  })).filter(month => {
+    const currentYear = new Date().getFullYear();
+    return (
+      currentMonth.getFullYear() < currentYear ||
+      month.value <= new Date().getMonth()
+    );
+  });
+  const years = Array.from({length: 100}, (_, i) => ({
+    label: `${new Date().getFullYear() - i}`,
+    value: new Date().getFullYear() - i,
+  }));
+
+  const days = getCalendarDays(currentMonth).filter(day => day <= new Date());
   const handleSelect = dates => {
     onPress(dates);
     close();
+  };
+
+  const handleMonthYearChange = (month, year) => {
+    setCurrentMonth(new Date(year, month, 1));
   };
 
   return (
@@ -72,32 +90,42 @@ const DateOfBirthPicker = ({visible, close, onPress}) => {
                   spaceBetween
                   marginTop={18}
                   marginHorizontal={12}>
-                  <Pressable
-                    onPress={() => setCurrentMonth(subMonths(currentMonth, 1))}>
-                    <Icon
-                      IconType={AntDesign}
-                      iconName={'caretleft'}
-                      iconSize={20}
-                      iconColor={COLORS.darkRed1}
-                    />
-                  </Pressable>
-                  <Text
-                    marginLeft={12}
-                    fontSize={14}
-                    semiBold
-                    color={COLORS.black2}>
-                    Tháng {format(currentMonth, 'LL|yyyy')}
-                    {/*  */}
-                  </Text>
-                  <Pressable
-                    onPress={() => setCurrentMonth(addMonths(currentMonth, 1))}>
-                    <Icon
-                      IconType={AntDesign}
-                      iconName={'caretright'}
-                      iconSize={20}
-                      iconColor={COLORS.darkRed1}
-                    />
-                  </Pressable>
+                  <Dropdown
+                    data={months}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Chọn tháng"
+                    value={currentMonth.getMonth()}
+                    onChange={item =>
+                      handleMonthYearChange(
+                        item.value,
+                        currentMonth.getFullYear(),
+                      )
+                    }
+                    style={{
+                      width: (width - 72) / 2,
+                      backgroundColor: COLORS.gray10,
+                      borderRadius: 8,
+                      padding: 8,
+                    }}
+                  />
+                  <Dropdown
+                    data={years}
+                    labelField="label"
+                    valueField="value"
+                    placeholder="Chọn năm"
+                    search={true}
+                    value={currentMonth.getFullYear()}
+                    onChange={item =>
+                      handleMonthYearChange(currentMonth.getMonth(), item.value)
+                    }
+                    style={{
+                      width: (width - 72) / 2,
+                      backgroundColor: COLORS.gray10,
+                      borderRadius: 8,
+                      padding: 8,
+                    }}
+                  />
                 </Block>
                 <Block marginTop={17} marginHorizontal={12}>
                   <Block row spaceBetween>
@@ -117,6 +145,7 @@ const DateOfBirthPicker = ({visible, close, onPress}) => {
                     {days?.map(day => {
                       const isInMonth = isSameMonth(day, currentMonth);
                       const isInDay = isSameDay(day, new Date());
+                      const isSelectable = day <= new Date();
                       return (
                         <Block
                           width={(width - 76) / 7}
@@ -125,7 +154,9 @@ const DateOfBirthPicker = ({visible, close, onPress}) => {
                           alignCenter>
                           <Pressable
                             onPress={() => {
-                              setSelectedDates(format(day, 'dd/MM/yyyy'));
+                              if (isSelectable) {
+                                setSelectedDates(format(day, 'dd/MM/yyyy'));
+                              }
                             }}
                             width={25}
                             height={25}
@@ -133,7 +164,8 @@ const DateOfBirthPicker = ({visible, close, onPress}) => {
                             justifyCenter
                             alignCenter
                             overflow={'hidden'}
-                            opacity={isInMonth ? 1 : 0}>
+                            opacity={isInMonth ? 1 : 0.5}
+                            disabled={!isSelectable}>
                             {selectedDates === format(day, 'dd/MM/yyyy') ? (
                               <RadialGradient
                                 colors={COLORS.gradient5}
@@ -159,7 +191,11 @@ const DateOfBirthPicker = ({visible, close, onPress}) => {
                                 fontSize={13}
                                 regular
                                 color={
-                                  isInDay ? COLORS.yellow3 : COLORS.black2
+                                  isSelectable
+                                    ? isInDay
+                                      ? COLORS.yellow3
+                                      : COLORS.black2
+                                    : COLORS.gray5
                                 }>
                                 {format(day, 'd')}
                               </Text>

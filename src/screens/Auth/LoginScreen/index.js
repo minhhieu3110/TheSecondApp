@@ -1,17 +1,27 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Icon, Image, Pressable, Text, TextInput} from '@components';
-import {width} from '@responsive';
+import {
+  Block,
+  Icon,
+  Image,
+  Pressable,
+  StatusBar,
+  Text,
+  TextInput,
+} from '@components';
+import {height, width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import axios from 'axios';
 import {authRoot, commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 
 export default function LoginScreen() {
+  const {bottom} = useSafeAreaInsets();
   const dispatch = useDispatch();
   const [phone, setPhone] = useState('');
 
@@ -34,14 +44,13 @@ export default function LoginScreen() {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <Block width={width} height={328}>
-        <Image
-          source={image.image_san}
-          width={width}
-          height={328}
-          resizeMode="cover"
-        />
-      </Block>
+      <StatusBar />
+      <Image
+        source={image.image_san}
+        width={width}
+        height={328}
+        resizeMode="cover"
+      />
       <Block
         marginTop={-39}
         marginHorizontal={12}
@@ -58,6 +67,7 @@ export default function LoginScreen() {
             </Text>
           </Block>
           <TextInput
+            maxLength={10}
             marginTop={26}
             borderWidth={0.5}
             borderColor={COLORS.gray11}
@@ -89,21 +99,19 @@ export default function LoginScreen() {
           </Block>
         </Block>
       </Block>
-      <Block alignCenter paddingHorizontal={48} flex={1} justifyEnd>
-        <Text
-          fontSize={14}
-          regular
-          color={COLORS.placeholder}
-          center
-          marginBottom={35}
-          width={width - 48}>
+      <Block
+        alignCenter
+        marginHorizontal={48}
+        flex={1}
+        justifyEnd
+        paddingBottom={bottom + 17.5}>
+        <Text fontSize={14} regular color={COLORS.placeholder} center>
           Bằng việc nhấn vào nút{' '}
           <Text semiBold color={COLORS.placeholder}>
             Tiếp tục
-          </Text>
-          , bạn đã đồng ý với <Text color={COLORS.red4}>{`\n`}Quy chế</Text> và{' '}
-          {''}
-          <Text color={COLORS.red4}>Điều khoản </Text>của chúng tôi
+          </Text>{' '}
+          bạn đã đồng ý với <Text color={COLORS.red4}>Quy chế</Text> và{' '}
+          <Text color={COLORS.red4}>Điều khoản</Text> của chúng tôi
         </Text>
       </Block>
     </Block>
