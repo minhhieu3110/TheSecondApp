@@ -28,7 +28,7 @@ export default function IntroSAN() {
   ];
   const renderItem = ({item}) => {
     return (
-      <Block gap={10}>
+      <Block gap={10} borderWidth={1} backgroundColor={COLORS.white}>
         <Text fontSize={18} semiBold color={COLORS.yellow3} uppercase center>
           {item.title}
         </Text>
@@ -46,54 +46,52 @@ export default function IntroSAN() {
   };
   const {top, bottom} = useSafeAreaInsets();
   return (
-    <ImageBackground
-      source={image.image_intro_1}
-      style={{
-        width: width,
-        height: '100%',
-      }}>
-      <StatusBar />
-      <Block flex justifyEnd paddingBottom={bottom + 32}>
-        <AppIntro
-          data={contentIntro}
-          renderItem={renderItem}
-          // style={{
-          //   height: height * 11.45,
-          // }}
-          style={{
-            marginTop: 670,
-            // borderWidth: 1,
-          }}
-          dotStyle={{
-            width: 8,
-            height: 8,
-            backgroundColor: COLORS.Yellow3_40,
-            marginTop: 29,
-          }}
-          activeDotStyle={{
-            width: 8,
-            height: 8,
-            marginTop: 29,
-            backgroundColor: COLORS.yellow3,
-          }}
-          nextLabel={false}
-          doneLabel={false}
-        />
-        <Block justifyCenter alignCenter>
-          <Pressable
-            onPress={() => authRoot.navigate(router.ONBOARDING_SCREEN)}
-            width={88}
-            height={29}
-            radius={15}
-            backgroundColor={COLORS.black2}
-            justifyCenter
-            alignCenter>
-            <Text fontSize={14} light color={COLORS.yellow3}>
-              Bỏ qua
-            </Text>
-          </Pressable>
+    <Block flex backgroundColor={COLORS.gray10}>
+      <Image
+        source={image.image_intro_1}
+        width={width}
+        height={'100%'}
+        resizeMode="stretch">
+        <StatusBar />
+        <Block flex justifyEnd paddingBottom={bottom + 32}>
+          <AppIntro
+            data={contentIntro}
+            renderItem={renderItem}
+            dotStyle={{
+              width: 8,
+              height: 8,
+              backgroundColor: COLORS.Yellow3_40,
+              marginTop: 29,
+            }}
+            activeDotStyle={{
+              width: 8,
+              height: 8,
+              marginTop: 29,
+              backgroundColor: COLORS.yellow3,
+            }}
+            contentContainerStyle={{
+              flex: 1,
+              justifyContent: 'flex-end',
+            }}
+            nextLabel={false}
+            doneLabel={false}
+          />
+          <Block justifyCenter alignCenter>
+            <Pressable
+              onPress={() => authRoot.navigate(router.ONBOARDING_SCREEN)}
+              width={88}
+              height={29}
+              radius={15}
+              backgroundColor={COLORS.black2}
+              justifyCenter
+              alignCenter>
+              <Text fontSize={14} light color={COLORS.yellow3}>
+                Bỏ qua
+              </Text>
+            </Pressable>
+          </Block>
         </Block>
-      </Block>
-    </ImageBackground>
+      </Image>
+    </Block>
   );
 }

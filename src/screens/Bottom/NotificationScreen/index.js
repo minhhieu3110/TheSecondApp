@@ -32,7 +32,7 @@ export default function NotificationScreen() {
           Thông báo
         </Text>
       </Block>
-      <Block width={width - 24} marginLeft={12} marginTop={15}>
+      <Block width={width - 24} marginLeft={12} marginTop={15} gap={12}>
         <ScrollView
           contentContainerStyle={{paddingBottom: 300}}
           showsVerticalScrollIndicator={false}>
@@ -44,26 +44,22 @@ export default function NotificationScreen() {
                 })
               }
               key={item.item_id}
-              height={108}
               radius={8}
               backgroundColor={COLORS.white}
-              paddingBottom={12}
-              marginBottom={12}>
-              <Block
-                marginLeft={12}
-                marginTop={12}
-                height={77}
-                row
-                paddingBottom={12}>
-                <Block width={60} height={60} radius={60} overflow={'hidden'}>
-                  <Image
-                    source={{uri: item?.picture}}
-                    width={'100%'}
-                    height={'100%'}
-                    resizeMode="contain"
-                  />
-                </Block>
-                <Block width={294} height={67} marginTop={10} marginLeft={12}>
+              paddingBottom={8}>
+              <Block paddingLeft={12} marginTop={12} paddingBottom={12} row>
+                <Image
+                  source={{uri: item?.picture}}
+                  width={60}
+                  height={60}
+                  resizeMode="cover"
+                  radius={60}
+                />
+                <Block
+                  width={'80%'}
+                  paddingBottom={10}
+                  marginTop={10}
+                  paddingLeft={12}>
                   <Text fontSize={15} semiBold color={COLORS.black2}>
                     {item?.title}
                   </Text>
@@ -71,11 +67,14 @@ export default function NotificationScreen() {
                     fontSize={14}
                     regular
                     color={COLORS.black1}
-                    marginBottom={14}
                     numberOfLines={1}>
                     {item?.short}
                   </Text>
-                  <Text fontSize={14} regular color={COLORS.placeholder}>
+                  <Text
+                    fontSize={14}
+                    regular
+                    color={COLORS.placeholder}
+                    marginTop={14}>
                     {ConvertDateTimeStamp(item?.created_at)}
                   </Text>
                 </Block>

@@ -42,15 +42,15 @@ export default function AllNews() {
               rowCenter
               paddingVertical={12}
               marginHorizontal={12}>
-              <Block
+              <Image
+                source={{uri: item?.picture}}
                 width={150}
-                marginLeft={12}
                 height={113}
+                marginLeft={12}
                 radius={10}
-                overflow={'hidden'}>
-                <Image source={{uri: item?.picture}} width={150} height={113} />
-              </Block>
-              <Block marginLeft={10} marginTop={17.9} width={width - 200}>
+                resizeMode="cover"
+              />
+              <Block width={'58%'} paddingLeft={10}>
                 <Block row alignCenter>
                   <Image
                     source={icon.icon_calendar}

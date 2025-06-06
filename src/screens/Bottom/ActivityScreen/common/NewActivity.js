@@ -35,7 +35,7 @@ export default function NewActivity() {
             <Block marginTop={42.7} alignCenter>
               <Image
                 source={image.image_none_activity}
-                width={width - 119.67}
+                width={'75%'}
                 height={227.04}
               />
               <Text
@@ -48,8 +48,7 @@ export default function NewActivity() {
               <Pressable
                 onPress={() => bottomRoot.navigate(router.HOME_SCREEN)}
                 marginTop={20}
-                marginHorizontal={94}
-                width={192}
+                width={'50%'}
                 height={48}
                 radius={8}
                 backgroundColor={COLORS.red4}

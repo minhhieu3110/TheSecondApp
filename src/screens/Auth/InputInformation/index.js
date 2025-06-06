@@ -114,6 +114,8 @@ export default function InputInformation({route}) {
                   value={email}
                   onChangeText={setEmail}
                   multiline={false}
+                  inputMode={'email'}
+                  keyboardType={'email-address'}
                 />
               </Block>
               <Block marginBottom={17}>

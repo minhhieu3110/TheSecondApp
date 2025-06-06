@@ -60,14 +60,21 @@ export default function Account() {
       name: 'profile.jpg',
       type: 'image/jpeg',
     });
-    // formData.append('update_avatar', 1);
-    // console.log('formData', formData);
-
     dispatch({
       type: actions.UPDATE_AVATAR,
       body: formData,
       onSuccess: res => {
+        Toast.show({
+          type: 'success',
+          text1: res?.message,
+        });
         dispatch({type: actions.GET_USER_INFO});
+      },
+      onFail: e => {
+        Toast.show({
+          type: 'error',
+          text1: e,
+        });
       },
     });
   };

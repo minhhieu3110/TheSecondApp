@@ -120,6 +120,7 @@ const TextInput = ({
   onEndEditing,
   includeFontPadding = false,
   textAlignVertical,
+  inputMode,
   onPress,
   ...rest
 }) => {
@@ -261,6 +262,7 @@ const TextInput = ({
       multiline={multiline}
       scrollEnabled={true}
       onPress={onPress}
+      inputMode={inputMode}
     />
   );
 };

@@ -215,16 +215,20 @@ export default function ShoppingScreen() {
                 key={index}
                 width={(width - 36) / 3}
                 height={index % 2 === 0 ? 164 : 127}
-                // height={152}
                 radius={5}
                 overflow={'hidden'}>
-                <Image
-                  source={{uri: item.picture}}
+                <Block
                   width={(width - 36) / 3}
                   height={index % 2 === 0 ? 164 : 127}
-                  // height={152}
-                  resizeMode="contain"
-                />
+                  alignCenter
+                  justifyCenter>
+                  <Image
+                    source={{uri: item.picture}}
+                    width={(width - 36) / 3}
+                    height={index % 2 === 0 ? 164 : 127}
+                    resizeMode="contain"
+                  />
+                </Block>
                 <Block absolute bottom={11} left={11} right={11} zIndex={10}>
                   <Text fontSize={15} semiBold color={COLORS.white}>
                     {item.title}

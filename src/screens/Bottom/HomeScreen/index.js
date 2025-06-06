@@ -68,8 +68,8 @@ export default function HomeScreen() {
           backgroundColor: COLORS.gray10,
           paddingBottom: 100,
         }}>
-        <Block width={width} height={337} backgroundColor={COLORS.white}>
-          <Block width={width - 24} height={46} row left={12} spaceBetween>
+        <Block width={width} paddingBottom={15} backgroundColor={COLORS.white}>
+          <Block marginHorizontal={12} row spaceBetween>
             <Block marginTop={3} height={43}>
               <Text
                 color={COLORS.red4}
@@ -131,9 +131,8 @@ export default function HomeScreen() {
           </Block>
           <Block
             marginHorizontal={12}
-            width={width - 24}
             backgroundColor={COLORS.pinkWhite2}
-            marginTop={13}
+            marginTop={14}
             radius={12}>
             <Block
               marginHorizontal={15}
@@ -177,13 +176,16 @@ export default function HomeScreen() {
           <Block
             width={width - 24}
             height={164}
-            marginTop={26}
-            marginHorizontal={12}>
+            marginTop={12}
+            marginHorizontal={12}
+            radius={12}
+            overflow="hidden">
             <Carousel
               data={banner || []}
               isDots={false}
               autoPlay={true}
               renderItem={renderItemBanner}
+              containerStyle={{width: '100%', height: '100%'}}
             />
           </Block>
         </Block>
@@ -215,21 +217,14 @@ export default function HomeScreen() {
                     service: item.name_service,
                   })
                 }
-                width={(width - 84) / 2}
+                width={'45%'}
                 key={item.item_id}
                 alignCenter>
-                <Block
+                <Image
+                  source={{uri: item.picture}}
                   width={100}
-                  height={105.56}
-                  radius={12}
-                  justifyCenter
-                  alignCenter>
-                  <Image
-                    source={{uri: item.picture}}
-                    width={72}
-                    height={83.46}
-                  />
-                </Block>
+                  height={105.68}
+                />
                 <Text
                   fontSize={16}
                   semiBold
@@ -253,17 +248,10 @@ export default function HomeScreen() {
             onPress={() => commonRoot.navigate(router.SHOPPING)}
             marginTop={27.9}
             backgroundColor={COLORS.pinkWhite2}
-            borderBottomLeftRadius={15}
-            borderBottomRightRadius={15}
+            borderBottomRadius={15}
             paddingBottom={14.1}>
-            <Block
-              rowCenter
-              gap={12}
-              marginHorizontal={14}
-              marginTop={6.7}
-              width={376}>
-              <Image source={icon.icon_shop_home} />
-
+            <Block rowCenter gap={12} marginHorizontal={14} marginTop={6.7}>
+              <Image source={icon.icon_shop_home} width={119} height={91.26} />
               <Block width={'65%'}>
                 <Text fontSize={16} semiBold color={COLORS.red4} uppercase>
                   e-shop
@@ -312,17 +300,13 @@ export default function HomeScreen() {
                   width={196}
                   rowGap={11}
                   key={item.item_id}>
-                  <Block
+                  <Image
+                    source={{uri: item.picture}}
                     width={196}
                     height={196}
+                    resizeMode="cover"
                     radius={12}
-                    overflow={'hidden'}>
-                    <Image
-                      source={{uri: item.picture}}
-                      width={196}
-                      height={196}
-                    />
-                  </Block>
+                  />
                   <Text
                     fontSize={15}
                     semiBold
@@ -373,18 +357,14 @@ export default function HomeScreen() {
                   rowCenter
                   height={113}
                   key={item.item_id}>
-                  <Block
+                  <Image
+                    source={{uri: item.picture}}
                     width={150}
                     height={113}
+                    resizeMode="cover"
                     radius={10}
-                    overflow={'hidden'}>
-                    <Image
-                      source={{uri: item.picture}}
-                      width={150}
-                      height={113}
-                    />
-                  </Block>
-                  <Block marginLeft={10} width={'58%'}>
+                  />
+                  <Block width={'62%'} paddingLeft={10}>
                     <Block row alignCenter>
                       <Image
                         source={icon.icon_calendar}
