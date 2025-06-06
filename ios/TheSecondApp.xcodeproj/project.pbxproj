@@ -37,29 +37,30 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TheSecondApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TheSecondApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = TheSecondApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		16FBFA451AD54251B071A9AE /* SVN-Poppins-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-SemiBold.otf"; path = "../src/assets/fonts/SVN-Poppins-SemiBold.otf"; sourceTree = "<group>"; };
-		17CBCF9A780B47B0AF9F0F22 /* SVN-Poppins-BlackItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-BlackItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-BlackItalic.otf"; sourceTree = "<group>"; };
-		1AA6553BE6BD48529CF11D87 /* SVN-Poppins-ExtraLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-ExtraLight.otf"; path = "../src/assets/fonts/SVN-Poppins-ExtraLight.otf"; sourceTree = "<group>"; };
-		2074463D66224CD099AA75A9 /* SVN-Poppins-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Thin.otf"; path = "../src/assets/fonts/SVN-Poppins-Thin.otf"; sourceTree = "<group>"; };
-		308BA252563041268C0D37B1 /* SVN-Poppins-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Light.otf"; path = "../src/assets/fonts/SVN-Poppins-Light.otf"; sourceTree = "<group>"; };
+		16FBFA451AD54251B071A9AE /* SVN-Poppins-SemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-SemiBold.otf"; path = "../src/assets/fonts/SVN-Poppins-SemiBold.otf"; sourceTree = "<group>"; };
+		17CBCF9A780B47B0AF9F0F22 /* SVN-Poppins-BlackItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-BlackItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-BlackItalic.otf"; sourceTree = "<group>"; };
+		1AA6553BE6BD48529CF11D87 /* SVN-Poppins-ExtraLight.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-ExtraLight.otf"; path = "../src/assets/fonts/SVN-Poppins-ExtraLight.otf"; sourceTree = "<group>"; };
+		2074463D66224CD099AA75A9 /* SVN-Poppins-Thin.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Thin.otf"; path = "../src/assets/fonts/SVN-Poppins-Thin.otf"; sourceTree = "<group>"; };
+		308BA252563041268C0D37B1 /* SVN-Poppins-Light.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Light.otf"; path = "../src/assets/fonts/SVN-Poppins-Light.otf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-TheSecondApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheSecondApp.debug.xcconfig"; path = "Target Support Files/Pods-TheSecondApp/Pods-TheSecondApp.debug.xcconfig"; sourceTree = "<group>"; };
-		41A42A2EEFF64E819CAFE598 /* SVN-Poppins-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Medium.otf"; path = "../src/assets/fonts/SVN-Poppins-Medium.otf"; sourceTree = "<group>"; };
-		42138EA4ECEC4C0B99E837C7 /* SVN-Poppins-MediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-MediumItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-MediumItalic.otf"; sourceTree = "<group>"; };
-		5409F6B0AAEA4D4BB4D15E2B /* SVN-Poppins-ThinItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-ThinItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-ThinItalic.otf"; sourceTree = "<group>"; };
+		41A42A2EEFF64E819CAFE598 /* SVN-Poppins-Medium.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Medium.otf"; path = "../src/assets/fonts/SVN-Poppins-Medium.otf"; sourceTree = "<group>"; };
+		42138EA4ECEC4C0B99E837C7 /* SVN-Poppins-MediumItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-MediumItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-MediumItalic.otf"; sourceTree = "<group>"; };
+		5409F6B0AAEA4D4BB4D15E2B /* SVN-Poppins-ThinItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-ThinItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-ThinItalic.otf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-TheSecondApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheSecondApp.release.xcconfig"; path = "Target Support Files/Pods-TheSecondApp/Pods-TheSecondApp.release.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-TheSecondApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TheSecondApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		750C35F8A64F498AA967437F /* SVN-Poppins-LightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-LightItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-LightItalic.otf"; sourceTree = "<group>"; };
+		750C35F8A64F498AA967437F /* SVN-Poppins-LightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-LightItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-LightItalic.otf"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = TheSecondApp/AppDelegate.swift; sourceTree = "<group>"; };
-		770C3BFC12B944549EA417A0 /* SVN-Poppins-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-ExtraBold.otf"; path = "../src/assets/fonts/SVN-Poppins-ExtraBold.otf"; sourceTree = "<group>"; };
-		80798E983A954365936753A0 /* SVN-Poppins-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Regular.otf"; path = "../src/assets/fonts/SVN-Poppins-Regular.otf"; sourceTree = "<group>"; };
+		770C3BFC12B944549EA417A0 /* SVN-Poppins-ExtraBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-ExtraBold.otf"; path = "../src/assets/fonts/SVN-Poppins-ExtraBold.otf"; sourceTree = "<group>"; };
+		80798E983A954365936753A0 /* SVN-Poppins-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Regular.otf"; path = "../src/assets/fonts/SVN-Poppins-Regular.otf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TheSecondApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		895FE52593AF49EB868C032F /* SVN-Poppins-SemiBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-SemiBoldItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-SemiBoldItalic.otf"; sourceTree = "<group>"; };
-		8DFCB1F3CC4C4477AD21FDF6 /* SVN-Poppins-Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Italic.otf"; path = "../src/assets/fonts/SVN-Poppins-Italic.otf"; sourceTree = "<group>"; };
-		9996EA9FBD3D42DB8E8D154F /* SVN-Poppins-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Black.otf"; path = "../src/assets/fonts/SVN-Poppins-Black.otf"; sourceTree = "<group>"; };
-		B0F5F46CCF424F478CA02986 /* SVN-Poppins-BoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-BoldItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-BoldItalic.otf"; sourceTree = "<group>"; };
-		C8A4EE475BA94F8E9FD2F31A /* SVN-Poppins-ExtraLightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-ExtraLightItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-ExtraLightItalic.otf"; sourceTree = "<group>"; };
-		D9F694D606AE4A0FB4FCF20E /* SVN-Poppins-ExtraBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-ExtraBoldItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-ExtraBoldItalic.otf"; sourceTree = "<group>"; };
-		E8DAEC8844234CBF973389D4 /* SVN-Poppins-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Bold.otf"; path = "../src/assets/fonts/SVN-Poppins-Bold.otf"; sourceTree = "<group>"; };
+		895FE52593AF49EB868C032F /* SVN-Poppins-SemiBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-SemiBoldItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-SemiBoldItalic.otf"; sourceTree = "<group>"; };
+		8DFCB1F3CC4C4477AD21FDF6 /* SVN-Poppins-Italic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Italic.otf"; path = "../src/assets/fonts/SVN-Poppins-Italic.otf"; sourceTree = "<group>"; };
+		9996EA9FBD3D42DB8E8D154F /* SVN-Poppins-Black.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Black.otf"; path = "../src/assets/fonts/SVN-Poppins-Black.otf"; sourceTree = "<group>"; };
+		B0F5F46CCF424F478CA02986 /* SVN-Poppins-BoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-BoldItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-BoldItalic.otf"; sourceTree = "<group>"; };
+		C16A49872DF2EF440075F8B0 /* TheSecondApp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = TheSecondApp.xcodeproj; sourceTree = "<group>"; };
+		C8A4EE475BA94F8E9FD2F31A /* SVN-Poppins-ExtraLightItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-ExtraLightItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-ExtraLightItalic.otf"; sourceTree = "<group>"; };
+		D9F694D606AE4A0FB4FCF20E /* SVN-Poppins-ExtraBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-ExtraBoldItalic.otf"; path = "../src/assets/fonts/SVN-Poppins-ExtraBoldItalic.otf"; sourceTree = "<group>"; };
+		E8DAEC8844234CBF973389D4 /* SVN-Poppins-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-Poppins-Bold.otf"; path = "../src/assets/fonts/SVN-Poppins-Bold.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -99,6 +100,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				C16A49872DF2EF440075F8B0 /* TheSecondApp.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -149,7 +151,6 @@
 				5409F6B0AAEA4D4BB4D15E2B /* SVN-Poppins-ThinItalic.otf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -159,6 +160,13 @@
 				5709B34CF0A7D63546082F79 /* Pods-TheSecondApp.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		C16A49882DF2EF440075F8B0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +217,12 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C16A49882DF2EF440075F8B0 /* Products */;
+					ProjectRef = C16A49872DF2EF440075F8B0 /* TheSecondApp.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* TheSecondApp */,
@@ -457,10 +471,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -529,10 +540,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
