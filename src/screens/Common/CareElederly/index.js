@@ -6,8 +6,9 @@ import {
   Text,
   Pressable,
   ScrollView,
+  StatusBar,
 } from '@components';
-import {width} from '@responsive';
+import {height, width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
@@ -16,6 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 export default function CareElederly({route}) {
   return (
     <Block flex backgroundColor={COLORS.gradient5}>
+      <StatusBar />
       <LinearGradient style={{flex: 1}} colors={COLORS.gradient5}>
         <Block height={53}>
           <HeaderTitle
@@ -26,8 +28,8 @@ export default function CareElederly({route}) {
             canGoBack
           />
         </Block>
-        <ScrollView contentContainerStyle={{paddingBottom: 100}}>
-          <Block width={width - 24} marginHorizontal={12} marginTop={10}>
+        <Block height={'94.29%'}>
+          <ScrollView contentContainerStyle={{paddingBottom: 181}}>
             <Pressable
               onPress={() =>
                 commonRoot.navigate(router.ELEDERLY_SERVICE_DURATION_DAY, {
@@ -38,14 +40,16 @@ export default function CareElederly({route}) {
               paddingBottom={23}
               backgroundColor={COLORS.white}
               radius={15}
+              height={'335'}
+              marginHorizontal={12}
               alignCenter>
               <Image
                 source={image.image_care_elederly_1}
                 marginTop={30}
-                width={width - 178}
-                height={157.79}
+                width={'50%'}
+                height={'47.08%'}
               />
-              <Text marginTop={34.2} fontSize={15} semiBold color={COLORS.red4}>
+              <Text fontSize={15} semiBold color={COLORS.red4} marginTop={34.2}>
                 Dịch vụ theo buổi/ngày
               </Text>
               <Text
@@ -68,15 +72,17 @@ export default function CareElederly({route}) {
                 })
               }
               marginTop={12}
+              height={'335'}
               paddingBottom={23}
               backgroundColor={COLORS.white}
+              marginHorizontal={12}
               radius={15}
               alignCenter>
               <Image
                 source={image.image_care_elederly_2}
                 marginTop={30}
-                width={width - 178}
-                height={157.79}
+                width={'50%'}
+                height={'47.08%'}
               />
               <Text marginTop={34.2} fontSize={15} semiBold color={COLORS.red4}>
                 Dịch vụ theo tháng
@@ -91,8 +97,8 @@ export default function CareElederly({route}) {
                 Tiết kiệm thời gian đăng việc, tránh thanh toán nhiều lần
               </Text>
             </Pressable>
-          </Block>
-        </ScrollView>
+          </ScrollView>
+        </Block>
       </LinearGradient>
     </Block>
   );

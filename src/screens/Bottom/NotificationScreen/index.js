@@ -47,7 +47,7 @@ export default function NotificationScreen() {
               radius={8}
               backgroundColor={COLORS.white}
               paddingBottom={8}>
-              <Block paddingLeft={12} marginTop={12} paddingBottom={12} row>
+              <Block paddingLeft={12} marginTop={12} row>
                 <Image
                   source={{uri: item?.picture}}
                   width={60}

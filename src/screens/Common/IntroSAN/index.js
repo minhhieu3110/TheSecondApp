@@ -28,7 +28,7 @@ export default function IntroSAN() {
   ];
   const renderItem = ({item}) => {
     return (
-      <Block gap={10} borderWidth={1} backgroundColor={COLORS.white}>
+      <Block gap={10} paddingBottom={40} justifyEnd flex={1}>
         <Text fontSize={18} semiBold color={COLORS.yellow3} uppercase center>
           {item.title}
         </Text>
@@ -57,6 +57,8 @@ export default function IntroSAN() {
           <AppIntro
             data={contentIntro}
             renderItem={renderItem}
+            // backgroundColor={COLORS.black2}
+            // contentContainerStyle={{flex: 1x}}
             dotStyle={{
               width: 8,
               height: 8,
@@ -68,10 +70,6 @@ export default function IntroSAN() {
               height: 8,
               marginTop: 29,
               backgroundColor: COLORS.yellow3,
-            }}
-            contentContainerStyle={{
-              flex: 1,
-              justifyContent: 'flex-end',
             }}
             nextLabel={false}
             doneLabel={false}

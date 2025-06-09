@@ -33,11 +33,7 @@ export default function NewActivity() {
         <Block width={width - 24} marginTop={15} marginHorizontal={12}>
           {newOrder.length === 0 ? (
             <Block marginTop={42.7} alignCenter>
-              <Image
-                source={image.image_none_activity}
-                width={'75%'}
-                height={227.04}
-              />
+              <Image source={image.image_none} width={'75%'} height={227.04} />
               <Text
                 marginTop={22.3}
                 fontSize={15}

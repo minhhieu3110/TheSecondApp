@@ -6,7 +6,7 @@ import {COLORS} from '@theme';
 import {ConvertDateTimeStamp} from '@utils';
 import {root} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
-import {Modal, SafeAreaView, ScrollView} from 'react-native';
+import {ActivityIndicator, Modal, SafeAreaView, ScrollView} from 'react-native';
 import RenderHTML from 'react-native-render-html';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
@@ -21,9 +21,10 @@ export default function DetailNotification({route}) {
   const detailNoti = useSelector(
     state => state.getDetailNotification?.data || [],
   );
-  console.log(detailNoti);
-
-  return (
+  const {isLoading} = useSelector(state => state.getDetailNotification);
+  return isLoading ? (
+    <ActivityIndicator size={'large'} color={COLORS.red4} />
+  ) : (
     <Block flex backgroundColor={COLORS.gray10}>
       <Block width={width} height={199.6}>
         <Image

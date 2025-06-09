@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import {PortalProvider} from '@gorhom/portal';
 import {Platform, StatusBar as RNStatusBar} from 'react-native';
 import {
@@ -8,12 +9,17 @@ import {
 import RootStack from 'navigation/RootStack';
 import {Provider} from 'react-redux';
 import Toast from 'react-native-toast-message';
-import store from 'redux/store';
-import {COLORS} from '@theme';
+import store, {persistor} from 'redux/store';
+import {PersistGate} from 'redux-persist/integration/react';
 import {Block, StatusBar} from '@components';
 
 const AppContent = () => {
   const {top} = useSafeAreaInsets();
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
     <Block
       flex={1}
@@ -29,9 +35,11 @@ const AppContent = () => {
 const App = () => {
   return (
     <Provider store={store}>
-      <SafeAreaProvider>
-        <AppContent />
-      </SafeAreaProvider>
+      <PersistGate persistor={persistor} loading={null}>
+        <SafeAreaProvider>
+          <AppContent />
+        </SafeAreaProvider>
+      </PersistGate>
     </Provider>
   );
 };

@@ -57,7 +57,7 @@ export default function Account() {
     const formData = new FormData();
     formData.append('picture', {
       uri: e.path,
-      name: 'profile.jpg',
+      name: `picture_${new Date().getTime()}.jpg`,
       type: 'image/jpeg',
     });
     dispatch({
@@ -73,7 +73,7 @@ export default function Account() {
       onFail: e => {
         Toast.show({
           type: 'error',
-          text1: e,
+          text1: 'Cập nhật ảnh đại diện thất bại',
         });
       },
     });

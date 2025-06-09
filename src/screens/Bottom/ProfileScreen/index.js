@@ -320,7 +320,7 @@ export default function ProfileScreen() {
                       paddingLeft={15}
                       rowCenter
                       spaceBetween
-                      width={'89%'}>
+                      width={'87.5%'}>
                       <Text fontSize={15} regular color={COLORS.black5}>
                         {item.title}
                       </Text>
@@ -365,7 +365,7 @@ export default function ProfileScreen() {
                       paddingLeft={15}
                       rowCenter
                       spaceBetween
-                      width={'89%'}>
+                      width={'87.5%'}>
                       <Text fontSize={15} regular color={COLORS.black5}>
                         {item.title}
                       </Text>

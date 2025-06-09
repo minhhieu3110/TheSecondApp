@@ -6,6 +6,7 @@ import router from '@router';
 import {bottom} from 'screens/Bottom';
 import {COLORS, FONTS} from '@theme';
 import {Block} from '@components';
+import {height} from '@responsive';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,12 +30,12 @@ const screenOptions = ({route}) => {
   return {
     headerShown: false,
     tabBarStyle: {
-      height: 81.65,
       elevation: 10,
       shadowOpacity: 0.1,
       shadowRadius: 10,
       shadowColor: '#000',
       shadowOffset: {height: -5, width: 0},
+      height: 81.25,
     },
     tabBarIcon: ({focused}) => (
       <Image
@@ -48,7 +49,7 @@ const screenOptions = ({route}) => {
     },
     tabBarActiveTintColor: COLORS.red4,
     tabBarInactiveTintColor: COLORS.black1,
-    tabBarItemStyle: {width: 54, height: 50, marginTop: 23.8},
+    tabBarItemStyle: {width: 58, height: 50, marginTop: 10},
   };
 };
 
@@ -78,7 +79,7 @@ export default function BottomTabContainer() {
               height={70}
               radius={50}
               absolute
-              bottom={10}
+              bottom={-8}
               alignCenter
               justifyCenter
               backgroundColor={COLORS.white}>

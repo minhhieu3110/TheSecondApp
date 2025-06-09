@@ -21,6 +21,7 @@ import {formatTime} from '@utils';
 import {format} from 'date-fns';
 import Toast from 'react-native-toast-message';
 import {formatCurrency} from 'utils/helper';
+import {ActivityIndicator} from 'react-native';
 export default function Elederly_Servicedurationmonth({route}) {
   const dayWeek = [
     {id: 1, title: 'T2'},
@@ -91,13 +92,13 @@ export default function Elederly_Servicedurationmonth({route}) {
       onFail: e => {
         Toast.show({
           type: 'error',
-          text1: e,
+          text1: 'Vui lòng chọn lịch làm việc',
         });
       },
     });
   }, [listDates, choose, start_time]);
   const infoService = useSelector(state => state.priceCalculation?.data || []);
-  console.log(numMouth);
+  const {isLoading} = useSelector(state => state.priceCalculation);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -249,9 +250,14 @@ export default function Elederly_Servicedurationmonth({route}) {
       </ScrollView>
       <ButtonSubmitService
         titleTop={
-          infoService?.amount_final == null || infoService?.amount_final === 0
-            ? '--//--'
-            : formatCurrency(infoService?.amount_final)
+          infoService?.amount_final == null ||
+          infoService?.amount_final === 0 ? (
+            '--//--'
+          ) : isLoading ? (
+            <ActivityIndicator color={COLORS.red4} />
+          ) : (
+            formatCurrency(infoService?.amount_final)
+          )
         }
         disable={
           infoService?.amount_final == null || infoService?.amount_final === 0

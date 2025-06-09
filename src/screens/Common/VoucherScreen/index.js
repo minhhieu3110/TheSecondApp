@@ -46,7 +46,7 @@ export default function Voucher() {
         {allVoucher && (
           <Pressable
             onPress={() => commonRoot.navigate(router.EXCHANGE_POINT)}
-            width={width - 322}
+            width={'25%'}
             height={28}
             absolute
             zIndex={10}
