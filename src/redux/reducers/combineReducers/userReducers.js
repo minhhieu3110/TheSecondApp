@@ -104,3 +104,6 @@ export const updateAvatar = (...props) => {
 export const deleteAccount = (...props) => {
   return reducerDefault(...props, actions.DELETE_ACCOUNT);
 };
+export const walletLog = (...props) => {
+  return reducerDefault(...props, actions.WALLET_LOG);
+};

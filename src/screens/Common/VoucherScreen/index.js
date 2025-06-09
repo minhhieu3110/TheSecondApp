@@ -1,4 +1,11 @@
-import {Block, HeaderTitle, Image, Pressable, Text} from '@components';
+import {
+  Block,
+  HeaderTitle,
+  Image,
+  Pressable,
+  StatusBar,
+  Text,
+} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS, FONTS} from '@theme';
@@ -31,10 +38,10 @@ export default function Voucher() {
       params: {apply_for: 'service'},
     });
   }, [dispatch]);
-  const vouchers = useSelector(state => state.getVoucher?.data || []);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <Block width={width} height={93} backgroundColor={COLORS.white}>
         <HeaderTitle
           background

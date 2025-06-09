@@ -16,22 +16,22 @@ import router from '@router';
 import {COLORS} from '@theme';
 import {bottomRoot, commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
-import {RefreshControl} from 'react-native';
+import {ActivityIndicator, RefreshControl} from 'react-native';
 import Toast from 'react-native-toast-message';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
 export default function FavoriteStaff() {
-  const favoriteEmp = useSelector(
-    state => state.getFavoriteEmployee?.data || [],
-  );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({
       type: actions.GET_FAVORITE_EMPLOYEE,
     });
   }, [dispatch]);
-
+  const favoriteEmp = useSelector(
+    state => state.getFavoriteEmployee?.data || [],
+  );
+  const {isLoading} = useSelector(state => state.getFavoriteEmployee);
   const removeFavoriteEmployee = item_id => {
     dispatch({
       type: actions.FAVORITE_EMPLOYEE,
@@ -65,71 +65,78 @@ export default function FavoriteStaff() {
       {favoriteEmp.length === 0 ? (
         <Block alignCenter flex paddingTop={100}>
           <Image source={image.image_none} width={'75%'} height={227.04} />
+          <Text fontSize={15} semiBold color={COLORS.black2} marginTop={10}>
+            Chưa có nhân viên yêu thích
+          </Text>
         </Block>
       ) : (
         <ScrollView
           contentContainerStyle={{marginTop: 15}}
           onRefresh={onRefresh}>
           <Block width={width - 24} marginLeft={12} gap={12}>
-            {favoriteEmp?.map(emp => (
-              <Pressable
-                onPress={() =>
-                  commonRoot.navigate(router.PROFILE_EMPLOYEE, {id: emp?.id})
-                }
-                key={emp?.id}
-                height={97}
-                backgroundColor={COLORS.white}
-                radius={8}
-                row>
-                <Block
-                  width={77}
-                  height={77}
+            {isLoading ? (
+              <ActivityIndicator color={COLORS.red4} />
+            ) : (
+              favoriteEmp?.map(emp => (
+                <Pressable
+                  onPress={() =>
+                    commonRoot.navigate(router.PROFILE_EMPLOYEE, {id: emp?.id})
+                  }
+                  key={emp?.id}
+                  height={97}
+                  backgroundColor={COLORS.white}
                   radius={8}
-                  marginLeft={10}
-                  overflow={'hidden'}
-                  marginTop={10}>
-                  <Image
-                    source={{uri: `${URL_API.uploads}/${emp?.picture}`}}
-                    width={'100%'}
-                    height={'100%'}
-                    resizeMode="contain"
-                  />
-                </Block>
-                <Block height={43} marginLeft={10.7} marginTop={15}>
-                  <Text fontSize={14} semiBold color={COLORS.black1}>
-                    {emp?.full_name}
-                  </Text>
-                  <Block marginLeft={2} row alignCenter>
-                    <Text
-                      fontSize={14}
-                      regular
-                      color={COLORS.placeholder}
-                      marginRight={5}>
-                      {emp?.star}
-                    </Text>
-                    <Icon
-                      IconType={FontAwesome}
-                      iconName={'star'}
-                      iconSize={18}
-                      iconColor={COLORS.yellow3}
+                  row>
+                  <Block
+                    width={77}
+                    height={77}
+                    radius={8}
+                    marginLeft={10}
+                    overflow={'hidden'}
+                    marginTop={10}>
+                    <Image
+                      source={{uri: `${URL_API.uploads}/${emp?.picture}`}}
+                      width={'100%'}
+                      height={'100%'}
+                      resizeMode="contain"
                     />
                   </Block>
-                </Block>
-                <Pressable
-                  width={34}
-                  height={34}
-                  absolute
-                  right={10}
-                  top={10}
-                  onPress={() => removeFavoriteEmployee(emp?.id)}>
-                  <Image
-                    source={icon.icon_heart_staff}
-                    height={34}
+                  <Block height={43} marginLeft={10.7} marginTop={15}>
+                    <Text fontSize={14} semiBold color={COLORS.black1}>
+                      {emp?.full_name}
+                    </Text>
+                    <Block marginLeft={2} row alignCenter>
+                      <Text
+                        fontSize={14}
+                        regular
+                        color={COLORS.placeholder}
+                        marginRight={5}>
+                        {emp?.star}
+                      </Text>
+                      <Icon
+                        IconType={FontAwesome}
+                        iconName={'star'}
+                        iconSize={18}
+                        iconColor={COLORS.yellow3}
+                      />
+                    </Block>
+                  </Block>
+                  <Pressable
                     width={34}
-                  />
+                    height={34}
+                    absolute
+                    right={10}
+                    top={10}
+                    onPress={() => removeFavoriteEmployee(emp?.id)}>
+                    <Image
+                      source={icon.icon_heart_staff}
+                      height={34}
+                      width={34}
+                    />
+                  </Pressable>
                 </Pressable>
-              </Pressable>
-            ))}
+              ))
+            )}
           </Block>
         </ScrollView>
       )}

@@ -426,6 +426,20 @@ function* deleteBank(action) {
     action.onFail?.(error);
   }
 }
+function* walletLog(action) {
+  const params = yield action.params;
+  try {
+    const res = yield api.get(URL_API.user.wallet_log, params);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 export default function* watchUserSagas() {
   yield takeLatest(actions.SEND_OTP, sendOTP);
   yield takeLatest(actions.VERIFY_OTP, verifyOTP);
@@ -456,4 +470,5 @@ export default function* watchUserSagas() {
   yield takeLatest(actions.UPDATE_AVATAR, updateAvatar);
   yield takeLatest(actions.DELETE_ACCOUNT, deleteAccount);
   yield takeLatest(actions.DELETE_BANK, deleteBank);
+  yield takeLatest(actions.WALLET_LOG, walletLog);
 }

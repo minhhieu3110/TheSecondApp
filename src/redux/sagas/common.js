@@ -80,6 +80,7 @@ export const URL_API = {
     delete: 'user/delete',
     delete_address: 'user/delete-addressbook',
     update_address: 'user/update-addressbook',
+    wallet_log: 'user/wallet-log',
   },
   promotion: {
     list: 'promotion/list',

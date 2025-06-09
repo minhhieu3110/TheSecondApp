@@ -27,6 +27,9 @@ export const orderService = (...props) => {
 export const getListOrder = (...props) => {
   return reducerDefault(...props, actions.GET_LIST_ORDER);
 };
+export const getListReception = (...props) => {
+  return reducerDefault(...props, actions.GET_LIST__RECEPTION);
+};
 export const getListOrderCancel = (...props) => {
   return reducerDefault(...props, actions.GET_LIST_ORDER_CANCEL);
 };
