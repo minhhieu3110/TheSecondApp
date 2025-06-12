@@ -1,6 +1,6 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Image, Pressable, Text, ScrollView} from '@components';
+import {Block, Image, Pressable, Text, ScrollView, NoneData} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
@@ -35,33 +35,13 @@ export default function NewActivity() {
         ) : (
           <Block width={width - 24} marginTop={15} marginHorizontal={12}>
             {newOrder.length === 0 ? (
-              <Block marginTop={42.7} alignCenter>
-                <Image
-                  source={image.image_none}
-                  width={'75%'}
-                  height={227.04}
-                />
-                <Text
-                  marginTop={22.3}
-                  fontSize={15}
-                  regular
-                  color={COLORS.black2}>
-                  Hiện bạn chưa có công việc nào đang chờ
-                </Text>
-                <Pressable
-                  onPress={() => bottomRoot.navigate(router.HOME_SCREEN)}
-                  marginTop={20}
-                  width={'50%'}
-                  height={48}
-                  radius={8}
-                  backgroundColor={COLORS.red4}
-                  alignCenter
-                  justifyCenter>
-                  <Text fontSize={15} regular color={COLORS.white}>
-                    Đăng việc ngay
-                  </Text>
-                </Pressable>
-              </Block>
+              <NoneData
+                top={42.7}
+                title={'Bạn chưa có công việc nào đang chờ'}
+                btn={true}
+                titleBtn={'Đăng việc ngay'}
+                onPress={() => bottomRoot.navigate(router.HOME_SCREEN)}
+              />
             ) : (
               <>
                 {newOrder?.map(item => (

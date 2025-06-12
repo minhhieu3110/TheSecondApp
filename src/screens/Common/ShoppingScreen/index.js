@@ -57,9 +57,22 @@ export default function ShoppingScreen() {
     state => state.getListProductSuggestion?.data || [],
   );
   const carts = useSelector(state => state.getCart?.data || []);
+  const renderItemBannerTop = useCallback(({item}) => {
+    return (
+      <Block gap={10}>
+        <Image
+          radius={10}
+          source={{uri: item.content}}
+          width={width}
+          height={164}
+          resizeMode="cover"
+        />
+      </Block>
+    );
+  }, []);
   const renderItemBanner = useCallback(({item}) => {
     return (
-      <Block>
+      <Block gap={10}>
         <Image
           radius={10}
           source={{uri: item.content}}
@@ -92,9 +105,7 @@ export default function ShoppingScreen() {
             dotStyles={{width: 8, height: 8}}
             dotContainerStyles={{marginTop: -37}}
             duration={2000}
-            itemHeight={197}
-            itemWidth={width}
-            renderItem={renderItemBanner}
+            renderItem={renderItemBannerTop}
           />
           <Block absolute top={16} right={6} left={12} row>
             <Pressable
@@ -207,9 +218,9 @@ export default function ShoppingScreen() {
               </Text>
             </Pressable>
           </Block>
-          <Block row marginTop={14} gap={6}>
+          <Block row marginTop={14} gap={6} marginHorizontal={12}>
             {columnData.map((column, colIndex) => (
-              <Block key={colIndex} flex={1} gap={7}>
+              <Block key={colIndex} flex={1} gap={7} radius={10}>
                 {column.map((item, index) => {
                   const height = (index + colIndex) % 2 === 0 ? 164 : 127;
                   return (
@@ -222,14 +233,13 @@ export default function ShoppingScreen() {
                         })
                       }
                       height={height}
-                      width={'100%'}>
+                      radius={5}
+                      overflow={'hidden'}>
                       <Image
                         source={{uri: item.picture}}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          resizeMode: 'cover',
-                        }}
+                        height={height}
+                        width={'100%'}
+                        resizeMode="cover"
                       />
                       <Block
                         position="absolute"
@@ -339,14 +349,18 @@ export default function ShoppingScreen() {
               </Pressable>
             ))}
           </Block>
-          <Block marginTop={10} height={164}>
+          <Block
+            width={width - 24}
+            height={164}
+            marginTop={12}
+            radius={12}
+            overflow="hidden">
             <Carousel
               data={bannerSuggestions || []}
-              duration={2000}
               isDots={false}
-              itemHeight={164}
-              itemWidth={width - 68}
+              autoPlay={true}
               renderItem={renderItemBanner}
+              containerStyle={{width: '100%', height: '100%'}}
             />
           </Block>
           <Text fontSize={15} semiBold color={COLORS.black2} marginTop={20}>

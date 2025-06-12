@@ -1,7 +1,8 @@
-import {TextInput} from '@components';
+import {Icon, TextInput} from '@components';
 import {COLORS} from '@theme';
 
 const FormInput = ({
+  width,
   value,
   onChangeText,
   placeholder,
@@ -10,6 +11,7 @@ const FormInput = ({
 }) => {
   return (
     <TextInput
+      width={width}
       height={41}
       radius={5}
       borderWidth={0.5}

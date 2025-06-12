@@ -10,6 +10,7 @@ import {
   Pressable,
   Text,
   ScrollView,
+  NoneData,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -63,11 +64,11 @@ export default function FavoriteStaff() {
         screenName={router.PROFILE_SCREEN}
       />
       {favoriteEmp.length === 0 ? (
-        <Block alignCenter flex paddingTop={100}>
-          <Image source={image.image_none} width={'75%'} height={227.04} />
-          <Text fontSize={15} semiBold color={COLORS.black2} marginTop={10}>
-            Chưa có nhân viên yêu thích
-          </Text>
+        <Block flex paddingTop={100}>
+          <NoneData
+            title={'Danh sách nhân viên yêu thích trống'}
+            image={image.image_none}
+          />
         </Block>
       ) : (
         <ScrollView

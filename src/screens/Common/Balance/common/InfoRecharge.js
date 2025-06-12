@@ -38,8 +38,8 @@ export default function InfoRecharge({route}) {
     const file_attach = new FormData();
     file_attach.append('file_attach', {
       uri: imageBill.path,
-      name: imageBill.filename,
-      type: imageBill.mime,
+      name: `picture_${new Date().getTime()}.jpg`,
+      type: 'image/jpeg',
     });
     dispatch({
       type: actions.UPDATE_BILL,
@@ -184,6 +184,7 @@ export default function InfoRecharge({route}) {
                 source={{uri: imageBill?.path}}
                 width={width - 251}
                 height={width - 251}
+                resizeMode="cover"
               />
             ) : (
               <Block alignCenter>

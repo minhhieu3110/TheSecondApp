@@ -47,15 +47,15 @@ export default function Feedback() {
     const file_attach = new FormData();
     file_attach.append('file_attach', {
       uri: image?.path,
-      name: image?.filename,
-      type: image?.mime,
+      name: `feedback_${new Date().getTime()}.jpg`,
+      type: 'image/jpeg',
     });
     const body = {
       service_id: serviceId,
       full_name: userInfo?.full_name,
       phone: userInfo?.phone,
       content: content,
-      file_attach: file_attach,
+      // file_attach: file_attach,
     };
     dispatch({
       type: actions.FEEDBACK,
@@ -156,7 +156,12 @@ export default function Feedback() {
             marginTop={15}
             overflow={'hidden'}>
             {image ? (
-              <Image source={{uri: image?.path}} width={177} height={177} />
+              <Image
+                source={{uri: image?.path}}
+                width={177}
+                height={177}
+                resizeMode="cover"
+              />
             ) : (
               <Block marginTop={65} justifyCenter alignCenter>
                 <Image

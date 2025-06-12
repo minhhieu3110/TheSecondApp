@@ -64,7 +64,6 @@ export default function Recharge() {
           },
         });
   };
-
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Nạp tiền'} canGoBack />
