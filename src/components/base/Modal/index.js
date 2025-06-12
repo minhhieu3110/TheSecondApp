@@ -3,7 +3,13 @@ import {useBackHandler} from '@react-native-community/hooks';
 import {COLORS} from '@theme';
 import {height} from '@utils/responsive';
 import React, {useEffect, useRef} from 'react';
-import {Animated, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {
+  Animated,
+  Platform,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {FullWindowOverlay} from 'react-native-screens';
 
 export default function Modal({
@@ -70,10 +76,10 @@ export default function Modal({
       onShow?.();
     });
   }, [animatedValue, animationDuration]);
-
+  const OverlayComponent = Platform.OS === 'ios' ? FullWindowOverlay : View;
   return (
     <Portal>
-      <FullWindowOverlay style={StyleSheet.absoluteFillObject}>
+      <OverlayComponent style={StyleSheet.absoluteFillObject}>
         <TouchableWithoutFeedback onPress={_onBackDropPress}>
           <Animated.View style={backdropStyle} />
         </TouchableWithoutFeedback>
@@ -82,7 +88,7 @@ export default function Modal({
           pointerEvents="box-none">
           {children}
         </Animated.View>
-      </FullWindowOverlay>
+      </OverlayComponent>
     </Portal>
   );
 }
