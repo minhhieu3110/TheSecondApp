@@ -15,6 +15,7 @@ import {COLORS} from '@theme';
 import {ConvertDateTimeStamp} from '@utils';
 import {useEffect, useState} from 'react';
 import RadialGradient from 'react-native-radial-gradient';
+import Toast from 'react-native-toast-message';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
@@ -53,13 +54,21 @@ export default function DetailMessage({route}) {
         });
         setContent('');
       },
+      onFail: e => {
+        Toast.show({
+          type: 'error',
+          text1: e,
+        });
+      },
     });
   };
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={route?.params?.name} canGoBack />
-      <ScrollView onRefresh={onRefresh}>
+      <ScrollView
+        onRefresh={onRefresh}
+        contentContainerStyle={{paddingBottom: 100}}>
         <Block marginTop={13} marginHorizontal={12} gap={22}>
           {messEmp?.map(mess => (
             <Block row key={mess?.id}>
@@ -74,6 +83,7 @@ export default function DetailMessage({route}) {
                 width={30}
                 height={30}
                 radius={50}
+                resizeMode="cover"
               />
               <Block
                 width={width - 209}

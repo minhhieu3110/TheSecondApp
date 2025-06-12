@@ -1,6 +1,6 @@
 import actions from '@actions';
 import {image} from '@assets';
-import {Block, Image, Text} from '@components';
+import {Block, Image, StatusBar, Text} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {useDispatch, useSelector} from 'react-redux';
@@ -76,9 +76,13 @@ export default function InputOTP({route}) {
   const otp = useSelector(state => state.sendOTP?.data?.otp_code || '');
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <Block width={width} height={328}>
-        <Image source={image.image_san} width={width} height={328} />
-      </Block>
+      <StatusBar />
+      <Image
+        source={image.image_san}
+        width={width}
+        height={328}
+        resizeMode="cover"
+      />
       <Block
         marginTop={-39}
         marginHorizontal={12}

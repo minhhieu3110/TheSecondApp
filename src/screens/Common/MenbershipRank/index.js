@@ -1,5 +1,4 @@
 import actions from '@actions';
-import {icon} from '@assets';
 import {
   Block,
   HeaderTitle,
@@ -12,13 +11,11 @@ import {
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
-import {bottomRoot, commonRoot} from 'navigation/navigationRef';
+import {commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
-import {Modal, SafeAreaView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
-import {Table, Row, Rows} from 'react-native-table-component';
 export default function MenbershipRank() {
   const dispatch = useDispatch();
   const data = {
@@ -45,7 +42,7 @@ export default function MenbershipRank() {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Hạng thành viên'} canGoBack />
-      <ScrollView>
+      <ScrollView contentContainerStyle={{paddingBottom: 181}}>
         <Block
           width={width - 24}
           marginTop={12}
@@ -181,18 +178,18 @@ export default function MenbershipRank() {
             Quyền lợi thành viên
           </Text>
           <Block
-            width={width - 50.5}
+            width={'93.5%'}
+            marginHorizontal={12}
             marginTop={20}
-            marginLeft={12}
             paddingBottom={11}
             row
             spaceBetween>
             {listRank?.map(rank => (
               <Pressable
                 onPress={() => setSeeInfoBenefitRank(rank?.item_id)}
-                width={80}
+                width={'24%'}
                 height={94}
-                justifyCenter
+                alignCenter
                 opacity={rank?.item_id === seeInfoBenefitRank ? 1 : 0.3}
                 key={rank?.item_id}>
                 <Image
@@ -206,7 +203,6 @@ export default function MenbershipRank() {
                   regular
                   color={COLORS.black5}
                   lineHeight={18}
-                  height={17}
                   center>
                   {rank?.title}
                 </Text>

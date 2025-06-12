@@ -107,3 +107,6 @@ export const deleteAccount = (...props) => {
 export const walletLog = (...props) => {
   return reducerDefault(...props, actions.WALLET_LOG);
 };
+export const pointLog = (...props) => {
+  return reducerDefault(...props, actions.POINT_LOG);
+};

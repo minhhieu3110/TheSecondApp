@@ -105,7 +105,7 @@ export default function ProfileScreen() {
               </Pressable>
             </Block>
             <Block
-              width={'50%'}
+              width={'70%'}
               paddingLeft={12}
               marginTop={26}
               paddingBottom={5}>

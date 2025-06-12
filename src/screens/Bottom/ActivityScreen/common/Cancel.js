@@ -114,7 +114,7 @@ export default function Cancel() {
                     {formatCurrency(item?.amount_final)}
                   </Text>
                 </Block>
-                <Block marginLeft={23} row width={width - 48}>
+                <Block marginLeft={23} row width={'85%'}>
                   <Image
                     source={icon.icon_address_cancel}
                     width={22}

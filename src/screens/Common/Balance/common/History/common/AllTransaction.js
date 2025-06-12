@@ -1,13 +1,11 @@
-import {Block, Text, Image, StatusBar} from '@components';
+import {Block, Text, Image, StatusBar, ScrollView} from '@components';
 import {COLORS} from '@theme';
 import {width} from '@responsive';
-import {icon} from '@assets';
-import {ActivityIndicator, ScrollView} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import actions from '@actions';
 import {URL_API} from 'redux/sagas/common';
-import {ConvertDateTimeStamp} from '@utils';
 import {convertDate, formatCurrency} from 'utils/helper';
 export default function AllTransaction() {
   const dispatch = useDispatch();
@@ -22,9 +20,7 @@ export default function AllTransaction() {
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
       <Block width={width - 24} marginLeft={12} marginTop={15}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: 1000}}>
+        <ScrollView contentContainerStyle={{paddingBottom: 181}}>
           {isLoading ? (
             <ActivityIndicator color={COLORS.red4} />
           ) : (

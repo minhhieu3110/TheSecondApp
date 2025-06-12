@@ -179,7 +179,7 @@ export default function Reception() {
                   <Text fontSize={14} regular color={COLORS.red4}>
                     {item?.employee?.full_name}
                   </Text>
-                  <Block row>
+                  <Block rowCenter>
                     <Text fontSize={14} regular color={COLORS.placeholder}>
                       {item?.employee?.star}
                     </Text>

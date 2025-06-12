@@ -123,26 +123,11 @@ function* deleteAccount(action) {
     yield put({type: _onFail(actions.type)});
   }
 }
-// function* updateUserInfo(action) {
-//   const body = yield action.body;
-//   try {
-//     const res = yield api.patch(URL_API.user.update, body);
-//     yield put({
-//       type: _onSuccess(action.type),
-//       data: res.data,
-//     });
-//     action.onSuccess?.(res);
-//   } catch (error) {
-//     yield put({type: _onFail(action.type)});
-//     action.onFail?.(error);
-//   }
-// }
 function* updateUserInfo(action) {
   const body = yield action.body;
   try {
     const res = yield api.patch(URL_API.user.update, body);
-    yield;
-    put({
+    yield put({
       type: _onSuccess(action.type),
       data: res.data,
     });
@@ -440,6 +425,20 @@ function* walletLog(action) {
     action.onFail?.(error);
   }
 }
+function* pointLog(action) {
+  const params = yield action.params;
+  try {
+    const res = yield api.get(URL_API.user.point_log, params);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 export default function* watchUserSagas() {
   yield takeLatest(actions.SEND_OTP, sendOTP);
   yield takeLatest(actions.VERIFY_OTP, verifyOTP);
@@ -471,4 +470,5 @@ export default function* watchUserSagas() {
   yield takeLatest(actions.DELETE_ACCOUNT, deleteAccount);
   yield takeLatest(actions.DELETE_BANK, deleteBank);
   yield takeLatest(actions.WALLET_LOG, walletLog);
+  yield takeLatest(actions.POINT_LOG, pointLog);
 }

@@ -1,4 +1,4 @@
-import {Block, Text, Pressable, Image} from '@components';
+import {Block, Text, Pressable, Image, StatusBar} from '@components';
 import {width} from '@responsive';
 import {COLORS, FONTS} from '@theme';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
@@ -19,10 +19,10 @@ export default function ActivityScreen({route}) {
     {name: router.CANCEL, lable: 'Huỷ'},
   ];
   const Tab = createMaterialTopTabNavigator();
-  console.log(route?.params?.title);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <Block width={width} backgroundColor={COLORS.white}>
         <Text
           marginTop={20}
@@ -48,7 +48,6 @@ export default function ActivityScreen({route}) {
         </Text>
       </Pressable>
       <Tab.Navigator
-        jumpTo={route?.params?.title}
         screenOptions={{
           tabBarLabelStyle: {
             fontSize: 15,

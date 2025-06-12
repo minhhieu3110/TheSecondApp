@@ -347,3 +347,10 @@ export const convertDate = dates => {
     year: 'numeric',
   });
 };
+export const convertTime = dates => {
+  const date = new Date();
+  return date.toLocaleString('vi-VN', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+};

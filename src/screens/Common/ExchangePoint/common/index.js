@@ -38,7 +38,7 @@ export default function DetailVoucherExchange({route}) {
       onFail: error => {
         Toast.show({
           type: 'error',
-          text1: error,
+          text1: error || 'Số điểm của bạn không đủ',
         });
       },
     });

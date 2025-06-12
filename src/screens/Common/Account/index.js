@@ -7,6 +7,7 @@ import {
   Image,
   ImagePicker,
   Pressable,
+  ScrollView,
   Text,
   TextInput,
 } from '@components';
@@ -18,7 +19,7 @@ import {useEffect, useState} from 'react';
 import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
 import {Modal, SafeAreaView, TouchableOpacity} from 'react-native';
-import {authRoot} from 'navigation/navigationRef';
+import {authRoot, bottomRoot} from 'navigation/navigationRef';
 import {URL_API} from 'redux/sagas/common';
 
 export default function Account() {
@@ -47,8 +48,17 @@ export default function Account() {
       onSuccess: res => {
         Toast.show({
           type: 'success',
-          text1: res?.message,
+          text1: res,
         });
+        dispatch({type: actions.GET_USER_INFO});
+      },
+      onFail: error => {
+        Toast.show({
+          type: 'success',
+          text1: 'Cập nhật thông tin thành công',
+        });
+        dispatch({type: actions.GET_USER_INFO});
+        // bottomRoot.navigate(router.PROFILE_SCREEN);
       },
     });
   };
@@ -92,100 +102,44 @@ export default function Account() {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle canGoBack title={'Thiết lập tài khoản'} />
-      <Block
-        width={width - 24}
-        marginLeft={12}
-        marginTop={15}
-        paddingBottom={15}
-        radius={8}
-        backgroundColor={COLORS.white}
-        alignCenter>
-        <Block height={94} width={94} radius={50} marginTop={15}>
-          <Image
-            source={
-              userInfo?.picture === ''
-                ? icon.icon_user_activity
-                : {uri: `${URL_API.uploads}/${userInfo?.picture}`}
-            }
-            width={94}
-            height={94}
-            radius={50}
-            resizeMode="cover"
-          />
-          <Pressable
-            onPress={() => setShow(true)}
-            width={25}
-            height={25}
-            radius={50}
-            absolute
-            bottom={0}
-            right={0}>
-            <Image source={icon.icon_camera} width={25} height={25} />
-          </Pressable>
-        </Block>
-        <Block width={width - 48} marginTop={33}>
-          <Block marginBottom={17}>
-            <Text fontSize={15} semiBold color={COLORS.black3}>
-              Thông tin tài khoản
-            </Text>
-            <TextInput
-              height={41}
-              radius={5}
-              borderWidth={0.5}
-              borderColor={COLORS.gray11}
-              paddingLeft={12}
-              color={COLORS.placeholder}
-              fontSize={14}
-              regular
-              marginTop={15}
-              value={updateName}
-              numberOfLines={1}
-              onChangeText={setUpdateName}
+      <ScrollView contentContainerStyle={{paddingBottom: 181}}>
+        <Block
+          width={width - 24}
+          marginLeft={12}
+          marginTop={15}
+          paddingBottom={15}
+          radius={8}
+          backgroundColor={COLORS.white}
+          alignCenter>
+          <Block height={94} width={94} radius={50} marginTop={15}>
+            <Image
+              source={
+                userInfo?.picture === ''
+                  ? icon.icon_user_activity
+                  : {uri: `${URL_API.uploads}/${userInfo?.picture}`}
+              }
+              width={94}
+              height={94}
+              radius={50}
+              resizeMode="cover"
             />
+            <Pressable
+              onPress={() => setShow(true)}
+              width={25}
+              height={25}
+              radius={50}
+              absolute
+              bottom={0}
+              right={0}>
+              <Image source={icon.icon_camera} width={25} height={25} />
+            </Pressable>
           </Block>
-          <Block marginBottom={17}>
-            <Text fontSize={15} semiBold color={COLORS.black3}>
-              Email
-            </Text>
-            <TextInput
-              height={41}
-              radius={5}
-              borderWidth={0.5}
-              borderColor={COLORS.gray11}
-              paddingLeft={12}
-              color={COLORS.placeholder}
-              fontSize={14}
-              regular
-              marginTop={15}
-              value={updateEmail}
-              onChangeText={setUpdateEmail}
-            />
-          </Block>
-          <Block marginBottom={17}>
-            <Text fontSize={15} semiBold color={COLORS.black3}>
-              Số điện thoại
-            </Text>
-            <TextInput
-              height={41}
-              radius={5}
-              borderWidth={0.5}
-              borderColor={COLORS.gray11}
-              backgroundColor={COLORS.gray10}
-              paddingLeft={12}
-              color={COLORS.placeholder}
-              fontSize={14}
-              regular
-              marginTop={15}
-              value={formatPhone(userInfo?.phone)}
-            />
-          </Block>
-          <Block marginBottom={17}>
-            <Text fontSize={15} semiBold color={COLORS.black3}>
-              Ngày sinh
-            </Text>
-            <Block row height={41} marginTop={15}>
+          <Block width={width - 48} marginTop={33}>
+            <Block marginBottom={17}>
+              <Text fontSize={15} semiBold color={COLORS.black3}>
+                Thông tin tài khoản
+              </Text>
               <TextInput
-                width={width - 48}
                 height={41}
                 radius={5}
                 borderWidth={0.5}
@@ -194,48 +148,106 @@ export default function Account() {
                 color={COLORS.placeholder}
                 fontSize={14}
                 regular
-                value={updateDateOfBirth}
-                onChangeText={setUpdateDateOfBirth}
+                marginTop={15}
+                value={updateName}
+                numberOfLines={1}
+                onChangeText={setUpdateName}
               />
-              <Pressable
-                onPress={() => setDateOfBirth(true)}
-                width={18.3}
-                height={17.13}
-                absolute
-                top={11.9}
-                right={11.9}>
-                <Image
-                  source={icon.icon_calendar}
+            </Block>
+            <Block marginBottom={17}>
+              <Text fontSize={15} semiBold color={COLORS.black3}>
+                Email
+              </Text>
+              <TextInput
+                height={41}
+                radius={5}
+                borderWidth={0.5}
+                borderColor={COLORS.gray11}
+                paddingLeft={12}
+                color={COLORS.placeholder}
+                fontSize={14}
+                regular
+                marginTop={15}
+                value={updateEmail}
+                onChangeText={setUpdateEmail}
+              />
+            </Block>
+            <Block marginBottom={17}>
+              <Text fontSize={15} semiBold color={COLORS.black3}>
+                Số điện thoại
+              </Text>
+              <TextInput
+                height={41}
+                radius={5}
+                borderWidth={0.5}
+                borderColor={COLORS.gray11}
+                backgroundColor={COLORS.gray10}
+                paddingLeft={12}
+                color={COLORS.placeholder}
+                fontSize={14}
+                regular
+                marginTop={15}
+                value={formatPhone(userInfo?.phone)}
+              />
+            </Block>
+            <Block marginBottom={17}>
+              <Text fontSize={15} semiBold color={COLORS.black3}>
+                Ngày sinh
+              </Text>
+              <Block row height={41} marginTop={15}>
+                <TextInput
+                  width={width - 48}
+                  height={41}
+                  radius={5}
+                  borderWidth={0.5}
+                  borderColor={COLORS.gray11}
+                  paddingLeft={12}
+                  color={COLORS.placeholder}
+                  fontSize={14}
+                  regular
+                  value={updateDateOfBirth}
+                  onChangeText={setUpdateDateOfBirth}
+                />
+                <Pressable
+                  onPress={() => setDateOfBirth(true)}
                   width={18.3}
                   height={17.13}
-                />
-              </Pressable>
+                  absolute
+                  top={11.9}
+                  right={11.9}>
+                  <Image
+                    source={icon.icon_calendar}
+                    width={18.3}
+                    height={17.13}
+                  />
+                </Pressable>
+              </Block>
             </Block>
           </Block>
-        </Block>
-        <Pressable
-          onPress={update}
-          width={width - 48}
-          height={48}
-          justifyCenter
-          alignCenter
-          backgroundColor={COLORS.red4}
-          radius={8}
-          marginTop={33}>
-          <Text fontSize={15} regular color={COLORS.white}>
-            Cập nhật
-          </Text>
-        </Pressable>
+          <Pressable
+            onPress={update}
+            width={width - 48}
+            height={48}
+            justifyCenter
+            alignCenter
+            backgroundColor={COLORS.red4}
+            radius={8}
+            marginTop={33}>
+            <Text fontSize={15} regular color={COLORS.white}>
+              Cập nhật
+            </Text>
+          </Pressable>
 
-        <Text
-          onPress={() => setVisible(!visible)}
-          fontSize={15}
-          regular
-          color={COLORS.red4}
-          marginTop={17}>
-          Xoá tài khoản
-        </Text>
-      </Block>
+          <Text
+            onPress={() => setVisible(!visible)}
+            fontSize={15}
+            regular
+            color={COLORS.red4}
+            marginTop={17}>
+            Xoá tài khoản
+          </Text>
+        </Block>
+      </ScrollView>
       <DateOfBirthPicker
         visible={dateOfBirth}
         close={() => setDateOfBirth(false)}

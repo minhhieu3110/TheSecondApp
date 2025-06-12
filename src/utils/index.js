@@ -32,6 +32,13 @@ export function ConvertTimeStamp(timestamp) {
     year: 'numeric',
   });
 }
+export function ConvertTime(timestamp) {
+  const date = new Date(timestamp * 1000);
+  return date.toLocaleString('vi-VN', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
 export function FormatDay(date) {
   const d = new Date(date);
   const options = {months: '2-digit', year: 'numeric'};

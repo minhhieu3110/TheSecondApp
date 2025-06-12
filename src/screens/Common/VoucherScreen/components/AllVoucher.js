@@ -50,7 +50,7 @@ export default function AllVoucher() {
                     overflow={'hidden'}>
                     <Image
                       source={{uri: `${URL_API.uploads}/${item.picture}`}}
-                      resizeMode="contain"
+                      resizeMode="cover"
                       width={92.06}
                       height={117.48}
                     />

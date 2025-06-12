@@ -121,6 +121,20 @@ function* getListReception(action) {
     action.onFail?.(error);
   }
 }
+function* getListOrderComplete(action) {
+  const params = yield action.params;
+  try {
+    const res = yield api.get(URL_API.service.list_order, params);
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({type: _onFail(action.type)});
+    action.onFail?.(error);
+  }
+}
 function* getListOrderCancel(action) {
   const params = yield action.params;
   try {
@@ -254,6 +268,7 @@ export default function* watchServiceSagas() {
   yield takeLatest(actions.ORDER_SERVICE, orderService);
   yield takeLatest(actions.GET_LIST_ORDER, getListOrder);
   yield takeLatest(actions.GET_LIST__RECEPTION, getListReception);
+  yield takeLatest(actions.GET_LIST_ORDER_COMPLETE, getListOrderComplete);
   yield takeLatest(actions.GET_LIST_ORDER_CANCEL, getListOrderCancel);
   yield takeLatest(actions.RE_ORDER, reOrder);
   yield takeLatest(actions.GET_DETAIL_ORDER, getDetailOrder);

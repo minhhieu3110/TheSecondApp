@@ -61,7 +61,7 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <Block flex backgroundColor={COLORS.black}>
+    <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
       <ScrollView
         contentContainerStyle={{

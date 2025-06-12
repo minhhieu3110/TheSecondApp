@@ -1,8 +1,7 @@
-import {Block, Text, Image, StatusBar} from '@components';
+import {Block, Text, Image, StatusBar, ScrollView} from '@components';
 import {COLORS} from '@theme';
 import {width} from '@responsive';
-import {icon} from '@assets';
-import {ActivityIndicator, ScrollView} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import actions from '@actions';

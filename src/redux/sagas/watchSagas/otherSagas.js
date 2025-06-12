@@ -182,7 +182,7 @@ function* redeemVoucher(action) {
     yield put({
       type: _onFail(action.type),
     });
-    action.onFail?.('Số điểm của bạn không đủ');
+    action.onFail?.(error);
   }
 }
 function* getBannerSuggest(action) {

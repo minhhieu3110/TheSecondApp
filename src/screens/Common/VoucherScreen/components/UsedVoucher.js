@@ -45,11 +45,13 @@ export default function UsedVoucher() {
                     height={117.98}
                     marginTop={16}
                     marginLeft={13.8}
+                    overflow={'hidden'}
                     radius={11}>
                     <Image
                       source={{uri: `${URL_API.uploads}/${item.picture}`}}
                       width={92.06}
                       height={117.98}
+                      resizeMode="cover"
                     />
                   </Block>
                   <TicketVoucherShape />

@@ -31,9 +31,6 @@ export default function RepeatService() {
       type: actions.CANCEL_REPEAT,
       body: {order_id: order_id},
       onSuccess: () => {
-        // Toast.show({
-
-        // })
         dispatch({type: actions.GET_LIST_ORDER, params: {repeat_weekly: 1}});
       },
     });

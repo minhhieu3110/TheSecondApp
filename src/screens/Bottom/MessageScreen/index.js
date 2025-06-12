@@ -63,6 +63,7 @@ export default function MessageScreen() {
                   width={60}
                   height={60}
                   radius={50}
+                  resizeMode="cover"
                 />
                 <Block marginLeft={12}>
                   <Text fontSize={15} semiBold color={COLORS.black2}>
