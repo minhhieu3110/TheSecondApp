@@ -42,6 +42,7 @@ import SelectInput from './form/SelectInput';
 import DateMultiPicker from './form/DateMultiPicker';
 import ChangeAddress from './base/ChangeAddress';
 import MultiImageInput from './form/MultiImageInput';
+import FormInput from './form/FormInput';
 export {
   Carousel,
   Block,
@@ -87,4 +88,5 @@ export {
   DateMultiPicker,
   ChangeAddress,
   MultiImageInput,
+  FormInput,
 };

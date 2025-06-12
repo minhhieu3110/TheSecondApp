@@ -71,7 +71,17 @@ export default function ShoppingScreen() {
       </Block>
     );
   }, []);
+  const COLUMN_COUNT = 3;
 
+  const splitIntoColumns = (data, columns) => {
+    const result = Array.from({length: columns}, () => []);
+    data.forEach((item, index) => {
+      result[index % columns].push(item);
+    });
+    return result;
+  };
+
+  const columnData = splitIntoColumns(listCategory, COLUMN_COUNT);
   return (
     <Block flex backgroundColor={COLORS.gray10} marginBottom>
       <ScrollView contentContainerStyle={{paddingBottom: 135}}>
@@ -197,44 +207,44 @@ export default function ShoppingScreen() {
               </Text>
             </Pressable>
           </Block>
-          <Block
-            marginHorizontal={12}
-            marginTop={14}
-            columnGap={6}
-            rowGap={7}
-            row
-            wrap>
-            {listCategory?.map((item, index) => (
-              <Pressable
-                onPress={() =>
-                  commonRoot.navigate(router.PRODUCT_OF_CATEGORY, {
-                    group_id: item.group_id,
-                    title: item.title,
-                  })
-                }
-                key={index}
-                width={(width - 36) / 3}
-                height={index % 2 === 0 ? 164 : 127}
-                radius={5}
-                overflow={'hidden'}>
-                <Block
-                  width={(width - 36) / 3}
-                  height={index % 2 === 0 ? 164 : 127}
-                  alignCenter
-                  justifyCenter>
-                  <Image
-                    source={{uri: item.picture}}
-                    width={(width - 36) / 3}
-                    height={index % 2 === 0 ? 164 : 127}
-                    resizeMode="contain"
-                  />
-                </Block>
-                <Block absolute bottom={11} left={11} right={11} zIndex={10}>
-                  <Text fontSize={15} semiBold color={COLORS.white}>
-                    {item.title}
-                  </Text>
-                </Block>
-              </Pressable>
+          <Block row marginTop={14} gap={6}>
+            {columnData.map((column, colIndex) => (
+              <Block key={colIndex} flex={1} gap={7}>
+                {column.map((item, index) => {
+                  const height = (index + colIndex) % 2 === 0 ? 164 : 127;
+                  return (
+                    <Pressable
+                      key={index}
+                      onPress={() =>
+                        commonRoot.navigate(router.PRODUCT_OF_CATEGORY, {
+                          group_id: item.group_id,
+                          title: item.title,
+                        })
+                      }
+                      height={height}
+                      width={'100%'}>
+                      <Image
+                        source={{uri: item.picture}}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          resizeMode: 'cover',
+                        }}
+                      />
+                      <Block
+                        position="absolute"
+                        bottom={11}
+                        left={11}
+                        right={11}
+                        zIndex={10}>
+                        <Text fontSize={15} semiBold color={COLORS.white}>
+                          {item.title}
+                        </Text>
+                      </Block>
+                    </Pressable>
+                  );
+                })}
+              </Block>
             ))}
           </Block>
         </Block>
