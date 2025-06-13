@@ -9,6 +9,7 @@ import {
   Pressable,
   Text,
   ScrollView,
+  NoneData,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -54,11 +55,8 @@ export default function BlockStaff() {
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle title={'Danh sách chặn'} canGoBack />
       {empBlock.length === 0 ? (
-        <Block alignCenter flex paddingTop={100}>
-          <Image source={image.image_none} width={'75%'} height={227.04} />
-          <Text fontSize={15} semiBold color={COLORS.black2} marginTop={10}>
-            Chưa có nhân viên chặn
-          </Text>
+        <Block flex paddingTop={100}>
+          <NoneData title={'Danh sách chặn trống'} />
         </Block>
       ) : (
         <ScrollView

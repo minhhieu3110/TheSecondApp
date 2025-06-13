@@ -49,7 +49,6 @@ export default function ConfirmAndPayService({route}) {
   const vouchers = useSelector(state => state.getVoucher?.data || []);
   const [methodSelected, setMethodSelected] = useState();
   const [promotionSelected, setPromotionSelected] = useState();
-  const [voucherCode, setVoucherCode] = useState('');
   const method = paymentMethod.find(item => item.method_id === methodSelected);
 
   const orderService = () => {
@@ -275,18 +274,6 @@ export default function ConfirmAndPayService({route}) {
                   <Text fontSize={14} regular color={COLORS.black2} marg>
                     {infoService?.service?.title}
                   </Text>
-                  {/* <Block rowCenter spaceBetween>
-                    <Text fontSize={14} regular color={COLORS.placeholder}>
-                      Khối lượng công việc
-                    </Text>
-                    <Block row>
-                      {infoService?.extra_services?.map(extra => (
-                        <Text fontSize={14} regular color={COLORS.black2}>
-                          {extra?.text},{' '}
-                        </Text>
-                      ))}
-                    </Block>
-                  </Block> */}
                   <Block row spaceBetween>
                     <Text fontSize={14} regular color={COLORS.placeholder}>
                       Dịch vụ thêm
@@ -371,6 +358,7 @@ export default function ConfirmAndPayService({route}) {
                 },
               });
             }}
+            promotionCode={promotionSelected}
           />
         </Block>
       </ScrollView>

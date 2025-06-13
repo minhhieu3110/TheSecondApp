@@ -1,18 +1,19 @@
 import {Block, Text, Image, Pressable} from '@components';
 import {COLORS} from '@theme';
 import {icon} from '@assets';
-import DTP from '@react-native-community/datetimepicker';
+// import DTP from '@react-native-community/datetimepicker';
+import DTP from 'react-native-modal-datetime-picker';
 import {useState} from 'react';
 
 export default function ChooseStartTime({onDateChange}) {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const handleChange = (event, selectedDate) => {
+  const handleChange = selectedDate => {
     if (selectedDate) {
       setDate(selectedDate);
       onDateChange(selectedDate);
-      setShow(false);
     }
+    setShow(false);
   };
   return (
     <Block
@@ -41,15 +42,15 @@ export default function ChooseStartTime({onDateChange}) {
           <Block height={31.67} borderWidth={1} borderColor={COLORS.white} />
           <Text>{String(date.getMinutes()).padStart(2, '0')}</Text>
         </Pressable>
-        {show && (
-          <DTP
-            mode="time"
-            value={date}
-            onChange={handleChange}
-            is24Hour={true}
-            display="inline"
-          />
-        )}
+        {/* {show && ( */}
+        <DTP
+          isVisible={show}
+          mode="time"
+          onConfirm={handleChange}
+          onCancel={() => setShow(false)}
+          is24Hour={true}
+        />
+        {/* // )} */}
       </Block>
     </Block>
   );

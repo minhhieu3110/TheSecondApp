@@ -364,6 +364,7 @@ export default function ConfirmAndSignupPackage({route}) {
             titlePay={method?.title}
             voucherData={vouchers}
             onPressVoucher={promotion_id => setPromotionSelected(promotion_id)}
+            promotionCode={promotionSelected}
           />
           <PolicyCancelPackageService top={20} title={'Quy định huỷ gói'} />
         </Block>

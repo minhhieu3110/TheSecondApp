@@ -138,7 +138,7 @@ function* updateUserInfo(action) {
   }
 }
 function* updateAvatar(action) {
-  const body = yield action.body;
+  const body = yield handleFormData(action.body);
   try {
     const res = yield api.postFormData(URL_API.user.update_avatar, body);
     console.log(res.data);

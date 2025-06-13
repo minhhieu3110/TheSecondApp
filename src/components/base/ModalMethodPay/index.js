@@ -13,6 +13,7 @@ const ModalMethodPay = ({visible, close, data = [], onPress}) => {
   const selectPay = id => {
     setMethodSelected(id);
     onPress(id);
+    close();
   };
   return (
     <Modal

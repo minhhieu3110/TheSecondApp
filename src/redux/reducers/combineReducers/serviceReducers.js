@@ -30,6 +30,9 @@ export const getListOrder = (...props) => {
 export const getListReception = (...props) => {
   return reducerDefault(...props, actions.GET_LIST__RECEPTION);
 };
+export const getListOrderDoing = (...props) => {
+  return reducerDefault(...props, actions.GET_LIST_ORDER_DOING);
+};
 export const getListOrderComplete = (...props) => {
   return reducerDefault(...props, actions.GET_LIST_ORDER_COMPLETE);
 };

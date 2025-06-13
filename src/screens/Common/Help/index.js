@@ -7,6 +7,7 @@ import {
   Image,
   Pressable,
   HeaderModal,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS, FONTS} from '@theme';
@@ -22,11 +23,9 @@ import {URL_API} from 'redux/sagas/common';
 import RenderHTML from 'react-native-render-html';
 import {formatPhone} from '@utils';
 export default function Help() {
-  const [visibleModalHelp, setVisibleModalHelp] = useState(0);
+  const [visibleModalHelp, setVisibleModalHelp] = useState(false);
   const dispatch = useDispatch();
-  const handleHelp = () => {
-    setVisibleModalHelp(!visibleModalHelp);
-  };
+
   useEffect(() => {
     dispatch({
       type: actions.GET_HELP,
@@ -40,6 +39,7 @@ export default function Help() {
   const sysoptions = useSelector(state => state.sysoptions?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Hỗ trợ'} canGoBack />
       <Block
         width={width - 24}
@@ -49,7 +49,11 @@ export default function Help() {
         radius={8}
         backgroundColor={COLORS.white}>
         <Block width={width - 44} marginHorizontal={12} marginTop={17}>
-          <Pressable onPress={handleHelp} row alignCenter width={width - 48}>
+          <Pressable
+            onPress={() => setVisibleModalHelp(!visibleModalHelp)}
+            row
+            alignCenter
+            width={width - 48}>
             <Text fontSize={15} regular color={COLORS.black5}>
               Lợi ích khi sử dụng SAN
             </Text>
@@ -189,7 +193,7 @@ export default function Help() {
           </Block>
         </Block>
       </Block>
-      <Modal visible={visibleModalHelp} transparent="fade">
+      <Modal visible={visibleModalHelp} transparent={true}>
         <SafeAreaView style={{flex: 1}}>
           <Block flex backgroundColor={COLORS.gray10}>
             <ScrollView>
@@ -203,7 +207,7 @@ export default function Help() {
                   resizeMode="cover"
                 />
                 <Pressable
-                  onPress={handleHelp}
+                  onPress={() => setVisibleModalHelp(!visibleModalHelp)}
                   width={30}
                   height={30}
                   radius={50}

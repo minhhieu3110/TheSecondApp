@@ -82,7 +82,7 @@ export default function Account() {
   const handleUpdateAvatar = e => {
     const formData = new FormData();
     formData.append('picture', {
-      uri: e.path,
+      uri: Platform.OS === 'android' ? e.path.replace('file://', '') : e.path,
       name: `picture_${new Date().getTime()}.jpg`,
       type: 'image/jpeg',
     });
@@ -156,82 +156,42 @@ export default function Account() {
               <Text fontSize={15} semiBold color={COLORS.black3}>
                 Thông tin tài khoản
               </Text>
-              <TextInput
-                height={41}
-                radius={5}
-                borderWidth={0.5}
-                borderColor={COLORS.gray11}
-                paddingLeft={12}
-                color={COLORS.placeholder}
-                fontSize={14}
-                regular
-                marginTop={15}
-                value={updateName}
-                numberOfLines={1}
-                onChangeText={setUpdateName}
-              />
+              <FormInput value={updateName} onChangeText={setUpdateName} />
             </Block>
             <Block marginBottom={17}>
               <Text fontSize={15} semiBold color={COLORS.black3}>
                 Email
               </Text>
-              <TextInput
-                height={41}
-                radius={5}
-                borderWidth={0.5}
-                borderColor={COLORS.gray11}
-                paddingLeft={12}
-                color={COLORS.placeholder}
-                fontSize={14}
-                regular
-                marginTop={15}
-                value={updateEmail}
-                onChangeText={setUpdateEmail}
-              />
+              <FormInput value={updateEmail} onChangeText={setUpdateEmail} />
             </Block>
             <Block marginBottom={17}>
               <Text fontSize={15} semiBold color={COLORS.black3}>
                 Số điện thoại
               </Text>
-              <TextInput
-                height={41}
-                radius={5}
-                borderWidth={0.5}
-                borderColor={COLORS.gray11}
-                backgroundColor={COLORS.gray10}
-                paddingLeft={12}
-                color={COLORS.placeholder}
-                fontSize={14}
-                regular
-                marginTop={15}
+              <FormInput
                 value={formatPhone(userInfo?.phone)}
+                backgroundColor={COLORS.gray10}
+                editable={false}
               />
             </Block>
             <Block marginBottom={17}>
               <Text fontSize={15} semiBold color={COLORS.black3}>
                 Ngày sinh
               </Text>
-              <Block row height={41} marginTop={15}>
-                <TextInput
+              <Block>
+                <FormInput
                   width={width - 48}
-                  height={41}
-                  radius={5}
-                  borderWidth={0.5}
-                  borderColor={COLORS.gray11}
-                  paddingLeft={12}
-                  color={COLORS.placeholder}
-                  fontSize={14}
-                  regular
                   value={updateDateOfBirth}
                   onChangeText={setUpdateDateOfBirth}
                 />
                 <Pressable
+                  marginRight={10}
                   onPress={() => setDateOfBirth(true)}
                   width={18.3}
                   height={17.13}
                   absolute
-                  top={11.9}
-                  right={11.9}>
+                  right={5}
+                  top={26}>
                   <Image
                     source={icon.icon_calendar}
                     width={18.3}

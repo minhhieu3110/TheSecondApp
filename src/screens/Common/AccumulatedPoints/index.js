@@ -45,23 +45,22 @@ export default function AccumulatedPoint() {
           screenName={router.PROFILE_SCREEN}
           root={bottomRoot}
         />
-        <Block flex justifyEnd paddingBottom={73} alignCenter>
-          <Block gap={8}>
-            <Text fontSize={40} bold color={COLORS.white}>
-              {userInfo?.point + ' điểm'}
-            </Text>
-            <Text fontSize={14} regular color={COLORS.white} center>
-              Điểm tích lũy
-            </Text>
-          </Block>
+
+        <Block flex justifyEnd paddingBottom={75} alignCenter>
+          <Text fontSize={40} bold color={COLORS.white}>
+            {userInfo?.point + ' điểm'}
+          </Text>
+          <Text marginTop={11} fontSize={14} regular color={COLORS.white}>
+            Điểm tích luỹ
+          </Text>
         </Block>
       </Image>
       <Block
         marginHorizontal={12}
+        marginTop={-33.76}
         height={67.33}
         row
-        spaceBetween
-        marginTop={-33.665}>
+        spaceBetween>
         <Pressable
           onPress={handleReceive}
           width={'48.5%'}
@@ -72,7 +71,9 @@ export default function AccumulatedPoint() {
           rowCenter
           gap={18}>
           <Image source={icon.icon_receive_point} width={40} height={40} />
-          <Text fontSize={15} regular color={COLORS.black2}>
+
+          <Image source={icon.icon_receive_point} width={44} height={44} />
+          <Text paddingLeft={18} fontSize={15} regular color={COLORS.black2}>
             Đã nhận
           </Text>
         </Pressable>
@@ -86,7 +87,9 @@ export default function AccumulatedPoint() {
           rowCenter
           gap={18}>
           <Image source={icon.icon_used_point} width={40} height={40} />
-          <Text fontSize={15} regular color={COLORS.black2}>
+
+          <Image source={icon.icon_used_point} width={44} height={44} />
+          <Text paddingLeft={18} fontSize={15} regular color={COLORS.black2}>
             Đã sử dụng
           </Text>
         </Pressable>
