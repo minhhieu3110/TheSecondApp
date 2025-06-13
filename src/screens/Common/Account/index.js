@@ -20,7 +20,6 @@ import {ConvertTimeStamp, formatPhone} from '@utils';
 import {useEffect, useState} from 'react';
 import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
-import {Modal, SafeAreaView, TouchableOpacity} from 'react-native';
 import {authRoot, bottomRoot} from 'navigation/navigationRef';
 import {
   ActivityIndicator,
@@ -28,7 +27,6 @@ import {
   SafeAreaView,
   TouchableOpacity,
 } from 'react-native';
-import {authRoot} from 'navigation/navigationRef';
 import {URL_API} from 'redux/sagas/common';
 
 export default function Account() {
