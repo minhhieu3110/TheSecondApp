@@ -256,11 +256,7 @@ export default function HomeScreen() {
                 <Text fontSize={16} semiBold color={COLORS.red4} uppercase>
                   e-shop
                 </Text>
-                <Text
-                  fontSize={15}
-                  regular
-                  color={COLORS.black2}
-                  numberOfLines={2}>
+                <Text fontSize={15} regular color={COLORS.black2}>
                   Mua sắm online chất lượng, giá tốt được nhiều người tin dùng
                 </Text>
               </Block>

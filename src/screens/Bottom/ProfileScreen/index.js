@@ -122,7 +122,7 @@ export default function ProfileScreen() {
               </Text>
               <Pressable
                 onPress={() => commonRoot.navigate(router.MENBERSHIP_RANK)}
-                width={'60%'}
+                width={`${userInfo?.rankinfo?.title?.length * 1.5 + 40}%`}
                 height={29}
                 marginTop={9}
                 radius={15}
@@ -139,12 +139,7 @@ export default function ProfileScreen() {
                     height: 29,
                     justifyContent: 'center',
                   }}>
-                  <Block
-                    width={'87%'}
-                    rowCenter
-                    spaceBetween
-                    marginLeft={8}
-                    gap={10}>
+                  <Block width={'87%'} rowCenter marginLeft={8} gap={10}>
                     <Block rowCenter gap={8.5}>
                       <Image
                         source={{

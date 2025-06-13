@@ -67,7 +67,7 @@ export default function Account() {
   const handleUpdateAvatar = e => {
     const formData = new FormData();
     formData.append('picture', {
-      uri: e.path,
+      uri: Platform.OS === 'android' ? e.path.replace('file://', '') : e.path,
       name: `picture_${new Date().getTime()}.jpg`,
       type: 'image/jpeg',
     });

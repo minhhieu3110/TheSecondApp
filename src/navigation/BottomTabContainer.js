@@ -6,8 +6,8 @@ import router from '@router';
 import {bottom} from 'screens/Bottom';
 import {COLORS, FONTS} from '@theme';
 import {Block} from '@components';
-import {height} from '@responsive';
-
+import {height, width} from '@responsive';
+import Svg, {Path} from 'react-native-svg';
 const Tab = createBottomTabNavigator();
 
 const getTabBarIcon = (route, focused) => {
@@ -37,6 +37,7 @@ const screenOptions = ({route}) => {
       shadowOffset: {height: -5, width: 0},
       height: 81.25,
     },
+
     tabBarIcon: ({focused}) => (
       <Image
         source={getTabBarIcon(route, focused)}

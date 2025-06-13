@@ -182,7 +182,7 @@ export default function Feedback() {
         </Block>
       </ScrollView>
       <Button title="Gửi" onPress={sendFeedback} />
-      <Modal visible={feedbackSent} transparent="fade">
+      <Modal visible={feedbackSent} transparent={true}>
         <SafeAreaView style={{flex: 1}}>
           <Block flex backgroundColor={COLORS.gray10}>
             <HeaderModal

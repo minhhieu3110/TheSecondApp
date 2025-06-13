@@ -15,6 +15,7 @@ export default function MethodPay({
   top,
   payData = [],
   titlePay,
+  promotionCode,
   voucherData = [],
   onPressPay,
   onPressVoucher,
@@ -64,7 +65,7 @@ export default function MethodPay({
             </Text>
             <Block marginTop={9} rowCenter spaceBetween>
               <Text fontSize={15} medium color={COLORS.red4}>
-                Chọn voucher
+                {promotionCode ? promotionCode : 'Chọn voucher'}
               </Text>
               <Block>
                 <Icon
