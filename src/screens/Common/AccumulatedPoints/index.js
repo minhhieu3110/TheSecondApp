@@ -31,77 +31,62 @@ export default function AccumulatedPoint() {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
-      <Block
+
+      <Image
+        source={image.image_header_balance}
         width={width}
         height={215}
-        backgroundColor={COLORS.white}
-        alignCenter>
+        resizeMode="cover">
         <HeaderTitle
-          background
+          title={'Điểm tích lũy'}
+          background={COLORS.transparent}
+          colorText={COLORS.white}
+          colorIcon={COLORS.white}
           screenName={router.PROFILE_SCREEN}
           root={bottomRoot}
-          title={'Điểm tích luỹ'}
-          colorIcon={COLORS.white}
-          colorText={COLORS.white}
         />
-        <Image
-          source={image.image_header_balance}
-          width={'100%'}
-          height={'100%'}
-          resizeMode="cover"
-        />
-        <Block absolute zIndex={10} top={74} alignCenter>
-          <Text fontSize={40} bold color={COLORS.white}>
-            {userInfo?.point} điểm
-          </Text>
-          <Text fontSize={14} regular color={COLORS.gray11}>
-            Điểm tích luỹ
-          </Text>
+        <Block flex justifyEnd paddingBottom={73} alignCenter>
+          <Block gap={8}>
+            <Text fontSize={40} bold color={COLORS.white}>
+              {userInfo?.point + ' điểm'}
+            </Text>
+            <Text fontSize={14} regular color={COLORS.white} center>
+              Điểm tích lũy
+            </Text>
+          </Block>
         </Block>
-      </Block>
+      </Image>
       <Block
-        width={width - 24}
+        marginHorizontal={12}
         height={67.33}
-        radius={15}
-        marginLeft={12}
-        marginTop={-33.7}
         row
-        spaceBetween>
+        spaceBetween
+        marginTop={-33.665}>
         <Pressable
           onPress={handleReceive}
-          width={(width - 24) / 2 - 5}
+          width={'48.5%'}
           backgroundColor={visibleReceivePoint ? COLORS.yellow3 : COLORS.white}
           radius={8}
-          row
-          alignCenter>
-          <Block width={44} height={44} marginLeft={18}>
-            <Image
-              source={icon.icon_receive_point}
-              width={'100%'}
-              height={'100%'}
-              resizeMode="contain"
-            />
-          </Block>
-          <Text fontSize={15} regular color={COLORS.textColor} marginLeft={18}>
+          alignCenter
+          paddingHorizontal={18}
+          rowCenter
+          gap={18}>
+          <Image source={icon.icon_receive_point} width={40} height={40} />
+          <Text fontSize={15} regular color={COLORS.black2}>
             Đã nhận
           </Text>
         </Pressable>
         <Pressable
           onPress={handleUsed}
-          width={(width - 24) / 2 - 5}
+          width={'48.5%'}
           backgroundColor={visibleUsedPoint ? COLORS.yellow3 : COLORS.white}
           radius={8}
-          row
-          alignCenter>
-          <Block width={44} height={44} marginLeft={18}>
-            <Image
-              source={icon.icon_used_point}
-              width={'100%'}
-              height={'100%'}
-              resizeMode="contain"
-            />
-          </Block>
-          <Text fontSize={15} regular color={COLORS.textColor} marginLeft={18}>
+          alignCenter
+          paddingHorizontal={18}
+          rowCenter
+          gap={18}>
+          <Image source={icon.icon_used_point} width={40} height={40} />
+          <Text fontSize={15} regular color={COLORS.black2}>
             Đã sử dụng
           </Text>
         </Pressable>
