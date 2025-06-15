@@ -44,39 +44,40 @@ export default function Feedback() {
   const [serviceId, setServiceId] = useState();
   const [content, setContent] = useState('');
   const sendFeedback = () => {
-    const file_attach = new FormData();
-    file_attach.append('file_attach', {
-      uri: image?.path,
-      name: `feedback_${new Date().getTime()}.jpg`,
-      type: 'image/jpeg',
-    });
-    // const body = {
-    //   service_id: serviceId,
-    //   full_name: userInfo?.full_name,
-    //   phone: userInfo?.phone,
-    //   content: content,
-    //   file_attach: file_attach,
-    // };
+    const formData = new FormData();
+
+    formData.append('service_id', serviceId);
+    formData.append('full_name', userInfo?.full_name || '');
+    formData.append('phone', userInfo?.phone || '');
+    formData.append('content', content);
+    if (image?.path) {
+      formData.append('file_attach', {
+        uri: image.path,
+        name: `feedback_${Date.now()}.jpg`,
+        type: 'image/jpeg',
+      });
+    }
+
     dispatch({
       type: actions.FEEDBACK,
-      body: {
-        service_id: serviceId,
-        full_name: userInfo?.full_name,
-        phone: userInfo?.phone,
-        content: content,
-        file_attach,
-      },
+      body: formData,
       onSuccess: () => {
-        setFeedbackSent(!feedbackSent);
+        setFeedbackSent(prev => !prev);
+        Toast.show({
+          type: 'success',
+          text1: 'Gửi phản hồi thành công!',
+        });
       },
       onFail: e => {
         Toast.show({
           type: 'error',
-          text1: e,
+          text1: 'Gửi phản hồi thất bại',
+          text2: e?.message || 'Vui lòng thử lại.',
         });
       },
     });
   };
+
   const feedback = useSelector(state => state.getFeedback?.data || []);
 
   return (
