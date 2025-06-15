@@ -16,6 +16,7 @@ import {COLORS} from '@theme';
 import {formatPhone} from '@utils';
 import {authRoot, bottomRoot, commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
+import {Platform} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import RadialGradient from 'react-native-radial-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -48,11 +49,11 @@ export default function ProfileScreen() {
   const handleUpdateAvatar = e => {
     const formData = new FormData();
     formData.append('picture', {
+      // uri: Platform.OS === 'android' ? e.uri.replace('file:///', '') : e.uri,
       uri: e.path,
       name: 'profile.jpg',
       type: 'image/jpeg',
     });
-    formData.append('update_avatar', 1);
     dispatch({
       type: actions.UPDATE_AVATAR,
       body: formData,

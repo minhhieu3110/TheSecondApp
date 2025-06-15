@@ -1,5 +1,5 @@
 import {Block, Icon, Modal, Pressable, Text} from '@components';
-// import {usePhotoPermission} from '@hooks';
+import {usePhotoPermission} from '@hooks';
 import {COLORS} from '@theme';
 import React from 'react';
 // import {useTranslation} from 'react-i18next';
@@ -14,7 +14,7 @@ const OPTIONS = {
 
 const ImagePicker = ({hidePicker, onImagePick, options = {}}) => {
   // const {t} = useTranslation();
-  // usePhotoPermission();
+  usePhotoPermission();
   const openCamera = () => {
     hidePicker?.();
     Picker.openCamera({...OPTIONS, ...options}).then(image => {

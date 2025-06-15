@@ -80,7 +80,8 @@ export default function Account() {
   const handleUpdateAvatar = e => {
     const formData = new FormData();
     formData.append('picture', {
-      uri: Platform.OS === 'android' ? e.path.replace('file://', '') : e.path,
+      uri: e.path,
+      // uri: e.path,
       name: `picture_${new Date().getTime()}.jpg`,
       type: 'image/jpeg',
     });
@@ -117,7 +118,7 @@ export default function Account() {
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
       <HeaderTitle canGoBack title={'Thiết lập tài khoản'} />
-      <ScrollView contentContainerStyle={{paddingBottom: 181}}>
+      {/* <ScrollView contentContainerStyle={{paddingBottom: 181}}>
         <Block
           width={width - 24}
           marginLeft={12}
@@ -222,7 +223,7 @@ export default function Account() {
             Xoá tài khoản
           </Text>
         </Block>
-      </ScrollView>
+      </ScrollView> */}
       {isLoading ? (
         <ActivityIndicator color={COLORS.red4} style={{marginTop: 15}} />
       ) : (

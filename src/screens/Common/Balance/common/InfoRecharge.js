@@ -44,7 +44,7 @@ export default function InfoRecharge({route}) {
     dispatch({
       type: actions.UPDATE_BILL,
       params: {id: rechargeInfo?.id},
-      body: {file_attach: file_attach},
+      body: file_attach,
     });
   };
 

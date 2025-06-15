@@ -53,7 +53,7 @@ export default function IntroSAN() {
         height={'100%'}
         resizeMode="stretch">
         <StatusBar />
-        <Block flex justifyEnd paddingBottom={bottom + 32}>
+        <Block flex justifyEnd paddingBottom={bottom + 8}>
           <AppIntro
             data={contentIntro}
             renderItem={renderItem}

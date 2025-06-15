@@ -50,16 +50,22 @@ export default function Feedback() {
       name: `feedback_${new Date().getTime()}.jpg`,
       type: 'image/jpeg',
     });
-    const body = {
-      service_id: serviceId,
-      full_name: userInfo?.full_name,
-      phone: userInfo?.phone,
-      content: content,
-      // file_attach: file_attach,
-    };
+    // const body = {
+    //   service_id: serviceId,
+    //   full_name: userInfo?.full_name,
+    //   phone: userInfo?.phone,
+    //   content: content,
+    //   file_attach: file_attach,
+    // };
     dispatch({
       type: actions.FEEDBACK,
-      body: body,
+      body: {
+        service_id: serviceId,
+        full_name: userInfo?.full_name,
+        phone: userInfo?.phone,
+        content: content,
+        file_attach,
+      },
       onSuccess: () => {
         setFeedbackSent(!feedbackSent);
       },

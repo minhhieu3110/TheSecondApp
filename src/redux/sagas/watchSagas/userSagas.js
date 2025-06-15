@@ -138,7 +138,7 @@ function* updateUserInfo(action) {
   }
 }
 function* updateAvatar(action) {
-  const body = yield handleFormData(action.body);
+  const body = yield action.body;
   try {
     const res = yield api.postFormData(URL_API.user.update_avatar, body);
     console.log(res.data);
@@ -156,7 +156,7 @@ function* updateAvatar(action) {
 function* sendFeedback(action) {
   const body = yield action.body;
   try {
-    const res = yield api.post(URL_API.user.feedback, body);
+    const res = yield api.postFormData(URL_API.user.feedback, body);
     yield put({
       type: _onSuccess(action.type),
       data: res.data,
@@ -345,7 +345,7 @@ function* updateBill(action) {
   const {id} = yield action.params;
   const body = yield action.body;
   try {
-    const res = yield api.post(`${URL_API.user.recharge}/${id}`, body);
+    const res = yield api.postFormData(`${URL_API.user.recharge}/${id}`, body);
     yield put({
       type: _onSuccess(action.type),
       data: res.data,
