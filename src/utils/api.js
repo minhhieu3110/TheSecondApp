@@ -3,7 +3,7 @@ import {handleExpiredToken, throttle} from './helper';
 
 import store from '@redux/store'; // Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
 // axios.defaults.baseURL = 'http://san.baoan.app24h.net:81/api/';
-axios.defaults.baseURL = 'https:san.thietkewebsite.info.vn/api/';
+axios.defaults.baseURL = 'https://san.thietkewebsite.info.vn/api/';
 const getDataBody = config => {
   let data = '';
   if (
@@ -94,7 +94,7 @@ export default class HttpService {
     const token = store.getState()?.appToken?.data;
 
     let options = {
-      'Content-Type': headers || 'application/x-www-form-urlencoded',
+      'Content-Type': headers,
       Accept: 'application/json',
     };
     if (token) {
@@ -147,7 +147,7 @@ export default class HttpService {
       return await axios
         .post(url, formData, {
           headers: {
-            post: this.generateHeader('form-data'),
+            post: this.generateHeader('multipart/form-data'),
           },
           params: {...params},
         })

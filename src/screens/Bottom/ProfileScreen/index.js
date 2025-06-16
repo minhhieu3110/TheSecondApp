@@ -49,7 +49,6 @@ export default function ProfileScreen() {
   const handleUpdateAvatar = e => {
     const formData = new FormData();
     formData.append('picture', {
-      // uri: Platform.OS === 'android' ? e.uri.replace('file:///', '') : e.uri,
       uri: e.path,
       name: 'profile.jpg',
       type: 'image/jpeg',

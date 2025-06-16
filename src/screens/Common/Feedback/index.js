@@ -14,8 +14,10 @@ import {
   TextInput,
 } from '@components';
 import {width} from '@responsive';
+import router from '@router';
 import {COLORS} from '@theme';
 import {ConvertDateTimeStamp, formatPhone} from '@utils';
+import {commonRoot} from 'navigation/navigationRef';
 import {use, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {Modal, SafeAreaView} from 'react-native';
@@ -33,9 +35,6 @@ export default function Feedback() {
     dispatch({
       type: actions.GET_USER_INFO,
     });
-    dispatch({
-      type: actions.GET_FEEDBACK,
-    });
   }, [dispatch]);
   const service = useSelector(state => state.getServices?.data || []);
   const userInfo = useSelector(state => state.getUserInfo?.data || []);
@@ -45,7 +44,6 @@ export default function Feedback() {
   const [content, setContent] = useState('');
   const sendFeedback = () => {
     const formData = new FormData();
-
     formData.append('service_id', serviceId);
     formData.append('full_name', userInfo?.full_name || '');
     formData.append('phone', userInfo?.phone || '');
@@ -62,11 +60,14 @@ export default function Feedback() {
       type: actions.FEEDBACK,
       body: formData,
       onSuccess: () => {
-        setFeedbackSent(prev => !prev);
+        setServiceId(null);
+        setContent('');
+        setImage(null);
         Toast.show({
           type: 'success',
           text1: 'Gửi phản hồi thành công!',
         });
+        commonRoot.navigate(router.HISTORY_FEEDBACK);
       },
       onFail: e => {
         Toast.show({
@@ -77,8 +78,6 @@ export default function Feedback() {
       },
     });
   };
-
-  const feedback = useSelector(state => state.getFeedback?.data || []);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -91,7 +90,7 @@ export default function Feedback() {
                 Chọn dịch vụ
               </Text>
               <Text
-                onPress={() => setFeedbackSent(!feedbackSent)}
+                onPress={() => commonRoot.navigate(router.HISTORY_FEEDBACK)}
                 fontSize={15}
                 regular
                 color={COLORS.red4}>
@@ -189,63 +188,6 @@ export default function Feedback() {
         </Block>
       </ScrollView>
       <Button title="Gửi" onPress={sendFeedback} />
-      <Modal visible={feedbackSent} transparent={true}>
-        <SafeAreaView style={{flex: 1}}>
-          <Block flex backgroundColor={COLORS.gray10}>
-            <HeaderModal
-              title={'Phản hồi đã gửi'}
-              onPress={() => setFeedbackSent(!feedbackSent)}
-            />
-            <ScrollView>
-              <Block width={width - 24} marginLeft={12} marginTop={14} gap={10}>
-                {feedback?.map(item => (
-                  <Block
-                    key={item.id}
-                    width={width - 24}
-                    backgroundColor={COLORS.white}
-                    radius={8}
-                    paddingBottom={12}>
-                    <Block width={width - 48} marginLeft={12} marginTop={17}>
-                      <Text fontSize={15} semiBold color={COLORS.red4}>
-                        {item?.service?.title}
-                      </Text>
-                      <Text
-                        fontSize={14}
-                        regular
-                        color={COLORS.placeholder}
-                        marginTop={17}>
-                        {ConvertDateTimeStamp(item?.created_at)}
-                      </Text>
-                      <Text
-                        fontSize={14}
-                        regular
-                        color={COLORS.black1}
-                        marginTop={13}>
-                        {item?.content}
-                      </Text>
-                      <Block marginTop={17} row gap={10}>
-                        <Block
-                          width={width - 275}
-                          height={96}
-                          overflow={'hidden'}>
-                          <Image
-                            source={{
-                              uri: `${URL_API.uploads}/${item?.file_attach}`,
-                            }}
-                            width={width - 275}
-                            height={96}
-                            resizeMode="cover"
-                          />
-                        </Block>
-                      </Block>
-                    </Block>
-                  </Block>
-                ))}
-              </Block>
-            </ScrollView>
-          </Block>
-        </SafeAreaView>
-      </Modal>
       {visible && (
         <ImagePicker
           hidePicker={e => {

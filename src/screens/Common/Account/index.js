@@ -11,7 +11,6 @@ import {
   ScrollView,
   StatusBar,
   Text,
-  TextInput,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -20,7 +19,7 @@ import {ConvertTimeStamp, formatPhone} from '@utils';
 import {useEffect, useState} from 'react';
 import Toast from 'react-native-toast-message';
 import {useDispatch, useSelector} from 'react-redux';
-import {authRoot, bottomRoot} from 'navigation/navigationRef';
+import {authRoot} from 'navigation/navigationRef';
 import {
   ActivityIndicator,
   Modal,
@@ -81,7 +80,6 @@ export default function Account() {
     const formData = new FormData();
     formData.append('picture', {
       uri: e.path,
-      // uri: e.path,
       name: `picture_${new Date().getTime()}.jpg`,
       type: 'image/jpeg',
     });
@@ -118,112 +116,6 @@ export default function Account() {
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
       <HeaderTitle canGoBack title={'Thiết lập tài khoản'} />
-      {/* <ScrollView contentContainerStyle={{paddingBottom: 181}}>
-        <Block
-          width={width - 24}
-          marginLeft={12}
-          marginTop={15}
-          paddingBottom={15}
-          radius={8}
-          backgroundColor={COLORS.white}
-          alignCenter>
-          <Block height={94} width={94} radius={50} marginTop={15}>
-            <Image
-              source={
-                userInfo?.picture === ''
-                  ? icon.icon_user_activity
-                  : {uri: `${URL_API.uploads}/${userInfo?.picture}`}
-              }
-              width={94}
-              height={94}
-              radius={50}
-              resizeMode="cover"
-            />
-            <Pressable
-              onPress={() => setShow(true)}
-              width={25}
-              height={25}
-              radius={50}
-              absolute
-              bottom={0}
-              right={0}>
-              <Image source={icon.icon_camera} width={25} height={25} />
-            </Pressable>
-          </Block>
-          <Block width={width - 48} marginTop={33}>
-            <Block marginBottom={17}>
-              <Text fontSize={15} semiBold color={COLORS.black3}>
-                Thông tin tài khoản
-              </Text>
-              <FormInput value={updateName} onChangeText={setUpdateName} />
-            </Block>
-            <Block marginBottom={17}>
-              <Text fontSize={15} semiBold color={COLORS.black3}>
-                Email
-              </Text>
-              <FormInput value={updateEmail} onChangeText={setUpdateEmail} />
-            </Block>
-            <Block marginBottom={17}>
-              <Text fontSize={15} semiBold color={COLORS.black3}>
-                Số điện thoại
-              </Text>
-              <FormInput
-                value={formatPhone(userInfo?.phone)}
-                backgroundColor={COLORS.gray10}
-                editable={false}
-              />
-            </Block>
-            <Block marginBottom={17}>
-              <Text fontSize={15} semiBold color={COLORS.black3}>
-                Ngày sinh
-              </Text>
-              <Block>
-                <FormInput
-                  width={width - 48}
-                  value={updateDateOfBirth}
-                  onChangeText={setUpdateDateOfBirth}
-                />
-                <Pressable
-                  marginRight={10}
-                  onPress={() => setDateOfBirth(true)}
-                  width={18.3}
-                  height={17.13}
-                  absolute
-                  right={5}
-                  top={26}>
-                  <Image
-                    source={icon.icon_calendar}
-                    width={18.3}
-                    height={17.13}
-                  />
-                </Pressable>
-              </Block>
-            </Block>
-          </Block>
-          <Pressable
-            onPress={update}
-            width={width - 48}
-            height={48}
-            justifyCenter
-            alignCenter
-            backgroundColor={COLORS.red4}
-            radius={8}
-            marginTop={33}>
-            <Text fontSize={15} regular color={COLORS.white}>
-              Cập nhật
-            </Text>
-          </Pressable>
-
-          <Text
-            onPress={() => setVisible(!visible)}
-            fontSize={15}
-            regular
-            color={COLORS.red4}
-            marginTop={17}>
-            Xoá tài khoản
-          </Text>
-        </Block>
-      </ScrollView> */}
       {isLoading ? (
         <ActivityIndicator color={COLORS.red4} style={{marginTop: 15}} />
       ) : (

@@ -32,6 +32,7 @@ const commonStack = [
   {name: router.PRIVACY_SECURITY},
   {name: router.SETTING},
   {name: router.FEEDBACK},
+  {name: router.HISTORY_FEEDBACK},
   {name: router.ABOUT},
   {name: router.INTRODUCE_SAN},
   //

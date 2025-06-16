@@ -149,6 +149,9 @@ function* updateAvatar(action) {
     });
     action.onSuccess?.(res);
   } catch (error) {
+    // console.log('❌ Message:', error.message);
+    // console.log('❌ Response:', error); // undefined nếu bị block SSL
+    // console.log('❌ Request:', error.request);
     yield put({type: _onFail(action.type)});
     action.onFail?.(error);
   }

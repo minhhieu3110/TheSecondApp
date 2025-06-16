@@ -7433,10 +7433,10 @@ react-native-paper@^5.14.4:
     color "^3.1.2"
     use-latest-callback "^0.2.3"
 
-react-native-permissions@^5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-5.3.0.tgz#987ec347d312306b4aeca548996a16f6f129992d"
-  integrity sha512-krDaImQ7J8tm7P+GqKmTIkojNqdO0E6v2x7TOlX/7rRc/zlpoqRXsN7210ecChcUmEOJEH6wzPcemYq+7AfZiw==
+react-native-permissions@^5.4.1:
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-5.4.1.tgz#b147e5901f2f5d847b367f2ba6e60378ebcee90c"
+  integrity sha512-MTou5DVn8IADr7OQjYePJzcxrVNEeODBvSpB8XOt5qBI9ui3HduSBn/KTNZECH/Ph2Y20OnZBMqe6Wp9IryrgQ==
 
 react-native-radial-gradient@^1.2.1:
   version "1.2.1"

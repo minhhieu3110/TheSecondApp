@@ -1,8 +1,9 @@
 import {Block, Icon, Modal, Pressable, Text} from '@components';
-import {usePhotoPermission} from '@hooks';
+
 import {COLORS} from '@theme';
 import React from 'react';
-// import {useTranslation} from 'react-i18next';
+
+import {requestImagePermission} from 'hooks/permissions/useImagePermission';
 import Picker from 'react-native-image-crop-picker';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -14,15 +15,26 @@ const OPTIONS = {
 
 const ImagePicker = ({hidePicker, onImagePick, options = {}}) => {
   // const {t} = useTranslation();
-  usePhotoPermission();
-  const openCamera = () => {
+  // usePhotoPermission();
+  const openCamera = async () => {
+    const hasPermission = await requestImagePermission();
+    if (!hasPermission) {
+      Alert.alert('Thông báo', 'Ứng dụng cần quyền truy cập ảnh để tiếp tục.');
+      return;
+    }
     hidePicker?.();
     Picker.openCamera({...OPTIONS, ...options}).then(image => {
       onImagePick?.(image);
     });
   };
 
-  const openGallery = () => {
+  const openGallery = async () => {
+    const hasPermission = await requestImagePermission();
+    if (!hasPermission) {
+      Alert.alert('Thông báo', 'Ứng dụng cần quyền truy cập ảnh để tiếp tục.');
+      return;
+    }
+
     hidePicker?.();
     Picker.openPicker({...OPTIONS, ...options}).then(image => {
       onImagePick?.(image);

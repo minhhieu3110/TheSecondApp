@@ -65,6 +65,7 @@ import DetailNew from './AllNews/common';
 import UpdateAddress from './UpdateAddress';
 import DetailOrder from './DetailOrder';
 import AddBankAccount from './AddBankAccount';
+import HistoryFeedback from './Feedback/common/HistoryFeedback';
 
 export const common = {
   [router.VOUCHER]: Voucher,
@@ -92,6 +93,7 @@ export const common = {
   [router.PRIVACY_SECURITY]: PrivacySecurity,
   [router.SETTING]: Setting,
   [router.FEEDBACK]: Feedback,
+  [router.HISTORY_FEEDBACK]: HistoryFeedback,
   [router.ABOUT]: About,
   [router.INTRODUCE_SAN]: IntroduceSAN,
   [router.DETAIL_SERVICE]: DetailService,

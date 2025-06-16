@@ -12,9 +12,12 @@ import {
 } from '@components';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {width} from '@responsive';
+import router from '@router';
 import {COLORS} from '@theme';
 import {formatCurrency} from '@utils/helper';
+import {commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
+import Toast from 'react-native-toast-message';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
@@ -31,13 +34,9 @@ export default function InfoRecharge({route}) {
   const [show, setShow] = useState(false);
   const [imageBill, setImageBill] = useState();
   const updateBill = () => {
-    if (!imageBill) {
-      console.error('No image selected for the bill.');
-      return;
-    }
     const file_attach = new FormData();
     file_attach.append('file_attach', {
-      uri: imageBill.path,
+      uri: imageBill?.path,
       name: `picture_${new Date().getTime()}.jpg`,
       type: 'image/jpeg',
     });
@@ -45,6 +44,20 @@ export default function InfoRecharge({route}) {
       type: actions.UPDATE_BILL,
       params: {id: rechargeInfo?.id},
       body: file_attach,
+      onSuccess: res => {
+        Toast.show({
+          type: 'success',
+          text1: 'Nạp tiền thành công',
+        });
+        commonRoot.navigate(router.BALANCE);
+      },
+      onFail: e => {
+        Toast.show({
+          type: 'error',
+          text1: 'Nạp tiền thất bại',
+          text2: 'Vui lòng tải lên hình ảnh biên lai và thử lại sau',
+        });
+      },
     });
   };
 
