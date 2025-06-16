@@ -17,10 +17,17 @@ export default function HistoryFeedback() {
   }, [dispatch]);
   const feedback = useSelector(state => state.getFeedback?.data || []);
   const {isLoading} = useSelector(state => state.getFeedback);
+  const onRefresh = () => {
+    dispatch({
+      type: actions.GET_FEEDBACK,
+    });
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <HeaderTitle canGoBack title={'Lịch sử phản hồi'} />
-      <ScrollView contentContainerStyle={{paddingBottom: 181}}>
+      <ScrollView
+        onRefresh={onRefresh}
+        contentContainerStyle={{paddingBottom: 181}}>
         <Block width={width - 24} marginLeft={12} marginTop={14} gap={10}>
           {isLoading ? (
             <ActivityIndicator color={COLORS.red4} />
@@ -43,13 +50,15 @@ export default function HistoryFeedback() {
                     marginTop={17}>
                     {ConvertDateTimeStamp(item?.created_at)}
                   </Text>
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.black1}
-                    marginTop={13}>
-                    {item?.content}
-                  </Text>
+                  {item?.content.length !== 0 && (
+                    <Text
+                      fontSize={14}
+                      regular
+                      color={COLORS.black1}
+                      marginTop={13}>
+                      {item?.content}
+                    </Text>
+                  )}
                   <Block marginTop={17} row gap={10}>
                     <Image
                       source={{
@@ -58,7 +67,7 @@ export default function HistoryFeedback() {
                       width={width - 275}
                       height={96}
                       resizeMode="cover"
-                      radius={15}
+                      radius={8}
                     />
                   </Block>
                 </Block>

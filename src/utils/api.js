@@ -94,7 +94,7 @@ export default class HttpService {
     const token = store.getState()?.appToken?.data;
 
     let options = {
-      'Content-Type': headers,
+      'Content-Type': headers || 'application/x-www-form-urlencoded',
       Accept: 'application/json',
     };
     if (token) {
@@ -114,7 +114,7 @@ export default class HttpService {
       return await axios
         .get(url, {
           headers: {
-            get: this.generateHeader(),
+            get: this.generateHeader('multipart/form-data'),
           },
           params: {...params},
         })
