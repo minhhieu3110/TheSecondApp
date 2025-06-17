@@ -178,8 +178,9 @@ export default function Account() {
                 <Text fontSize={15} semiBold color={COLORS.black3}>
                   Ngày sinh
                 </Text>
-                <Block row height={41} marginTop={15}>
+                <Block row>
                   <FormInput
+                    width={'100%'}
                     value={updateDateOfBirth}
                     onChangeText={setUpdateDateOfBirth}
                   />
@@ -188,8 +189,8 @@ export default function Account() {
                     width={18.3}
                     height={17.13}
                     absolute
-                    top={11.9}
-                    right={11.9}>
+                    top={28}
+                    right={5}>
                     <Image
                       source={icon.icon_calendar}
                       width={18.3}

@@ -62,9 +62,6 @@ export default function Housework_ServiceMonth({route}) {
   const start_time = formatTime(time);
   const detailSub = useSelector(state => state.getDetailServiceSub?.data || []);
   const [content, setContent] = useState('');
-  const durationSelected = detailSub?.durations?.find(
-    item => item.item_id === chooseDuration,
-  );
   const numMonth = detailSub?.months?.find(
     month => month.item_id === chooseOptionDuration,
   );
@@ -73,7 +70,6 @@ export default function Housework_ServiceMonth({route}) {
     service_sub_id: route?.params?.service_sub_id,
     duration_id: chooseDuration,
     monthly_package_id: chooseOptionDuration,
-    // schedule_week: againWeek,
     list_day: listDates,
     start_time: start_time,
     note: content,
@@ -90,7 +86,6 @@ export default function Housework_ServiceMonth({route}) {
         service_sub_id: route?.params?.service_sub_id,
         duration_id: chooseDuration,
         monthly_package_id: chooseOptionDuration,
-        // schedule_week: againWeek,
         list_day: listDates,
         start_time: start_time,
         note: content,
@@ -107,7 +102,6 @@ export default function Housework_ServiceMonth({route}) {
     });
   }, [listDates, chooseDuration, start_time]);
   const infoService = useSelector(state => state.priceCalculation?.data || []);
-  console.log(numMonth);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -131,13 +125,13 @@ export default function Housework_ServiceMonth({route}) {
               </Text>
             </Pressable>
           </Block>
-          <Block marginTop={15} row columnGap={9.9} justifyCenter>
+          <Block marginTop={15} row gap={9.9}>
             {dayWeek.map(item => (
               <Pressable
                 onPress={() => handleWeekDayPress(item.title)}
                 key={item.title}
-                width={49.14}
-                height={49.14}
+                width={(width - 83.4) / 7}
+                height={(width - 83.4) / 7}
                 radius={5}
                 borderWidth={againWeek.includes(item.title) ? 1 : ''}
                 borderColor={againWeek.includes(item.title) && COLORS.red4}
