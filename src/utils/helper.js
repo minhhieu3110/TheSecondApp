@@ -354,3 +354,9 @@ export const convertTime = dates => {
     minute: '2-digit',
   });
 };
+export const sortWeekdays = days => {
+  const weekdayOrder = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
+  return [...days].sort(
+    (a, b) => weekdayOrder.indexOf(a) - weekdayOrder.indexOf(b),
+  );
+};

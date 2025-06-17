@@ -88,3 +88,9 @@ export const dataUtilities = [
     },
   },
 ];
+export const infoWork = [
+  {id: 1, icon: icon.icon_calendar_day, title: 'Ngày làm việc'},
+  {id: 2, icon: icon.icon_time_activity, title: 'Thời gian làm việc'},
+  {id: 3, icon: icon.icon_calendar_days, title: 'Lặp lại hàng tuần'},
+  {id: 4, icon: icon.icon_detail_activity, title: 'Chi tiết công việc'},
+];

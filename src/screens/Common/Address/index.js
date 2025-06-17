@@ -82,40 +82,45 @@ export default function Address({route}) {
         Danh sách địa điểm
       </Text>
       <ScrollView contentContainerStyle={{paddingBottom: 100}}>
-        <Block
-          width={width - 24}
-          marginHorizontal={12}
-          marginTop={15}
-          spaceBetween>
+        <Block width={width - 24} marginHorizontal={12} marginTop={15} gap={12}>
           {addressSaved.map(item => (
-            <ScrollView key={item.item_id} horizontal={true}>
+            <Block
+              key={item.item_id}
+              row
+              radius={8}
+              overflow={'hidden'}
+              backgroundColor={COLORS.white}
+              spaceBetween>
               <Pressable
-                width={width - 24}
+                width={'85%'}
                 onPress={() => handleService(item.item_id)}
-                borderLeftRadius={8}
-                backgroundColor={COLORS.white}
-                paddingBottom={18}
-                marginBottom={12}>
-                <Block
-                  marginLeft={10}
-                  marginTop={12}
-                  height={25}
-                  row
-                  alignCenter>
-                  <Image
-                    source={icon.icon_position_address}
-                    width={25}
-                    height={25}
-                  />
-                  <Text
-                    marginLeft={4}
-                    fontSize={14}
-                    regular
-                    color={COLORS.placeholder}>
-                    {item.title}
-                  </Text>
+                paddingBottom={18}>
+                <Block marginLeft={10} marginTop={12} rowCenter spaceBetween>
+                  <Block rowCenter gap={4}>
+                    <Image
+                      source={icon.icon_position_address}
+                      width={25}
+                      height={25}
+                    />
+                    <Text fontSize={14} regular color={COLORS.placeholder}>
+                      {item.title}
+                    </Text>
+                  </Block>
+                  {item.is_default === 1 && (
+                    <Block
+                      paddingVertical={5}
+                      paddingHorizontal={10}
+                      borderWidth={1}
+                      radius={15}
+                      borderColor={COLORS.red4}>
+                      <Text fontSize={10} regular color={COLORS.red4}>
+                        Mặc định
+                      </Text>
+                    </Block>
+                  )}
                 </Block>
                 <Text
+                  width={'86%'}
                   fontSize={14}
                   regular
                   color={COLORS.placeholder}
@@ -125,40 +130,47 @@ export default function Address({route}) {
                   {item.address_full}
                 </Text>
               </Pressable>
-              <Pressable
-                onPress={() => deleteAddress(item.item_id)}
-                justifyCenter
-                alignCenter
-                backgroundColor={COLORS.red4}
-                width={78}
-                marginBottom={12}>
-                <Icon
-                  IconType={AntDesign}
-                  iconName={'delete'}
-                  iconSize={30}
-                  iconColor={COLORS.white}
-                />
-              </Pressable>
-              <Pressable
-                onPress={() =>
-                  commonRoot.navigate(router.UPDATE_ADDRESS, {
-                    item_id: item.item_id,
-                  })
-                }
-                justifyCenter
-                alignCenter
-                backgroundColor={COLORS.green}
-                width={78}
-                marginBottom={12}
-                borderRightRadius={8}>
-                <Icon
-                  IconType={Feather}
-                  iconName={'edit'}
-                  iconSize={30}
-                  iconColor={COLORS.white}
-                />
-              </Pressable>
-            </ScrollView>
+              <Block
+                width={'10%'}
+                marginRight={10}
+                spaceBetween
+                paddingVertical={10}>
+                <Pressable
+                  onPress={() => deleteAddress(item.item_id)}
+                  justifyCenter
+                  alignCenter
+                  width={'100%'}
+                  radius={5}
+                  backgroundColor={COLORS.placeholderOpacity}
+                  height={40}>
+                  <Icon
+                    IconType={AntDesign}
+                    iconName={'delete'}
+                    iconSize={24}
+                    iconColor={COLORS.red4}
+                  />
+                </Pressable>
+                <Pressable
+                  onPress={() =>
+                    commonRoot.navigate(router.UPDATE_ADDRESS, {
+                      item_id: item.item_id,
+                    })
+                  }
+                  justifyCenter
+                  alignCenter
+                  backgroundColor={COLORS.placeholderOpacity}
+                  radius={5}
+                  width={'100%'}
+                  height={40}>
+                  <Icon
+                    IconType={Feather}
+                    iconName={'edit'}
+                    iconSize={24}
+                    iconColor={COLORS.green4}
+                  />
+                </Pressable>
+              </Block>
+            </Block>
           ))}
         </Block>
       </ScrollView>

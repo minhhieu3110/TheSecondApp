@@ -255,7 +255,7 @@ export default function ProfileScreen() {
                     })
                   }
                   key={sta.title}
-                  width={'22%'}
+                  width={'23.5%'}
                   height={74}
                   alignCenter>
                   <Image

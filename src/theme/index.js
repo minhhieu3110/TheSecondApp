@@ -34,7 +34,7 @@ export const COLORS = {
   white1: 'rgba(255,255,255,0.7)',
   white2: 'rgba(255,255,255,0)',
   white50: 'rgba(255,255,255,0.5)',
-  placeholderOpacity: 'rgba(112,112,112,0.1)',
+  placeholderOpacity: 'rgba(112,112,112,0.06)',
   gray15: '#f1f1f1',
   pinkWhite3: '#FFECEC',
   green6: '#00C707',

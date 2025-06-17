@@ -37,10 +37,9 @@ export default function CareElederly({route}) {
                   service_id: route?.params?.service_id,
                 })
               }
-              paddingBottom={23}
+              paddingBottom={15}
               backgroundColor={COLORS.white}
               radius={15}
-              height={'335'}
               marginHorizontal={12}
               alignCenter>
               <Image
@@ -72,8 +71,7 @@ export default function CareElederly({route}) {
                 })
               }
               marginTop={12}
-              height={'335'}
-              paddingBottom={23}
+              paddingBottom={15}
               backgroundColor={COLORS.white}
               marginHorizontal={12}
               radius={15}

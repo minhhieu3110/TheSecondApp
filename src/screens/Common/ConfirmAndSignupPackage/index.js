@@ -126,10 +126,8 @@ export default function ConfirmAndSignupPackage({route}) {
                   {address?.address_full}
                 </Text>
               </Block>
-              <Block marginTop={15}>
+              <Block marginTop={15} alignEnd>
                 <Block
-                  absolute
-                  right={0}
                   width={width - 76}
                   borderWidth={1}
                   borderColor={COLORS.borderColor1}
@@ -165,156 +163,107 @@ export default function ConfirmAndSignupPackage({route}) {
             backgroundColor={COLORS.white}
             marginTop={15}
             paddingBottom={16}>
-            <Block marginTop={13} marginHorizontal={12}>
-              <Block row alignCenter>
-                <Block row alignCenter>
-                  <Image
-                    source={icon.icon_calendar_day}
-                    width={22}
-                    height={22}
-                  />
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.placeholder}
-                    marginLeft={8}>
-                    Ngày bắt đầu
-                  </Text>
-                </Block>
-                <Block absolute right={0}>
-                  <Text fontSize={14} regular color={COLORS.black2}>
-                    {infoService?.start_date}
-                  </Text>
+            <Block marginTop={13} marginHorizontal={12} gap={12}>
+              <Block row>
+                <Image source={icon.icon_calendar_day} width={22} height={22} />
+                <Block gap={13} marginLeft={8} width={'91%'}>
+                  <Block rowCenter spaceBetween>
+                    <Text fontSize={14} regular color={COLORS.placeholder}>
+                      Ngày bắt đầu
+                    </Text>
+                    <Text fontSize={14} regular color={COLORS.black2}>
+                      {infoService?.start_date}
+                    </Text>
+                  </Block>
+                  <Block borderWidth={1} borderColor={COLORS.borderColor1} />
                 </Block>
               </Block>
-              <Block marginTop={13}>
-                <Block
-                  absolute
-                  right={0}
-                  width={width - 76}
-                  borderWidth={1}
-                  borderColor={COLORS.borderColor1}
+              <Block row>
+                <Image source={icon.icon_calendar_day} width={22} height={22} />
+                <Block gap={13} marginLeft={8} width={'91%'}>
+                  <Block rowCenter spaceBetween>
+                    <Text fontSize={14} regular color={COLORS.placeholder}>
+                      Ngày kết thúc
+                    </Text>
+                    <Text fontSize={14} regular color={COLORS.black2}>
+                      {infoService?.end_date}
+                    </Text>
+                  </Block>
+                  <Block borderWidth={1} borderColor={COLORS.borderColor1} />
+                </Block>
+              </Block>
+              <Block row>
+                <Image
+                  source={icon.icon_time_activity}
+                  width={22}
+                  height={22}
                 />
-              </Block>
-              <Block row marginTop={12} alignCenter>
-                <Block row alignCenter>
-                  <Image source={icon.icon_day_end} width={22} height={22} />
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.placeholder}
-                    marginLeft={8}>
-                    Ngày kết thúc
-                  </Text>
-                </Block>
-                <Block absolute right={0}>
-                  <Text fontSize={14} regular color={COLORS.black2}>
-                    {infoService?.end_date}
-                  </Text>
+                <Block gap={13} marginLeft={8} width={'91%'}>
+                  <Block rowCenter spaceBetween>
+                    <Text fontSize={14} regular color={COLORS.placeholder}>
+                      Thời gian làm việc
+                    </Text>
+                    <Text fontSize={14} regular color={COLORS.black2}>
+                      {infoService?.time?.hours +
+                        ' giờ ' +
+                        infoService?.time?.start_time +
+                        ' đến ' +
+                        infoService?.time?.end_time}
+                    </Text>
+                  </Block>
+                  <Block borderWidth={1} borderColor={COLORS.borderColor1} />
                 </Block>
               </Block>
-              <Block marginTop={13}>
-                <Block
-                  absolute
-                  right={0}
-                  width={width - 76}
-                  borderWidth={1}
-                  borderColor={COLORS.borderColor1}
+              <Block row>
+                <Image source={icon.icon_day_again} width={22} height={22} />
+                <Block gap={13} marginLeft={8} width={'91%'}>
+                  <Block rowCenter spaceBetween>
+                    <Text fontSize={14} regular color={COLORS.placeholder}>
+                      Lặp lại hàng tuần
+                    </Text>
+                    <Text fontSize={14} regular color={COLORS.black2}>
+                      {infoService?.work_shifts + ' buổi'}
+                    </Text>
+                  </Block>
+                  <Block borderWidth={1} borderColor={COLORS.borderColor1} />
+                </Block>
+              </Block>
+
+              <Block row>
+                <Image
+                  source={icon.icon_detail_activity}
+                  width={22}
+                  height={22}
                 />
-              </Block>
-              <Block row marginTop={12} alignCenter>
-                <Block row alignCenter>
-                  <Image
-                    source={icon.icon_time_activity}
-                    width={22}
-                    height={22}
-                  />
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.placeholder}
-                    marginLeft={8}>
-                    Thời gian làm việc
-                  </Text>
+                <Block gap={13} marginLeft={8} width={'91%'}>
+                  <Block>
+                    <Text fontSize={14} regular color={COLORS.placeholder}>
+                      Chi tiết công việc
+                    </Text>
+                    <Text fontSize={14} regular color={COLORS.black2} marg>
+                      {infoService?.service?.title}
+                    </Text>
+                    {infoService?.extra_services?.length !== 0 && (
+                      <Block row spaceBetween>
+                        <Text fontSize={14} regular color={COLORS.placeholder}>
+                          Dịch vụ thêm
+                        </Text>
+                        <Block>
+                          {infoService?.extra_services?.map(extra => (
+                            <Text fontSize={14} regular color={COLORS.black2}>
+                              {extra?.text}
+                            </Text>
+                          ))}
+                        </Block>
+                      </Block>
+                    )}
+                    {infoService?.note?.length !== 0 && (
+                      <Text fontSize={14} regular color={COLORS.placeholder}>
+                        {`Ghi chú: ${infoService?.note}`}
+                      </Text>
+                    )}
+                  </Block>
                 </Block>
-                <Block absolute right={0}>
-                  <Text fontSize={14} regular color={COLORS.black2}>
-                    {infoService?.time?.hours} giờ,{' '}
-                    {infoService?.time?.start_time} đến{' '}
-                    {infoService?.time?.end_time}
-                  </Text>
-                </Block>
-              </Block>
-              <Block marginTop={13}>
-                <Block
-                  absolute
-                  right={0}
-                  width={width - 76}
-                  borderWidth={1}
-                  borderColor={COLORS.borderColor1}
-                />
-              </Block>
-              <Block row marginTop={12} alignCenter>
-                <Block row alignCenter>
-                  <Image source={icon.icon_day_again} width={22} height={22} />
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.placeholder}
-                    marginLeft={8}>
-                    Số buổi
-                  </Text>
-                </Block>
-                <Block absolute right={0}>
-                  <Text fontSize={14} regular color={COLORS.black2}>
-                    {infoService?.work_shifts} buổi
-                  </Text>
-                </Block>
-              </Block>
-              <Block marginTop={13}>
-                <Block
-                  absolute
-                  right={0}
-                  width={width - 76}
-                  borderWidth={1}
-                  borderColor={COLORS.borderColor1}
-                />
-              </Block>
-              <Block marginTop={12}>
-                <Block row alignCenter>
-                  <Image
-                    source={icon.icon_detail_activity}
-                    width={22}
-                    height={22}
-                  />
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.placeholder}
-                    marginLeft={8}>
-                    Chi tiết công việc
-                  </Text>
-                </Block>
-                <Text
-                  fontSize={14}
-                  regular
-                  color={COLORS.black2}
-                  marginLeft={30}
-                  marginTop={9}>
-                  Chăm sóc người già tại nhà
-                </Text>
-                {infoService?.note === '' ? (
-                  ''
-                ) : (
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.placeholder}
-                    marginLeft={30}
-                    marginTop={11}>
-                    Ghi chú: {infoService?.note}
-                  </Text>
-                )}
               </Block>
             </Block>
           </Block>
@@ -326,35 +275,24 @@ export default function ConfirmAndSignupPackage({route}) {
             backgroundColor={COLORS.white}
             marginTop={15}
             paddingBottom={16}>
-            <Block marginTop={13} marginHorizontal={12}>
-              <Block row alignCenter>
+            <Block marginTop={13} marginHorizontal={12} gap={15}>
+              <Block row spaceBetween>
                 <Text fontSize={14} regular color={COLORS.placeholder}>
                   Giá dịch vụ
                 </Text>
-                <Block absolute right={0}>
-                  <Text fontSize={14} regular color={COLORS.black2}>
-                    {formatCurrency(infoService?.amount_estimated)}
-                  </Text>
-                </Block>
+                <Text fontSize={14} regular color={COLORS.black2}>
+                  {formatCurrency(infoService?.amount_estimated)}
+                </Text>
               </Block>
-              <Block marginTop={15}>
-                <Block
-                  absolute
-                  right={0}
-                  width={width - 76}
-                  borderWidth={1}
-                  borderColor={COLORS.borderColor1}
-                />
-              </Block>
-              <Block row alignCenter marginTop={15}>
+
+              <Block borderWidth={1} borderColor={COLORS.borderColor1} />
+              <Block row spaceBetween>
                 <Text fontSize={14} regular color={COLORS.placeholder}>
                   Tổng thanh toán
                 </Text>
-                <Block absolute right={0}>
-                  <Text fontSize={15} medium color={COLORS.red4}>
-                    {formatCurrency(infoService?.amount_final)}
-                  </Text>
-                </Block>
+                <Text fontSize={15} medium color={COLORS.red4}>
+                  {formatCurrency(infoService?.amount_final)}
+                </Text>
               </Block>
             </Block>
           </Block>

@@ -118,8 +118,12 @@ export default function DetailService({route}) {
                         ? detailOrder?.employee?.full_name
                         : detailOrder?.status?.note_title}
                     </Text>
-                    <Block rowCenter gap={8}>
-                      <Text fontSize={14} regular color={COLORS.black2}>
+                    <Block rowCenter gap={8} width={'95%'}>
+                      <Text
+                        fontSize={14}
+                        regular
+                        color={COLORS.black2}
+                        numberOfLines={1}>
                         {detailOrder?.employee
                           ? detailOrder?.employee?.star
                           : detailOrder?.status?.note_content}
@@ -167,63 +171,21 @@ export default function DetailService({route}) {
               radius={8}
               backgroundColor={COLORS.white}
               marginTop={15}>
-              <Block width={width - 48} marginHorizontal={12} marginTop={14}>
-                <Block>
-                  <Block row alignCenter>
-                    <Image
-                      source={icon.icon_position_address}
-                      width={22}
-                      height={22}
-                    />
-                    <Text
-                      fontSize={15}
-                      medium
-                      color={COLORS.black2}
-                      marginLeft={8}>
-                      Công ty
-                    </Text>
-                  </Block>
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.placeholder}
-                    marginLeft={30}
-                    marginTop={11}
-                    numberOfLines={2}>
-                    {detailOrder?.address_full}
-                  </Text>
-                </Block>
-                <Block
-                  absolute
-                  top={85}
-                  right={0}
-                  width={width - 76}
-                  borderWidth={1}
-                  borderColor={COLORS.borderColor1}
+              <Block marginHorizontal={12} marginTop={14} row>
+                <Image
+                  source={icon.icon_position_address}
+                  width={22}
+                  height={22}
                 />
-                <Block marginTop={28}>
-                  <Block row alignCenter>
-                    <Image
-                      source={icon.icon_name_user}
-                      width={22}
-                      height={22}
-                    />
-                    <Text
-                      fontSize={15}
-                      medium
-                      color={COLORS.black2}
-                      marginLeft={8}>
-                      {detailOrder?.order?.full_name}
-                    </Text>
-                  </Block>
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.placeholder}
-                    marginLeft={30}
-                    marginTop={11}
-                    numberOfLines={2}>
+                <Block paddingLeft={8} width={'96%'}>
+                  <Text fontSize={15} medium color={COLORS.black2}>
+                    {detailOrder?.order?.full_name}
+                  </Text>
+                  <Text fontSize={15} regular color={COLORS.placeholder}>
                     {formatPhone(detailOrder?.order?.phone)}
+                  </Text>
+                  <Text fontSize={15} regular color={COLORS.placeholder}>
+                    {detailOrder?.address_full}
                   </Text>
                 </Block>
               </Block>
@@ -236,8 +198,8 @@ export default function DetailService({route}) {
               radius={8}
               backgroundColor={COLORS.white}
               marginTop={15}>
-              <Block width={width - 48} marginHorizontal={12} marginTop={14}>
-                <Block row alignCenter>
+              <Block marginHorizontal={12} marginTop={14} gap={12}>
+                {/* <Block row alignCenter>
                   <Block row alignCenter>
                     <Image
                       source={icon.icon_calendar_day}
@@ -408,12 +370,148 @@ export default function DetailService({route}) {
                   </>
                 ) : (
                   ''
+                )} */}
+                <Block row>
+                  <Image
+                    source={icon.icon_calendar_day}
+                    width={22}
+                    height={22}
+                  />
+                  <Block gap={13} marginLeft={8} width={'91%'}>
+                    <Block rowCenter spaceBetween>
+                      <Text fontSize={14} regular color={COLORS.placeholder}>
+                        Ngày làm việc
+                      </Text>
+                      <Text fontSize={14} regular color={COLORS.black2}>
+                        {detailOrder?.order?.start_date}
+                      </Text>
+                    </Block>
+                    <Block borderWidth={1} borderColor={COLORS.borderColor1} />
+                  </Block>
+                </Block>
+                <Block row>
+                  <Image
+                    source={icon.icon_time_activity}
+                    width={22}
+                    height={22}
+                  />
+                  <Block gap={13} marginLeft={8} width={'91%'}>
+                    <Block rowCenter spaceBetween>
+                      <Text fontSize={14} regular color={COLORS.placeholder}>
+                        Thời gian làm việc
+                      </Text>
+                      <Text fontSize={14} regular color={COLORS.black2}>
+                        {detailOrder?.order?.hour +
+                          ' giờ ' +
+                          detailOrder?.order?.start_time +
+                          ' đến ' +
+                          detailOrder?.order?.end_time}
+                      </Text>
+                    </Block>
+                    <Block borderWidth={1} borderColor={COLORS.borderColor1} />
+                  </Block>
+                </Block>
+                {detailOrder?.order?.repeat_weekly !== null && (
+                  <Block row>
+                    <Image
+                      source={icon.icon_calendar_days}
+                      width={22}
+                      height={22}
+                    />
+                    <Block gap={13} marginLeft={8} width={'91%'}>
+                      <Block rowCenter spaceBetween>
+                        <Text fontSize={14} regular color={COLORS.placeholder}>
+                          Lặp lại hàng tuần
+                        </Text>
+                        <Text fontSize={14} regular color={COLORS.black2}>
+                          {detailOrder?.order?.repeat_weekly?.join('-')}
+                        </Text>
+                      </Block>
+                      <Block
+                        borderWidth={1}
+                        borderColor={COLORS.borderColor1}
+                      />
+                    </Block>
+                  </Block>
                 )}
+                {detailOrder?.actual_start_time !== null && (
+                  <Block row>
+                    <Image
+                      source={icon.icon_time_work}
+                      width={22}
+                      height={22}
+                    />
+                    <Block gap={13} marginLeft={8} width={'91%'}>
+                      <Block rowCenter spaceBetween>
+                        <Text fontSize={14} regular color={COLORS.placeholder}>
+                          Thời gian
+                        </Text>
+                        <Block>
+                          <Text fontSize={14} regular color={COLORS.red4}>
+                            {'Bắt đầu ' +
+                              ConvertTime(detailOrder?.actual_start_time)}
+                          </Text>
+                          <Text fontSize={14} regular color={COLORS.red4}>
+                            {'Kết thúc ' +
+                              ConvertTime(detailOrder?.actual_end_time)}
+                          </Text>
+                        </Block>
+                      </Block>
+                      <Block
+                        borderWidth={1}
+                        borderColor={COLORS.borderColor1}
+                      />
+                    </Block>
+                  </Block>
+                )}
+                <Block row>
+                  <Image
+                    source={icon.icon_detail_activity}
+                    width={22}
+                    height={22}
+                  />
+                  <Block gap={13} marginLeft={8} width={'91%'}>
+                    <Block>
+                      <Text fontSize={14} regular color={COLORS.placeholder}>
+                        Chi tiết công việc
+                      </Text>
+                      <Text fontSize={14} regular color={COLORS.black2} marg>
+                        {detailOrder?.order?.service?.title}
+                      </Text>
+                      {detailOrder?.order?.extra_services !== null && (
+                        <Block row spaceBetween>
+                          <Text
+                            fontSize={14}
+                            regular
+                            color={COLORS.placeholder}>
+                            Dịch vụ thêm
+                          </Text>
+                          <Block row>
+                            {detailOrder?.order?.extra_services?.map(
+                              (extra, index) => (
+                                <Text
+                                  fontSize={14}
+                                  regular
+                                  color={COLORS.black2}
+                                  key={index}>
+                                  {extra?.text + ', '}
+                                </Text>
+                              ),
+                            )}
+                          </Block>
+                        </Block>
+                      )}
+                      {detailOrder?.order?.note?.length !== 0 && (
+                        <Text fontSize={14} regular color={COLORS.placeholder}>
+                          {`Ghi chú: ${detailOrder?.order?.note}`}
+                        </Text>
+                      )}
+                    </Block>
+                  </Block>
+                </Block>
               </Block>
             </Block>
-            {detailOrder?.reason_id === null ? (
-              ''
-            ) : (
+            {detailOrder?.reason_id !== null && (
               <Block>
                 <Text
                   fontSize={15}
@@ -446,94 +544,54 @@ export default function DetailService({route}) {
               radius={8}
               backgroundColor={COLORS.white}
               marginTop={19}>
-              <Block width={width - 48} marginHorizontal={12} marginTop={16}>
-                <Block row alignCenter>
+              <Block marginHorizontal={12} marginTop={16} gap={16}>
+                <Block row spaceBetween>
                   <Text fontSize={14} regular color={COLORS.placeholder}>
                     Giá gói
                   </Text>
-                  <Block absolute right={0}>
-                    <Text fontSize={14} regular color={COLORS.placeholder}>
-                      {formatCurrency(detailOrder?.amount_estimated)}
-                    </Text>
-                  </Block>
+                  <Text fontSize={14} regular color={COLORS.placeholder}>
+                    {formatCurrency(detailOrder?.amount_estimated)}
+                  </Text>
                 </Block>
-                <Block
-                  marginTop={15}
-                  marginLeft={28}
-                  width={width - 48}
-                  borderWidth={1}
-                  borderColor={COLORS.borderColor1}
-                  marginBottom={16}
-                />
-                <Block row alignCenter>
+                <Block borderWidth={1} borderColor={COLORS.borderColor1} />
+                <Block row spaceBetween>
                   <Text fontSize={14} regular color={COLORS.placeholder}>
                     Khuyến mãi
                   </Text>
-                  <Block absolute right={0}>
-                    <Text fontSize={14} regular color={COLORS.black2}>
-                      -{formatCurrency(detailOrder?.amount_promotion)}
-                    </Text>
-                  </Block>
+                  <Text fontSize={14} regular color={COLORS.black2}>
+                    -{formatCurrency(detailOrder?.amount_promotion)}
+                  </Text>
                 </Block>
-                <Block
-                  marginTop={15}
-                  marginLeft={28}
-                  width={width - 48}
-                  borderWidth={1}
-                  borderColor={COLORS.borderColor1}
-                  marginBottom={16}
-                />
-                <Block row alignCenter>
+                <Block borderWidth={1} borderColor={COLORS.borderColor1} />
+                <Block row spaceBetween>
                   <Text fontSize={14} regular color={COLORS.placeholder}>
                     Phương thức thanh toán
                   </Text>
-                  <Block absolute right={0}>
-                    <Text fontSize={14} regular color={COLORS.placeholder}>
-                      {detailOrder?.order?.method?.title}
-                    </Text>
-                  </Block>
+                  <Text fontSize={14} regular color={COLORS.placeholder}>
+                    {detailOrder?.order?.method?.title}
+                  </Text>
                 </Block>
-                <Block
-                  marginTop={15}
-                  marginLeft={28}
-                  width={width - 48}
-                  borderWidth={1}
-                  borderColor={COLORS.borderColor1}
-                  marginBottom={16}
-                />
-                <Block row alignCenter>
+                <Block borderWidth={1} borderColor={COLORS.borderColor1} />
+                <Block row spaceBetween>
                   <Text fontSize={14} regular color={COLORS.placeholder}>
                     Tổng thanh toán
                   </Text>
-                  <Block absolute right={0}>
-                    <Text fontSize={14} regular color={COLORS.red4}>
-                      {formatCurrency(detailOrder?.amount_final)}
-                    </Text>
-                  </Block>
+                  <Text fontSize={14} regular color={COLORS.red4}>
+                    {formatCurrency(detailOrder?.amount_final)}
+                  </Text>
                 </Block>
-                {detailOrder?.is_complete === 1 ? (
+                {detailOrder?.is_complete === 1 && (
                   <>
-                    <Block
-                      marginTop={15}
-                      marginLeft={28}
-                      width={width - 48}
-                      borderWidth={1}
-                      borderColor={COLORS.borderColor1}
-                      marginBottom={16}
-                    />
-                    <Block row alignCenter>
+                    <Block borderWidth={1} borderColor={COLORS.borderColor1} />
+                    <Block row spaceBetween>
                       <Text fontSize={14} regular color={COLORS.placeholder}>
                         Điểm tích luỹ
                       </Text>
-                      <Block absolute right={0}>
-                        <Text fontSize={14} regular color={COLORS.green4}>
-                          {'+ ' + detailOrder?.cumulative_points}
-                        </Text>
-                      </Block>
+                      <Text fontSize={14} regular color={COLORS.green4}>
+                        {'+ ' + detailOrder?.cumulative_points}
+                      </Text>
                     </Block>
                   </>
-                ) : (
-                  ''
                 )}
               </Block>
             </Block>

@@ -10,8 +10,8 @@ import {
   ButtonSubmitService,
   HeaderChooseTime,
   ChooseStartTime,
+  ScrollView,
 } from '@components';
-import {ScrollView} from 'react-native';
 import {COLORS} from '@theme';
 import {width} from '@responsive';
 import {icon} from '@assets';
@@ -22,7 +22,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import DatePicker from 'react-native-date-picker';
 import {formatTime} from '@utils';
-import {formatCurrency} from 'utils/helper';
+import {formatCurrency, sortWeekdays} from 'utils/helper';
 const SelectDayWorking = ({route}) => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -69,6 +69,7 @@ const SelectDayWorking = ({route}) => {
       return [...prevState, title];
     });
   };
+  const daysSort = sortWeekdays(againWeek);
 
   const [time, setTime] = useState(new Date());
   const start_time = formatTime(time);
@@ -76,7 +77,7 @@ const SelectDayWorking = ({route}) => {
     service_id: route?.params?.service_id,
     service_sub_id: route?.params?.service_sub_id,
     duration_id: route?.params?.duration_id,
-    repeat_weekly: againWeek,
+    repeat_weekly: isActive === false ? [] : daysSort,
     list_day: [`${chooseDay}/${year}`],
     start_time: start_time,
     note: note,
@@ -91,7 +92,7 @@ const SelectDayWorking = ({route}) => {
         service_id: route?.params?.service_id,
         service_sub_id: route?.params?.service_sub_id,
         duration_id: route?.params?.duration_id,
-        repeat_weekly: againWeek,
+        repeat_weekly: isActive === false ? [] : daysSort,
         list_day: [`${chooseDay}/${year}`],
         start_time: start_time,
         note: note,
@@ -128,68 +129,71 @@ const SelectDayWorking = ({route}) => {
         titleAddress={address?.title}
         address={address?.address_full}
       />
-
-      <Block marginHorizontal={12} marginTop={20}>
-        <Block row alignCenter>
-          <Text fontSize={15} semiBold color={COLORS.black6}>
-            Chọn ngày làm việc
-          </Text>
-          <Block absolute right={0}>
-            <Text fontSize={15} regular color={COLORS.black6}>
-              Tháng{' '}
-              {String(new Date().getMonth() + 1).padStart(2, '0') +
-                '/' +
-                new Date().getFullYear()}
+      <ScrollView contentContainerStyle={{paddingBottom: 181}}>
+        <Block marginHorizontal={12} marginTop={20}>
+          <Block row alignCenter>
+            <Text fontSize={15} semiBold color={COLORS.black6}>
+              Chọn ngày làm việc
             </Text>
+            <Block absolute right={0}>
+              <Text fontSize={15} regular color={COLORS.black6}>
+                Tháng{' '}
+                {String(new Date().getMonth() + 1).padStart(2, '0') +
+                  '/' +
+                  new Date().getFullYear()}
+              </Text>
+            </Block>
           </Block>
-        </Block>
-        <Block marginTop={15}>
-          <ScrollView
-            contentContainerStyle={{flexDirection: 'row', columnGap: 15}}
-            horizontal
-            showsHorizontalScrollIndicator={false}>
-            {days.map(day => (
-              <Pressable
-                onPress={() => setChooseDay(day.day)}
-                key={day.id}
-                width={(width - 99) / 6}
-                height={80.33}
-                borderWidth={chooseDay === day.day ? 1 : 0}
-                borderColor={chooseDay === day.day && COLORS.red4}
-                backgroundColor={
-                  chooseDay === day.day ? COLORS.pinkWhite2 : COLORS.white
-                }
-                radius={5}
-                justifyCenter
-                paddingBottom={15.3}>
-                <Block alignCenter marginTop={17}>
-                  <Text
-                    fontSize={15}
-                    semiBold
-                    color={chooseDay === day.day ? COLORS.red4 : COLORS.black2}>
-                    {day.title}
-                  </Text>
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={
-                      chooseDay === day.day ? COLORS.red4 : COLORS.placeholder
-                    }
-                    marginTop={19}>
-                    {day.day}
-                  </Text>
-                </Block>
-              </Pressable>
-            ))}
-          </ScrollView>
-        </Block>
-        <ChooseStartTime date={time} onDateChange={setTime} />
-        <Block marginTop={24.3} row>
-          <Image source={icon.icon_week_again} width={24.08} height={27} />
-          <Text marginLeft={12.9} fontSize={15} regular color={COLORS.black2}>
-            Lặp lại hàng tuần
-          </Text>
-          <Block absolute right={0}>
+          <Block marginTop={15}>
+            <ScrollView
+              contentContainerStyle={{flexDirection: 'row', columnGap: 15}}
+              horizontal
+              showsHorizontalScrollIndicator={false}>
+              {days.map(day => (
+                <Pressable
+                  onPress={() => setChooseDay(day.day)}
+                  key={day.id}
+                  width={'13.4%'}
+                  height={80.33}
+                  borderWidth={chooseDay === day.day ? 1 : 0}
+                  borderColor={chooseDay === day.day && COLORS.red4}
+                  backgroundColor={
+                    chooseDay === day.day ? COLORS.pinkWhite2 : COLORS.white
+                  }
+                  radius={5}
+                  justifyCenter
+                  paddingBottom={15.3}>
+                  <Block alignCenter marginTop={17}>
+                    <Text
+                      fontSize={15}
+                      semiBold
+                      color={
+                        chooseDay === day.day ? COLORS.red4 : COLORS.black2
+                      }>
+                      {day.title}
+                    </Text>
+                    <Text
+                      fontSize={14}
+                      regular
+                      color={
+                        chooseDay === day.day ? COLORS.red4 : COLORS.placeholder
+                      }
+                      marginTop={19}>
+                      {day.day}
+                    </Text>
+                  </Block>
+                </Pressable>
+              ))}
+            </ScrollView>
+          </Block>
+          <ChooseStartTime date={time} onDateChange={setTime} />
+          <Block marginTop={24.3} row spaceBetween>
+            <Block rowCenter gap={12.9}>
+              <Image source={icon.icon_week_again} width={24.08} height={27} />
+              <Text fontSize={15} regular color={COLORS.black2}>
+                Lặp lại hàng tuần
+              </Text>
+            </Block>
             <Switch
               value={isActive}
               onValueChange={setIsActive}
@@ -201,55 +205,57 @@ const SelectDayWorking = ({route}) => {
               padding={3}
             />
           </Block>
+          <Block marginTop={12} row columnGap={9.9} spaceBetween justifyCenter>
+            {dayWeek.map(item => (
+              <Pressable
+                disabled={isActive === false}
+                onPress={() => handleWeekDayPress(item.title)}
+                key={item.title}
+                width={'12%'}
+                height={49.14}
+                radius={5}
+                borderWidth={againWeek.includes(item.title) ? 1 : ''}
+                borderColor={againWeek.includes(item.title) && COLORS.red4}
+                backgroundColor={
+                  againWeek.includes(item.title)
+                    ? COLORS.pinkWhite2
+                    : COLORS.white
+                }
+                justifyCenter
+                alignCenter>
+                <Text
+                  fontSize={15}
+                  semiBold
+                  color={
+                    againWeek.includes(item.title) ? COLORS.red4 : COLORS.black2
+                  }>
+                  {item.title}
+                </Text>
+              </Pressable>
+            ))}
+          </Block>
+          <Block marginTop={34.9}>
+            <Text fontSize={15} semiBold color={COLORS.black2}>
+              Ghi chú
+            </Text>
+            <Text fontSize={14} regular color={COLORS.black2} marginTop={17}>
+              Ghi chú này giúp nhân viên làm việc thuận tiện hơn
+            </Text>
+            <TextInput
+              height={154.67}
+              placeholder={'Nhập nội dung'}
+              radius={8}
+              backgroundColor={COLORS.white}
+              paddingLeft={12}
+              placeholderTextColor={COLORS.placeholder}
+              marginTop={13}
+              value={note}
+              onChangeText={setNote}
+            />
+          </Block>
         </Block>
-        <Block marginTop={12} row columnGap={9.9} justifyCenter>
-          {dayWeek.map(item => (
-            <Pressable
-              disabled={isActive === false}
-              onPress={() => handleWeekDayPress(item.title)}
-              key={item.title}
-              width={49.14}
-              height={49.14}
-              radius={5}
-              borderWidth={againWeek.includes(item.title) ? 1 : ''}
-              borderColor={againWeek.includes(item.title) && COLORS.red4}
-              backgroundColor={
-                againWeek.includes(item.title)
-                  ? COLORS.pinkWhite2
-                  : COLORS.white
-              }
-              justifyCenter
-              alignCenter>
-              <Text
-                fontSize={15}
-                semiBold
-                color={
-                  againWeek.includes(item.title) ? COLORS.red4 : COLORS.black2
-                }>
-                {item.title}
-              </Text>
-            </Pressable>
-          ))}
-        </Block>
-        <Block marginTop={34.9}>
-          <Text fontSize={15} semiBold color={COLORS.black2}>
-            Ghi chú
-          </Text>
-          <Text fontSize={14} regular color={COLORS.black2} marginTop={17}>
-            Ghi chú này giúp nhân viên làm việc thuận tiện hơn
-          </Text>
-          <TextInput
-            placeholder={'Nhập nội dung'}
-            radius={8}
-            backgroundColor={COLORS.white}
-            paddingLeft={12}
-            placeholderTextColor={COLORS.placeholder}
-            marginTop={13}
-            value={note}
-            onChangeText={setNote}
-          />
-        </Block>
-      </Block>
+      </ScrollView>
+
       <ButtonSubmitService
         titleTop={
           `${formatCurrency(infoService?.amount_final)}` +

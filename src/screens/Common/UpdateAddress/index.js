@@ -232,7 +232,7 @@ export default function UpdateAddress({route}) {
             </Pressable>
           ))}
         </Block>
-        <Block width={width - 291} height={19} marginTop={18} row alignCenter>
+        <Block height={19} marginTop={18} row alignCenter>
           <Pressable onPress={handleSetDefault}>
             <Icon
               IconType={defaultAddress ? AntDesign : Ionicons}
