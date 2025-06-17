@@ -10,6 +10,7 @@ import {
   ModalSANStaffNotPerform,
   Pressable,
   ScrollView,
+  StatusBar,
   Switch,
   Text,
 } from '@components';
@@ -61,6 +62,7 @@ const ChooseTimeForService = ({route}) => {
   const [time, setTime] = useState(new Date());
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderChooseTime />
       <ScrollView contentContainerStyle={{paddingBottom: 136}}>
         <Block marginHorizontal={12} marginTop={20}>

@@ -5,6 +5,7 @@ import {
   Image,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
   TextInput,
 } from '@components';
@@ -79,14 +80,10 @@ export default function AddBankAccount({route}) {
       },
     });
   };
-  // const [itemBankEdit, setItemBankEdit] = useState();
-  // const bankEdit = bankCard.find(item => item.item_id === itemBankEdit);
-  // const [bankDefault, setBankDefault] = useState(
-  //   bankEdit ? bankEdit?.is_default : 0,
-  // );
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Thêm tài khoản'} canGoBack />
       <ScrollView>
         <Block

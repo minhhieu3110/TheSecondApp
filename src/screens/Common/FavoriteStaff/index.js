@@ -11,6 +11,7 @@ import {
   Text,
   ScrollView,
   NoneData,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -58,6 +59,7 @@ export default function FavoriteStaff() {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle
         title={'Nhân viên yêu thích'}
         root={bottomRoot}

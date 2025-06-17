@@ -9,6 +9,7 @@ import {
   TextInput,
   Pressable,
   SelectInput,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
@@ -80,6 +81,7 @@ export default function UpdateAddress({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Cập nhật địa chỉ'} canGoBack />
       <Block row absolute top={15} right={8} alignCenter height={25}>
         <Text fontSize={14} regular color={COLORS.red4}>

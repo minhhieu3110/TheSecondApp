@@ -96,6 +96,7 @@ export default function ProfileEmployee({route}) {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
+      <StatusBar />
       <HeaderTitle
         title={
           employee?.length === 0 ? 'Thông tin nhân viên' : employee?.full_name

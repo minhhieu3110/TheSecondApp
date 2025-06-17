@@ -8,6 +8,7 @@ import {
   RankStar,
   Text,
   ScrollView,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
@@ -48,6 +49,7 @@ export default function Evaluate({route}) {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle canGoBack title={'Đánh giá sản phẩm'} />
       <ScrollView onRefresh={onRefesh}>
         <Block marginTop={15} marginHorizontal={12}>

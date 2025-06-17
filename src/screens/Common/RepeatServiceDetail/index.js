@@ -9,6 +9,7 @@ import {
   Text,
   PolicyCancelPackageService,
   ModalTurnOffRepeat,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -87,6 +88,7 @@ export default function RepeatServiceDetail({route}) {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Chi tiết dịch vụ'} canGoBack />
       <ScrollView
         contentContainerStyle={{paddingBottom: 153}}

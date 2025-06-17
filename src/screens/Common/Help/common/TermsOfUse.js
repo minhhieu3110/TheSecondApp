@@ -1,5 +1,5 @@
 import actions from '@actions';
-import {Block, HeaderTitle, Text} from '@components';
+import {Block, HeaderTitle, StatusBar, Text} from '@components';
 import {width} from '@responsive';
 import {COLORS, FONTS} from '@theme';
 import {useEffect} from 'react';
@@ -18,6 +18,7 @@ export default function TermsOfUse() {
   const help = useSelector(state => state.getHelp?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle canGoBack title={'Điều khoản sử dụng'} />
       <ScrollView>
         <Block

@@ -10,6 +10,7 @@ import {
   Pressable,
   ScrollView,
   SelectDropdown,
+  StatusBar,
   Text,
   TextInput,
 } from '@components';
@@ -81,6 +82,7 @@ export default function Feedback() {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Phản hồi'} canGoBack />
       <ScrollView contentContainerStyle={{paddingBottom: 171}}>
         <Block width={width - 24} marginLeft={12} marginTop={20}>

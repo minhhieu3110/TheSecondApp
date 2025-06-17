@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   SANStaffDuties,
+  StatusBar,
   Switch,
   Text,
 } from '@components';
@@ -37,6 +38,7 @@ export default function Sicker_Servicedurationday({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderChooseTime
         titleAddress={address.title}
         address={address.address_full}

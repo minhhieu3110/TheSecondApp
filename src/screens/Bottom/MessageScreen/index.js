@@ -1,6 +1,13 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Image, Text, Pressable, ScrollView} from '@components';
+import {
+  Block,
+  Image,
+  Text,
+  Pressable,
+  ScrollView,
+  StatusBar,
+} from '@components';
 import router from '@router';
 import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
@@ -27,6 +34,7 @@ export default function MessageScreen() {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <Block height={53} backgroundColor={COLORS.white}>
         <Text
           marginTop={19}

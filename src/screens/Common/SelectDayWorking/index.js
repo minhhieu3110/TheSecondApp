@@ -11,6 +11,7 @@ import {
   HeaderChooseTime,
   ChooseStartTime,
   ScrollView,
+  StatusBar,
 } from '@components';
 import {COLORS} from '@theme';
 import {width} from '@responsive';
@@ -125,6 +126,7 @@ const SelectDayWorking = ({route}) => {
   const infoService = useSelector(state => state.priceCalculation?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderChooseTime
         titleAddress={address?.title}
         address={address?.address_full}

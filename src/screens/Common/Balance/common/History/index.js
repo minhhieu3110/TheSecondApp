@@ -1,4 +1,4 @@
-import {Block, HeaderTitle, Pressable, Text} from '@components';
+import {Block, HeaderTitle, Pressable, StatusBar, Text} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS, FONTS} from '@theme';
@@ -34,52 +34,7 @@ export default function History() {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      {/* <HeaderTitle
-        title={'Lịch sử'}
-        root={bottomRoot}
-        screenName={router.PROFILE_SCREEN}
-      /> */}
-
-      {/* <Tab.Navigator
-        screenOptions={{
-          tabBarLabelStyle: {
-            fontSize: 15,
-            fontFamily: FONTS.regular,
-          },
-          tabBarItemStyle: {
-            width: (width - 24) / 4,
-            justifyContent: 'center',
-            alignItems: 'center',
-          },
-          tabBarIndicatorStyle: {
-            backgroundColor: COLORS.red4,
-            marginLeft: 12,
-          },
-          tabBarActiveTintColor: COLORS.red4,
-          tabBarInactiveTintColor: COLORS.black1,
-          tabBarStyle: {width: width, paddingLeft: 12},
-        }}>
-        <Tab.Screen
-          name="Tất cả"
-          component={AllTransaction}
-          options={{tabBarLabel: 'Tất cả'}}
-        />
-        <Tab.Screen
-          name="Nạp"
-          component={Recharge}
-          options={{tabBarLabel: 'Nạp'}}
-        />
-        <Tab.Screen
-          name="Rút"
-          component={WithDraw}
-          options={{tabBarLabel: 'Rút'}}
-        />
-        <Tab.Screen
-          name="Sử dụng"
-          component={UseService}
-          options={{tabBarLabel: 'Sử dụng'}}
-        />
-      </Tab.Navigator> */}
+      <StatusBar />
       <Block width={width} height={93} backgroundColor={COLORS.white}>
         <HeaderTitle
           background

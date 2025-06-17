@@ -10,6 +10,7 @@ import {
   Text,
   TextInput,
   ScrollView,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -72,6 +73,7 @@ export default function Cart() {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle
         root={commonRoot}
         screenName={router.SHOPPING}

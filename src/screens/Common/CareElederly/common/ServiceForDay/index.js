@@ -7,6 +7,7 @@ import {
   Pressable,
   SANStaffDuties,
   ScrollView,
+  StatusBar,
   Switch,
   Text,
 } from '@components';
@@ -38,6 +39,7 @@ export default function Elederly_Servicedurationday({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <ScrollView contentContainerStyle={{paddingBottom: 181}}>
         <HeaderChooseTime
           titleAddress={address.title}

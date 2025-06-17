@@ -8,6 +8,7 @@ import {
   Image,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
 } from '@components';
 import {width} from '@responsive';
@@ -72,6 +73,7 @@ export default function Address({route}) {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Chọn địa điểm'} canGoBack />
       <Text
         fontSize={15}

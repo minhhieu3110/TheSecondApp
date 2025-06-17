@@ -9,6 +9,7 @@ import {
   ModalSuccess,
   PolicyCancelPackageService,
   MethodPay,
+  StatusBar,
 } from '@components';
 
 import {Modal, TouchableOpacity} from 'react-native';
@@ -90,6 +91,7 @@ export default function ConfirmAndSignupPackage({route}) {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Xác nhận và thanh toán'} canGoBack />
       <ScrollView contentContainerStyle={{paddingBottom: 120}}>
         <Block marginTop={20} marginHorizontal={12}>

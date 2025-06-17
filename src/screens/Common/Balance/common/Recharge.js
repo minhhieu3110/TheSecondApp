@@ -6,6 +6,7 @@ import {
   HeaderTitle,
   Image,
   Pressable,
+  StatusBar,
   Text,
   TextInput,
 } from '@components';
@@ -66,6 +67,7 @@ export default function Recharge() {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Nạp tiền'} canGoBack />
       <Block
         width={width - 24}

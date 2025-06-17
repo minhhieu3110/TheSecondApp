@@ -8,6 +8,7 @@ import {
   Text,
   ModalSuccess,
   MethodPay,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
@@ -88,6 +89,7 @@ export default function ConfirmAndPayService({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Xác nhận và thanh toán'} canGoBack />
       <ScrollView contentContainerStyle={{paddingBottom: 120}}>
         <Block marginTop={20} marginHorizontal={12}>

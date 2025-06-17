@@ -9,6 +9,7 @@ import {
   ChooseStartTime,
   DateMultiPicker,
   ScrollView,
+  StatusBar,
 } from '@components';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
@@ -102,6 +103,7 @@ export default function Elederly_Servicedurationmonth({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <ScrollView contentContainerStyle={{paddingBottom: 136}}>
         <HeaderChooseTime
           titleAddress={address?.title}

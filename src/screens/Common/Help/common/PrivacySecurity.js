@@ -1,4 +1,4 @@
-import {Block, HeaderTitle, Text} from '@components';
+import {Block, HeaderTitle, StatusBar, Text} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {useEffect} from 'react';
@@ -17,6 +17,7 @@ export default function PrivacySecurity() {
   const help = useSelector(state => state.getHelp?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle canGoBack title={'Chính sách bảo mật'} />
       <ScrollView>
         <Block

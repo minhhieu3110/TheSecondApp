@@ -1,6 +1,13 @@
 import actions from '@actions';
 import {image} from '@assets';
-import {Block, HeaderTitle, Image, Text, Pressable} from '@components';
+import {
+  Block,
+  HeaderTitle,
+  Image,
+  Text,
+  Pressable,
+  StatusBar,
+} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS, FONTS} from '@theme';
@@ -24,6 +31,7 @@ export default function ChooseService({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gradient5}>
+      <StatusBar />
       <LinearGradient style={{flex: 1}} colors={COLORS.gradient5}>
         <Block height={53}>
           <HeaderTitle

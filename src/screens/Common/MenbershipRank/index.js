@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
 } from '@components';
 import {width} from '@responsive';
@@ -41,6 +42,7 @@ export default function MenbershipRank() {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Hạng thành viên'} canGoBack />
       <ScrollView contentContainerStyle={{paddingBottom: 181}}>
         <Block

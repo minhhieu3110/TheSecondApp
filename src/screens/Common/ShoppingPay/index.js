@@ -12,6 +12,7 @@ import {
   Text,
   ScrollView,
   ChangeAddress,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -91,6 +92,7 @@ export default function Shopping_Pay({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle canGoBack title={'Xác nhận và thanh toán'} />
       <ScrollView contentContainerStyle={{paddingBottom: 179}}>
         <Block marginTop={20} marginHorizontal={12}>

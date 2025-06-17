@@ -1,4 +1,12 @@
-import {Block, Carousel, Icon, Image, Pressable, Text} from '@components';
+import {
+  Block,
+  Carousel,
+  Icon,
+  Image,
+  Pressable,
+  StatusBar,
+  Text,
+} from '@components';
 import {COLORS} from '@theme';
 import {ScrollView} from 'react-native';
 import {icon} from '@assets';
@@ -97,6 +105,7 @@ export default function ShoppingScreen() {
   const columnData = splitIntoColumns(listCategory, COLUMN_COUNT);
   return (
     <Block flex backgroundColor={COLORS.gray10} marginBottom>
+      <StatusBar />
       <ScrollView contentContainerStyle={{paddingBottom: 135}}>
         <Block height={197}>
           <Carousel

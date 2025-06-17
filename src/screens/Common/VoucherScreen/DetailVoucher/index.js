@@ -7,6 +7,7 @@ import {
   Image,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
 } from '@components';
 import Clipboard from '@react-native-clipboard/clipboard';
@@ -32,6 +33,7 @@ export default function DetailVoucher({route}) {
   );
   return (
     <Block backgroundColor={COLORS.gray10} flex>
+      <StatusBar />
       <ScrollView contentContainerStyle={{paddingBottom: 100}}>
         <Block width={width} height={199.6}>
           <Pressable

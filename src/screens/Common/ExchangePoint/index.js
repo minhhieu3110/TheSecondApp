@@ -7,6 +7,7 @@ import {
   ModalConfirmExchange,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
 } from '@components';
 import {width} from '@responsive';
@@ -45,6 +46,7 @@ export default function ExchangePoint() {
   };
   return (
     <Block backgroundColor={COLORS.gray10} flex>
+      <StatusBar />
       <HeaderTitle canGoBack title={'Đổi điểm'} />
       <Block rowCenter absolute zIndex={10} top={21} right={12}>
         <Text fontSize={15} regular color={COLORS.placeholder}>

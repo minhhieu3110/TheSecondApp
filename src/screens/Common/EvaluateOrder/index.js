@@ -7,6 +7,7 @@ import {
   ImagePicker,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
   TextInput,
 } from '@components';
@@ -61,6 +62,7 @@ export default function EvaluateOrder({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle canGoBack title={'Đánh giá'} />
       <ScrollView>
         {detailOrder?.details?.map(item => (

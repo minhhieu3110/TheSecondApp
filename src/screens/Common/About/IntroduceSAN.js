@@ -1,5 +1,5 @@
 import {image} from '@assets';
-import {Block, Text, Icon, Image, Pressable} from '@components';
+import {Block, Text, Icon, Image, Pressable, StatusBar} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {ScrollView} from 'react-native';
@@ -18,6 +18,7 @@ export default function IntroduceSAN() {
   const about = useSelector(state => state.getAbout?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <ScrollView>
         <Block width={width} height={199.6}>
           <Image

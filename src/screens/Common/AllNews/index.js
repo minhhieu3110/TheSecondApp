@@ -7,6 +7,7 @@ import {
   Image,
   Text,
   ScrollView,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -28,6 +29,7 @@ export default function AllNews() {
 
   return (
     <Block backgroundColor={COLORS.gray10} flex>
+      <StatusBar />
       <HeaderTitle title={'Tin tức'} canGoBack />
       <ScrollView>
         <Block marginTop={15} gap={12}>

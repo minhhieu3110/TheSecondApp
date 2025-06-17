@@ -1,6 +1,6 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Icon, Image, Pressable, Text} from '@components';
+import {Block, Icon, Image, Pressable, StatusBar, Text} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {root} from 'navigation/navigationRef';
@@ -31,6 +31,7 @@ export default function ReferFriend() {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <ScrollView showsVerticalScrollIndicator={false}>
         <Block width={width} height={199.6}>
           <Image

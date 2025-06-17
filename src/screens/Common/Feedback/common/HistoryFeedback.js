@@ -1,5 +1,12 @@
 import actions from '@actions';
-import {Block, HeaderTitle, Image, ScrollView, Text} from '@components';
+import {
+  Block,
+  HeaderTitle,
+  Image,
+  ScrollView,
+  StatusBar,
+  Text,
+} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {ConvertDateTimeStamp} from '@utils';
@@ -24,6 +31,7 @@ export default function HistoryFeedback() {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle canGoBack title={'Lịch sử phản hồi'} />
       <ScrollView
         onRefresh={onRefresh}

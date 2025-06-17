@@ -7,6 +7,7 @@ import {
   Icon,
   Pressable,
   ModalTurnOffRepeat,
+  StatusBar,
 } from '@components';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
@@ -37,6 +38,7 @@ export default function RepeatService() {
   };
   return (
     <Block backgroundColor={COLORS.gray10} flex>
+      <StatusBar />
       <HeaderTitle canGoBack title={'Dịch vụ lặp lại'} />
       <ScrollView contentContainerStyle={{paddingBottom: 100}}>
         <Block width={width - 24} marginTop={15} marginHorizontal={12}>

@@ -9,6 +9,7 @@ import {
   SANStaffDuties,
   ChooseStartTime,
   DateMultiPicker,
+  StatusBar,
 } from '@components';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
@@ -110,6 +111,7 @@ export default function Housework_ServiceMonth({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <ScrollView contentContainerStyle={{paddingBottom: 136}}>
         <HeaderChooseTime
           titleAddress={address?.title}

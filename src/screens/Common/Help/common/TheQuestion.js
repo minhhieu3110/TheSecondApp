@@ -5,6 +5,7 @@ import {
   Icon,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
 } from '@components';
 import {width} from '@responsive';
@@ -36,6 +37,7 @@ export default function TheQuestion() {
   const faq = useSelector(state => state.getFAQ?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Câu hỏi thường gặp'} canGoBack />
       <ScrollView>
         <Block marginTop={15} marginLeft={12} width={width - 24}>

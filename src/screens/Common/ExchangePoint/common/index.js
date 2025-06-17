@@ -8,6 +8,7 @@ import {
   ModalConfirmExchange,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
 } from '@components';
 import {width} from '@responsive';
@@ -46,6 +47,7 @@ export default function DetailVoucherExchange({route}) {
 
   return (
     <Block backgroundColor={COLORS.gray10} flex>
+      <StatusBar />
       <ScrollView contentContainerStyle={{paddingBottom: 190}}>
         <Block width={width} height={199.6}>
           <Pressable

@@ -4,6 +4,7 @@ import {
   HeaderTitle,
   Image,
   RankStar,
+  StatusBar,
   Text,
   TextInput,
 } from '@components';
@@ -15,6 +16,7 @@ import {commonRoot} from 'navigation/navigationRef';
 export default function EvaluateService() {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle canGoBack title={'Đánh giá dịch vụ'} />
       <Block
         width={width - 24}

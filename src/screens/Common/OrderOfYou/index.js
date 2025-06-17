@@ -1,4 +1,4 @@
-import {Block, HeaderTitle} from '@components';
+import {Block, HeaderTitle, StatusBar} from '@components';
 import router from '@router';
 import {COLORS, FONTS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
@@ -14,6 +14,7 @@ export default function OrderOfYou({route}) {
   const Tab = createMaterialTopTabNavigator();
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle
         root={commonRoot}
         screenName={router.SHOPPING}

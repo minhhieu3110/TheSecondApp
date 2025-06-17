@@ -9,6 +9,7 @@ import {
   ScrollView,
   Carousel,
   TextInput,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
@@ -113,6 +114,7 @@ export default function DetailProduct({route}) {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <ScrollView contentContainerStyle={{paddingBottom: 203}}>
         <Block backgroundColor={COLORS.white} paddingBottom={22}>
           <Block width={width} height={width}>

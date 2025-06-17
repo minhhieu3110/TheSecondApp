@@ -12,6 +12,7 @@ import {
   HeaderTitle,
   TextInput,
   ModalChooseDay,
+  StatusBar,
 } from '@components';
 import {COLORS} from '@theme';
 import {useEffect, useState} from 'react';
@@ -78,6 +79,7 @@ export default function Housework_OddShiftService({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <ScrollView contentContainerStyle={{paddingBottom: 122}}>
         <HeaderChooseTime
           titleAddress={address?.title}

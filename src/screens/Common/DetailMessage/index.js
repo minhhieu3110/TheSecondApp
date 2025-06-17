@@ -9,6 +9,7 @@ import {
   TextInput,
   ScrollView,
   Pressable,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
@@ -65,6 +66,7 @@ export default function DetailMessage({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={route?.params?.name} canGoBack />
       <ScrollView
         onRefresh={onRefresh}

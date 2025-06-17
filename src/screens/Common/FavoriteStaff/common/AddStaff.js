@@ -8,6 +8,7 @@ import {
   Icon,
   Image,
   Pressable,
+  StatusBar,
   Text,
 } from '@components';
 import {width} from '@responsive';
@@ -49,6 +50,7 @@ export default function AddStaff() {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Thêm nhân viên yêu thích'} canGoBack />
       <ScrollView
         contentContainerStyle={{marginTop: 15}}

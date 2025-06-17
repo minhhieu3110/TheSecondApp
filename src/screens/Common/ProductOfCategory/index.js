@@ -5,6 +5,7 @@ import {
   Image,
   Pressable,
   ScrollView,
+  StatusBar,
 } from '@components';
 import {COLORS} from '@theme';
 import {image} from '@assets';
@@ -29,6 +30,7 @@ export default function ProductOfCategory({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle
         root={commonRoot}
         screenName={router.ALL_CATEGORY}

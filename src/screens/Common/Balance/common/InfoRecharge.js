@@ -9,6 +9,7 @@ import {
   Pressable,
   Button,
   ImagePicker,
+  StatusBar,
 } from '@components';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {width} from '@responsive';
@@ -63,6 +64,7 @@ export default function InfoRecharge({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Thông tin chuyển khoản'} canGoBack />
       <Block
         width={width - 24}

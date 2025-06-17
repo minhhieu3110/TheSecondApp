@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   HeaderModal,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
@@ -33,6 +34,7 @@ export default function About() {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Về chúng tôi'} canGoBack />
       <Block
         width={width - 24}

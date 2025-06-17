@@ -8,6 +8,7 @@ import {
   Text,
   ScrollView,
   NoneData,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -34,6 +35,7 @@ export default function Balance() {
   const {isLoading} = useSelector(state => state.walletLog);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <Image
         source={image.image_header_balance}
         width={width}

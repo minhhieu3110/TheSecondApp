@@ -1,6 +1,6 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Image, Pressable, Text, Icon} from '@components';
+import {Block, Image, Pressable, Text, Icon, StatusBar} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {ConvertDateTimeStamp} from '@utils';
@@ -26,6 +26,7 @@ export default function DetailNotification({route}) {
     <ActivityIndicator size={'large'} color={COLORS.red4} />
   ) : (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <Block width={width} height={199.6}>
         <Image
           source={{uri: detailNoti?.picture}}

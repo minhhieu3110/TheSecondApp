@@ -1,10 +1,18 @@
-import {Block, HeaderTitle, Image, Text, ScrollView} from '@components';
+import {
+  Block,
+  HeaderTitle,
+  Image,
+  Text,
+  ScrollView,
+  StatusBar,
+} from '@components';
 import {COLORS, FONTS} from '@theme';
 import {width} from '@responsive';
 import {icon} from '@assets';
 export default function HistoryPoint() {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle canGoBack title={'Xem lịch sử điểm thưởng'} />
       <Block width={width - 24} marginLeft={12} marginTop={15}>
         <ScrollView contentContainerStyle={{paddingBottom: 171}}>

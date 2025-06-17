@@ -1,5 +1,12 @@
 import {image} from '@assets';
-import {Block, HeaderTitle, Image, Pressable, Text} from '@components';
+import {
+  Block,
+  HeaderTitle,
+  Image,
+  Pressable,
+  StatusBar,
+  Text,
+} from '@components';
 import router from '@router';
 import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
@@ -9,6 +16,7 @@ export default function AllCategory() {
   const listCategory = useSelector(state => state.getListCategory?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle
         title={'Danh mục'}
         root={commonRoot}

@@ -9,6 +9,7 @@ import {
   Text,
   ScrollView,
   UpdateAvatar,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -63,6 +64,7 @@ export default function ProfileScreen() {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <ScrollView
         contentContainerStyle={{paddingBottom: 50}}
         showsVerticalScrollIndicator={false}>

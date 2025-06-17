@@ -1,6 +1,13 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Image, Pressable, Text, ScrollView} from '@components';
+import {
+  Block,
+  Image,
+  Pressable,
+  Text,
+  ScrollView,
+  StatusBar,
+} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
@@ -21,6 +28,7 @@ export default function NotificationScreen() {
   const {isLoading} = useSelector(state => state.getNotification);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <Block width={width} height={53} backgroundColor={COLORS.white}>
         <Text
           marginLeft={12}

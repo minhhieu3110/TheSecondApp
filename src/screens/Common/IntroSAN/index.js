@@ -47,6 +47,7 @@ export default function IntroSAN() {
   const {top, bottom} = useSafeAreaInsets();
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <Image
         source={image.image_intro_1}
         width={width}

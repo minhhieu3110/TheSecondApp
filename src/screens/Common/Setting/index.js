@@ -1,5 +1,5 @@
 import actions from '@actions';
-import {Block, HeaderTitle, Text, Switch} from '@components';
+import {Block, HeaderTitle, Text, Switch, StatusBar} from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
 import {root} from 'navigation/navigationRef';
@@ -42,6 +42,7 @@ export default function Setting() {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Cài đặt'} canGoBack />
       <Block marginTop={15} marginLeft={12} width={width - 24}>
         <Block

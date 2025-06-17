@@ -7,6 +7,7 @@ import {
   ScrollView,
   Pressable,
   TextInput,
+  StatusBar,
 } from '@components';
 import {COLORS} from '@theme';
 import {width} from '@responsive';
@@ -79,6 +80,7 @@ export default function DetailOrder({route}) {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle canGoBack title={'Chi tiết đơn hàng'} />
       <ScrollView contentContainerStyle={{paddingBottom: 110}}>
         <Block marginTop={16} marginHorizontal={12}>

@@ -10,6 +10,7 @@ import {
   SANStaffDuties,
   ButtonSubmitService,
   ModalChooseDay,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -55,6 +56,7 @@ export default function PhysicalTherapy({route}) {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <ScrollView contentContainerStyle={{paddingBottom: 147}}>
         <HeaderChooseTime
           titleAddress={address?.title}

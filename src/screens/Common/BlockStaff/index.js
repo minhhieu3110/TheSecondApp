@@ -10,6 +10,7 @@ import {
   Text,
   ScrollView,
   NoneData,
+  StatusBar,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -53,6 +54,7 @@ export default function BlockStaff() {
   };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
+      <StatusBar />
       <HeaderTitle title={'Danh sách chặn'} canGoBack />
       {empBlock.length === 0 ? (
         <Block flex paddingTop={100}>
