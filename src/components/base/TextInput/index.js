@@ -122,6 +122,7 @@ const TextInput = ({
   textAlignVertical,
   inputMode,
   onPress,
+  onChange,
   ...rest
 }) => {
   const insets = useSafeAreaInsets();
@@ -263,6 +264,7 @@ const TextInput = ({
       scrollEnabled={true}
       onPress={onPress}
       inputMode={inputMode}
+      onChange={onChange}
     />
   );
 };

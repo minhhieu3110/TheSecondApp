@@ -21,7 +21,6 @@ export default function Complete() {
     state => state.getListOrderComplete?.data || [],
   );
   const {isLoading} = useSelector(state => state.getListOrderComplete);
-  console.log('listComplete', listComplete);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -169,7 +168,11 @@ export default function Complete() {
                     </Block>
                   </Block>
                   <Pressable
-                    onPress={() => commonRoot.navigate(router.EVALUATE_SERVICE)}
+                    onPress={() =>
+                      commonRoot.navigate(router.EVALUATE_SERVICE, {
+                        orderId: item.id,
+                      })
+                    }
                     width={152}
                     height={42}
                     justifyCenter

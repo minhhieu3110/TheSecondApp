@@ -448,7 +448,14 @@ export default function DetailService({route}) {
             </Block>
             {detailOrder?.is_status !== 0 && detailOrder?.is_status !== 1 ? (
               <Pressable
-                onPress={() => onPress(detailOrder?.is_status)}
+                onPress={() => {
+                  (detailOrder?.is_status === 2 &&
+                    commonRoot.navigate(router.HELP)) ||
+                    (detailOrder?.is_status === 3 &&
+                      commonRoot.navigate(router.EVALUATE_SERVICE, {
+                        orderId: route?.params?.orderId,
+                      }));
+                }}
                 marginTop={23}
                 height={48}
                 backgroundColor={COLORS.red4}

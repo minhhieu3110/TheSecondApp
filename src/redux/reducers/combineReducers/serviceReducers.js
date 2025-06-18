@@ -60,3 +60,6 @@ export const cancelRepeat = (...props) => {
 export const rechargeMethod = (...props) => {
   return reducerDefault(...props, actions.RECHARGE_METHOD);
 };
+export const ratingService = (...props) => {
+  return reducerDefault(...props, actions.RATING_SERVICE);
+};

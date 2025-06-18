@@ -7,6 +7,8 @@ const FormInput = ({
   placeholder,
   backgroundColor,
   editable,
+  multiline = false,
+  keyboardType,
 }) => {
   return (
     <TextInput
@@ -26,6 +28,8 @@ const FormInput = ({
       numberOfLines={1}
       onChangeText={onChangeText}
       editable={editable}
+      multiline={multiline}
+      keyboardType={keyboardType}
     />
   );
 };

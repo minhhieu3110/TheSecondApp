@@ -51,26 +51,21 @@ export default function Account() {
         email: updateEmail,
         birthday: updateDateOfBirth,
       },
+
       onSuccess: res => {
-        Toast.show({
-          type: 'success',
-          text1: res,
-        });
-        dispatch({type: actions.GET_USER_INFO});
-      },
-      onFail: error => {
         Toast.show({
           type: 'success',
           text1: 'Cập nhật thông tin thành công',
         });
-
         dispatch({type: actions.GET_USER_INFO});
       },
-      onFail: res => {
+      onFail: e => {
         Toast.show({
           type: 'error',
-          text1: 'Cập nhật thông tin thất bại',
+          text1: `Cập nhật thông tin thất bại`,
+          text2: 'Vui lòng thử lại sau',
         });
+
         dispatch({type: actions.GET_USER_INFO});
       },
     });

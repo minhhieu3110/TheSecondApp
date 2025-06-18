@@ -105,6 +105,7 @@ export const URL_API = {
     statistical: 'service/statistical',
     cancel_repeat: 'service/cancel-repeat',
     recharge_method: 'service/recharge-method',
+    rating_service: 'service/rating',
   },
   promo: {
     list: 'promo/list',

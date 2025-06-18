@@ -107,6 +107,7 @@ function* updateAddress(action) {
     });
     action.onSuccess?.(res);
   } catch (error) {
+    console.error('API error:', error);
     yield put({type: _onFail(action.type)});
     action.onFail?.(error);
   }

@@ -8,12 +8,13 @@ import {
   Text,
   TextInput,
   StatusBar,
+  FormInput,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {formatPhone} from '@utils';
-import {authRoot, bottomRoot, commonRoot} from 'navigation/navigationRef';
+import {authRoot} from 'navigation/navigationRef';
 import {useState} from 'react';
 import {ScrollView} from 'react-native';
 import {getDeviceId, getDeviceName} from 'react-native-device-info';
@@ -22,10 +23,10 @@ import {useDispatch} from 'react-redux';
 
 export default function InputInformation({route}) {
   const [visible, setVisible] = useState(false);
-  const [fullname, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [referralCode, setReferralCode] = useState('');
+  const [fullname, setFullName] = useState();
+  const [email, setEmail] = useState();
+  const [dateOfBirth, setDateOfBirth] = useState();
+  const [referralCode, setReferralCode] = useState();
   const data = route?.params.data;
 
   const dispatch = useDispatch();
@@ -80,43 +81,20 @@ export default function InputInformation({route}) {
                 <Text fontSize={15} semiBold color={COLORS.black3}>
                   Họ tên
                 </Text>
-                <TextInput
-                  height={41}
-                  radius={5}
-                  borderWidth={0.5}
-                  borderColor={COLORS.gray11}
-                  paddingLeft={12}
-                  color={COLORS.placeholder}
-                  fontSize={14}
-                  regular
-                  marginTop={15}
+                <FormInput
                   placeholder={'Nhập họ tên'}
-                  placeholderTextColor={COLORS.placeholder}
                   value={fullname}
                   onChangeText={setFullName}
-                  multiline={false}
                 />
               </Block>
               <Block marginBottom={17}>
                 <Text fontSize={15} semiBold color={COLORS.black3}>
                   Email
                 </Text>
-                <TextInput
-                  height={41}
-                  radius={5}
-                  borderWidth={0.5}
-                  borderColor={COLORS.gray11}
-                  paddingLeft={12}
-                  color={COLORS.placeholder}
-                  fontSize={14}
-                  regular
-                  marginTop={15}
-                  placeholderTextColor={COLORS.placeholder}
+                <FormInput
                   placeholder={'Nhập email'}
                   value={email}
                   onChangeText={setEmail}
-                  multiline={false}
-                  inputMode={'email'}
                   keyboardType={'email-address'}
                 />
               </Block>
@@ -124,49 +102,29 @@ export default function InputInformation({route}) {
                 <Text fontSize={15} semiBold color={COLORS.black3}>
                   Số điện thoại
                 </Text>
-                <Text
-                  height={41}
-                  radius={5}
-                  borderWidth={0.5}
-                  borderColor={COLORS.gray11}
+                <FormInput
+                  value={formatPhone(data?.phone)}
+                  editable={false}
                   backgroundColor={COLORS.gray10}
-                  paddingLeft={12}
-                  paddingTop={13}
-                  color={COLORS.placeholder}
-                  alignCenter
-                  fontSize={14}
-                  regular
-                  marginTop={15}>
-                  {formatPhone(data?.phone)}
-                </Text>
+                />
               </Block>
               <Block marginBottom={17}>
                 <Text fontSize={15} semiBold color={COLORS.black3}>
                   Ngày sinh
                 </Text>
-                <Block row height={41} marginTop={15}>
-                  <TextInput
-                    width={width - 48}
-                    height={41}
-                    radius={5}
-                    borderWidth={0.5}
-                    borderColor={COLORS.gray11}
-                    paddingLeft={12}
-                    color={COLORS.placeholder}
-                    fontSize={14}
-                    regular
+                <Block row>
+                  <FormInput
+                    width={'100%'}
                     value={dateOfBirth}
                     onChangeText={setDateOfBirth}
-                    placeholder={'Nhập ngày sinh'}
-                    multiline={false}
                   />
                   <Pressable
                     onPress={() => setVisible(true)}
                     width={18.3}
                     height={17.13}
                     absolute
-                    top={11.9}
-                    right={11.9}>
+                    top={28}
+                    right={5}>
                     <Image
                       source={icon.icon_calendar}
                       width={18.3}
@@ -179,20 +137,10 @@ export default function InputInformation({route}) {
                 <Text fontSize={15} semiBold color={COLORS.black3}>
                   Mã giới thiệu
                 </Text>
-                <TextInput
-                  height={41}
-                  radius={5}
-                  borderWidth={0.5}
-                  borderColor={COLORS.gray11}
-                  paddingLeft={12}
-                  color={COLORS.placeholder}
-                  fontSize={14}
-                  regular
-                  marginTop={15}
+                <FormInput
                   placeholder={'Nhập mã giới thiệu'}
                   value={referralCode}
                   onChangeText={setReferralCode}
-                  multiline={false}
                 />
               </Block>
             </Block>

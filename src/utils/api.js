@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {handleExpiredToken, throttle} from './helper';
 
-import store from '@redux/store'; // Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+import store from '@redux/store';
 // axios.defaults.baseURL = 'http://san.baoan.app24h.net:81/api/';
 axios.defaults.baseURL = 'https://san.thietkewebsite.info.vn/api/';
 const getDataBody = config => {
@@ -179,7 +179,7 @@ export default class HttpService {
           headers: this.generateHeader('application/json'),
           params: {...params},
         })
-        .then(response => response.body);
+        .then(response => response.data);
     } catch (error) {
       throw error.response;
     }

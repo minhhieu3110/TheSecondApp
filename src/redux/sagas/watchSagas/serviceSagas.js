@@ -273,6 +273,23 @@ function* rechargeMethod(action) {
     action.onFail?.(error);
   }
 }
+function* ratingService(action) {
+  const body = yield action.body;
+  try {
+    const res = yield api.post(URL_API.service.rating_service, body);
+
+    yield put({
+      type: _onSuccess(action.type),
+      data: res.data,
+    });
+    action.onSuccess?.(res);
+  } catch (error) {
+    yield put({
+      type: _onFail(action.type),
+    });
+    action.onFail?.(error);
+  }
+}
 export default function* watchServiceSagas() {
   yield takeLatest(actions.GET_LIST_SERVICE, getServices);
   yield takeLatest(actions.GET_SERVICE_SUB, getServiceSub);
@@ -292,4 +309,5 @@ export default function* watchServiceSagas() {
   yield takeLatest(actions.GET_STATISTICAL, getStatistical);
   yield takeLatest(actions.CANCEL_REPEAT, cancelRepeat);
   yield takeLatest(actions.RECHARGE_METHOD, rechargeMethod);
+  yield takeLatest(actions.RATING_SERVICE, ratingService);
 }

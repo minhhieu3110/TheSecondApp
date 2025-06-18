@@ -141,17 +141,12 @@ function* updateAvatar(action) {
   const body = yield action.body;
   try {
     const res = yield api.postFormData(URL_API.user.update_avatar, body);
-    console.log(res.data);
-
     yield put({
       type: _onSuccess(action.type),
       data: res.data,
     });
     action.onSuccess?.(res);
   } catch (error) {
-    // console.log('❌ Message:', error.message);
-    // console.log('❌ Response:', error); // undefined nếu bị block SSL
-    // console.log('❌ Request:', error.request);
     yield put({type: _onFail(action.type)});
     action.onFail?.(error);
   }

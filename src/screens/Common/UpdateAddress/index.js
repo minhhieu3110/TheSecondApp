@@ -10,6 +10,7 @@ import {
   Pressable,
   SelectInput,
   StatusBar,
+  FormInput,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
@@ -19,6 +20,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
+import Toast from 'react-native-toast-message';
 export default function UpdateAddress({route}) {
   const addressSaved = useSelector(state => state.getAddressSave?.data || []);
   const updateAdd = addressSaved?.find(
@@ -71,10 +73,16 @@ export default function UpdateAddress({route}) {
       onSuccess: res => {
         Toast.show({
           type: 'success',
-          text1: res?.message,
+          text1: 'Cập nhật thành công',
         });
         root.goBack();
         dispatch({type: actions.GET_ADDRESS_SAVE});
+      },
+      onFail: e => {
+        Toast.show({
+          type: 'error',
+          text1: e,
+        });
       },
     });
   };
@@ -138,7 +146,7 @@ export default function UpdateAddress({route}) {
               placeholder={'Tỉnh/Thành Phố'}
               value={updateAdd?.province}
               onChange={item => {
-                setProvinceCode(item.code);
+                setProvinceCode(null);
                 setDistrictCode(null);
                 setWardCode(null);
                 dispatch({
@@ -174,39 +182,17 @@ export default function UpdateAddress({route}) {
             />
           </Block>
 
-          <TextInput
-            width={width - 24}
-            placeholder={'Số nhà, tên đường, toà nhà...'}
-            placeholderTextColor={COLORS.gay12}
-            height={41}
-            radius={5}
-            backgroundColor={COLORS.white}
-            borderWidth={0.5}
-            marginTop={12}
-            borderColor={COLORS.gray11}
-            paddingLeft={12}
-            fontSize={14}
-            regular
-            color={COLORS.black1}
+          <FormInput
+            placeholder={'Số nhà, tên đường, toà nhà....'}
             value={address}
             onChangeText={setAddress}
-          />
-          <TextInput
-            width={width - 24}
-            placeholder={'Tên gọi địa chỉ'}
-            placeholderTextColor={COLORS.gay12}
-            height={41}
-            radius={5}
             backgroundColor={COLORS.white}
-            borderWidth={0.5}
-            marginTop={12}
-            borderColor={COLORS.gray11}
-            paddingLeft={12}
-            fontSize={14}
-            regular
-            color={COLORS.black1}
+          />
+          <FormInput
+            placeholder={'Tên gọi địa chỉ'}
             value={title}
             onChangeText={setTitle}
+            backgroundColor={COLORS.white}
           />
         </Block>
         <Text fontSize={15} semiBold color={COLORS.black3} marginTop={20}>

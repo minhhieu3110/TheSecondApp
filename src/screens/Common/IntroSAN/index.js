@@ -54,12 +54,10 @@ export default function IntroSAN() {
         height={'100%'}
         resizeMode="stretch">
         <StatusBar />
-        <Block flex justifyEnd paddingBottom={bottom + 8}>
+        <Block flex justifyEnd paddingBottom={bottom + 16}>
           <AppIntro
             data={contentIntro}
             renderItem={renderItem}
-            // backgroundColor={COLORS.black2}
-            // contentContainerStyle={{flex: 1x}}
             dotStyle={{
               width: 8,
               height: 8,
