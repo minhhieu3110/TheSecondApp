@@ -25,7 +25,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {formatCurrency} from 'utils/helper';
 
 export default function Shopping_Pay({route}) {
-  const [usePoint, setUsePoint] = useState(0);
+  const [usePoint, setUsePoint] = useState(false);
+  const [point, setPoint] = useState(0);
   const [show, setShow] = useState(0);
   const [changeAddress, setChangeAddress] = useState(false);
 
@@ -78,7 +79,7 @@ export default function Shopping_Pay({route}) {
         address_id: addSelected,
         method_id: methodSelected,
         promotion_id: promotionSelected,
-        use_point: 0,
+        use_point: point,
         cart_item:
           route?.params?.cart_item === undefined
             ? [infoAddCart?.cart?.id]
@@ -230,6 +231,7 @@ export default function Shopping_Pay({route}) {
                 },
               });
             }}
+            promotionCode={promotionSelected}
           />
           <Block marginTop={15} row alignCenter>
             <Text fontSize={14} regular color={COLORS.black2}>
@@ -240,7 +242,14 @@ export default function Shopping_Pay({route}) {
                 {userInfo?.point} điểm
               </Text>
               <Block marginLeft={10}>
-                <Switch value={usePoint} onValueChange={setUsePoint} />
+                <Switch
+                  value={usePoint}
+                  onValueChange={() => {
+                    const newUsePoint = !usePoint;
+                    setUsePoint(newUsePoint);
+                    setPoint(newUsePoint ? userInfo?.point : 0);
+                  }}
+                />
               </Block>
             </Block>
           </Block>
@@ -248,71 +257,69 @@ export default function Shopping_Pay({route}) {
             <Text fontSize={15} semiBold color={COLORS.black2}>
               Đơn hàng của bạn
             </Text>
-            <Block
-              radius={8}
-              backgroundColor={COLORS.white}
-              marginTop={15}
-              paddingBottom={15}>
-              <Block marginHorizontal={12} marginTop={16}>
+            <Block radius={8} backgroundColor={COLORS.white} marginTop={15}>
+              <Block marginHorizontal={12} gap={16} paddingVertical={16}>
                 <Block>
-                  <Block rowCenter spaceBetween>
-                    <Text fontSize={15} regular color={COLORS.placeholder}>
-                      Tổng tiền
-                    </Text>
-                    <Text fontSize={15} medium color={COLORS.black2}>
-                      {formatCurrency(cacl?.amount_estimated)}
-                    </Text>
+                  <Block>
+                    <Block rowCenter spaceBetween>
+                      <Text fontSize={15} regular color={COLORS.placeholder}>
+                        Tổng tiền
+                      </Text>
+                      <Text fontSize={15} medium color={COLORS.black2}>
+                        {formatCurrency(cacl?.amount_estimated)}
+                      </Text>
+                    </Block>
+                    <Block
+                      borderWidth={1}
+                      borderColor={COLORS.borderColor1}
+                      marginTop={15}
+                    />
                   </Block>
-                  <Block
-                    borderWidth={1}
-                    borderColor={COLORS.borderColor1}
-                    marginTop={15}
-                  />
                 </Block>
-              </Block>
-              <Block marginHorizontal={12} marginTop={16}>
                 <Block>
-                  <Block rowCenter spaceBetween>
-                    <Text fontSize={15} regular color={COLORS.placeholder}>
-                      Voucher
-                    </Text>
-                    <Text fontSize={15} medium color={COLORS.red4}>
-                      -{formatCurrency(cacl?.amount_promotion)}
-                    </Text>
+                  <Block>
+                    <Block rowCenter spaceBetween>
+                      <Text fontSize={15} regular color={COLORS.placeholder}>
+                        Voucher
+                      </Text>
+                      <Text fontSize={15} medium color={COLORS.red4}>
+                        -{formatCurrency(cacl?.amount_promotion)}
+                      </Text>
+                    </Block>
+                    <Block
+                      borderWidth={1}
+                      borderColor={COLORS.borderColor1}
+                      marginTop={15}
+                    />
                   </Block>
-                  <Block
-                    borderWidth={1}
-                    borderColor={COLORS.borderColor1}
-                    marginTop={15}
-                  />
                 </Block>
-              </Block>
-              <Block marginHorizontal={12} marginTop={16}>
                 <Block>
-                  <Block rowCenter spaceBetween>
-                    <Text fontSize={15} regular color={COLORS.placeholder}>
-                      Điểm tích luỹ
-                    </Text>
-                    <Text fontSize={15} medium color={COLORS.black2}>
-                      -{formatCurrency(userInfo?.point)}
-                    </Text>
+                  <Block>
+                    <Block rowCenter spaceBetween>
+                      <Text fontSize={15} regular color={COLORS.placeholder}>
+                        Điểm tích luỹ
+                      </Text>
+                      <Text fontSize={15} medium color={COLORS.black2}>
+                        -{formatCurrency(point)}
+                      </Text>
+                    </Block>
+                    <Block
+                      borderWidth={1}
+                      borderColor={COLORS.borderColor1}
+                      marginTop={15}
+                    />
                   </Block>
-                  <Block
-                    borderWidth={1}
-                    borderColor={COLORS.borderColor1}
-                    marginTop={15}
-                  />
                 </Block>
-              </Block>
-              <Block marginHorizontal={12} marginTop={16}>
                 <Block>
-                  <Block rowCenter spaceBetween>
-                    <Text fontSize={15} regular color={COLORS.placeholder}>
-                      Tổng thanh toán
-                    </Text>
-                    <Text fontSize={15} medium color={COLORS.red4}>
-                      {formatCurrency(cacl?.amount_final)}
-                    </Text>
+                  <Block>
+                    <Block rowCenter spaceBetween>
+                      <Text fontSize={15} regular color={COLORS.placeholder}>
+                        Tổng thanh toán
+                      </Text>
+                      <Text fontSize={15} medium color={COLORS.red4}>
+                        {formatCurrency(cacl?.amount_final)}
+                      </Text>
+                    </Block>
                   </Block>
                 </Block>
               </Block>

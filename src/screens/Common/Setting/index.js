@@ -23,14 +23,6 @@ export default function Setting() {
       type: actions.UPDATE_USER_INFO,
       body: {allow_notifications: value ? 1 : 0},
       onSuccess: res => {
-        if (res?.message) {
-          Toast.show({
-            type: 'success',
-            text1: res,
-          });
-        }
-      },
-      onFail: error => {
         Toast.show({
           type: 'success',
           text1: 'Cập nhật thông tin thành công',

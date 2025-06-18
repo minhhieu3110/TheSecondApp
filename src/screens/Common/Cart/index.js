@@ -17,6 +17,7 @@ import router from '@router';
 import {COLORS} from '@theme';
 import {commonRoot} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
+import {ActivityIndicator} from 'react-native';
 import Toast from 'react-native-toast-message';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
@@ -70,7 +71,7 @@ export default function Cart() {
         });
   }, [dispatch, chooseProducts]);
   const cacl = useSelector(state => state.calculationPriceProduct?.data || []);
-
+  const {isLoading} = useSelector(state => state.calculationPriceProduct);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
@@ -309,12 +310,16 @@ export default function Cart() {
         disable={chooseProducts.length === 0 && true}
         titleBottom={`${chooseProducts.length} sản phẩm`}
         titleTop={
-          <>
-            Tổng cộng:{' '}
-            <Text color={COLORS.red4}>
-              {formatCurrency(cacl?.amount_final)}
-            </Text>
-          </>
+          isLoading ? (
+            <ActivityIndicator color={COLORS.red4} />
+          ) : (
+            <>
+              Tổng cộng:{' '}
+              <Text color={COLORS.red4}>
+                {formatCurrency(cacl?.amount_final)}
+              </Text>
+            </>
+          )
         }
         onPress={() =>
           commonRoot.navigate(router.PAY_SHOPPING, {cart_item: chooseProducts})

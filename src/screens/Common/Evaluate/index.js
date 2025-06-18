@@ -68,7 +68,8 @@ export default function Evaluate({route}) {
                   fontSize={15}
                   medium
                   color={COLORS.black2}
-                  numberOfLines={1}>
+                  numberOfLines={1}
+                  width={'65%'}>
                   {detailProduct?.title}
                 </Text>
                 <Block rowCenter gap={20} marginTop={21}>
@@ -107,10 +108,13 @@ export default function Evaluate({route}) {
                     <ProgressBar
                       marginLeft={8.4}
                       radius={0}
-                      width={width - 228.89}
+                      width={'65%'}
                       height={8.06}
                       used={item.total}
                       total={total}
+                      progressColor={
+                        item.total === 0 ? COLORS.gray10 : COLORS.red4
+                      }
                     />
                     <Text
                       marginLeft={7.7}

@@ -242,8 +242,12 @@ export default function ConfirmAndPayService({route}) {
                           Dịch vụ thêm
                         </Text>
                         <Block>
-                          {infoService?.extra_services?.map(extra => (
-                            <Text fontSize={14} regular color={COLORS.black2}>
+                          {infoService?.extra_services?.map((extra, index) => (
+                            <Text
+                              key={index}
+                              fontSize={14}
+                              regular
+                              color={COLORS.black2}>
                               {extra?.text}
                             </Text>
                           ))}
