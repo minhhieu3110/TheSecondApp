@@ -29,7 +29,7 @@ export default function NewActivity() {
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
-      <ScrollView onRefresh={onRefresh}>
+      <ScrollView contentContainerStyle={{paddingBottom: 181}}>
         {isLoading ? (
           <ActivityIndicator color={COLORS.red4} style={{marginTop: 10}} />
         ) : (

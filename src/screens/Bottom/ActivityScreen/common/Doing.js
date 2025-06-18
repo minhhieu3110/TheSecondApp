@@ -1,6 +1,14 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Image, Text, Icon, Pressable, ScrollView} from '@components';
+import {
+  Block,
+  Image,
+  Text,
+  Icon,
+  Pressable,
+  ScrollView,
+  NoneData,
+} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
@@ -25,6 +33,8 @@ export default function Doing() {
         <Block width={width - 24} marginTop={15} marginHorizontal={12}>
           {isLoading ? (
             <ActivityIndicator color={COLORS.red4} />
+          ) : doingList?.length === 0 ? (
+            <NoneData />
           ) : (
             doingList?.map(item => (
               <Pressable

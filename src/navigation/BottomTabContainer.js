@@ -6,9 +6,6 @@ import router from '@router';
 import {bottom} from 'screens/Bottom';
 import {COLORS, FONTS} from '@theme';
 import {Block} from '@components';
-import {height, width} from '@responsive';
-import Svg, {Path} from 'react-native-svg';
-import CurvedUpRectangle from '@components/common/CurvedUpRectangle';
 const Tab = createBottomTabNavigator();
 
 const getTabBarIcon = (route, focused) => {

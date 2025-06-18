@@ -1,7 +1,6 @@
 import {Block} from '@components';
 import {COLORS} from '@theme';
 import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
 import {StatusBar as RNStatusBar} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
