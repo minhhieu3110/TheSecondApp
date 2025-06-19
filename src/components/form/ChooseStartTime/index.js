@@ -37,7 +37,8 @@ export default function ChooseStartTime({onDateChange}) {
           alignCenter
           paddingHorizontal={29.5}
           rowCenter
-          spaceBetween>
+          spaceBetween
+          radius={5}>
           <Text>{String(date.getHours()).padStart(2, '0')}</Text>
           <Block height={31.67} borderWidth={1} borderColor={COLORS.white} />
           <Text>{String(date.getMinutes()).padStart(2, '0')}</Text>

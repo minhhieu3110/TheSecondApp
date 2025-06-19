@@ -6,14 +6,17 @@ import {
   Icon,
   Image,
   ModalConfirmExchange,
+  ModalExchangeVoucherSuccess,
   Pressable,
   ScrollView,
   StatusBar,
   Text,
 } from '@components';
 import {width} from '@responsive';
+import router from '@router';
 import {COLORS} from '@theme';
-import {root} from 'navigation/navigationRef';
+import {ConvertDateTimeStamp} from '@utils';
+import {commonRoot, root} from 'navigation/navigationRef';
 import {useEffect, useState} from 'react';
 import RenderHTML from 'react-native-render-html';
 import Toast from 'react-native-toast-message';
@@ -32,10 +35,20 @@ export default function DetailVoucherExchange({route}) {
     state => state.getDetailExchange?.data || [],
   );
   const [show, setShow] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const redeemVoucher = voucher_id => {
     dispatch({
       type: actions.REDEEM_VOUCHER,
       body: {voucher_id: voucher_id},
+      onSuccess: () => {
+        Toast.show({
+          type: 'success',
+          text1: 'Đổi điểm thành công',
+        });
+        setShow(!show);
+        setShowSuccess(!showSuccess);
+        dispatch({type: actions.GET_USER_INFO});
+      },
       onFail: error => {
         Toast.show({
           type: 'error',
@@ -44,6 +57,7 @@ export default function DetailVoucherExchange({route}) {
       },
     });
   };
+  const voucher = useSelector(state => state.redeemVoucher?.data || []);
 
   return (
     <Block backgroundColor={COLORS.gray10} flex>
@@ -145,6 +159,15 @@ export default function DetailVoucherExchange({route}) {
         close={() => setShow(!show)}
         point={detailExchange?.point}
         onPress={() => redeemVoucher(detailExchange?.id)}
+      />
+      <ModalExchangeVoucherSuccess
+        visible={showSuccess}
+        date={ConvertDateTimeStamp(voucher?.date_end)}
+        onPress1={() => {
+          commonRoot.navigate(router.DETAIL_VOUCHER, {id: voucher?.id});
+          setShowSuccess(!showSuccess);
+        }}
+        onPress2={() => root.goBack()}
       />
     </Block>
   );

@@ -321,7 +321,11 @@ export default function ProfileScreen() {
                       <Text fontSize={15} regular color={COLORS.black5}>
                         {item.title}
                       </Text>
-                      <Icon iconName={item.iconName} IconType={MaterialIcons} />
+                      <Icon
+                        iconName={item.iconName}
+                        IconType={MaterialIcons}
+                        iconSize={25}
+                      />
                     </Block>
                   </Pressable>
                   {item.id === 5 ? (
@@ -366,7 +370,11 @@ export default function ProfileScreen() {
                       <Text fontSize={15} regular color={COLORS.black5}>
                         {item.title}
                       </Text>
-                      <Icon iconName={item.iconName} IconType={MaterialIcons} />
+                      <Icon
+                        iconName={item.iconName}
+                        IconType={MaterialIcons}
+                        iconSize={25}
+                      />
                     </Block>
                   </Pressable>
                   {item.id === 4 ? (

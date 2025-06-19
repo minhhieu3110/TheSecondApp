@@ -33,7 +33,7 @@ export default function ReceivePoint() {
                 paddingTop={12}
                 paddingBottom={15}
                 radius={8}
-                backgroundColor={log?.exchange_type?.background}
+                backgroundColor={COLORS.white}
                 marginBottom={12}
                 row>
                 <Image

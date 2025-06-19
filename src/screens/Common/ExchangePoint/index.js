@@ -36,6 +36,13 @@ export default function ExchangePoint() {
     dispatch({
       type: actions.REDEEM_VOUCHER,
       body: {voucher_id: voucher_id},
+      onSuccess: () => {
+        Toast.show({
+          type: 'success',
+          text1: 'Đổi điểm thành công',
+        });
+        dispatch({type: actions.GET_USER_INFO});
+      },
       onFail: error => {
         Toast.show({
           type: 'error',

@@ -67,7 +67,7 @@ const ModalMethodPay = ({visible, close, data = [], onPress}) => {
             borderTopWidth={1}
             borderColor={COLORS.grayBreak}>
             <Block marginTop={15} marginLeft={24} marginRight={21.2} gap={15}>
-              {data.map(item => (
+              {data.map((item, index) => (
                 <Block key={item.method_id}>
                   <Pressable
                     onPress={() => selectPay(item.method_id)}
@@ -88,7 +88,7 @@ const ModalMethodPay = ({visible, close, data = [], onPress}) => {
                     <Block
                       width={23}
                       height={23}
-                      borderWidth={1}
+                      borderWidth={methodSelected === item.method_id ? 0 : 1}
                       borderColor={COLORS.lightGray1}
                       radius={50}
                       absolute
@@ -96,23 +96,25 @@ const ModalMethodPay = ({visible, close, data = [], onPress}) => {
                       justifyCenter
                       alignCenter
                       backgroundColor={
-                        methodSelected === item.method_id && COLORS.red4
+                        methodSelected === item.method_id
+                          ? COLORS.red4
+                          : COLORS.white
                       }>
-                      {methodSelected === item.method_id && (
-                        <Block
-                          width={15}
-                          height={15}
-                          radius={50}
-                          backgroundColor={COLORS.white}
-                        />
-                      )}
+                      <Block
+                        width={11}
+                        height={11}
+                        radius={50}
+                        backgroundColor={COLORS.white}
+                      />
                     </Block>
                   </Pressable>
-                  <Block
-                    marginTop={15}
-                    borderWidth={1}
-                    borderColor={COLORS.grayBreak}
-                  />
+                  {index !== data?.length - 1 && (
+                    <Block
+                      marginTop={15}
+                      borderWidth={1}
+                      borderColor={COLORS.grayBreak}
+                    />
+                  )}
                 </Block>
               ))}
             </Block>

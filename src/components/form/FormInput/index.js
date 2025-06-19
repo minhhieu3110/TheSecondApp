@@ -9,6 +9,7 @@ const FormInput = ({
   editable,
   multiline = false,
   keyboardType,
+  color = COLORS.placeholder,
 }) => {
   return (
     <TextInput
@@ -20,7 +21,7 @@ const FormInput = ({
       borderColor={COLORS.gray11}
       backgroundColor={backgroundColor}
       paddingLeft={12}
-      color={COLORS.placeholder}
+      color={color}
       fontSize={14}
       regular
       marginTop={15}

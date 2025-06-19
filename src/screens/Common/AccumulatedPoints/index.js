@@ -68,10 +68,7 @@ export default function AccumulatedPoint() {
           radius={8}
           alignCenter
           paddingHorizontal={18}
-          rowCenter
-          gap={18}>
-          <Image source={icon.icon_receive_point} width={40} height={40} />
-
+          rowCenter>
           <Image source={icon.icon_receive_point} width={44} height={44} />
           <Text paddingLeft={18} fontSize={15} regular color={COLORS.black2}>
             Đã nhận
@@ -84,10 +81,7 @@ export default function AccumulatedPoint() {
           radius={8}
           alignCenter
           paddingHorizontal={18}
-          rowCenter
-          gap={18}>
-          <Image source={icon.icon_used_point} width={40} height={40} />
-
+          rowCenter>
           <Image source={icon.icon_used_point} width={44} height={44} />
           <Text paddingLeft={18} fontSize={15} regular color={COLORS.black2}>
             Đã sử dụng

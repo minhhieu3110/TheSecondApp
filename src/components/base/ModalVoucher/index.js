@@ -115,10 +115,11 @@ const ModalVoucher = ({visible, close, data = [], onPress}) => {
                 }}
               />
               <Pressable
+                marginRight={4}
                 width={104}
                 height={37}
                 radius={5}
-                backgroundColor={voucherCode ? COLORS.red4 : COLORS.grayBreak}
+                backgroundColor={voucherCode ? COLORS.red4 : COLORS.placeholder}
                 justifyCenter
                 alignCenter
                 onPress={voucherCode ? handleVoucherApply : null}>
@@ -162,6 +163,7 @@ const ModalVoucher = ({visible, close, data = [], onPress}) => {
                   height={108}
                   marginTop={14.6}
                   marginLeft={12.6}
+                  radius={11}
                 />
                 <Block marginLeft={7}>
                   <TicketVoucherShape />
@@ -192,7 +194,7 @@ const ModalVoucher = ({visible, close, data = [], onPress}) => {
                 <Block
                   width={23}
                   height={23}
-                  borderWidth={1}
+                  borderWidth={promotionSelected === item.promotion_id ? 0 : 1}
                   borderColor={COLORS.lightGray1}
                   radius={50}
                   absolute

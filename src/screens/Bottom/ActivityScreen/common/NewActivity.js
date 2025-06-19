@@ -56,10 +56,27 @@ export default function NewActivity() {
                     backgroundColor={COLORS.white}
                     radius={8}
                     marginBottom={15}>
-                    <Block marginTop={18} marginLeft={12}>
-                      <Text fontSize={17} semiBold color={COLORS.red4}>
-                        {item?.order?.service?.title}
-                      </Text>
+                    <Block marginTop={18} marginHorizontal={12}>
+                      <Block rowCenter spaceBetween>
+                        <Text fontSize={17} semiBold color={COLORS.red4}>
+                          {item?.order?.service?.title}
+                        </Text>
+                        <Block
+                          width={95}
+                          height={29}
+                          backgroundColor={`${item?.status?.background}`}
+                          justifyCenter
+                          alignCenter
+                          radius={15}>
+                          <Text
+                            fontSize={13}
+                            regular
+                            color={`${item?.status?.color}`}>
+                            {item?.status?.title}
+                          </Text>
+                        </Block>
+                      </Block>
+
                       <Text
                         marginTop={16}
                         fontSize={14}
@@ -68,30 +85,15 @@ export default function NewActivity() {
                         {item?.order?.start_time}, {item?.order?.start_date}
                       </Text>
                     </Block>
-                    <Block
-                      width={95}
-                      height={29}
-                      backgroundColor={`${item?.status?.background}`}
-                      justifyCenter
-                      alignCenter
-                      radius={15}
-                      absolute
-                      top={12}
-                      right={12}>
-                      <Text
-                        fontSize={13}
-                        regular
-                        color={`${item?.status?.color}`}>
-                        {item?.status?.title}
-                      </Text>
-                    </Block>
+
                     <Block
                       marginTop={16}
                       paddingBottom={19}
                       paddingVertical={12}
-                      borderWidth={1}
+                      borderTopWidth={1}
+                      borderBottomWidth={1}
                       borderColor={COLORS.gray11}>
-                      <Block marginLeft={23} row marginBottom={12}>
+                      <Block rowCenter marginHorizontal={12} marginBottom={12}>
                         <Image
                           source={icon.icon_calendar_day}
                           width={22}
@@ -105,7 +107,7 @@ export default function NewActivity() {
                           {item?.order?.start_date}
                         </Text>
                       </Block>
-                      <Block marginLeft={23} row marginBottom={12}>
+                      <Block rowCenter marginHorizontal={12} marginBottom={12}>
                         <Image
                           source={icon.icon_time_activity}
                           width={22}
@@ -120,10 +122,11 @@ export default function NewActivity() {
                           {item?.order?.end_time}
                         </Text>
                       </Block>
-                      {item?.order?.repeat_weekly === null ? (
-                        ''
-                      ) : (
-                        <Block marginLeft={23} row marginBottom={12}>
+                      {item?.order?.repeat_weekly?.length !== 0 && (
+                        <Block
+                          rowCenter
+                          marginHorizontal={12}
+                          marginBottom={12}>
                           <Image
                             source={icon.icon_calendar_days}
                             width={22}
@@ -138,7 +141,7 @@ export default function NewActivity() {
                           </Text>
                         </Block>
                       )}
-                      <Block marginLeft={23} row marginBottom={12}>
+                      <Block rowCenter marginHorizontal={12} marginBottom={12}>
                         <Image
                           source={icon.icon_price_service}
                           width={22}
@@ -152,7 +155,7 @@ export default function NewActivity() {
                           {formatCurrency(item?.amount_final)}
                         </Text>
                       </Block>
-                      <Block marginLeft={23} row width={'85%'}>
+                      <Block rowCenter marginHorizontal={12} width={'85%'}>
                         <Image
                           source={icon.icon_position_address}
                           width={22}
@@ -172,22 +175,19 @@ export default function NewActivity() {
                     <Block
                       marginLeft={11.7}
                       marginTop={14.1}
-                      width={345.26}
+                      width={'95%'}
                       rowCenter
-                      spaceBetween
                       gap={13.3}
                       height={42}
                       alignCenter>
-                      <Block width={42} height={42} radius={50}>
-                        <Image
-                          width={42}
-                          height={42}
-                          source={icon.icon_user_activity}
-                          resizeMode="contain"
-                          radius={50}
-                        />
-                      </Block>
-                      <Block height={40} width={290}>
+                      <Image
+                        width={42}
+                        height={42}
+                        source={icon.icon_user_activity}
+                        resizeMode="contain"
+                        radius={50}
+                      />
+                      <Block height={40} width={'80%'}>
                         <Text fontSize={14} regular color={COLORS.red4}>
                           {item?.status?.note_title}
                         </Text>

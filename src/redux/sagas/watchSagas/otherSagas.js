@@ -173,9 +173,10 @@ function* redeemVoucher(action) {
   const body = action.body;
   try {
     const res = yield api.post(URL_API.promotion.redeem_voucher, body);
+
     yield put({
       type: _onSuccess(action.type),
-      data: res.data.data,
+      data: res.data,
     });
     action.onSuccess?.(res);
   } catch (error) {

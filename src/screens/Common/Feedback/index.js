@@ -140,6 +140,8 @@ export default function Feedback() {
             </Text>
             <TextInput
               placeholder={'Nhập nội dung'}
+              height={110}
+              textAlignVertical={'top'}
               paddingLeft={12}
               placeholderTextColor={COLORS.placeholder}
               radius={8}

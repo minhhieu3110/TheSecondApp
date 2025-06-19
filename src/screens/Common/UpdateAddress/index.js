@@ -91,17 +91,7 @@ export default function UpdateAddress({route}) {
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
       <HeaderTitle title={'Cập nhật địa chỉ'} canGoBack />
-      <Block row absolute top={15} right={8} alignCenter height={25}>
-        <Text fontSize={14} regular color={COLORS.red4}>
-          Bản đồ
-        </Text>
-        <Image
-          source={icon.icon_position_address}
-          width={25}
-          height={25}
-          marginLeft={15}
-        />
-      </Block>
+
       <Block width={width - 24} marginHorizontal={12} marginTop={18}>
         <Text fontSize={15} semiBold color={COLORS.black3}>
           Thông tin cá nhân
@@ -187,12 +177,14 @@ export default function UpdateAddress({route}) {
             value={address}
             onChangeText={setAddress}
             backgroundColor={COLORS.white}
+            color={COLORS.black2}
           />
           <FormInput
             placeholder={'Tên gọi địa chỉ'}
             value={title}
             onChangeText={setTitle}
             backgroundColor={COLORS.white}
+            color={COLORS.black2}
           />
         </Block>
         <Text fontSize={15} semiBold color={COLORS.black3} marginTop={20}>
@@ -220,19 +212,34 @@ export default function UpdateAddress({route}) {
             </Pressable>
           ))}
         </Block>
-        <Block height={19} marginTop={18} row alignCenter>
-          <Pressable onPress={handleSetDefault}>
-            <Icon
-              IconType={defaultAddress ? AntDesign : Ionicons}
-              iconName={defaultAddress ? 'checksquare' : 'square-outline'}
-              iconSize={19}
-              iconColor={defaultAddress ? COLORS.red4 : COLORS.gay12}
-            />
-          </Pressable>
-          <Text fontSize={14} regular color={COLORS.black3} marginLeft={10}>
+        <Pressable
+          onPress={handleSetDefault}
+          height={19}
+          marginTop={18}
+          rowCenter
+          alignCenter>
+          <Block>
+            {defaultAddress ? (
+              <Icon
+                IconType={AntDesign}
+                iconName={'checksquare'}
+                iconSize={19}
+                iconColor={COLORS.red4}
+              />
+            ) : (
+              <Block
+                borderWidth={1}
+                radius={3}
+                borderColor={COLORS.gay12}
+                backgroundColor={COLORS.white}
+                width={19}
+                height={19}></Block>
+            )}
+          </Block>
+          <Text fontSize={14} regular color={COLORS.black3} paddingLeft={10}>
             Cài làm mặc định
           </Text>
-        </Block>
+        </Pressable>
       </Block>
       <Button title="Cập nhập" onPress={updateAddress} />
     </Block>

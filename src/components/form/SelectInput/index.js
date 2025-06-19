@@ -19,12 +19,12 @@ const SelectInput = ({
       width={width}
       backgroundColor={COLORS.white}
       height={height}
-      borderWidth={0.5}
       borderColor={COLORS.placeholder}
       marginTop={top}
       radius={5}>
       <Dropdown
         data={data}
+        style={{borderWidth: 0}}
         searchField={keyword}
         iconStyle={{width: 20, height: 20, marginTop: 10}}
         placeholder={placeholder}

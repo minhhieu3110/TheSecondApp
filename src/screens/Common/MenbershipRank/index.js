@@ -146,21 +146,18 @@ export default function MenbershipRank() {
               marginTop={15}
             />
             <Pressable
-              onPress={() => commonRoot.navigate(router.HISTORY_POINT)}
+              onPress={() => commonRoot.navigate(router.ACCUMULATED_POINT)}
               marginTop={15}
-              row
+              rowCenter
               justifyCenter>
-              <Block rowCenter>
-                <Text fontSize={14} regular color={COLORS.red4} center>
-                  Xem lịch sử điểm thưởng
-                </Text>
-                <Icon
-                  IconType={MaterialIcons}
-                  iconName={'keyboard-arrow-right'}
-                  iconColor={COLORS.red4}
-                  marginLeft={23}
-                />
-              </Block>
+              <Text fontSize={14} regular color={COLORS.red4} center>
+                Xem lịch sử điểm thưởng
+              </Text>
+              <Icon
+                IconType={MaterialIcons}
+                iconName={'keyboard-arrow-right'}
+                iconColor={COLORS.red4}
+              />
             </Pressable>
           </Block>
         </Block>

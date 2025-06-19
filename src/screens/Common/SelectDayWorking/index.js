@@ -58,16 +58,18 @@ const SelectDayWorking = ({route}) => {
     {id: 6, title: 'T7'},
     {id: 7, title: 'CN'},
   ];
-  const [isActive, setIsActive] = useState(false);
+
   const [chooseDay, setChooseDay] = useState();
   const [againWeek, setAgainWeek] = useState([]);
+  const [isActive, setIsActive] = useState(false);
   const [note, setNote] = useState('');
   const handleWeekDayPress = title => {
     setAgainWeek(prevState => {
-      if (prevState.includes(title)) {
-        return prevState.filter(item => item !== title);
-      }
-      return [...prevState, title];
+      const updatedState = prevState.includes(title)
+        ? prevState.filter(item => item !== title)
+        : [...prevState, title];
+      setIsActive(updatedState.length !== 0);
+      return updatedState;
     });
   };
   const daysSort = sortWeekdays(againWeek);
@@ -78,7 +80,7 @@ const SelectDayWorking = ({route}) => {
     service_id: route?.params?.service_id,
     service_sub_id: route?.params?.service_sub_id,
     duration_id: route?.params?.duration_id,
-    repeat_weekly: isActive === false ? [] : daysSort,
+    repeat_weekly: daysSort,
     list_day: [`${chooseDay}/${year}`],
     start_time: start_time,
     note: note,
@@ -93,7 +95,7 @@ const SelectDayWorking = ({route}) => {
         service_id: route?.params?.service_id,
         service_sub_id: route?.params?.service_sub_id,
         duration_id: route?.params?.duration_id,
-        repeat_weekly: isActive === false ? [] : daysSort,
+        repeat_weekly: daysSort,
         list_day: [`${chooseDay}/${year}`],
         start_time: start_time,
         note: note,
@@ -113,7 +115,7 @@ const SelectDayWorking = ({route}) => {
         service_id: route?.params?.service_id,
         service_sub_id: route?.params?.service_sub_id,
         duration_id: route?.params?.duration_id,
-        repeat_weekly: againWeek,
+        repeat_weekly: daysSort,
         list_day: [`${chooseDay}/${year}`],
         start_time: start_time,
         note: note,
@@ -210,7 +212,6 @@ const SelectDayWorking = ({route}) => {
           <Block marginTop={12} row columnGap={9.9} spaceBetween justifyCenter>
             {dayWeek.map(item => (
               <Pressable
-                disabled={isActive === false}
                 onPress={() => handleWeekDayPress(item.title)}
                 key={item.title}
                 width={'12%'}
@@ -248,11 +249,14 @@ const SelectDayWorking = ({route}) => {
               placeholder={'Nhập nội dung'}
               radius={8}
               backgroundColor={COLORS.white}
+              pa
               paddingLeft={12}
               placeholderTextColor={COLORS.placeholder}
               marginTop={13}
               value={note}
               onChangeText={setNote}
+              multiline={true}
+              textAlignVertical={'top'}
             />
           </Block>
         </Block>

@@ -158,6 +158,7 @@ export const image = {
   image_intro: require('./image/image_intro.png'),
   image_intro_1: require('./image/image_san_intro_1.png'),
   image_none: require('./image/image_none.png'),
+  image_exchange_voucher_success: require('./image/image_exchange_voucher_success.png'),
 };
 export const lotties = {
   success: require('./lotties/Success.json'),

@@ -68,7 +68,8 @@ export default function InputOTP({route}) {
       onFail(e) {
         Toast.show({
           type: 'error',
-          text1: 'OTP Invail',
+          text1: 'Mã OTP không tồn tại!',
+          text2: 'Vui lòng kiểm tra lại',
         });
       },
     });

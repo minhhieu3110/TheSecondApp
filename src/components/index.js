@@ -44,6 +44,7 @@ import ChangeAddress from './base/ChangeAddress';
 import MultiImageInput from './form/MultiImageInput';
 import FormInput from './form/FormInput';
 import NoneData from './common/NoneData';
+import ModalExchangeVoucherSuccess from './common/ModalExchangeVoucherSuccess';
 export {
   Carousel,
   Block,
@@ -91,4 +92,5 @@ export {
   MultiImageInput,
   FormInput,
   NoneData,
+  ModalExchangeVoucherSuccess,
 };

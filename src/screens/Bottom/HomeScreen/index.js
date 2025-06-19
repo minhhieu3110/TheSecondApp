@@ -68,7 +68,11 @@ export default function HomeScreen() {
           backgroundColor: COLORS.gray10,
           paddingBottom: 100,
         }}>
-        <Block width={width} paddingBottom={15} backgroundColor={COLORS.white}>
+        <Block
+          width={width}
+          paddingBottom={15}
+          backgroundColor={COLORS.white}
+          paddingTop={15}>
           <Block marginHorizontal={12} row spaceBetween>
             <Block marginTop={3} height={43}>
               <Text
@@ -265,7 +269,7 @@ export default function HomeScreen() {
         </Block>
 
         <Block marginTop={20} width={width} height={723}>
-          <Block width={width - 24} left={12} row spaceBetween>
+          <Block width={width - 24} left={12} rowCenter spaceBetween>
             <Text fontSize={16} semiBold color={COLORS.black1}>
               Ưu đãi
             </Text>
@@ -322,7 +326,7 @@ export default function HomeScreen() {
             <Block
               marginLeft={12}
               marginTop={17.8}
-              row
+              rowCenter
               spaceBetween
               width={width - 24}>
               <Text fontSize={16} bold color={COLORS.black1}>
