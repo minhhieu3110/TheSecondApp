@@ -111,7 +111,7 @@ export default function Cancel() {
                   {item?.order?.repeat_weekly?.length !== 0 && (
                     <Block rowCenter marginHorizontal={12} marginBottom={12}>
                       <Image
-                        source={icon.icon_calendar_days}
+                        source={icon.icon_again_week_cancel}
                         width={22}
                         height={22}
                       />
@@ -134,7 +134,7 @@ export default function Cancel() {
                       marginLeft={8}
                       fontSize={14}
                       regular
-                      color={COLORS.red4}>
+                      color={COLORS.black1}>
                       {formatCurrency(item?.amount_final)}
                     </Text>
                   </Block>

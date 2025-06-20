@@ -118,6 +118,7 @@ export const icon = {
   icon_point_exchange: require('./icon/icon_point.png'),
   icon_repeat: require('./icon/icon_repeat.png'),
   title_repeat_icon: require('./icon/repeat.png'),
+  icon_again_week_cancel: require('./icon/again_week_cancel.png'),
 };
 export const image = {
   image_top_home_1: require('./image/image_top_home_1.png'),

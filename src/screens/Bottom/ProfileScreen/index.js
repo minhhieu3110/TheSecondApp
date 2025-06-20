@@ -62,6 +62,12 @@ export default function ProfileScreen() {
       },
     });
   };
+  const titleToTab = {
+    'Mới đăng': 'NEW_ACTIVITY',
+    'Tiếp nhận': 'RECEPTION',
+    'Đang làm': 'DOING',
+    'Hoàn thành': 'COMPLETE',
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
@@ -253,18 +259,36 @@ export default function ProfileScreen() {
                 <Pressable
                   onPress={() =>
                     bottomRoot.navigate(router.ACTIVITY_SCREEN, {
-                      title: sta.title,
+                      tab: titleToTab[sta.title],
                     })
                   }
                   key={sta.title}
                   width={'23.5%'}
                   height={74}
                   alignCenter>
-                  <Image
-                    source={{uri: `${URL_API.uploads}/${sta?.picture}`}}
-                    width={42.17}
-                    height={43.55}
-                  />
+                  <Block>
+                    {sta?.count !== 0 && (
+                      <Block
+                        absolute
+                        top={-9}
+                        right={-13}
+                        width={18}
+                        height={18}
+                        radius={18}
+                        backgroundColor={COLORS.yellow3}
+                        justifyCenter
+                        alignCenter>
+                        <Text fontSize={12} regular color={COLORS.white}>
+                          {sta.count}
+                        </Text>
+                      </Block>
+                    )}
+                    <Image
+                      source={{uri: `${URL_API.uploads}/${sta?.picture}`}}
+                      width={42.17}
+                      height={43.55}
+                    />
+                  </Block>
                   <Text
                     marginTop={11.4}
                     fontSize={13}
@@ -272,22 +296,6 @@ export default function ProfileScreen() {
                     color={COLORS.black2}>
                     {sta.title}
                   </Text>
-                  {sta?.count !== 0 && (
-                    <Block
-                      absolute
-                      top={-9}
-                      right={-9}
-                      width={18}
-                      height={18}
-                      radius={18}
-                      backgroundColor={COLORS.yellow3}
-                      justifyCenter
-                      alignCenter>
-                      <Text fontSize={12} regular color={COLORS.white}>
-                        {sta.count}
-                      </Text>
-                    </Block>
-                  )}
                 </Pressable>
               ))}
             </Block>

@@ -73,6 +73,9 @@ const Pressable = ({
   translateY,
   safeAreaTop,
   safeAreaBottom,
+  gap,
+  columnGap,
+  rowGap,
   //width, height
   width,
   height,
@@ -108,6 +111,7 @@ const Pressable = ({
   style,
   disabled,
   children,
+  ref,
   ...rest
 }) => {
   const insets = useSafeAreaInsets();
@@ -188,6 +192,9 @@ const Pressable = ({
     translateY && {transform: [{translateY: hs(translateY)}]},
     safeAreaTop && {marginTop: insets.top},
     safeAreaBottom && {marginBottom: insets.bottom},
+    gap && {gap: hs(gap)},
+    columnGap && {columnGap: hs(columnGap)},
+    row && {rowGap: hs(rowGap)},
     //width, height
     width && {width: hs(width)},
     height && {height: hs(height)},
@@ -224,6 +231,7 @@ const Pressable = ({
   return (
     <RNPrsesable
       {...rest}
+      ref={ref}
       style={customStyles}
       disabled={disabled}
       onPress={onPress}

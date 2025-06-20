@@ -103,6 +103,14 @@ export default function ShoppingScreen() {
   };
 
   const columnData = splitIntoColumns(listCategory, COLUMN_COUNT);
+  const titleToTabKey = {
+    Mới: 'NEW_ORDER',
+    'Xác nhận': 'CONFIRM_ORDER',
+    'Đang giao': 'SHIPPING',
+    'Đã giao': 'COMPLETE_SHIP_ORDER',
+    'Đã hủy': 'CANCEL_ORDER',
+  };
+
   return (
     <Block flex backgroundColor={COLORS.gray10} marginBottom>
       <StatusBar />
@@ -193,7 +201,12 @@ export default function ShoppingScreen() {
                 {listStatus?.map((status, index) => (
                   <Pressable
                     key={index}
-                    onPress={() => commonRoot.navigate(router.ORDER_OF_YOU)}
+                    onPress={() => {
+                      const tabKey = titleToTabKey[status?.title];
+                      if (tabKey) {
+                        commonRoot.navigate(router.ORDER_OF_YOU, {tab: tabKey});
+                      }
+                    }}
                     maxWidth={68}
                     alignCenter>
                     <Image

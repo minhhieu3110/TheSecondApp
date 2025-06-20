@@ -20,6 +20,7 @@ const HeaderTile = ({
   colorText,
   background = false,
   absolute = true,
+  height = 53,
 }) => {
   const navigation = useNavigation();
 
@@ -40,7 +41,7 @@ const HeaderTile = ({
       absolute={absolute}
       zIndex={10}
       width={width}
-      height={53}
+      height={height}
       backgroundColor={background}>
       <Pressable
         onPress={handleBack}
@@ -76,7 +77,7 @@ const HeaderTile = ({
       </Pressable>
     </Block>
   ) : (
-    <Block width={width} height={53} backgroundColor={COLORS.white}>
+    <Block width={width} height={height} backgroundColor={COLORS.white}>
       <Pressable
         onPress={handleBack}
         height={30}
