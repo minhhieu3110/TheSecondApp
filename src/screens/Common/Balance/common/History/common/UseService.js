@@ -22,7 +22,7 @@ export default function UseService() {
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
       <Block width={width - 24} marginLeft={12} marginTop={15}>
-        {walletLog?.length === 0 ? (
+        {useLog?.length === 0 ? (
           <NoneData />
         ) : (
           <ScrollView contentContainerStyle={{paddingBottom: 1000}}>

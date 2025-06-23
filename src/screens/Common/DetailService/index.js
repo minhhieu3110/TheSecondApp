@@ -34,6 +34,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
+import Toast from 'react-native-toast-message';
 export default function DetailService({route}) {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -69,6 +70,17 @@ export default function DetailService({route}) {
       dispatch({
         type: actions.RE_ORDER,
         body: {order_id: route?.params?.orderId},
+        onSuccess: e => {
+          Toast.show({
+            type: 'success',
+            text1: 'Đặt lại dịch vụ thành công',
+          });
+        },
+      });
+    status === 2 && commonRoot.navigate(router.HELP);
+    status === 3 &&
+      commonRoot.navigate(router.EVALUATE_SERVICE, {
+        orderId: route?.params?.orderId,
       });
   };
   const reasonCancel = reasons.find(
@@ -83,12 +95,10 @@ export default function DetailService({route}) {
         {isLoading ? (
           <ActivityIndicator color={COLORS.red4} />
         ) : (
-          <Block marginTop={12} marginHorizontal={12}>
-            {detailOrder?.is_status === -1 ? (
-              ''
-            ) : (
+          <Block marginHorizontal={12}>
+            {detailOrder?.is_status !== -1 && (
               <Block
-                width={width - 24}
+                marginTop={12}
                 height={72}
                 radius={8}
                 backgroundColor={`${detailOrder?.status?.background}`}
@@ -449,12 +459,7 @@ export default function DetailService({route}) {
             {detailOrder?.is_status !== 0 && detailOrder?.is_status !== 1 ? (
               <Pressable
                 onPress={() => {
-                  (detailOrder?.is_status === 2 &&
-                    commonRoot.navigate(router.HELP)) ||
-                    (detailOrder?.is_status === 3 &&
-                      commonRoot.navigate(router.EVALUATE_SERVICE, {
-                        orderId: route?.params?.orderId,
-                      }));
+                  onPress(detailOrder?.is_status);
                 }}
                 marginTop={23}
                 height={48}

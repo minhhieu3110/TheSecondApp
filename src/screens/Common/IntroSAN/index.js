@@ -1,11 +1,10 @@
 import {image} from '@assets';
 import {Block, Image, Pressable, Text, StatusBar} from '@components';
-import {height, width} from '@responsive';
+import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
 import {authRoot} from 'navigation/navigationRef';
-import {ImageBackground} from 'react-native';
-import AppIntro from 'react-native-app-intro-slider';
+import Swiper from 'react-native-swiper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 export default function IntroSAN() {
   const contentIntro = [
@@ -44,7 +43,7 @@ export default function IntroSAN() {
       </Block>
     );
   };
-  const {top, bottom} = useSafeAreaInsets();
+  const {bottom} = useSafeAreaInsets();
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
@@ -54,25 +53,44 @@ export default function IntroSAN() {
         height={'100%'}
         resizeMode="stretch">
         <StatusBar />
-        <Block flex justifyEnd paddingBottom={bottom + 16}>
-          <AppIntro
-            data={contentIntro}
-            renderItem={renderItem}
-            dotStyle={{
-              width: 8,
-              height: 8,
-              backgroundColor: COLORS.Yellow3_40,
-              marginTop: 29,
-            }}
-            activeDotStyle={{
-              width: 8,
-              height: 8,
-              marginTop: 29,
-              backgroundColor: COLORS.yellow3,
-            }}
-            nextLabel={false}
-            doneLabel={false}
-          />
+        <Block flex justifyEnd paddingBottom={bottom + 32}>
+          <Swiper
+            autoplay={true}
+            dotColor={COLORS.Yellow3_40}
+            activeDotColor={COLORS.yellow3}
+            loop={false}
+            onMomentumScrollEnd={(e, state) => {
+              if (state.index === contentIntro.length - 1) {
+                authRoot.navigate(router.ONBOARDING_SCREEN);
+              }
+            }}>
+            {contentIntro.map(content => (
+              <Block
+                flex
+                justifyEnd
+                paddingBottom={60}
+                key={content.id}
+                gap={10}>
+                <Text
+                  fontSize={18}
+                  semiBold
+                  color={COLORS.yellow3}
+                  uppercase
+                  center>
+                  {content.title}
+                </Text>
+                <Text
+                  fontSize={14}
+                  light
+                  color={COLORS.white}
+                  numberOfLines={2}
+                  center
+                  marginHorizontal={29}>
+                  {content.subTitle}
+                </Text>
+              </Block>
+            ))}
+          </Swiper>
           <Block justifyCenter alignCenter>
             <Pressable
               onPress={() => authRoot.navigate(router.ONBOARDING_SCREEN)}

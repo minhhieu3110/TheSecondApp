@@ -66,6 +66,8 @@ import UpdateAddress from './UpdateAddress';
 import DetailOrder from './DetailOrder';
 import AddBankAccount from './AddBankAccount';
 import HistoryFeedback from './Feedback/common/HistoryFeedback';
+import PrivacySecurityOnBoarding from './PrivacySecurityOnBoarding';
+import TermsOfUseOnBoarding from './TermsOfUseOnBoarding';
 
 export const common = {
   [router.VOUCHER]: Voucher,
@@ -139,4 +141,6 @@ export const common = {
   [router.ALL_NEWS]: AllNews,
   [router.DETAIL_NEW]: DetailNew,
   [router.ADD_BANK_ACCOUNT]: AddBankAccount,
+  [router.PRIVACY_SECURITY_ONBOARDING]: PrivacySecurityOnBoarding,
+  [router.TERMS_OF_USE_ONBOARDING]: TermsOfUseOnBoarding,
 };

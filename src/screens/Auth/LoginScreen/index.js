@@ -110,8 +110,21 @@ export default function LoginScreen() {
           <Text semiBold color={COLORS.placeholder}>
             Tiếp tục
           </Text>{' '}
-          bạn đã đồng ý với <Text color={COLORS.red4}>Quy chế</Text> và{' '}
-          <Text color={COLORS.red4}>Điều khoản</Text> của chúng tôi
+          bạn đã đồng ý với{' '}
+          <Text
+            color={COLORS.red4}
+            onPress={() =>
+              commonRoot.navigate(router.PRIVACY_SECURITY_ONBOARDING)
+            }>
+            Chính sách
+          </Text>{' '}
+          và{' '}
+          <Text
+            color={COLORS.red4}
+            onPress={() => commonRoot.navigate(router.TERMS_OF_USE_ONBOARDING)}>
+            Điều khoản
+          </Text>{' '}
+          của chúng tôi
         </Text>
       </Block>
     </Block>

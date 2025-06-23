@@ -23,7 +23,7 @@ export default function Recharge() {
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
       <Block width={width - 24} marginLeft={12} marginTop={15}>
-        {walletLog?.length === 0 ? (
+        {rechargeLog?.length === 0 ? (
           <NoneData />
         ) : (
           <ScrollView contentContainerStyle={{paddingBottom: 181}}>

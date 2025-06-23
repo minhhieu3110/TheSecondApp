@@ -1,5 +1,6 @@
 import {
   Block,
+  FormInput,
   HeaderTitle,
   Icon,
   Image,
@@ -61,6 +62,13 @@ export default function AddBankAccount({route}) {
         setShow(false);
         dispatch({
           type: actions.GET_BANK_CARD,
+        });
+      },
+      onFail: e => {
+        Toast.show({
+          type: 'error',
+          text1: 'Có lỗi xảy ra!',
+          text2: 'Vui lòng kiểm tra và thử lại!',
         });
       },
     });
@@ -155,23 +163,6 @@ export default function AddBankAccount({route}) {
                       iconSize={25}
                     />
                   </Pressable>
-                  {/* <Pressable
-                    onPress={() => {
-                      setShowEdit(!showEdit);
-                      setItemBankEdit(bank?.item_id);
-                    }}
-                    backgroundColor={COLORS.green4}
-                    width={50}
-                    borderRightRadius={8}
-                    justifyCenter
-                    alignCenter>
-                    <Icon
-                      IconType={AntDesign}
-                      iconName={'edit'}
-                      iconColor={COLORS.white}
-                      iconSize={25}
-                    />
-                  </Pressable> */}
                 </ScrollView>
                 {index < bankCard.length - 1 && (
                   <Block
@@ -239,19 +230,12 @@ export default function AddBankAccount({route}) {
                 </Pressable>
               </Block>
               <Block marginTop={15} marginHorizontal={12} gap={12}>
-                <TextInput
-                  height={41}
-                  borderWidth={0.5}
-                  borderColor={COLORS.lightGray1}
-                  radius={8}
+                <FormInput
+                  color={COLORS.black2}
+                  borderColor={COLORS.black2}
                   placeholder={
                     bankSelect ? bankSelect?.title_short : 'Nhập tên ngân hàng'
                   }
-                  placeholderTextColor={COLORS.placeholder}
-                  fontSize={13}
-                  regular
-                  color={COLORS.placeholder}
-                  paddingLeft={16}
                   value={bankSelect?.title_short || keyword}
                   onChangeText={e => {
                     setKeyword(e);
@@ -271,110 +255,94 @@ export default function AddBankAccount({route}) {
                   onPress={() => setShowListBank(true)}
                 />
                 {showListBank && (
-                  <Block
-                    absolute
-                    top={45}
-                    zIndex={10}
-                    radius={8}
-                    backgroundColor={COLORS.white}
-                    width={width - 48}
-                    gap={10}>
-                    {listBank?.map(bank => (
-                      <Pressable
-                        onPress={() => {
-                          setBankId(bank?.item_id);
-                          setShowListBank(false);
-                        }}
-                        rowCenter
-                        spaceBetween
-                        key={bank?.item_id}
-                        height={30}
-                        borderWidth={0.2}
-                        radius={5}>
-                        <Text
-                          marginLeft={12}
-                          fontSize={14}
-                          semiBold
-                          color={COLORS.black2}>
-                          {bank?.title}
-                        </Text>
-                        <Block
-                          width={20}
-                          height={20}
-                          radius={20}
+                  <Block radius={8} maxHeight={250}>
+                    <ScrollView contentContainerStyle={{gap: 10}}>
+                      {listBank?.map(bank => (
+                        <Pressable
+                          onPress={() => {
+                            setBankId(bank?.item_id);
+                            setShowListBank(false);
+                          }}
+                          rowCenter
+                          spaceBetween
+                          key={bank?.item_id}
+                          maxHeight={30}
                           borderWidth={0.5}
-                          borderColor={COLORS.placeholder}
-                          marginRight={5}
-                          justifyCenter
-                          alignCenter>
-                          {bankId === bank?.item_id && (
-                            <Block
-                              width={12}
-                              height={12}
-                              radius={12}
-                              backgroundColor={COLORS.red4}></Block>
-                          )}
-                        </Block>
-                      </Pressable>
-                    ))}
+                          radius={5}
+                          paddingVertical={10}>
+                          <Text
+                            width={'90%'}
+                            marginLeft={12}
+                            fontSize={14}
+                            semiBold
+                            color={COLORS.black2}>
+                            {bank?.title + ' - ' + bank?.title_short}
+                          </Text>
+                          <Block
+                            width={20}
+                            height={20}
+                            radius={20}
+                            borderWidth={0.5}
+                            borderColor={COLORS.placeholder}
+                            marginRight={5}
+                            justifyCenter
+                            alignCenter>
+                            {bankId === bank?.item_id && (
+                              <Block
+                                width={12}
+                                height={12}
+                                radius={12}
+                                backgroundColor={COLORS.red4}></Block>
+                            )}
+                          </Block>
+                        </Pressable>
+                      ))}
+                    </ScrollView>
                   </Block>
                 )}
-                <TextInput
-                  height={41}
-                  borderWidth={0.5}
-                  borderColor={COLORS.lightGray1}
-                  radius={8}
+                <FormInput
                   placeholder={'Nhập số tài khoản'}
-                  placeholderTextColor={COLORS.placeholder}
-                  fontSize={13}
-                  regular
-                  color={COLORS.placeholder}
-                  paddingLeft={16}
+                  color={COLORS.black2}
+                  borderColor={COLORS.black2}
                   value={bankNumber}
                   onChangeText={setBankNumber}
                 />
-                <TextInput
-                  height={41}
-                  borderWidth={0.5}
-                  borderColor={COLORS.lightGray1}
-                  radius={8}
+                <FormInput
                   placeholder={'Nhập tên chủ tài khoản'}
-                  placeholderTextColor={COLORS.placeholder}
-                  fontSize={13}
-                  regular
-                  color={COLORS.placeholder}
-                  paddingLeft={16}
+                  color={COLORS.black2}
+                  borderColor={COLORS.black2}
                   value={bankAccount}
                   onChangeText={setBankAccount}
                 />
-                <TextInput
-                  height={41}
-                  borderWidth={0.5}
-                  borderColor={COLORS.lightGray1}
-                  radius={8}
+                <FormInput
                   placeholder={'Nhập chi nhánh ngân hàng'}
-                  placeholderTextColor={COLORS.placeholder}
-                  fontSize={13}
-                  regular
-                  color={COLORS.placeholder}
-                  paddingLeft={16}
+                  color={COLORS.black2}
+                  borderColor={COLORS.black2}
                   value={bankBranch}
                   onChangeText={setBankBranch}
                 />
-                <Block
-                  width={width - 291}
+                <Pressable
+                  onPress={() => setBankDefault(!bankDefault)}
                   height={19}
                   marginTop={18}
                   row
                   alignCenter>
-                  <Pressable onPress={() => setBankDefault(!bankDefault)}>
+                  {bankDefault ? (
                     <Icon
-                      IconType={bankDefault ? AntDesign : Ionicons}
-                      iconName={bankDefault ? 'checksquare' : 'square-outline'}
+                      IconType={AntDesign}
+                      iconName={'checksquare'}
                       iconSize={19}
-                      iconColor={bankDefault ? COLORS.red4 : COLORS.gay12}
+                      iconColor={COLORS.red4}
                     />
-                  </Pressable>
+                  ) : (
+                    <Block
+                      borderWidth={1}
+                      radius={3}
+                      borderColor={COLORS.gay12}
+                      backgroundColor={COLORS.white}
+                      width={19}
+                      height={19}></Block>
+                  )}
                   <Text
                     fontSize={14}
                     regular
@@ -382,7 +350,7 @@ export default function AddBankAccount({route}) {
                     marginLeft={10}>
                     Cài làm mặc định
                   </Text>
-                </Block>
+                </Pressable>
               </Block>
               <Pressable
                 onPress={addBank}
@@ -402,206 +370,6 @@ export default function AddBankAccount({route}) {
           </TouchableOpacity>
         </SafeAreaView>
       </Modal>
-      {/* <Modal visible={showEdit} transparent={true} animationType="fade">
-        <SafeAreaView style={{flex: 1}}>
-          <TouchableOpacity
-            activeOpacity={1}
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'rgba(0,0,0,0.6)',
-              flex: 1,
-            }}>
-            <Block
-              marginHorizontal={12}
-              width={width - 24}
-              paddingBottom={15}
-              backgroundColor={COLORS.white}
-              radius={8}>
-              <Block marginTop={10}>
-                <Text fontSize={13} semiBold center color={COLORS.black2}>
-                  Sửa tài khoản liên kết
-                </Text>
-                <Pressable
-                  onPress={() => {
-                    setShowEdit(!showEdit);
-                  }}
-                  absolute
-                  right={10}>
-                  <Icon
-                    IconType={FontAwesome}
-                    iconName={'times-rectangle'}
-                    iconSize={20}
-                    iconColor={COLORS.red4}
-                  />
-                </Pressable>
-              </Block>
-              <Block marginTop={15} marginHorizontal={12} gap={12}>
-                <TextInput
-                  height={41}
-                  borderWidth={0.5}
-                  borderColor={COLORS.lightGray1}
-                  radius={8}
-                  placeholder={
-                    bankSelect ? bankSelect?.title_short : 'Nhập tên ngân hàng'
-                  }
-                  placeholderTextColor={COLORS.placeholder}
-                  fontSize={13}
-                  regular
-                  color={COLORS.placeholder}
-                  paddingLeft={16}
-                  value={bankEdit?.bank_name?.title_short || keyword}
-                  onChangeText={e => {
-                    setKeyword(e);
-                    setShowListBank(true);
-                    setBankId();
-                    dispatch({
-                      type: actions.GET_LIST_BANK,
-                      params: {keyword: keyword},
-                      onSuccess: () => {
-                        dispatch({
-                          type: actions.GET_LIST_BANK,
-                        });
-                        setKeyword('');
-                      },
-                    });
-                  }}
-                  onPress={() => setShowListBank(true)}
-                />
-                {showListBank && (
-                  <Block
-                    absolute
-                    top={45}
-                    zIndex={10}
-                    radius={8}
-                    backgroundColor={COLORS.white}
-                    width={width - 48}
-                    gap={10}>
-                    {listBank?.map(bank => (
-                      <Pressable
-                        onPress={() => {
-                          setBankId(bank?.item_id);
-                          setShowListBank(false);
-                        }}
-                        rowCenter
-                        spaceBetween
-                        key={bank?.item_id}
-                        height={30}
-                        borderWidth={0.2}
-                        radius={5}>
-                        <Text
-                          marginLeft={12}
-                          fontSize={14}
-                          semiBold
-                          color={COLORS.black2}>
-                          {bank?.title}
-                        </Text>
-                        <Block
-                          width={20}
-                          height={20}
-                          radius={20}
-                          borderWidth={0.5}
-                          borderColor={COLORS.placeholder}
-                          marginRight={5}
-                          justifyCenter
-                          alignCenter>
-                          {bankId === bank?.item_id && (
-                            <Block
-                              width={12}
-                              height={12}
-                              radius={12}
-                              backgroundColor={COLORS.red4}></Block>
-                          )}
-                        </Block>
-                      </Pressable>
-                    ))}
-                  </Block>
-                )}
-                <TextInput
-                  height={41}
-                  borderWidth={0.5}
-                  borderColor={COLORS.lightGray1}
-                  radius={8}
-                  placeholder={'Nhập số tài khoản'}
-                  placeholderTextColor={COLORS.placeholder}
-                  fontSize={13}
-                  regular
-                  color={COLORS.placeholder}
-                  paddingLeft={16}
-                  value={
-                    bankEdit ? bankNumber === bankEdit?.bank_number : bankNumber
-                  }
-                  onChangeText={setBankNumber}
-                />
-                <TextInput
-                  height={41}
-                  borderWidth={0.5}
-                  borderColor={COLORS.lightGray1}
-                  radius={8}
-                  placeholder={'Nhập tên chủ tài khoản'}
-                  placeholderTextColor={COLORS.placeholder}
-                  fontSize={13}
-                  regular
-                  color={COLORS.placeholder}
-                  paddingLeft={16}
-                  value={bankAccount}
-                  onChangeText={setBankAccount}
-                />
-                <TextInput
-                  height={41}
-                  borderWidth={0.5}
-                  borderColor={COLORS.lightGray1}
-                  radius={8}
-                  placeholder={'Nhập chi nhánh ngân hàng'}
-                  placeholderTextColor={COLORS.placeholder}
-                  fontSize={13}
-                  regular
-                  color={COLORS.placeholder}
-                  paddingLeft={16}
-                  value={bankBranch}
-                  onChangeText={setBankBranch}
-                />
-                <Block
-                  width={width - 291}
-                  height={19}
-                  marginTop={18}
-                  row
-                  alignCenter>
-                  <Pressable onPress={() => setBankDefault(!bankDefault)}>
-                    <Icon
-                      IconType={bankDefault ? AntDesign : Ionicons}
-                      iconName={bankDefault ? 'checksquare' : 'square-outline'}
-                      iconSize={19}
-                      iconColor={bankDefault ? COLORS.red4 : COLORS.gay12}
-                    />
-                  </Pressable>
-                  <Text
-                    fontSize={14}
-                    regular
-                    color={COLORS.black3}
-                    marginLeft={10}>
-                    Cài làm mặc định
-                  </Text>
-                </Block>
-              </Block>
-              <Pressable
-                onPress={addBank}
-                marginTop={20}
-                height={40}
-                width={width - 48}
-                marginHorizontal={12}
-                backgroundColor={COLORS.red4}
-                radius={8}
-                justifyCenter
-                alignCenter>
-                <Text fontSize={14} semiBold color={COLORS.white}>
-                  Thêm tài khoản
-                </Text>
-              </Pressable>
-            </Block>
-          </TouchableOpacity>
-        </SafeAreaView>
-      </Modal> */}
     </Block>
   );
 }

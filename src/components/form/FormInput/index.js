@@ -10,6 +10,8 @@ const FormInput = ({
   multiline = false,
   keyboardType,
   color = COLORS.placeholder,
+  marginTop = 15,
+  borderColor = COLORS.gray11,
 }) => {
   return (
     <TextInput
@@ -18,13 +20,13 @@ const FormInput = ({
       radius={5}
       borderWidth={0.5}
       placeholder={placeholder}
-      borderColor={COLORS.gray11}
+      borderColor={borderColor}
       backgroundColor={backgroundColor}
       paddingLeft={12}
       color={color}
       fontSize={14}
       regular
-      marginTop={15}
+      // marginTop={15}
       value={value}
       numberOfLines={1}
       onChangeText={onChangeText}
