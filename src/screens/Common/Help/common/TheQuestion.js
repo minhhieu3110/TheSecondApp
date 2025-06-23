@@ -15,19 +15,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import actions from '@actions';
 import RenderHTML from 'react-native-render-html';
 
-const faqs = [
-  {
-    question: 'Ứng dụng SAN là gì ?',
-    answer:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been industry's standard dummy text ever since the 1",
-  },
-  {
-    question: 'Cách sử dụng ứng dụng SAN?',
-    answer:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been industry's standard dummy text ever since the 1",
-  },
-];
-
 export default function TheQuestion() {
   const [expandedIndex, setExpandedIndex] = useState(null);
   const dispatch = useDispatch();

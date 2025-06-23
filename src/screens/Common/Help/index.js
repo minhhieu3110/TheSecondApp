@@ -14,7 +14,7 @@ import {COLORS, FONTS} from '@theme';
 import {useEffect, useState} from 'react';
 import {Modal, SafeAreaView, ScrollView} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {commonRoot} from 'navigation/navigationRef';
 import router from '@router';
 import {useDispatch, useSelector} from 'react-redux';
@@ -215,10 +215,12 @@ export default function Help() {
                   top={13}
                   left={12}
                   backgroundColor={COLORS.black}
+                  justifyCenter
+                  alignCenter
                   opacity={0.6}>
                   <Icon
-                    IconType={Ionicons}
-                    iconName={'chevron-back-outline'}
+                    IconType={Entypo}
+                    iconName={'chevron-small-left'}
                     iconSize={30}
                     iconColor={COLORS.white}
                   />

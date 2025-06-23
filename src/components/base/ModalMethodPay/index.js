@@ -18,7 +18,7 @@ const ModalMethodPay = ({visible, close, data = [], onPress}) => {
   return (
     <Modal
       visible={visible}
-      transparent={false}
+      transparent={true}
       animationType="fade"
       onRequestClose={close}>
       <TouchableOpacity

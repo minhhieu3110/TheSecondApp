@@ -1,6 +1,14 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Image, Pressable, Text, ScrollView, NoneData} from '@components';
+import {
+  Block,
+  Image,
+  Pressable,
+  Text,
+  ScrollView,
+  NoneData,
+  Loading,
+} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
@@ -33,7 +41,7 @@ export default function NewActivity() {
         contentContainerStyle={{paddingBottom: 181}}
         onRefresh={onRefresh}>
         {isLoading ? (
-          <ActivityIndicator color={COLORS.red4} style={{marginTop: 10}} />
+          <Loading />
         ) : (
           <Block width={width - 24} marginTop={15} marginHorizontal={12}>
             {newOrder.length === 0 ? (

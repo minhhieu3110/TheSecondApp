@@ -7,6 +7,7 @@ import {
   Text,
   ScrollView,
   StatusBar,
+  Loading,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -42,7 +43,7 @@ export default function NotificationScreen() {
       <Block width={width - 24} marginLeft={12} marginTop={15} gap={12}>
         <ScrollView contentContainerStyle={{paddingBottom: 181}}>
           {isLoading ? (
-            <ActivityIndicator color={COLORS.red4} />
+            <Loading />
           ) : (
             notifications.map(item => (
               <Pressable

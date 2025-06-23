@@ -7,6 +7,7 @@ import {
   HeaderTitle,
   Image,
   ImagePicker,
+  Loading,
   Pressable,
   ScrollView,
   StatusBar,
@@ -112,7 +113,8 @@ export default function Account() {
       <StatusBar />
       <HeaderTitle canGoBack title={'Thiết lập tài khoản'} />
       {isLoading ? (
-        <ActivityIndicator color={COLORS.red4} style={{marginTop: 15}} />
+        // <ActivityIndicator color={COLORS.red4} style={{marginTop: 15}} />
+        <Loading />
       ) : (
         <ScrollView contentContainerStyle={{paddingBottom: 186}}>
           <Block

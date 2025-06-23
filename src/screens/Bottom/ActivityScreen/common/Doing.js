@@ -8,6 +8,7 @@ import {
   Pressable,
   ScrollView,
   NoneData,
+  Loading,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -32,7 +33,7 @@ export default function Doing() {
       <ScrollView contentContainerStyle={{paddingBottom: 181}}>
         <Block width={width - 24} marginTop={15} marginHorizontal={12}>
           {isLoading ? (
-            <ActivityIndicator color={COLORS.red4} />
+            <Loading />
           ) : doingList?.length === 0 ? (
             <NoneData />
           ) : (

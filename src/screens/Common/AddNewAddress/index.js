@@ -127,7 +127,7 @@ export default function AddNewAddress() {
           Thông tin địa chỉ
         </Text>
         <Block marginTop={15}>
-          <Block wrap row gap={12}>
+          <Block row wrap columnGap={12} rowGap={12}>
             <SelectInput
               data={province}
               width={width - 24}
@@ -169,6 +169,7 @@ export default function AddNewAddress() {
           </Block>
 
           <FormInput
+            marginTop={12}
             placeholder={'Số nhà, tên đường, toà nhà....'}
             value={address}
             onChangeText={setAddress}

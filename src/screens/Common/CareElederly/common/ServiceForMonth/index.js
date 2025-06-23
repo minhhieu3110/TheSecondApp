@@ -241,6 +241,8 @@ export default function Elederly_Servicedurationmonth({route}) {
               marginTop={13}
               value={content}
               onChangeText={setContent}
+              height={141}
+              textAlignVertical={'top'}
             />
           </Block>
           <SANStaffDuties

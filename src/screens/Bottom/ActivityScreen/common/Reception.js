@@ -8,6 +8,7 @@ import {
   Pressable,
   ScrollView,
   NoneData,
+  Loading,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -45,7 +46,7 @@ export default function Reception() {
         onRefresh={onRefresh}>
         <Block width={width - 24} marginTop={15} marginHorizontal={12}>
           {isLoading ? (
-            <ActivityIndicator color={COLORS.red4} />
+            <Loading />
           ) : receptionList?.length === 0 ? (
             <NoneData />
           ) : (

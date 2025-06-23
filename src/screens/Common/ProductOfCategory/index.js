@@ -31,11 +31,7 @@ export default function ProductOfCategory({route}) {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
-      <HeaderTitle
-        root={commonRoot}
-        screenName={router.ALL_CATEGORY}
-        title={route?.params?.title}
-      />
+      <HeaderTitle canGoBack title={route?.params?.title} />
       <ScrollView>
         <Block
           marginTop={15}

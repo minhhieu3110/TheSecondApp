@@ -58,17 +58,18 @@ export default function IntroSAN() {
             autoplay={true}
             dotColor={COLORS.Yellow3_40}
             activeDotColor={COLORS.yellow3}
-            loop={false}
-            onMomentumScrollEnd={(e, state) => {
-              if (state.index === contentIntro.length - 1) {
-                authRoot.navigate(router.ONBOARDING_SCREEN);
-              }
-            }}>
+            // loop={false}
+            // onMomentumScrollEnd={(e, state) => {
+            //   if (state.index === contentIntro.length - 1) {
+            //     authRoot.navigate(router.ONBOARDING_SCREEN);
+            //   }
+            // }}
+          >
             {contentIntro.map(content => (
               <Block
                 flex
                 justifyEnd
-                paddingBottom={60}
+                paddingBottom={45}
                 key={content.id}
                 gap={10}>
                 <Text

@@ -90,7 +90,11 @@ export default function Shopping_Pay({route}) {
       },
     });
   };
-
+  const usePoints = () => {
+    const newUsePoint = !usePoint;
+    setUsePoint(newUsePoint);
+    setPoint(newUsePoint ? userInfo?.point : 0);
+  };
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
@@ -233,25 +237,18 @@ export default function Shopping_Pay({route}) {
             }}
             promotionCode={promotionSelected}
           />
-          <Block marginTop={15} row alignCenter>
+          <Block marginTop={15} rowCenter spaceBetween>
             <Text fontSize={14} regular color={COLORS.black2}>
               Dùng điểm tích luỹ
             </Text>
-            <Block row rowGap={10} absolute right={0}>
+            <Pressable onPress={usePoints} rowCenter spaceBetween>
               <Text fontSize={14} medium color={COLORS.black2}>
                 {userInfo?.point} điểm
               </Text>
               <Block marginLeft={10}>
-                <Switch
-                  value={usePoint}
-                  onValueChange={() => {
-                    const newUsePoint = !usePoint;
-                    setUsePoint(newUsePoint);
-                    setPoint(newUsePoint ? userInfo?.point : 0);
-                  }}
-                />
+                <Switch value={usePoint} onValueChange={setUsePoint} />
               </Block>
-            </Block>
+            </Pressable>
           </Block>
           <Block marginTop={25}>
             <Text fontSize={15} semiBold color={COLORS.black2}>
@@ -333,7 +330,13 @@ export default function Shopping_Pay({route}) {
             regular
             color={COLORS.black2}>
             Nhấn vào nút "Đặt hàng" đồng nghĩa với việc bạn đồng ý tuân theo
-            <Text color={COLORS.red4}> Điều khoản</Text> SAN
+            <Text
+              color={COLORS.red4}
+              onPress={() => commonRoot.navigate(router.TERMS_OF_USE)}>
+              {' '}
+              Điều khoản
+            </Text>{' '}
+            SAN
           </Text>
         </Block>
       </ScrollView>

@@ -1,6 +1,14 @@
 import actions from '@actions';
 import {icon, image} from '@assets';
-import {Block, Image, Text, ScrollView, Pressable, NoneData} from '@components';
+import {
+  Block,
+  Image,
+  Text,
+  ScrollView,
+  Pressable,
+  NoneData,
+  Loading,
+} from '@components';
 import {width} from '@responsive';
 import router from '@router';
 import {COLORS} from '@theme';
@@ -33,7 +41,7 @@ export default function Cancel() {
       <ScrollView contentContainerStyle={{paddingBottom: 181}}>
         <Block width={width - 24} marginTop={15} marginHorizontal={12}>
           {isLoading ? (
-            <ActivityIndicator color={COLORS.red4} />
+            <Loading />
           ) : cancelOrder?.length === 0 ? (
             <NoneData />
           ) : (

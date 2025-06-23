@@ -8,6 +8,7 @@ import {
   Pressable,
   ScrollView,
   NoneData,
+  Loading,
 } from '@components';
 import {width} from '@responsive';
 import router from '@router';
@@ -34,7 +35,7 @@ export default function Complete() {
     <Block flex backgroundColor={COLORS.gray10}>
       <ScrollView contentContainerStyle={{paddingBottom: 181}}>
         {isLoading ? (
-          <ActivityIndicator color={COLORS.red4} style={{marginTop: 10}} />
+          <Loading />
         ) : (
           <Block width={width - 24} marginTop={15} marginHorizontal={12}>
             {listComplete?.length === 0 ? (

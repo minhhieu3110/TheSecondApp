@@ -18,8 +18,8 @@ const ButtonSubmitService = ({
       backgroundColor={COLORS.white}
       height={72}
       width={width}>
-      <Block marginVertical={12} marginHorizontal={12} justifyCenter>
-        <Block marginLeft={12}>
+      <Block marginVertical={12} marginHorizontal={12} rowCenter spaceBetween>
+        <Block marginBottom={5}>
           <Text fontSize={16} semiBold color={COLORS.black6} numberOfLines={1}>
             {titleTop}
           </Text>
@@ -27,13 +27,7 @@ const ButtonSubmitService = ({
             {titleBottom}
           </Text>
         </Block>
-        <Block
-          width={48}
-          height={48}
-          absolute
-          right={0}
-          radius={8}
-          overflow={'hidden'}>
+        <Block width={48} height={48} radius={5} overflow={'hidden'}>
           <RadialGradient
             style={{
               width: 48,

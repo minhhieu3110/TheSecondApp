@@ -17,11 +17,7 @@ export default function AllCategory() {
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
-      <HeaderTitle
-        title={'Danh mục'}
-        root={commonRoot}
-        screenName={router.SHOPPING}
-      />
+      <HeaderTitle title={'Danh mục'} canGoBack />
       <Block marginTop={15} marginHorizontal={12} gap={12}>
         {listCategory?.map(item => (
           <Pressable
