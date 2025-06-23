@@ -25,7 +25,7 @@ import {formatPhone} from '@utils';
 export default function Help() {
   const [visibleModalHelp, setVisibleModalHelp] = useState(false);
   const dispatch = useDispatch();
-
+  const number = 11;
   useEffect(() => {
     dispatch({
       type: actions.GET_HELP,
@@ -34,8 +34,9 @@ export default function Help() {
     dispatch({
       type: actions.SYSOPTIONS,
     });
-  }, [dispatch]);
+  }, [dispatch, number]);
   const help = useSelector(state => state.getHelp?.data || []);
+  const {isLoading} = useSelector(state => state.getHelp);
   const sysoptions = useSelector(state => state.sysoptions?.data || []);
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -50,7 +51,7 @@ export default function Help() {
         backgroundColor={COLORS.white}>
         <Block width={width - 44} marginHorizontal={12} marginTop={17}>
           <Pressable
-            onPress={() => setVisibleModalHelp(!visibleModalHelp)}
+            onPress={() => commonRoot.navigate(router.BENEFIT)}
             row
             alignCenter
             width={width - 48}>
@@ -193,73 +194,6 @@ export default function Help() {
           </Block>
         </Block>
       </Block>
-      <Modal visible={visibleModalHelp} transparent={true}>
-        <SafeAreaView style={{flex: 1}}>
-          <Block flex backgroundColor={COLORS.gray10}>
-            <ScrollView>
-              <Block width={width} height={199.6}>
-                <Image
-                  source={{
-                    uri: `${URL_API.uploads}/${help?.picture}`,
-                  }}
-                  width={width}
-                  height={199.6}
-                  resizeMode="cover"
-                />
-                <Pressable
-                  onPress={() => setVisibleModalHelp(!visibleModalHelp)}
-                  width={30}
-                  height={30}
-                  radius={50}
-                  absolute
-                  top={13}
-                  left={12}
-                  backgroundColor={COLORS.black}
-                  justifyCenter
-                  alignCenter
-                  opacity={0.6}>
-                  <Icon
-                    IconType={Entypo}
-                    iconName={'chevron-small-left'}
-                    iconSize={30}
-                    iconColor={COLORS.white}
-                  />
-                </Pressable>
-              </Block>
-              <Block
-                marginTop={-19.6}
-                width={width - 24}
-                paddingBottom={27}
-                radius={8}
-                backgroundColor={COLORS.white}
-                marginLeft={12}>
-                <Text
-                  fontSize={18}
-                  semiBold
-                  color={COLORS.black1}
-                  marginLeft={12}
-                  marginTop={15}>
-                  {help?.title}
-                </Text>
-                <Block marginHorizontal={12} marginTop={16}>
-                  <RenderHTML
-                    contentWidth={width - 48}
-                    source={{html: help?.content}}
-                    tagsStyles={{
-                      p: {
-                        fontSize: 14,
-                        fontFamily: FONTS.regular,
-                        color: COLORS.black2,
-                        lineHeight: 22,
-                      },
-                    }}
-                  />
-                </Block>
-              </Block>
-            </ScrollView>
-          </Block>
-        </SafeAreaView>
-      </Modal>
     </Block>
   );
 }

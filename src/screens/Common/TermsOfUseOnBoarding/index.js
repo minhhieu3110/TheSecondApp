@@ -12,7 +12,7 @@ import {COLORS} from '@theme';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {URL_API} from 'redux/sagas/common';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import {root} from 'navigation/navigationRef';
 import RenderHTML from 'react-native-render-html';
 export default function TermsOfUseOnBoarding() {
@@ -46,8 +46,8 @@ export default function TermsOfUseOnBoarding() {
             alignCenter
             overflow={'hidden'}>
             <Icon
-              IconType={Ionicons}
-              iconName={'chevron-back-outline'}
+              IconType={Entypo}
+              iconName={'chevron-small-left'}
               iconSize={25}
               iconColor={COLORS.white}
             />

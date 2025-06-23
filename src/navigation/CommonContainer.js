@@ -86,6 +86,7 @@ const commonStack = [
   {name: router.ADD_BANK_ACCOUNT},
   {name: router.PRIVACY_SECURITY_ONBOARDING},
   {name: router.TERMS_OF_USE_ONBOARDING},
+  {name: router.BENEFIT},
 ];
 
 export default function CommonContainer() {
