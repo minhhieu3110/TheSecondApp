@@ -87,6 +87,7 @@ const Block = ({
   //position
   relative,
   absolute,
+  sticky,
   absoluteFillObject,
   top,
   left,
@@ -205,6 +206,7 @@ const Block = ({
     //position
     relative && {position: 'relative'},
     absolute && {position: 'absolute'},
+    sticky && {position: 'sticky'},
     absoluteFillObject && styles.absoluteFillObject,
     top !== undefined && {top: hs(top)},
     right !== undefined && {right: hs(right)},

@@ -1,16 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {Dimensions, ScrollView} from 'react-native';
 import {TabView, SceneMap} from 'react-native-tab-view';
-import {
-  Block,
-  Text,
-  Pressable,
-  Image,
-  StatusBar,
-  ScrollView,
-} from '@components';
+import {Block, Text, Pressable, Image, StatusBar} from '@components';
 import {width} from '@responsive';
-import {COLORS, FONTS} from '@theme';
+import {COLORS} from '@theme';
 import {icon} from '@assets';
 import router from '@router';
 import {commonRoot} from 'navigation/navigationRef';
@@ -43,16 +36,42 @@ const renderScene = SceneMap(
 
 export default function ActivityScreen({route}) {
   const tabParam = route.params?.tab || 'NEW_ACTIVITY';
-  const initialIndex = tabKeyToIndex[tabParam] || 0;
+  const initialIndex = tabKeyToIndex[tabParam] ?? 0;
 
   const [index, setIndex] = useState(initialIndex);
   const [routes] = useState(tabRoutes);
+
+  const scrollRef = useRef(null);
+  const tabRefs = useRef([]);
 
   useEffect(() => {
     if (tabParam && tabKeyToIndex[tabParam] !== undefined) {
       setIndex(tabKeyToIndex[tabParam]);
     }
   }, [tabParam]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const ref = tabRefs.current[index];
+      if (ref && scrollRef.current) {
+        ref.measureLayout(
+          scrollRef.current,
+          (x, y, w) => {
+            const screenWidth = width;
+            const scrollX =
+              x + w > screenWidth ? x + w - screenWidth + 240 : x - 12;
+            scrollRef.current.scrollTo({
+              x: scrollX > 0 ? scrollX : 0,
+              animated: true,
+            });
+          },
+          () => {},
+        );
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [index]);
 
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -77,6 +96,7 @@ export default function ActivityScreen({route}) {
           </Pressable>
         </Block>
       </Block>
+
       <TabView
         navigationState={{index, routes}}
         renderScene={renderScene}
@@ -84,30 +104,35 @@ export default function ActivityScreen({route}) {
         initialLayout={{width: Dimensions.get('window').width}}
         renderTabBar={props => (
           <Block backgroundColor={COLORS.white}>
-            <Block marginHorizontal={12}>
-              <ScrollView horizontal>
-                {props.navigationState.routes.map((route, i) => {
-                  const isFocused = index === i;
-                  return (
-                    <Pressable
-                      key={route.key}
-                      onPress={() => setIndex(i)}
-                      width={(width - 24) / 4}
-                      height={30}
-                      alignCenter
-                      borderBottomWidth={isFocused ? 2 : 0}
-                      borderColor={COLORS.red4}>
-                      <Text
-                        fontSize={15}
-                        regular
-                        color={isFocused ? COLORS.red4 : COLORS.black1}>
-                        {route.title}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
-              </ScrollView>
-            </Block>
+            <ScrollView
+              ref={scrollRef}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{paddingHorizontal: 12}}>
+              {props.navigationState.routes.map((route, i) => {
+                const isFocused = index === i;
+                return (
+                  <Pressable
+                    key={route.key}
+                    ref={el => {
+                      if (el) tabRefs.current[i] = el;
+                    }}
+                    onPress={() => setIndex(i)}
+                    width={(width - 24) / 4}
+                    height={30}
+                    alignCenter
+                    borderBottomWidth={isFocused ? 2 : 0}
+                    borderColor={COLORS.red4}>
+                    <Text
+                      fontSize={15}
+                      regular
+                      color={isFocused ? COLORS.red4 : COLORS.black1}>
+                      {route.title}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </ScrollView>
           </Block>
         )}
       />

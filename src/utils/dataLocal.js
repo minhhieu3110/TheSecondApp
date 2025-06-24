@@ -1,6 +1,6 @@
 import {icon} from '@assets';
 import router from '@router';
-import {commonRoot} from 'navigation/navigationRef';
+import {bottomRoot, commonRoot} from 'navigation/navigationRef';
 
 export const dataAccount = [
   {
@@ -88,9 +88,33 @@ export const dataUtilities = [
     },
   },
 ];
-export const infoWork = [
-  {id: 1, icon: icon.icon_calendar_day, title: 'Ngày làm việc'},
-  {id: 2, icon: icon.icon_time_activity, title: 'Thời gian làm việc'},
-  {id: 3, icon: icon.icon_calendar_days, title: 'Lặp lại hàng tuần'},
-  {id: 4, icon: icon.icon_detail_activity, title: 'Chi tiết công việc'},
+export const infoHelp = [
+  {
+    id: 1,
+    title: 'Lợi ích khi sử dụng San',
+    onPress: () => {
+      commonRoot.navigate(router.BENEFIT);
+    },
+  },
+  {
+    id: 2,
+    title: 'Câu hỏi thường gặp',
+    onPress: () => {
+      commonRoot.navigate(router.THEQUESTION);
+    },
+  },
+  {
+    id: 3,
+    title: 'Điều khoản sử dụng',
+    onPress: () => {
+      commonRoot.navigate(router.TERMS_OF_USE);
+    },
+  },
+  {
+    id: 4,
+    title: 'Chính sách bảo mật',
+    onPress: () => {
+      commonRoot.navigate(router.PRIVACY_SECURITY);
+    },
+  },
 ];

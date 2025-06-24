@@ -46,7 +46,7 @@ const Loading = ({
           width={70}
           radius={5}
           backgroundColor="white">
-          <SkypeIndicator size={30} color={COLORS.red} />
+          <ActivityIndicator size={30} color={COLORS.red} />
         </Block>
       </TouchableOpacity>
     </Modal>

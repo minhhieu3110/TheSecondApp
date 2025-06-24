@@ -119,6 +119,10 @@ export const icon = {
   icon_repeat: require('./icon/icon_repeat.png'),
   title_repeat_icon: require('./icon/repeat.png'),
   icon_again_week_cancel: require('./icon/again_week_cancel.png'),
+  icon_home_menu: require('./icon/icon_home_menu.png'),
+  icon_share_menu: require('./icon/icon_share_menu.png'),
+  icon_report_menu: require('./icon/icon_report_menu.png'),
+  icon_question_menu: require('./icon/icon_question_menu.png'),
 };
 export const image = {
   image_top_home_1: require('./image/image_top_home_1.png'),

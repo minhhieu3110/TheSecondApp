@@ -10,6 +10,8 @@ import {
   Carousel,
   TextInput,
   StatusBar,
+  Loading,
+  CarouselThumbnail,
 } from '@components';
 import {width} from '@responsive';
 import {COLORS} from '@theme';
@@ -119,12 +121,33 @@ export default function DetailProduct({route}) {
     });
   };
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
-
+  const itemMenuVertical = [
+    {
+      id: 1,
+      title: 'Trở về trang chủ',
+      icon: icon.icon_home_menu,
+      onPress: () => {
+        bottomRoot.navigate(router.HOME_SCREEN);
+      },
+    },
+    {id: 2, title: 'Chia sẻ', icon: icon.icon_share_menu},
+    {
+      id: 3,
+      title: 'Báo cáo sản phẩm này',
+      icon: icon.icon_report_menu,
+      onPress: () => setShowReport(!showReport),
+    },
+    {
+      id: 4,
+      title: 'Bạn cần giúp đỡ',
+      icon: icon.icon_question_menu,
+    },
+  ];
   return (
     <Block flex backgroundColor={COLORS.gray10}>
       <StatusBar />
       {isLoading ? (
-        <ActivityIndicator color={COLORS.red4} style={{marginTop: 10}} />
+        <Loading />
       ) : (
         <>
           <ScrollView contentContainerStyle={{paddingBottom: 203}}>
@@ -144,24 +167,28 @@ export default function DetailProduct({route}) {
                     isDots={false}
                     onChangeIndex={index => setNumberImg(index)}
                   />
+                  // <CarouselThumbnail
+                  //   data={detailProduct?.arr_picture}
+                  //   onChangeIndex={index => setNumberImg(index)}
+                  // />
                 )}
-                <Block absolute top={16} left={12} right={12} row>
-                  <Pressable
-                    onPress={() => commonRoot.navigate(router.SHOPPING)}
-                    width={35}
-                    height={35}
-                    radius={18}
-                    backgroundColor={COLORS.black50}
-                    alignCenter
-                    justifyCenter>
-                    <Icon
-                      IconType={MaterialIcons}
-                      iconName={'keyboard-arrow-left'}
-                      iconSize={35}
-                      iconColor={COLORS.white}
-                    />
-                  </Pressable>
-                  <Block absolute right={0} alignEnd>
+                <Block absolute top={16} left={12} right={12}>
+                  <Block rowCenter spaceBetween>
+                    <Pressable
+                      onPress={() => commonRoot.navigate(router.SHOPPING)}
+                      width={35}
+                      height={35}
+                      radius={18}
+                      backgroundColor={COLORS.black50}
+                      alignCenter
+                      justifyCenter>
+                      <Icon
+                        IconType={MaterialIcons}
+                        iconName={'keyboard-arrow-left'}
+                        iconSize={35}
+                        iconColor={COLORS.white}
+                      />
+                    </Pressable>
                     <Block row rowGap={10}>
                       <Block>
                         <Image
@@ -219,114 +246,45 @@ export default function DetailProduct({route}) {
                         />
                       </Pressable>
                     </Block>
-                    {menuVertical === true && (
-                      <Pressable
-                        onPressOut={() => setMenuVertical(false)}
-                        paddingBottom={13}
-                        marginTop={10}
-                        backgroundColor={COLORS.black70}
-                        radius={10}>
-                        <Block marginTop={13.9}>
-                          <Pressable
-                            onPress={() =>
-                              bottomRoot.navigate(router.HOME_SCREEN)
-                            }
-                            row
-                            marginLeft={10}
-                            alignCenter>
-                            <Icon
-                              IconType={Ionicons}
-                              iconName={'home'}
-                              iconSize={15}
-                              iconColor={COLORS.white}
-                            />
-                            <Text
-                              marginLeft={9.9}
-                              fontSize={14}
-                              regular
-                              color={COLORS.white}
-                              marginTop={1.1}>
-                              Trở về trang chủ
-                            </Text>
-                          </Pressable>
-                          <Block
-                            width={width - 218}
-                            borderWidth={0.5}
-                            borderColor={COLORS.white50}
-                            marginTop={11}
-                            marginBottom={12}
-                          />
-                          <Block row marginLeft={10} alignCenter>
-                            <Icon
-                              IconType={Ionicons}
-                              iconName={'share-social-sharp'}
-                              iconSize={15}
-                              iconColor={COLORS.white}
-                            />
-                            <Text
-                              marginLeft={9.9}
-                              fontSize={14}
-                              regular
-                              color={COLORS.white}
-                              marginTop={1.1}>
-                              Chia sẻ
-                            </Text>
-                          </Block>
-                          <Block
-                            width={width - 218}
-                            borderWidth={0.5}
-                            borderColor={COLORS.white50}
-                            marginTop={11}
-                            marginBottom={12}
-                          />
-                          <Pressable
-                            row
-                            marginLeft={10}
-                            alignCenter
-                            onPress={() => setShowReport(!showReport)}>
-                            <Icon
-                              IconType={MaterialIcons}
-                              iconName={'report-problem'}
-                              iconSize={15}
-                              iconColor={COLORS.white}
-                            />
-                            <Text
-                              marginLeft={9.9}
-                              fontSize={14}
-                              regular
-                              color={COLORS.white}
-                              marginTop={1.1}>
-                              Báo cáo sản phẩm này
-                            </Text>
-                          </Pressable>
-                          <Block
-                            width={width - 218}
-                            borderWidth={0.5}
-                            borderColor={COLORS.white50}
-                            marginTop={11}
-                            marginBottom={12}
-                          />
-                          <Block row marginLeft={10} alignCenter>
-                            <Icon
-                              IconType={AntDesign}
-                              iconName={'questioncircle'}
-                              iconSize={15}
-                              iconColor={COLORS.white}
-                            />
-                            <Text
-                              marginLeft={9.9}
-                              fontSize={14}
-                              regular
-                              color={COLORS.white}
-                              marginTop={1.1}>
-                              Bạn cần giúp đỡ?
-                            </Text>
-                          </Block>
-                        </Block>
-                      </Pressable>
-                    )}
                   </Block>
+                  {menuVertical && (
+                    <Block marginTop={10} alignEnd>
+                      <Block
+                        paddingVertical={13.5}
+                        backgroundColor={COLORS.black70}
+                        radius={10}
+                        paddingHorizontal={10}
+                        gap={10}>
+                        {itemMenuVertical.map(item => (
+                          <Block gap={10} key={item.id}>
+                            <Pressable
+                              rowCenter
+                              gap={10}
+                              onPress={item.onPress}>
+                              <Image
+                                source={item.icon}
+                                width={14.07}
+                                height={13.1}
+                              />
+                              <Text fontSize={14} regular color={COLORS.white}>
+                                {item.title}
+                              </Text>
+                            </Pressable>
+                            {item.id !== 4 && (
+                              <Block
+                                marginHorizontal={-10}
+                                borderWidth={0.5}
+                                borderColor={COLORS.white}
+                                opacity={0.5}
+                              />
+                            )}
+                          </Block>
+                        ))}
+                      </Block>
+                    </Block>
+                  )}
                 </Block>
+
                 {detailProduct?.arr_picture === '' ? (
                   ''
                 ) : (

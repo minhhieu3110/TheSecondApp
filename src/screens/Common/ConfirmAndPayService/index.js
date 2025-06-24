@@ -21,7 +21,6 @@ import {formatCurrency} from 'utils/helper';
 import {bottomRoot} from 'navigation/navigationRef';
 import router from '@router';
 import Toast from 'react-native-toast-message';
-import {infoWork} from 'utils/dataLocal';
 
 export default function ConfirmAndPayService({route}) {
   const dispatch = useDispatch();

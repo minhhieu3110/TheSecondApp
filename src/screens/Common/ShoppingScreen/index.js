@@ -11,7 +11,7 @@ import {COLORS} from '@theme';
 import {ScrollView} from 'react-native';
 import {icon} from '@assets';
 import {width} from '@responsive';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {bottomRoot, commonRoot} from 'navigation/navigationRef';
 import router from '@router';
@@ -124,7 +124,7 @@ export default function ShoppingScreen() {
             duration={2000}
             renderItem={renderItemBannerTop}
           />
-          <Block absolute top={16} right={6} left={12} row>
+          <Block absolute top={16} left={12} right={12} rowCenter spaceBetween>
             <Pressable
               onPress={() => bottomRoot.navigate(router.HOME_SCREEN)}
               width={35}
@@ -134,56 +134,38 @@ export default function ShoppingScreen() {
               alignCenter
               justifyCenter>
               <Icon
-                IconType={MaterialIcons}
-                iconName={'keyboard-arrow-left'}
-                iconSize={35}
+                IconType={Entypo}
+                iconName={'chevron-small-left'}
+                iconSize={25}
                 iconColor={COLORS.white}
               />
             </Pressable>
-            <Block absolute right={0} row>
-              <Block
-                width={35}
-                height={35}
-                radius={18}
-                backgroundColor={COLORS.black50}
-                alignCenter
-                justifyCenter>
-                <Icon
-                  IconType={Octicons}
-                  iconName={'search'}
-                  iconSize={20}
-                  iconColor={COLORS.white}
-                />
-              </Block>
-              <Pressable
-                onPress={() => commonRoot.navigate(router.CART)}
-                width={44}
-                marginLeft={10}
-                row>
-                <Image source={icon.icon_cart} width={35} height={35} />
-                {carts?.total_quantity === 0 ? (
-                  ''
-                ) : (
-                  <Block
-                    absolute
-                    top={-6}
-                    right={0}
-                    backgroundColor={COLORS.red4}
-                    radius={20}
-                    paddingBottom={2}
-                    width={20}
-                    height={20}
-                    justifyCenter
-                    alignCenter>
-                    <Text fontSize={10} regular color={COLORS.white}>
-                      {carts?.total_quantity > 99
-                        ? '99+'
-                        : carts?.total_quantity}
-                    </Text>
-                  </Block>
-                )}
-              </Pressable>
-            </Block>
+            <Pressable
+              onPress={() => commonRoot.navigate(router.CART)}
+              width={44}
+              marginLeft={10}
+              row>
+              <Image source={icon.icon_cart} width={35} height={35} />
+              {carts?.total_quantity === 0 ? (
+                ''
+              ) : (
+                <Block
+                  absolute
+                  top={-6}
+                  right={0}
+                  backgroundColor={COLORS.red4}
+                  radius={20}
+                  paddingBottom={2}
+                  width={20}
+                  height={20}
+                  justifyCenter
+                  alignCenter>
+                  <Text fontSize={10} regular color={COLORS.white}>
+                    {carts?.total_quantity > 99 ? '99+' : carts?.total_quantity}
+                  </Text>
+                </Block>
+              )}
+            </Pressable>
           </Block>
         </Block>
         <Block backgroundColor={COLORS.white} paddingBottom={15}>

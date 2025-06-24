@@ -25,24 +25,7 @@ export default function IntroSAN() {
         'Các cụ không cần phải đến viện dưỡng lão và có thể sống vui, sum vầy cùng con cháu',
     },
   ];
-  const renderItem = ({item}) => {
-    return (
-      <Block gap={10} paddingBottom={40} justifyEnd flex={1}>
-        <Text fontSize={18} semiBold color={COLORS.yellow3} uppercase center>
-          {item.title}
-        </Text>
-        <Text
-          fontSize={14}
-          light
-          color={COLORS.white}
-          numberOfLines={2}
-          center
-          marginHorizontal={29}>
-          {item.subTitle}
-        </Text>
-      </Block>
-    );
-  };
+
   const {bottom} = useSafeAreaInsets();
   return (
     <Block flex backgroundColor={COLORS.gray10}>
@@ -53,7 +36,7 @@ export default function IntroSAN() {
         height={'100%'}
         resizeMode="stretch">
         <StatusBar />
-        <Block flex justifyEnd paddingBottom={bottom + 32}>
+        <Block flex justifyEnd>
           <Swiper
             autoplay={true}
             dotColor={COLORS.Yellow3_40}
@@ -92,7 +75,7 @@ export default function IntroSAN() {
               </Block>
             ))}
           </Swiper>
-          <Block justifyCenter alignCenter>
+          <Block justifyCenter alignCenter marginBottom={bottom + 10}>
             <Pressable
               onPress={() => authRoot.navigate(router.ONBOARDING_SCREEN)}
               width={88}

@@ -8,6 +8,7 @@ const ScrollView = ({
   contentContainerStyle,
   safeAreaBottom,
   horizontal = false,
+  scrollEnabled = true,
   ...rest
 }) => {
   const {bottom} = useSafeAreaInsets();
@@ -15,6 +16,7 @@ const ScrollView = ({
     <RNScrollView
       {...rest}
       horizontal={horizontal}
+      scrollEnabled={scrollEnabled}
       showsHorizontalScrollIndicator={false}
       showsVerticalScrollIndicator={false}
       refreshControl={

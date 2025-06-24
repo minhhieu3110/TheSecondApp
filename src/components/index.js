@@ -45,6 +45,7 @@ import MultiImageInput from './form/MultiImageInput';
 import FormInput from './form/FormInput';
 import NoneData from './common/NoneData';
 import ModalExchangeVoucherSuccess from './common/ModalExchangeVoucherSuccess';
+import CarouselThumbnail from './base/CarouselThumbnail';
 // import Loading from './base/Loading';
 export {
   Carousel,
@@ -95,4 +96,5 @@ export {
   NoneData,
   ModalExchangeVoucherSuccess,
   // Loading,
+  CarouselThumbnail,
 };
